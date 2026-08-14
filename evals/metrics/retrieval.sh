@@ -20,16 +20,25 @@ ground=$( { printf '%s\n' "$primary"; printf '%s\n' "$related"; printf '%s\n' "$
 
 pcount=$(printf '%s\n' "$primary" | grep -v '^$' | sort -u | wc -l)
 pfound=0
+match() { # $1=path fila (abs/rel)  $2=ground truth relativo → match exacto o por sufijo
+  [ "$1" = "$2" ] && return 0
+  case "/$1" in */"$2") return 0 ;; esac
+  return 1
+}
 for f in $primary; do
   [ -z "$f" ] && continue
-  printf '%s\n' "$files" | grep -qx "$f" && pfound=$((pfound + 1))
+  for rf in $files; do
+    match "$rf" "$f" && { pfound=$((pfound + 1)); break; }
+  done
 done
 
 gt_hits=0
 total_files=$(printf '%s\n' "$files" | grep -v '^$' | wc -l)
-for f in $files; do
-  [ -z "$f" ] && continue
-  printf '%s\n' "$ground" | grep -qx "$f" && gt_hits=$((gt_hits + 1))
+for rf in $files; do
+  [ -z "$rf" ] && continue
+  for f in $ground; do
+    match "$rf" "$f" && { gt_hits=$((gt_hits + 1)); break; }
+  done
 done
 
 if [ "$pcount" -gt 0 ] && [ "$pfound" -ge "$pcount" ]; then success=correct

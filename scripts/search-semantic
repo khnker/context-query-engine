@@ -34,9 +34,9 @@ QUERY="$1"
 ERR="$(mktemp)"
 trap 'rm -f "$ERR"' EXIT
 
-# Comando real; degradación: probe search si query falla
-if ! OUTPUT="$(probe query "$QUERY" --limit "$N" 2>"$ERR")"; then
-  if ! OUTPUT="$(probe search "$QUERY" 2>"$ERR")"; then
+# Comando real; degradación: probe search si query falla. DIR como PATH posicional.
+if ! OUTPUT="$(probe query "$QUERY" --limit "$N" "$DIR" 2>"$ERR")"; then
+  if ! OUTPUT="$(probe search "$QUERY" "$DIR" 2>"$ERR")"; then
     echo "search-semantic: probe falló para query '$QUERY'" >&2
     cat "$ERR" >&2
     exit 3
@@ -64,9 +64,30 @@ if echo "$OUTPUT" | jq -e 'type == "array" or type == "object"' >/dev/null 2>&1;
         reason: "semantic match"
       }'
 else
-  # Formato no-JSON: línea por línea, registro mínimo defensivo
-  echo "$OUTPUT" | grep -v '^[[:space:]]*$' | jq -Rc '
-    {source: "probe", path: ., symbol: null, language: null,
-     line_start: 0, line_end: 0, match_type: "semantic",
-     score: 0, token_estimate: 5, reason: "semantic match"}'
+  # Formato texto de probe (BM25): bloques "File: <path>" + líneas numeradas "N    <code>"
+  # → 1 fila por archivo con path real; sin bloques → 0 filas (nunca basura)
+  echo "$OUTPUT" | awk '
+    /^File: / {
+      file = substr($0, 7);
+      gsub(/^[ \t]+|[ \t]+$/, "", file);
+      if (cur != "") emit(cur, sl, el);
+      cur = file; sl = 0; el = 0;
+      next;
+    }
+    {
+      if (cur != "" && match($0, /^[0-9]+/)) {
+        ln = substr($0, 1, RLENGTH) + 0;
+        if (sl == 0) sl = ln;
+        el = ln;
+      }
+    }
+    END { if (cur != "") emit(cur, sl, el) }
+    function emit(f, a, b,   toks) {
+      if (a <= 0) a = 1; if (b < a) b = a;
+      toks = (b - a + 1) * 5;
+      printf "{\"source\":\"probe\",\"path\":\"%s\",\"symbol\":null,\"language\":null,\"line_start\":%d,\"line_end\":%d,\"match_type\":\"semantic\",\"score\":0.5,\"token_estimate\":%d,\"reason\":\"semantic match\"}\n", esc(f), a, b, toks;
+    }
+    function esc(s,   r) {
+      gsub(/\\/, "\\\\", s); gsub(/"/, "\\\"", s); return s;
+    }'
 fi

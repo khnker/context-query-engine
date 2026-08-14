@@ -295,6 +295,26 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     }
   }
 
+  // semantic-escalation — concept con 0 resultados → search-semantic (policy nivel 4)
+  if (logicalPlan.target?.kind === 'concept' && pool.length === 0) {
+    const concept = String(logicalPlan.target.name ?? '').trim();
+    if (concept) {
+      stats.tool_calls += 1;
+      const t0 = Date.now();
+      try {
+        const semantic = execOp({ tool: 'search-semantic', args: [concept] }, logicalPlan, []);
+        const latencyMs = Date.now() - t0;
+        pool.push(...semantic);
+        stats.escalated_semantic = true;
+        recordExecution(logicalPlan.query_type, 'search-semantic', {
+          tokens: 800, latency_ms: latencyMs, results: semantic.length,
+          relevant: semantic.filter((r) => RELEVANT.has(r.match_type)).length,
+          satisfied: semantic.length > 0, cache_hit: false,
+        }, phys.pred_class);
+      } catch { /* probe ausente o roto — sin crash */ }
+    }
+  }
+
   const results = fuse(pool, logicalPlan.budget ?? 8000);
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
   cache.set(key, { results, ts: Date.now() });
