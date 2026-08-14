@@ -1,0 +1,16 @@
+tiers:
+  t1:
+    - id: t1-basic
+      path: evals/datasets/repos/t1-basic
+      language: typescript
+    - id: t1-modular
+      path: evals/datasets/repos/t1-modular
+      language: python
+  t2:
+    - id: polar
+      path: /home/nicolas/dev/polar
+      language: typescript
+  t3:
+    - id: placeholder-large
+      path: null
+      language: unknown

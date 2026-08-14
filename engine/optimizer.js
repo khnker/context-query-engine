@@ -132,8 +132,10 @@ function normalizeType(qt) {
 // 12.1 — planes físicos candidatos por query_type (+ FOLLOW/INCLUDE del logical plan)
 function plansFor(queryType, target = {}, relations = [], inclusions = []) {
   const name = target.name ?? '';
+  const kw = String(name).split(/\s+/)[0] || name;
   let base;
-  switch (normalizeType(queryType)) {
+  const useConcept = normalizeType(queryType) === 'concept' || target.kind === 'concept';
+  switch (useConcept ? 'concept' : normalizeType(queryType)) {
     case 'filename':
       base = [
         { id: 'A', ops: [{ tool: 'rg-files', args: [name] }] },
@@ -143,8 +145,8 @@ function plansFor(queryType, target = {}, relations = [], inclusions = []) {
     case 'concept':
       base = [
         { id: 'A', ops: [{ tool: 'search-semantic', args: [name] }] },
-        { id: 'B', ops: [{ tool: 'search-code', args: [name] }, { tool: 'assemble-context', args: [] }] },
-        { id: 'C', ops: [{ tool: 'search-semantic', args: [name] }, { tool: 'search-code', args: [name] }] },
+        { id: 'B', ops: [{ tool: 'search-code', args: [kw] }, { tool: 'assemble-context', args: [] }] },
+        { id: 'C', ops: [{ tool: 'search-semantic', args: [name] }, { tool: 'search-code', args: [kw] }] },
       ];
       break;
     case 'pattern':

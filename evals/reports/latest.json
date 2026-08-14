@@ -1,0 +1,95 @@
+{
+  "summary": {
+    "tasks": null,
+    "modes": [
+      {
+        "mode": "A",
+        "count": 5,
+        "avg_tokens": 292.8,
+        "avg_latency_ms": 43.8,
+        "avg_tool_calls": 2,
+        "success_rate": 1,
+        "avg_precision": 0.9,
+        "avg_recall": 1,
+        "avg_efficiency": 0.9,
+        "avg_compression": 1,
+        "avg_wrong_tokens": 49.4,
+        "avg_dup_tokens": 0,
+        "avg_density": 0.9,
+        "avg_regret": 0
+      },
+      {
+        "mode": "B",
+        "count": 5,
+        "avg_tokens": 10.2,
+        "avg_latency_ms": 69.8,
+        "avg_tool_calls": 1,
+        "success_rate": 0.8,
+        "avg_precision": 0.8,
+        "avg_recall": 0.8,
+        "avg_efficiency": 0.8,
+        "avg_compression": 31.6509,
+        "avg_wrong_tokens": 3,
+        "avg_dup_tokens": 0,
+        "avg_density": 0.7,
+        "avg_regret": 0
+      },
+      {
+        "mode": "C",
+        "count": 5,
+        "avg_tokens": 59,
+        "avg_latency_ms": 122,
+        "avg_tool_calls": 1,
+        "success_rate": 1,
+        "avg_precision": 0.8,
+        "avg_recall": 1,
+        "avg_efficiency": 0.8,
+        "avg_compression": 4.459884,
+        "avg_wrong_tokens": 17.2,
+        "avg_dup_tokens": 31.2,
+        "avg_density": 0.80074,
+        "avg_regret": 0.12158
+      },
+      {
+        "mode": "D",
+        "count": 5,
+        "avg_tokens": 70,
+        "avg_latency_ms": 130.2,
+        "avg_tool_calls": 1,
+        "success_rate": 0.8,
+        "avg_precision": 0.8,
+        "avg_recall": 0.8,
+        "avg_efficiency": 0.8,
+        "avg_compression": 5.1659500000000005,
+        "avg_wrong_tokens": 19.8,
+        "avg_dup_tokens": 0,
+        "avg_density": 0.7,
+        "avg_regret": 0
+      }
+    ]
+  },
+  "ranking": [
+    {
+      "mode": "A",
+      "avg_density": 0.9
+    },
+    {
+      "mode": "C",
+      "avg_density": 0.80074
+    },
+    {
+      "mode": "D",
+      "avg_density": 0.7
+    },
+    {
+      "mode": "B",
+      "avg_density": 0.7
+    }
+  ],
+  "regression": {
+    "verdict": "N/A",
+    "baseline_avg_density": 0,
+    "delta": 0
+  },
+  "verdict": "PASS"
+}

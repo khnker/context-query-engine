@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "check-tools": "scripts/check-tools",
-    "test": "node --test && bash test/smoke.sh && bash engine/test-e2e.sh"
+    "test": "node --test test/ && bash test/smoke.sh && bash engine/test-e2e.sh",
+    "eval": "bash evals/run-eval.sh"
   }
 }

@@ -86,7 +86,7 @@ function parseGrep(out) {
     const m = /^([^:]+):(\d+):(.*)$/s.exec(line);
     if (m) {
       results.push({
-        source: 'rg', path: m[1], line: Number(m[2]), content: m[3],
+        source: 'rg', path: m[1], line: Number(m[2]), line_start: Number(m[2]), line_end: Number(m[2]), content: m[3],
         match_type: 'exact', score: 1, token_estimate: Math.max(8, Math.ceil(m[3].length / 4)),
       });
     }
@@ -104,7 +104,7 @@ function parseStructural(out) {
     const m1 = /^([^:]+):(\d+):(\d+):(.*)$/s.exec(line);
     if (m1) {
       results.push({
-        source: 'sg', path: m1[1], line: Number(m1[2]), content: m1[4],
+        source: 'sg', path: m1[1], line: Number(m1[2]), line_start: Number(m1[2]), line_end: Number(m1[2]), content: m1[4],
         match_type: 'structural', score: 0.9, token_estimate: Math.max(8, Math.ceil(m1[4].length / 4)),
       });
       continue;
@@ -112,7 +112,7 @@ function parseStructural(out) {
     const m2 = /^(\d+):(\d+):(.*)$/.exec(line.trim());
     if (m2 && pendingPath) {
       results.push({
-        source: 'sg', path: pendingPath, line: Number(m2[1]), content: m2[3],
+        source: 'sg', path: pendingPath, line: Number(m2[1]), line_start: Number(m2[1]), line_end: Number(m2[1]), content: m2[3],
         match_type: 'structural', score: 0.9, token_estimate: Math.max(8, Math.ceil(m2[3].length / 4)),
       });
       continue;
@@ -124,7 +124,7 @@ function parseStructural(out) {
 
 // 13.1 — ejecuta una op del plan físico (pool = resultados acumulados, usado por FOLLOW/INCLUDE)
 function execOp(op, plan, pool = []) {
-  const name = String(plan.target?.name ?? '').trim();
+  const name = String(op.args?.[0] ?? plan.target?.name ?? '').trim();
   if (!name) return [];
   switch (op.tool) {
     case 'search-code': {
