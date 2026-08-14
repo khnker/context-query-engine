@@ -5,6 +5,7 @@
   "description": "Context query language, optimizer y motor de retrieval para agentes LLM",
   "type": "module",
   "scripts": {
-    "check-tools": "scripts/check-tools"
+    "check-tools": "scripts/check-tools",
+    "test": "node --test && bash test/smoke.sh && bash engine/test-e2e.sh"
   }
 }

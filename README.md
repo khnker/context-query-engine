@@ -9,6 +9,10 @@
 - [Architecture](#architecture)
 - [Components](#components)
 - [How it works](#how-it-works)
+- [Pipeline: worked example](#pipeline-worked-example)
+- [Glossary](#glossary)
+- [Testing](#testing)
+- [Expanded installation](#expanded-installation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Benchmark: context savings](#benchmark-context-savings)
@@ -146,6 +150,148 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 ```
 
 Budgets: `BUDGET` maps to levels 2000 / 8000 / 20000 / 30000 (intermediate values round down: `5000 → 2000`).
+
+---
+
+## Pipeline: worked example
+
+The query below is the one shown in [How it works](#how-it-works), traced through every stage with its real outputs:
+
+```bash
+node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
+```
+
+1. **Query text (CQP)** — declarative: target `concept "provider fallback"`, relation `implementation`, `FOLLOW references`, `INCLUDE tests`, bounded by `LIMIT 8000` tokens.
+2. **Interpreter + parser** (`cqp.js` + `interpreter.js`) — parse into the internal AST, then classify intent into `query_type: "implementation"` with a heuristic `confidence`. Output: `{ query_type: "implementation", target: { kind: "concept", name: "provider fallback" }, relations: ["references"], inclusions: ["tests"], limit: 8000, budget: 8000 }`.
+3. **Logical plan** — tool-agnostic: what to retrieve (target, relations, inclusions), not how. The budget is snapped to the closest context level (`8000 → 8000`).
+4. **Optimizer** (`optimizer.js`) — builds **candidate physical plans A/B/C** per query type: A = `search-code`; B = `search-code` + `search-structure`; C = `search-semantic` + `search-code`. Each is scored with the cost model (`cost = w1·tokens + w2·latency + w3·tool_calls`, `utility = quality / cost`); cardinality starts from `CARD_DEFAULTS` (e.g. `concept: 100`) and is refined with post-execution actuals.
+5. **Physical plan** — the selected ordered sequence of operators:
+   `search-code(definitions) → search-code(implementation) → search-structure(implementation) → follow(references) → include(tests)`
+6. **Execution** — operators run in order; each emits one NDJSON line with **estimated vs actual** (`engine/statistics.ndjson`). Real row from this query:
+
+```json
+{"ts":"2026-08-14T20:37:35.784Z","operator":"search-code","queryClass":"definitions","estimated":{"candidates":15,"tokens":200,"latencyMs":15},"actual":{"candidates":15,"tokens":599,"latencyMs":26}}
+```
+
+| Operator / predicate class | Estimated (cand · tok · ms) | Actual (cand · tok · ms) |
+|---|---|---|
+| `search-code` / definitions | 15 · 200 · 15 | 15 · 599 · 26 |
+| `search-code` / implementation | 15 · 200 · 15 | 15 · 551 · 25 |
+| `search-structure` / implementation | 15 · 300 · 20 | 0 · 1 · 15 |
+| `follow` / implementation | 15 · 300 · 25 | 0 · 1 · 19 |
+| `include` / implementation | 15 · 200 · 20 | 4 · 1 · 27 |
+
+   The `search-structure` and `follow` stages returned **0 candidates** — the actuals teach the optimizer that this predicate class is cheap and low-yield, improving future estimates (learned mappings).
+7. **Fusion** (`assemble-context`) — normalizes results, filters low-value paths, dedups by `path:line_start:line_end` across tools, ranks multi-factor, trims to the 8000-token budget and orders by confidence tiers.
+8. **Stats + context** — actuals append to `engine/statistics.ndjson`; with ≥3 records per `(operator, predicate_class)` the estimates improve. Final context is bounded by budget, deduplicated and ranked — ready for the LLM.
+
+---
+
+## Glossary
+
+| Term | Meaning |
+|---|---|
+| **CQ** | Context Query — what the agent needs, as natural language or intent text (e.g. `--intent 'where is parseConfig defined?'`). |
+| **CQP** | Context Query Plan — the declarative query language the engine executes (`FIND ... AND ... LIMIT ...`), parsed by `cqp.js`. |
+| **AST** | Abstract Syntax Tree — the internal structured representation produced by the parser; boundary between query text and the planner. |
+| **Logical plan** | Tool-agnostic description of what to retrieve: target, relations, inclusions, limit/budget. |
+| **Physical retrieval plan** | The concrete ordered sequence of operators that will run (`search-code`, `search-structure`, `search-semantic`, `project-map`, `extract-context`). Candidates A/B/C per query type. |
+| **Cost model** | `cost = w1·tokens + w2·latency + w3·tool_calls` with weights `CF_COST_1..3`; plan selection uses `utility = quality / cost`. |
+| **Confidence** | How sure the heuristic interpreter is about the `query_type` classification of a query. |
+| **Statistics** | Per `(operator, predicate_class)` aggregates — avg candidates, p95 tokens, latency, success rate — computed with ≥3 records, stored in `engine/statistics.ndjson`. |
+| **Information density** | `useful_context_tokens / total_context_tokens` — the metric the engine optimizes. |
+| **Wrong-context** | Retrieved context that does not match what the agent actually needs; the failure mode that fusion (dedup, ranking, budget) minimizes. |
+
+---
+
+## Testing
+
+Run the full suite:
+
+```bash
+npm test
+```
+
+Coverage (aligned with the `test-suite` OpenSpec change):
+
+- **Unit** — `node --test` over `engine/` (parser, optimizer, statistics).
+- **Smoke** — bash scripts: `npm run check-tools` plus one end-to-end run of the worked query.
+- **End-to-end** — `node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'`, asserting each pipeline stage emits the expected NDJSON.
+
+Until the `test-suite` change lands, run the unit suite directly:
+
+```bash
+node --test engine/
+```
+
+---
+
+## Expanded installation
+
+### Prerequisites per distribution
+
+Node.js **≥ 18** plus core tools (`rg`, `fd`, `jq`):
+
+| Distribution | Command |
+|---|---|
+| Fedora | `sudo dnf install ripgrep fd-find jq` |
+| Ubuntu / Debian | `sudo apt install ripgrep fd-find jq` |
+| macOS | `brew install ripgrep fd jq` |
+
+On Debian/Ubuntu the package is `fd-find` and the binary is `fdfind`; symlink it so `fd` resolves:
+
+```bash
+mkdir -p "$HOME/.local/bin" && ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
+```
+
+### Optional tools
+
+| Tool | Purpose | Install without sudo |
+|---|---|---|
+| `probe` | Semantic search (`scripts/search-semantic`) | static binary → `~/.local/bin` |
+| `tokei` | LOC stats (repo_map cardinality) | static binary → `~/.local/bin` |
+| `semgrep` | AST rules for advanced pattern searches | pip or static binary → `~/.local/bin` |
+
+`sg` (semantic grep) is deprecated — use `ast-grep` instead.
+
+### Environment variables
+
+| Variable | Default | Effect |
+|---|---|---|
+| `CF_COST_1` | `0.01` | Cost weight w1 — tokens |
+| `CF_COST_2` | `0.001` | Cost weight w2 — latency |
+| `CF_COST_3` | `1` | Cost weight w3 — tool calls |
+| `CF_QUALITY_1` | `10` | Quality weight q1 — relevance |
+| `CF_QUALITY_2` | `5` | Quality weight q2 — coverage |
+| `CF_QUALITY_3` | `1` | Quality weight q3 — confidence |
+| `CF_STATS_FILE` | `engine/statistics.ndjson` | Path to the statistics store (default in-repo file) |
+
+`utility = quality / cost` drives physical plan selection — tune the weights per workload.
+
+### Exclusions configuration
+
+`agent-context-engineering/config/exclusions.json`:
+
+- `defaults` — paths excluded everywhere: `node_modules`, `.git`, `dist`, `build`, `coverage`, `vendor`, `target`, `__pycache__`, `.next`.
+- `project_overrides` — per-project additions (empty by default).
+
+### Verification
+
+```bash
+npm run check-tools
+```
+
+Checks core (`rg`, `fd`, `jq`) and optional (`yq`, `sg`, `tokei`, `probe`) tools. **Exit 0** if all core tools are present; **exit 1** if any core tool is missing. Missing optional tools are reported as `MISSING` but do not block basic operation.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| Semantic search returns nothing | Probe index missing → run `probe index` |
+| `sg` reported MISSING / deprecated | Use `ast-grep` instead |
+| `fd: command not found` (Debian/Ubuntu) | Install `fd-find` and symlink `fdfind → fd` (see above) |
+| Tools in `~/.local/bin` not found | Add `export PATH="$HOME/.local/bin:$PATH"` to your shell profile (`check-tools` does this itself) |
+| Analyzer exits with code 2 (insufficient data) | Statistics need ≥3 records per `(operator, predicate_class)` — run the query at least 3 times |
 
 ---
 
@@ -299,3 +445,18 @@ Physical Retrieval Plan     → optimizer output (ordered ops)
 ```
 
 `CIR` is documented as a concept but not implemented as a separate layer (YAGNI: the parser emits the logical plan directly).
+
+## Testing
+
+Suite automatizada (tasks test-suite):
+
+```bash
+npm test
+```
+
+Cubre:
+- Unit (node:test, stdlib): parser CQP (test/cqp.test.js), interpreter (test/interpreter.test.js), optimizer (test/optimizer.test.js), statistics (test/statistics.test.js).
+- Smoke bash (test/smoke.sh): sintaxis de los 9 scripts, check-tools, pipeline search-code → assemble-context, retrieval-metrics record/report.
+- E2E (engine/test-e2e.sh): runCQP real sobre el repo; verifica plan.selected, results, cache_hits en 2ª corrida, early_terminated/tokens_used.
+
+Exit no-cero ante cualquier fallo (CI-ready).
