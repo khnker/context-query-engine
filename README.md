@@ -32,8 +32,8 @@ ContextForge fixes this by applying the database query optimizer analogy to code
 
 | Database | ContextForge |
 |---|---|
-| SQL | Context Query (CQL) |
-| Query parser | `interpreter.js` + `cql.js` |
+| SQL | Context Query (CQP) |
+| Query parser | `interpreter.js` + `cqp.js` |
 | Logical plan | Plan with target, relations, inclusions, budget |
 | Query optimizer | `optimizer.js` (cost model + candidate plans) |
 | Table scan / index | rg / fd / ast-grep / Probe |
@@ -50,7 +50,7 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
 
 **Implemented**
 
-- CQL (declarative query language) + parser
+- CQP (declarative query language) + parser
 - Heuristic intent interpreter (no ML)
 - Candidate physical plans A/B/C per query type
 - Statistics store per `(operator, predicate_class)`: avg candidates, p95 tokens, latency, success rate (≥3 records)
@@ -75,7 +75,7 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
                         │
                         ▼
                ┌──────────────────────┐
-               │   cql.js / interpreter │  parse + classify intent
+               │   cqp.js / interpreter │  parse + classify intent
                └──────────┬───────────┘
                           ▼
                ┌──────────────────────┐
@@ -106,7 +106,7 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
 
 ### Phases
 
-1. **Interpretation** — the agent issues a CQL query (`FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000`) or natural language (`--intent 'where is parseConfig defined?'`). `cql.js` turns it into a logical plan; `interpreter.js` classifies the intent into `query_type` + `confidence`.
+1. **Interpretation** — the agent issues a CQP query (`FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000`) or natural language (`--intent 'where is parseConfig defined?'`). `cqp.js` turns it into a logical plan; `interpreter.js` classifies the intent into `query_type` + `confidence`.
 2. **Optimization** — `optimizer.js` generates candidate physical plans per query type and selects the lowest estimated cost. Accumulated telemetry enables *learned mappings*: if `search-structure` has a better track record than `search-code` for `definitions`, the plan is reordered.
 3. **Execution** — plan ops run in order with **early termination**: if the first op satisfies the query, the rest are skipped. Each op emits NDJSON lines of the normalized schema.
 4. **Fusion** — `assemble-context` runs the pipeline over results: excludes low-value paths, dedups by `path:line_start:line_end` (collapses cross-tool matches), ranks multi-factor, trims to budget, orders by confidence tiers (T1 constraints → T4 low confidence).
@@ -118,7 +118,7 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
 | Module | Description |
 |---|---|
 | `agent-context-engineering/` | **Agent skill** — `SKILL.md` + 10 policy references (retrieval-policy, tool-selection, context-budget with levels 2000/8000/20000/30000, dedup, semantics, filesystem, evaluation, metrics, result schema, toolchain). Teaches the agent the rules; contains no engine logic. |
-| `engine/` | **Node engine (ESM, stdlib-only, zero deps)** — CQL parser, interpreter, optimizer, pipeline, cache and MCP server. |
+| `engine/` | **Node engine (ESM, stdlib-only, zero deps)** — CQP parser, interpreter, optimizer, pipeline, cache and MCP server. |
 | `scripts/` | **CLIs** — 9 wrappers around the retrieval tools. |
 | `evals/` | **Benchmark** — 10 tasks, skill-vs-baseline runner and 4-target analyzer. |
 | `openspec/` | **Spec-driven specification** of the project (governance). |
@@ -127,14 +127,14 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
 
 ## How it works
 
-Real example — CQL query:
+Real example — CQP query:
 
 ```bash
 node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
 ```
 
 ```text
-1. cql.js        → { query_type: "implementation",
+1. cqp.js        → { query_type: "implementation",
                      target: {kind:"concept", name:"provider fallback"},
                      relations: ["references"], inclusions: ["tests"],
                      limit: 8000, budget: 8000 }
@@ -196,7 +196,7 @@ scripts/extract-context src/router.ts 40 60                  # semantic unit (li
 **Full engine:**
 
 ```bash
-# CQL query
+# CQP query
 node engine/engine.js 'FIND definitions OF symbol parseConfig'
 
 # Natural language query
@@ -252,7 +252,7 @@ To move from heuristic router to full query optimizer (in value order):
 
 1. **Statistics store** — aggregate `telemetry.ndjson` per `(operator, predicate class)`: `avg_candidates`, `p95_tokens`, `latency_ms`, `success_rate`.
 2. **Cardinality estimation** — estimate candidates **before** running each op and refine with the real post-execution count (PostgreSQL `autoanalyze` analogy). Today costs are per-tool constants.
-3. **`FOLLOW` / `INCLUDE` operators** — execute the `relations` and `inclusions` that CQL already parses (references, tests).
+3. **`FOLLOW` / `INCLUDE` operators** — execute the `relations` and `inclusions` that CQP already parses (references, tests).
 4. **Plan rewriting** — commute/reorder ops when the estimate justifies it.
 5. **Separate Cost / Quality** — `utility = Quality(plan) / Cost(plan)`, with relevance/coverage/confidence outside the cost formula.
 
@@ -270,7 +270,7 @@ contextforge/
 │   ├── config/exclusions.json     # default exclusions (node_modules, dist, ...)
 │   └── scripts/check-tools
 ├── engine/                        # engine (Node, stdlib-only)
-│   ├── cql.js                     # CQL parser → logical plan
+│   ├── cqp.js                     # CQP parser → logical plan
 │   ├── interpreter.js             # intent classifier (heuristic)
 │   ├── optimizer.js               # candidate plans + cost model + telemetry + learned mappings
 │   ├── engine.js                  # pipeline: parse → optimize → execute → fuse (+ cache)
@@ -286,3 +286,16 @@ contextforge/
 ## License
 
 [MIT](LICENSE)
+
+## Naming: CQ / CIR / CQP
+
+ContextForge's query language is called **CQP (Context Query Plan)** — deliberately not "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
+
+```
+Context Query (CQ)          → the agent's request text
+Context Intermediate Rep.   → parsed representation (concept; folded into CQP today)
+Context Query Plan (CQP)    → logical plan produced by parseCQP
+Physical Retrieval Plan     → optimizer output (ordered ops)
+```
+
+`CIR` is documented as a concept but not implemented as a separate layer (YAGNI: the parser emits the logical plan directly).

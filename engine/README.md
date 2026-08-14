@@ -1,10 +1,10 @@
-# engine — CQL (Context Query Language) + Query Interpreter
+# engine — CQP (Context Query Language) + Query Interpreter
 
 Node.js ESM, **stdlib SOLO** (package.json `"type": "module"`, sin dependencias nuevas).
 
-## cql.js — parser CQL → logical query plan (tasks 10.1/10.2)
+## cqp.js — parser CQP → logical query plan (tasks 10.1/10.2)
 
-`node engine/cql.js "<query>"` → imprime el logical plan JSON. Exporta `parseCQL(input)` (lanza `Error` en input inválido).
+`node engine/cqp.js "<query>"` → imprime el logical plan JSON. Exporta `parseCQP(input)` (lanza `Error` en input inválido).
 
 ### Cláusulas (case-insensitive, orden flexible)
 
@@ -20,7 +20,7 @@ Node.js ESM, **stdlib SOLO** (package.json `"type": "module"`, sin dependencias 
 ### Ejemplo completo parseado
 
 ```
-node engine/cql.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
+node engine/cqp.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
 ```
 
 ```json
@@ -54,4 +54,8 @@ Reglas de confidence:
 
 ## ⚠️ Nota: empty results
 
-Si el plan (CQL) o la query_type (interpreter) **no produce resultados**, el reporte downstream DEBE indicar **qué query type falló** — no reportar genéricamente "sin resultados". Ej.: `query_type=references → 0 resultados` (el consumidor puede sugerir cambiar de familia de query).
+Si el plan (CQP) o la query_type (interpreter) **no produce resultados**, el reporte downstream DEBE indicar **qué query type falló** — no reportar genéricamente "sin resultados". Ej.: `query_type=references → 0 resultados` (el consumidor puede sugerir cambiar de familia de query).
+
+## Naming: CQ / CIR / CQP
+
+El lenguaje se llama **CQP (Context Query Plan)**, no CQL (acrónimo sobrecargado por estándares externos). `parseCQP` (engine/cqp.js) produce el plan lógico; el optimizer lo convierte en Physical Retrieval Plan (ops). CIR (Context Intermediate Representation) es un concepto documentado, plegado en CQP por YAGNI.

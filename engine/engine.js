@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * engine/engine.js — Execution Engine + Result Fusion (task 13).
- * Pipeline: parseCQL → interpret (--intent) → optimize → ejecución ordenada de ops
+ * Pipeline: parseCQP → interpret (--intent) → optimize → ejecución ordenada de ops
  * con early termination (13.1) → fusión con scripts/assemble-context (13.2) →
  * cache intra-sesión Map en memoria, TTL 5 min (13.4).
  * Node.js ESM, stdlib SOLO.
@@ -16,7 +16,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { parseCQL } from './cql.js';
+import { parseCQP } from './cqp.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
 
@@ -244,9 +244,9 @@ function runPlan(logicalPlan, rawText) {
   return { plan: phys, results, stats, cached: false };
 }
 
-export function runCQL(cqlText, opts = {}) {
-  const logicalPlan = parseCQL(cqlText); // lanza Error si input inválido
-  return runPlan(logicalPlan, cqlText);
+export function runCQP(cqpText, opts = {}) {
+  const logicalPlan = parseCQP(cqpText); // lanza Error si input inválido
+  return runPlan(logicalPlan, cqpText);
 }
 
 export function runIntent(intentText, opts = {}) {
@@ -273,8 +273,8 @@ if (isMain) {
   const intentIdx = args.indexOf('--intent');
   const q = args.find((a) => !a.startsWith('--'));
   try {
-    if (!q) throw new Error('uso: node engine/engine.js "<CQL>" [--json] [--stats] | --intent "<texto>" [--stats]');
-    const out = intentIdx >= 0 ? runIntent(args[intentIdx + 1] ?? q) : runCQL(q);
+    if (!q) throw new Error('uso: node engine/engine.js "<CQP>" [--json] [--stats] | --intent "<texto>" [--stats]');
+    const out = intentIdx >= 0 ? runIntent(args[intentIdx + 1] ?? q) : runCQP(q);
     process.stdout.write(JSON.stringify(out) + '\n');
     if (showStats) process.stderr.write(JSON.stringify(out.stats) + '\n');
   } catch (e) {

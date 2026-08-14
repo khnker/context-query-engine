@@ -4,3 +4,4 @@ dist/
 *.log
 *.ndjson
 engine/.cache.json
+openspec/

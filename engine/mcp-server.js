@@ -5,7 +5,7 @@
  * mensaje) por stdin/stdout.
  *
  * Tools:
- *   context_query — CQL (FIND ...) → runCQL; intención natural → interpret → runIntent
+ *   context_query — CQP (FIND ...) → runCQP; intención natural → interpret → runIntent
  *   search_files  — passthrough a scripts/search-code (rg)
  *   read_file     — passthrough a scripts/extract-context
  *
@@ -17,18 +17,18 @@ import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { runCQL, runIntent } from './engine.js';
+import { runCQP, runIntent } from './engine.js';
 
 const SCRIPTS = fileURLToPath(new URL('../scripts/', import.meta.url));
 
 const TOOLS = [
   {
     name: 'context_query',
-    description: 'Query de contexto: CQL (FIND ...) o intención en lenguaje natural → pipeline optimizer+engine',
+    description: 'Query de contexto: CQP (FIND ...) o intención en lenguaje natural → pipeline optimizer+engine',
     inputSchema: {
       type: 'object',
       properties: {
-        intent: { type: 'string', description: 'Query CQL o intención natural' },
+        intent: { type: 'string', description: 'Query CQP o intención natural' },
         constraints: {
           type: 'object',
           properties: {
@@ -82,8 +82,8 @@ function handleCall(name, args) {
     case 'context_query': {
       const intent = String(args?.intent ?? '').trim();
       if (!intent) throw new Error('context_query: falta intent');
-      const cqlLike = /^\s*FIND\b/i.test(intent);
-      const out = cqlLike ? runCQL(intent) : runIntent(intent);
+      const cqpLike = /^\s*FIND\b/i.test(intent);
+      const out = cqpLike ? runCQP(intent) : runIntent(intent);
       return { content: [{ type: 'text', text: JSON.stringify(out) }] };
     }
     case 'search_files': {

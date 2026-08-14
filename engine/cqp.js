@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * engine/cql.js — CQL (Context Query Language) parser → logical query plan.
+ * engine/cqp.js — CQP (Context Query Language) parser → logical query plan.
  * Tasks 10.1 + 10.2. Node.js ESM, stdlib SOLO (sin dependencias nuevas).
  *
  * Gramática (case-insensitive, orden flexible entre cláusulas):
@@ -28,7 +28,7 @@ const BUDGET_LEVELS = [2000, 8000, 20000, 30000];
 const DEFAULT_BUDGET = 8000;
 const DEFAULT_LIMIT = 20;
 
-class CqlError extends Error {}
+class CqpError extends Error {}
 
 function mapBudget(n) {
   let mapped = BUDGET_LEVELS[0];
@@ -39,9 +39,9 @@ function mapBudget(n) {
   return mapped;
 }
 
-export function parseCQL(input) {
+export function parseCQP(input) {
   if (typeof input !== 'string' || input.trim() === '') {
-    throw new CqlError('empty input: se espera una query CQL');
+    throw new CqpError('empty input: se espera una query CQP');
   }
   const raw = input;
 
@@ -60,7 +60,7 @@ export function parseCQL(input) {
     markers.push({ kw: m[1].toLowerCase(), idx: m.index });
   }
   if (markers.length === 0) {
-    throw new CqlError('FIND missing: la query no contiene ninguna cláusula CQL (se espera FIND ...)');
+    throw new CqpError('FIND missing: la query no contiene ninguna cláusula CQP (se espera FIND ...)');
   }
 
   // 3) Segmentar: cada cláusula toma el texto hasta el siguiente marcador.
@@ -72,7 +72,7 @@ export function parseCQL(input) {
   }
 
   if (segments[0].kw !== 'find') {
-    throw new CqlError(`FIND missing: la primera cláusula debe ser FIND (se encontró "${segments[0].kw.toUpperCase()}")`);
+    throw new CqpError(`FIND missing: la primera cláusula debe ser FIND (se encontró "${segments[0].kw.toUpperCase()}")`);
   }
 
   const plan = {
@@ -82,7 +82,7 @@ export function parseCQL(input) {
     inclusions: [],
     limit: DEFAULT_LIMIT,
     budget: DEFAULT_BUDGET,
-    confidence: 0.95, // CQL explícito/estructurado → confianza alta
+    confidence: 0.95, // CQP explícito/estructurado → confianza alta
     raw,
   };
 
@@ -94,7 +94,7 @@ export function parseCQL(input) {
       case 'find': {
         const t = /\b(\w+)\b/.exec(body);
         if (!t) {
-          throw new CqlError('FIND missing: falta el target (implementation|definitions|references|usages|filename|pattern)');
+          throw new CqpError('FIND missing: falta el target (implementation|definitions|references|usages|filename|pattern)');
         }
         const word = t[1].toLowerCase();
         plan.query_type = FIND_TARGETS.has(word) ? word : 'implementation';
@@ -110,7 +110,7 @@ export function parseCQL(input) {
         }
         const n = /^\s*(?:\u0000Q(\d+)\u0000|([a-zA-Z_][\w.-]*))/.exec(rest);
         if (!n) {
-          throw new CqlError(`OF ${plan.target.kind} requiere un name (string entre comillas o bareword)`);
+          throw new CqpError(`OF ${plan.target.kind} requiere un name (string entre comillas o bareword)`);
         }
         plan.target.name = n[1] !== undefined ? quoted[Number(n[1])] : n[2];
         break;
@@ -119,7 +119,7 @@ export function parseCQL(input) {
         for (const p of body.split(/,|\band\b/i)) {
           const rel = p.trim().toLowerCase();
           if (!rel) continue;
-          if (!RELATIONS.has(rel)) throw new CqlError(`invalid FOLLOW relation: ${unquote(rel)}`);
+          if (!RELATIONS.has(rel)) throw new CqpError(`invalid FOLLOW relation: ${unquote(rel)}`);
           if (!plan.relations.includes(rel)) plan.relations.push(rel);
         }
         break;
@@ -128,22 +128,22 @@ export function parseCQL(input) {
         for (const p of body.split(/,|\band\b/i)) {
           const inc = p.trim().toLowerCase();
           if (!inc) continue;
-          if (!INCLUSIONS.has(inc)) throw new CqlError(`invalid INCLUDE: ${unquote(inc)}`);
+          if (!INCLUSIONS.has(inc)) throw new CqpError(`invalid INCLUDE: ${unquote(inc)}`);
           if (!plan.inclusions.includes(inc)) plan.inclusions.push(inc);
         }
         break;
       }
       case 'limit': {
         const lm = /^(\d+)$/.exec(body);
-        if (!lm) throw new CqlError(`invalid LIMIT: ${unquote(body)}`);
+        if (!lm) throw new CqpError(`invalid LIMIT: ${unquote(body)}`);
         const n = Number(lm[1]);
-        if (!Number.isInteger(n) || n < 1) throw new CqlError(`invalid LIMIT: ${lm[1]} (debe ser entero >= 1)`);
+        if (!Number.isInteger(n) || n < 1) throw new CqpError(`invalid LIMIT: ${lm[1]} (debe ser entero >= 1)`);
         plan.limit = n;
         break;
       }
       case 'budget': {
         const bm = /^(\d+)$/.exec(body);
-        if (!bm) throw new CqlError(`invalid BUDGET: ${unquote(body)}`);
+        if (!bm) throw new CqpError(`invalid BUDGET: ${unquote(body)}`);
         plan.budget = mapBudget(Number(bm[1]));
         break;
       }
@@ -159,13 +159,13 @@ const isMain = process.argv[1] === fileURLToPath(import.meta.url);
 if (isMain) {
   const input = process.argv.slice(2).join(' ');
   if (!input) {
-    console.error('uso: node cql.js "<query CQL>"');
+    console.error('uso: node cqp.js "<query CQP>"');
     process.exit(1);
   }
   try {
-    console.log(JSON.stringify(parseCQL(input)));
+    console.log(JSON.stringify(parseCQP(input)));
   } catch (err) {
-    console.error(`cql.js: ${err.message}`);
+    console.error(`cqp.js: ${err.message}`);
     process.exit(1);
   }
 }
