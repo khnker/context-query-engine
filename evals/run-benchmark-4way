@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# 5.2 run-benchmark-4way — 4 vias por tarea sobre evals/retrieval4.json
+#   A) filesystem bruto (grep/find/cat)        -> raw, sin dedup
+#   B) skill: search-code (+assemble-context)  -> dedup = raw - lineas unicas
+#   C) engine: node engine/engine.js CQP       -> dedup = raw - lineas unicas
+#   D) C + search-semantic (si probe disponible); si probe falta -> D = C y mode_D_fallback:true
+# Metricas por corrida -> evals/metrics4.ndjson (NDJSON propio):
+#   {task, mode, tokens, latency_ms, tool_calls, success, wrong_tokens, dup_tokens, density, mode_D_fallback?}
+# success: archivos matcheando expect.path_glob que contienen "name" >= min_hits
+# wrong-context: tokens de lineas cuyo archivo (primer campo ':') NO contiene el nombre target
+# density = success ? max(0, 1 - wrong_tokens/tokens) : 0
+# Exit 0 con resumen: N tareas x 4 modos.
+
+set -uo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
+CORPUS="$HERE/retrieval4.json"
+OUT="$HERE/metrics4.ndjson"
+META_DIR="$HERE/.meta4"
+cd "$ROOT"
+
+command -v jq >/dev/null 2>&1 || { echo "run-benchmark-4way: jq not found" >&2; exit 2; }
+command -v rg >/dev/null 2>&1 || { echo "run-benchmark-4way: rg not found" >&2; exit 2; }
+[ -f "$CORPUS" ] || { echo "run-benchmark-4way: $CORPUS no existe" >&2; exit 1; }
+
+rm -f "$OUT"
+rm -rf "$META_DIR"
+mkdir -p "$META_DIR"
+
+# tokens estimados: bytes / 4
+tok() { echo $(( $(wc -c < "$1" 2>/dev/null || echo 0) / 4 )); }
+
+# glob (path_glob) -> regex (grep -E / rg)
+glob2re() { printf '%s' "${1:-*}" | sed 's/\./\\./g; s/\*/.*/g; s/\?/./g'; }
+
+# tool_calls: 1 por comando; pipes/&&/;|| suman un segmento cada uno
+toolcalls() {
+  local n
+  n=$(printf '%s' "$1" | grep -oE '\|\||&&|;|\|' | wc -l)
+  echo $((n + 1))
+}
+
+now_ms() { echo $(( $(date +%s%N) / 1000000 )); }
+
+semantic_avail=0
+command -v probe >/dev/null 2>&1 && semantic_avail=1
+
+TOTAL=0
+while IFS= read -r t; do
+  id="$(jq -r '.id' <<<"$t")"
+  name="$(jq -r '.name // .pattern' <<<"$t")"
+  dir="$(jq -r '.dir // "."' <<<"$t")"
+  glob="$(jq -r '.expect.path_glob // "*"' <<<"$t")"
+  minhits="$(jq -r '.expect.min_hits // 1' <<<"$t")"
+
+  for mode in A B C D; do
+    cmd="$(jq -r ".cmd_$mode" <<<"$t")"
+    [ "$cmd" = "null" ] && continue
+
+    outf="$META_DIR/${id}_${mode}.out"
+    errf="$META_DIR/${id}_${mode}.err"
+    : >"$outf"; : >"$errf"
+    fallback=0
+
+    st="$(now_ms)"
+    if [ "$mode" = D ]; then
+      # D = C + search-semantic; sin probe -> D = C (fallback marcado)
+      if [ "$semantic_avail" = 1 ]; then
+        eval "$cmd" >"$outf" 2>"$errf" || true
+        "$ROOT/scripts/search-semantic" -d "$dir" "$name" >>"$outf" 2>>"$errf" || true
+      else
+        eval "$cmd" >"$outf" 2>"$errf" || true
+        fallback=1
+      fi
+    else
+      eval "$cmd" >"$outf" 2>"$errf" || true
+    fi
+    et="$(now_ms)"
+
+    lat=$((et - st)); [ "$lat" -lt 0 ] && lat=0; [ "$lat" -eq 0 ] && lat=1
+    tokens="$(tok "$outf")"
+    calls="$(toolcalls "$cmd")"
+    [ "$mode" = D ] && [ "$semantic_avail" = 1 ] && calls=$((calls + 1))
+
+    # dedup: B y C pasan por assemble-context (lineas unicas); A/D sin dedup
+    if [ "$mode" = B ] || [ "$mode" = C ]; then
+      uniq_tokens=$(tok <(sort -u "$outf"))
+      dup=$((tokens > uniq_tokens ? tokens - uniq_tokens : 0))
+    else
+      dup=0
+    fi
+
+    # success: archivos matcheando path_glob que contienen el nombre target >= min_hits
+    hits=0
+    while IFS= read -r f; do
+      if [ -n "$f" ] && [ -f "$f" ] && grep -qF "$name" "$f" 2>/dev/null; then
+        hits=$((hits + 1))
+      fi
+    done < <(rg --files "$ROOT" 2>/dev/null | rg "$(glob2re "$glob")")
+    if [ "$hits" -ge "$minhits" ]; then success=1; else success=0; fi
+
+    # wrong-context: lineas cuyo archivo (primer campo ':') no contiene el nombre target
+    wrong=0
+    while IFS= read -r line; do
+      f="${line%%:*}"
+      if [ -f "$f" ] && ! grep -qF "$name" "$f" 2>/dev/null; then
+        wrong=$((wrong + ${#line} / 4))
+      fi
+    done <"$outf"
+    # ademas: paths en salidas JSON (engine) cuyo archivo no contiene el target
+    if [ -s "$outf" ] && jq -e . "$outf" >/dev/null 2>&1; then
+      while IFS= read -r fp; do
+        if [ -n "$fp" ] && [ -f "$fp" ] && ! grep -qF "$name" "$fp" 2>/dev/null; then
+          wrong=$((wrong + ${#fp} / 4))
+        fi
+      done < <(rg -o '"path":"[^"]+"|"file":"[^"]+"' "$outf" 2>/dev/null | sed 's/.*"\([^"]*\)"$/\1/')
+    fi
+
+    # density = success ? max(0, 1 - wrong/tokens) : 0
+    if [ "$success" = 1 ] && [ "$tokens" -gt 0 ]; then
+      density="$(awk -v w="$wrong" -v t="$tokens" 'BEGIN{ d=1-w/t; if(d<0)d=0; printf "%.3f", d }')"
+    else
+      density=0
+    fi
+
+    rec="{\"task\":\"$id\",\"mode\":\"$mode\",\"tokens\":$tokens,\"latency_ms\":$lat,\"tool_calls\":$calls,\"success\":$success,\"wrong_tokens\":$wrong,\"dup_tokens\":$dup,\"density\":$density"
+    [ "$mode" = D ] && rec="$rec,\"mode_D_fallback\":$fallback"
+    rec="$rec}"
+    printf '%s\n' "$rec" >>"$OUT"
+    TOTAL=$((TOTAL + 1))
+  done
+done < <(jq -c '.[]' "$CORPUS")
+
+rm -rf "$META_DIR"
+printf 'run-benchmark-4way: %d corridas (%d tareas x 4 modos) -> %s\n' "$TOTAL" "$((TOTAL / 4))" "$OUT"
+exit 0

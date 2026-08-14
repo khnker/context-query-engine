@@ -19,6 +19,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseCQP } from './cqp.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
+import { record } from './statistics.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
@@ -194,7 +195,7 @@ function fuse(pool, budget) {
 }
 
 // --- pipeline principal ---
-function runPlan(logicalPlan, rawText) {
+function runPlan(logicalPlan, rawText, opts = {}) {
   const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0 };
   const key = `${rawText}|${logicalPlan.budget ?? 8000}`;
   const phys = optimize(logicalPlan);
@@ -218,7 +219,23 @@ function runPlan(logicalPlan, rawText) {
   for (const op of selected.ops) {
     if (op.tool === 'assemble-context') continue;
     stats.tool_calls += 1;
+    const t0 = Date.now();
     const results = execOp(op, logicalPlan, pool);
+    const latencyMs = Date.now() - t0;
+    // optimizer-statistics: registrar estimated vs actual (best-effort, nunca rompe el pipeline)
+    try {
+      record({
+        operator: op.tool,
+        queryClass: logicalPlan.query_type,
+        scope: opts.scope ?? '',
+        estimated: { candidates: op.est_candidates, tokens: op.tokens, latencyMs: op.latency_ms },
+        actual: {
+          candidates: results.length,
+          tokens: Math.max(1, Math.ceil(results.map((r) => r.content ?? r.snippet ?? '').join('\n').length / 4)),
+          latencyMs,
+        },
+      });
+    } catch { /* telemetría best-effort */ }
     const relevant = results.filter((r) => RELEVANT.has(r.match_type));
     pool.push(...results);
     recordExecution(logicalPlan.query_type, op.tool, {
@@ -246,7 +263,7 @@ function runPlan(logicalPlan, rawText) {
 
 export function runCQP(cqpText, opts = {}) {
   const logicalPlan = parseCQP(cqpText); // lanza Error si input inválido
-  return runPlan(logicalPlan, cqpText);
+  return runPlan(logicalPlan, cqpText, opts);
 }
 
 export function runIntent(intentText, opts = {}) {
@@ -262,7 +279,7 @@ export function runIntent(intentText, opts = {}) {
     confidence: interp.confidence,
     raw: src,
   };
-  return runPlan(logicalPlan, src);
+  return runPlan(logicalPlan, src, opts);
 }
 
 // --- CLI ---

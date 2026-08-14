@@ -16,6 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { load, confidence, estimateCandidates as statsEstimate } from './statistics.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const TELEMETRY = path.join(ENGINE_DIR, 'telemetry.ndjson');
@@ -114,6 +115,12 @@ export function recordExecution(queryType, tool, metrics = {}, predClass = query
   return rec;
 }
 
+// Deprecado (change optimizer-statistics): la lógica de aprendizaje pasó a statistics.js
+// (confidence blend). Se mantiene como export por compatibilidad.
+export function learnedMapping() {
+  return load();
+}
+
 function normalizeType(qt) {
   const t = String(qt ?? '').toLowerCase();
   if (t === 'filename') return 'filename';
@@ -196,12 +203,38 @@ function rewritePlan(ops) {
 }
 
 // 12 — optimizar: candidatos + estimator + rewriting + utility = quality / cost
+// D15b — reordenamiento por éxito aprendido: stats[`${tool}|${queryType}`] con
+// n>20 y successRate>=0.8 → mueve la tool de mejor successRate al frente de los SEARCH,
+// respetando topología (FOLLOW/INCLUDE/assemble-context quedan después del primer SEARCH).
+const SEARCH_TOOLS = new Set(['search-code', 'search-structure', 'search-semantic', 'rg-files']);
+
+function reorderBySuccess(ops, stats, queryType) {
+  const idx = ops.map((op, i) => (SEARCH_TOOLS.has(op.tool) ? i : -1)).filter((i) => i >= 0);
+  if (idx.length < 2) return ops;
+  const eligible = idx.filter((i) => {
+    const s = stats.get(`${ops[i].tool}|${queryType}`);
+    return s && s.n > 20 && s.successRate >= 0.8;
+  });
+  if (eligible.length < 2) return ops;
+  let best = eligible[0];
+  for (let i = 1; i < eligible.length; i++) {
+    if (stats.get(`${ops[eligible[i]].tool}|${queryType}`).successRate > stats.get(`${ops[best].tool}|${queryType}`).successRate) {
+      best = eligible[i];
+    }
+  }
+  if (best === idx[0]) return ops;
+  const next = [...ops];
+  [next[idx[0]], next[best]] = [next[best], next[idx[0]]];
+  return next;
+}
+
 export function optimize(logicalPlan = {}) {
   const queryType = logicalPlan.query_type ?? 'implementation';
   const target = logicalPlan.target ?? {};
   const name = target.name ?? '';
   const predClass = predicateClass(queryType, target);
-  const store = statsStore();
+  const store = statsStore(); // telemetría D12 legacy (se conserva)
+  const stats = load();       // aprendizaje por confianza (optimizer-statistics)
   const cw = costWeights();
   const qw = qualityWeights();
   const confidence = logicalPlan.confidence ?? 0.5;
@@ -209,13 +242,15 @@ export function optimize(logicalPlan = {}) {
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
       const ops = p.ops.map((op) => {
-        const m = makeOp(op.tool, op.args ?? [name], estimateCandidates(predClass, store));
+        const m = makeOp(op.tool, op.args ?? [name], statsEstimate(queryType, logicalPlan.scope ?? '', stats));
         if (op.relations) m.relations = op.relations;
         if (op.inclusions) m.inclusions = op.inclusions;
         return m;
       });
-      const rewritten = rewritePlan(ops);
-      const variants = [ops, rewritten];
+      // D15b — reordenar SEARCH ops por éxito aprendido (solo con evidencia sólida)
+      const reordered = reorderBySuccess(ops, stats, queryType);
+      const rewritten = rewritePlan(reordered);
+      const variants = [reordered, rewritten];
       return variants.map((v, i) => {
         const cost = planCost(v, cw);
         const quality = planQuality(v, qw, confidence);

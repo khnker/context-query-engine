@@ -1,15 +1,23 @@
 #!/usr/bin/env node
 /**
- * engine/cqp.js — CQP (Context Query Language) parser → logical query plan.
- * Tasks 10.1 + 10.2. Node.js ESM, stdlib SOLO (sin dependencias nuevas).
+ * engine/cqp.js — CQP (Context Query Language) parser → AST → logical query plan.
+ * Tasks 10.1 + 10.2 + frontier AST (change optimizer-statistics).
+ * Node.js ESM, stdlib SOLO (sin dependencias nuevas).
  *
  * Gramática (case-insensitive, orden flexible entre cláusulas):
- *   FIND <target>              target: implementation|definitions|references|usages|filename|pattern (default implementation)
+ *   FIND <target>              target: implementation|definitions|references|usages|filename|pattern|concept|symbol (default implementation)
  *   OF <kind> [<name>]         kind: concept|symbol|file|function|class|constant (default symbol), name obligatorio
  *   AND FOLLOW <relations>     relations: references|callers|callees|imports|dependents (lista por comas u otro AND)
  *   AND INCLUDE <inclusions>   inclusions: tests|config|docs|generated (lista)
  *   LIMIT <n>                  n entero >= 1 (default 20)
  *   BUDGET <n>                 n en {2000,8000,20000,30000} (default 8000).
+ *
+ * parseAST(text) → AST {operator:'find', target:{type,value,kind}, relations:[{operator:'follow',type}],
+ *                       include:[...], budget, limit}
+ *   - target.type: de FIND <type> OF <kind> <name>. kind mapea:
+ *     concept→concept, symbol→symbol, file→filename, function/class/constant→definitions.
+ * toLogicalPlan(ast) → plan lógico (misma forma que devolvía parseCQP).
+ * parseCQP(text) = toLogicalPlan(parseAST(text)) — compat total con callers.
  *
  * Mapeo BUDGET (documentado): el valor pedido se redondea al nivel más cercano
  * INFERIOR del set {2000, 8000, 20000, 30000}. ej. 5000→2000, 15000→8000,
@@ -19,9 +27,19 @@
 import { fileURLToPath } from 'node:url';
 
 const FIND_TARGETS = new Set(['implementation', 'definitions', 'references', 'usages', 'filename', 'pattern']);
+const FIND_TYPES = new Set(['implementation', 'definitions', 'references', 'usages', 'filename', 'pattern', 'concept', 'symbol']);
 const KINDS = new Set(['concept', 'symbol', 'file', 'function', 'class', 'constant']);
 const RELATIONS = new Set(['references', 'callers', 'callees', 'imports', 'dependents']);
 const INCLUSIONS = new Set(['tests', 'config', 'docs', 'generated']);
+// kind → target.type (cuando FIND no trae type explícito)
+const KIND_MAP = {
+  concept: 'concept',
+  symbol: 'symbol',
+  file: 'filename',
+  function: 'definitions',
+  class: 'definitions',
+  constant: 'definitions',
+};
 
 // Niveles de presupuesto permitidos, ascendentes. mapBudget elige el mayor nivel <= n pedido.
 const BUDGET_LEVELS = [2000, 8000, 20000, 30000];
@@ -39,7 +57,13 @@ function mapBudget(n) {
   return mapped;
 }
 
-export function parseCQP(input) {
+/**
+ * parseAST(text) → AST front-end:
+ *   { operator:'find', target:{type,value,kind}, relations:[{operator:'follow',type}],
+ *     include:[...], budget, limit }
+ * value = nombre buscado; kind = kind de OF (para toLogicalPlan).
+ */
+export function parseAST(input) {
   if (typeof input !== 'string' || input.trim() === '') {
     throw new CqpError('empty input: se espera una query CQP');
   }
@@ -51,6 +75,7 @@ export function parseCQP(input) {
     quoted.push(s);
     return `\u0000Q${quoted.length - 1}\u0000`;
   });
+  const unquote = (s) => s.replace(/\u0000Q(\d+)\u0000/g, (_m, i) => quoted[Number(i)]);
 
   // 2) Detectar cláusulas por keyword, en orden de aparición.
   const markers = [];
@@ -75,18 +100,15 @@ export function parseCQP(input) {
     throw new CqpError(`FIND missing: la primera cláusula debe ser FIND (se encontró "${segments[0].kw.toUpperCase()}")`);
   }
 
-  const plan = {
-    query_type: 'implementation',
-    target: { kind: 'symbol', name: null },
+  const ast = {
+    operator: 'find',
+    target: { type: 'implementation', value: null, kind: 'symbol' },
     relations: [],
-    inclusions: [],
-    limit: DEFAULT_LIMIT,
+    include: [],
     budget: DEFAULT_BUDGET,
-    confidence: 0.95, // CQP explícito/estructurado → confianza alta
-    raw,
+    limit: DEFAULT_LIMIT,
   };
-
-  const unquote = (s) => s.replace(/\u0000Q(\d+)\u0000/g, (_m, i) => quoted[Number(i)]);
+  let findWord = null;
 
   for (const seg of segments) {
     const body = seg.body;
@@ -94,10 +116,9 @@ export function parseCQP(input) {
       case 'find': {
         const t = /\b(\w+)\b/.exec(body);
         if (!t) {
-          throw new CqpError('FIND missing: falta el target (implementation|definitions|references|usages|filename|pattern)');
+          throw new CqpError('FIND missing: falta el target (implementation|definitions|references|usages|filename|pattern|concept|symbol)');
         }
-        const word = t[1].toLowerCase();
-        plan.query_type = FIND_TARGETS.has(word) ? word : 'implementation';
+        findWord = t[1].toLowerCase();
         break;
       }
       case 'of': {
@@ -105,14 +126,14 @@ export function parseCQP(input) {
         const k = /^\s*(concept|symbol|file|function|class|constant)\b/i.exec(body);
         let rest = body;
         if (k) {
-          plan.target.kind = k[1].toLowerCase();
+          ast.target.kind = k[1].toLowerCase();
           rest = body.slice(k[0].length);
         }
         const n = /^\s*(?:\u0000Q(\d+)\u0000|([a-zA-Z_][\w.-]*))/.exec(rest);
         if (!n) {
-          throw new CqpError(`OF ${plan.target.kind} requiere un name (string entre comillas o bareword)`);
+          throw new CqpError(`OF ${ast.target.kind} requiere un name (string entre comillas o bareword)`);
         }
-        plan.target.name = n[1] !== undefined ? quoted[Number(n[1])] : n[2];
+        ast.target.value = n[1] !== undefined ? quoted[Number(n[1])] : n[2];
         break;
       }
       case 'follow': {
@@ -120,7 +141,7 @@ export function parseCQP(input) {
           const rel = p.trim().toLowerCase();
           if (!rel) continue;
           if (!RELATIONS.has(rel)) throw new CqpError(`invalid FOLLOW relation: ${unquote(rel)}`);
-          if (!plan.relations.includes(rel)) plan.relations.push(rel);
+          if (!ast.relations.some((r) => r.type === rel)) ast.relations.push({ operator: 'follow', type: rel });
         }
         break;
       }
@@ -129,22 +150,20 @@ export function parseCQP(input) {
           const inc = p.trim().toLowerCase();
           if (!inc) continue;
           if (!INCLUSIONS.has(inc)) throw new CqpError(`invalid INCLUDE: ${unquote(inc)}`);
-          if (!plan.inclusions.includes(inc)) plan.inclusions.push(inc);
+          if (!ast.include.includes(inc)) ast.include.push(inc);
         }
         break;
       }
       case 'limit': {
         const lm = /^(\d+)$/.exec(body);
-        if (!lm) throw new CqpError(`invalid LIMIT: ${unquote(body)}`);
-        const n = Number(lm[1]);
-        if (!Number.isInteger(n) || n < 1) throw new CqpError(`invalid LIMIT: ${lm[1]} (debe ser entero >= 1)`);
-        plan.limit = n;
+        if (!lm) throw new CqpError('invalid LIMIT: se espera un entero >= 1');
+        ast.limit = Number(lm[1]);
         break;
       }
       case 'budget': {
         const bm = /^(\d+)$/.exec(body);
-        if (!bm) throw new CqpError(`invalid BUDGET: ${unquote(body)}`);
-        plan.budget = mapBudget(Number(bm[1]));
+        if (!bm) throw new CqpError('invalid BUDGET: se espera 2000|8000|20000|30000');
+        ast.budget = mapBudget(Number(bm[1]));
         break;
       }
       default:
@@ -152,20 +171,45 @@ export function parseCQP(input) {
     }
   }
 
-  return plan;
+  // Resolver target.type: FIND <type> explícito gana; si no, kind mapea.
+  ast.target.type = FIND_TYPES.has(findWord) ? findWord : (KIND_MAP[ast.target.kind] ?? 'implementation');
+
+  return ast;
 }
 
+/**
+ * toLogicalPlan(ast) → el MISMO plan lógico que parseCQP devolvía:
+ *   {query_type, target:{kind,name}, relations, inclusions, limit, budget, confidence, raw}
+ */
+export function toLogicalPlan(ast) {
+  const type = ast.target.type;
+  return {
+    query_type: FIND_TARGETS.has(type) ? type : 'implementation',
+    target: { kind: ast.target.kind ?? 'symbol', name: ast.target.value ?? null },
+    relations: ast.relations.map((r) => r.type),
+    inclusions: [...ast.include],
+    limit: ast.limit,
+    budget: ast.budget,
+    confidence: 0.95, // CQP explícito/estructurado → confianza alta
+    raw: ast.raw ?? '',
+  };
+}
+
+// parseCQP(text) = toLogicalPlan(parseAST(text)) — firma/salida idéntica a la previa.
+export function parseCQP(input) {
+  return toLogicalPlan(parseAST(input));
+}
+
+// --- CLI ---
 const isMain = process.argv[1] === fileURLToPath(import.meta.url);
 if (isMain) {
-  const input = process.argv.slice(2).join(' ');
-  if (!input) {
-    console.error('uso: node cqp.js "<query CQP>"');
-    process.exit(1);
-  }
-  try {
-    console.log(JSON.stringify(parseCQP(input)));
-  } catch (err) {
-    console.error(`cqp.js: ${err.message}`);
-    process.exit(1);
+  const args = process.argv.slice(2);
+  const showAst = args.includes('--ast');
+  const input = args.filter((a) => a !== '--ast').join(' ');
+  if (showAst) {
+    const ast = parseAST(input);
+    process.stdout.write(JSON.stringify({ ast, plan: toLogicalPlan(ast) }, null, 2) + '\n');
+  } else {
+    process.stdout.write(JSON.stringify(parseCQP(input)) + '\n');
   }
 }

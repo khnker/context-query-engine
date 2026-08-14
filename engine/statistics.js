@@ -1,0 +1,165 @@
+#!/usr/bin/env node
+/**
+ * engine/statistics.js — Aprendizaje por confianza (change optimizer-statistics).
+ * Registra ejecuciones reales (estimated vs actual) en NDJSON y produce agregados
+ * usados por el optimizer para estimar cardinalidad y reordenar tools.
+ * Node.js ESM, stdlib SOLO.
+ *
+ * CLI:
+ *   node engine/statistics.js --record '<json>'  → append + exit 0
+ *   node engine/statistics.js --learned          → agregado JSON (keys con n>0)
+ *
+ * Archivo de stats: engine/statistics.ndjson (override con env CF_STATS_FILE).
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
+const STATS_FILE = process.env.CF_STATS_FILE || path.join(ENGINE_DIR, 'statistics.ndjson');
+
+// Cardinalidad default por clase de query (D13) — usada cuando no hay datos (n=0).
+export const DEFAULTS = {
+  identifier: 5,
+  filename: 3,
+  pattern: 20,
+  concept: 100,
+  symbol: 15,
+  repo_map: 1,
+};
+
+// obs = { operator, queryClass, scope, estimated:{candidates,tokens,latencyMs}, actual:{candidates,tokens,latencyMs} }
+export function record(obs) {
+  fs.mkdirSync(path.dirname(STATS_FILE), { recursive: true });
+  const line = { ts: new Date().toISOString(), ...obs };
+  fs.appendFileSync(STATS_FILE, JSON.stringify(line) + '\n');
+  return line;
+}
+
+function p95(values) {
+  if (values.length === 0) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.min(sorted.length - 1, Math.ceil(0.95 * sorted.length) - 1)];
+}
+
+/**
+ * Lee el NDJSON y agrega por clave `operator|queryClass` (y `operator|queryClass|scope`
+ * si el record trae scope). Además agrega por `queryClass` plano: estimateCandidates
+ * recibe solo (queryClass, scope, stats) y necesita una entrada agregada sin operador
+ * para hacer el blend de cardinalidad.
+ * Retorna Map key → {n, avgCandidates, p95Tokens, avgLatencyMs, successRate, avgEstCandidates}.
+ */
+export function load() {
+  const map = new Map();
+  let lines = [];
+  try {
+    lines = fs.readFileSync(STATS_FILE, 'utf8').split('\n').filter(Boolean);
+  } catch { /* sin archivo → stats vacías */ }
+
+  const ensure = (key) => {
+    let e = map.get(key);
+    if (!e) {
+      e = { n: 0, avgCandidates: 0, p95Tokens: 0, avgLatencyMs: 0, successRate: 0, avgEstCandidates: 0, _tokens: [], _success: 0 };
+      map.set(key, e);
+    }
+    return e;
+  };
+
+  for (const l of lines) {
+    let o;
+    try { o = JSON.parse(l); } catch { continue; }
+    if (!o || typeof o !== 'object') continue;
+    const { operator, queryClass, scope } = o;
+    if (!operator || !queryClass) continue;
+    const actual = o.actual ?? {};
+    const estimated = o.estimated ?? {};
+    const cand = Number(actual.candidates) || 0;
+    const tokens = Number(actual.tokens) || 0;
+    const latency = Number(actual.latencyMs) || 0;
+    const estCand = Number(estimated.candidates) || 0;
+    for (const key of [`${operator}|${queryClass}`, queryClass]) {
+      const e = ensure(key);
+      e.n += 1;
+      e.avgCandidates += cand;
+      e.avgLatencyMs += latency;
+      e.avgEstCandidates += estCand;
+      e._tokens.push(tokens);
+      if (cand > 0) e._success += 1;
+    }
+    if (scope) {
+      const e = ensure(`${operator}|${queryClass}|${scope}`);
+      e.n += 1;
+      e.avgCandidates += cand;
+      e.avgLatencyMs += latency;
+      e.avgEstCandidates += estCand;
+      e._tokens.push(tokens);
+      if (cand > 0) e._success += 1;
+    }
+  }
+
+  for (const e of map.values()) {
+    e.avgCandidates = e.n ? e.avgCandidates / e.n : 0;
+    e.avgLatencyMs = e.n ? e.avgLatencyMs / e.n : 0;
+    e.avgEstCandidates = e.n ? e.avgEstCandidates / e.n : 0;
+    e.p95Tokens = p95(e._tokens);
+    e.successRate = e.n ? e._success / e.n : 0;
+    delete e._tokens;
+    delete e._success;
+  }
+  return map;
+}
+
+// n<5 → 0.3, 5<=n<=20 → 0.6, n>20 → 0.9
+export function confidence(n) {
+  if (n < 5) return 0.3;
+  if (n <= 20) return 0.6;
+  return 0.9;
+}
+
+// Blend: con datos → avgCandidates*c + DEFAULT*(1-c); sin datos → DEFAULT.
+export function estimateCandidates(queryClass, scope, stats = new Map()) {
+  const d = DEFAULTS[queryClass] ?? 15;
+  const entry = stats.get(queryClass);
+  if (entry && entry.n > 0) {
+    const c = confidence(entry.n);
+    return Math.round(entry.avgCandidates * c + d * (1 - c));
+  }
+  return d;
+}
+
+// --- CLI ---
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+  const args = process.argv.slice(2);
+  try {
+    if (args[0] === '--record') {
+      const obs = JSON.parse(args[1] ?? '{}');
+      record(obs);
+      process.stdout.write(JSON.stringify({ ok: true, recorded: obs }) + '\n');
+      process.exit(0);
+    }
+    if (args[0] === '--learned') {
+      const out = {};
+      for (const [k, v] of load()) {
+        if (v.n > 0) {
+          out[k] = {
+            n: v.n,
+            avgCandidates: v.avgCandidates,
+            p95Tokens: v.p95Tokens,
+            avgLatencyMs: v.avgLatencyMs,
+            successRate: v.successRate,
+            avgEstCandidates: v.avgEstCandidates,
+            confidence: confidence(v.n),
+          };
+        }
+      }
+      process.stdout.write(JSON.stringify(out, null, 2) + '\n');
+      process.exit(0);
+    }
+    throw new Error('uso: node engine/statistics.js --record <json> | --learned');
+  } catch (e) {
+    process.stderr.write(JSON.stringify({ error: e.message }) + '\n');
+    process.exit(1);
+  }
+}

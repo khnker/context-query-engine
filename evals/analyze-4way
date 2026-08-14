@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# 5.3 analyze-4way — analiza evals/metrics4.ndjson (salida de run-benchmark-4way)
+# Tabla por modo (JSON): n, avg_tokens, avg_latency_ms, avg_tool_calls, success_rate, avg_wrong, avg_dup, avg_density
+# Ranking por avg_density desc.
+# Verdict: C >= B >= A en density y C >= A en success -> PASS (exit 0); si no FAIL (exit 1).
+# Datos insuficientes (<3 filas por modo) -> exit 2.
+
+set -uo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+METRICS="$HERE/metrics4.ndjson"
+
+command -v jq >/dev/null 2>&1 || { echo "analyze-4way: jq not found" >&2; exit 2; }
+[ -f "$METRICS" ] || { echo "analyze-4way: $METRICS no existe (correr run-benchmark-4way primero)" >&2; exit 2; }
+
+out="$(jq -s '
+  def agg($g): {
+    mode: $g[0].mode,
+    n: ($g | length),
+    avg_tokens: (($g | map(.tokens) | add) / ($g | length)),
+    avg_latency_ms: (($g | map(.latency_ms) | add) / ($g | length)),
+    avg_tool_calls: (($g | map(.tool_calls) | add) / ($g | length)),
+    success_rate: (($g | map(select(.success == 1)) | length) / ($g | length)),
+    avg_wrong: (($g | map(.wrong_tokens) | add) / ($g | length)),
+    avg_dup: (($g | map(.dup_tokens) | add) / ($g | length)),
+    avg_density: (($g | map(.density) | add) / ($g | length))
+  };
+  group_by(.mode) | map(agg(.)) | sort_by(.mode) | {modes: .}
+' "$METRICS")"
+
+# suficiencia: cada modo presente con >= 3 filas
+insufficient=""
+for m in A B C D; do
+  n="$(jq -r --arg m "$m" '.modes[] | select(.mode == $m) | .n' <<<"$out" 2>/dev/null)"
+  [ -z "$n" ] && n=0
+  if [ "$n" -lt 3 ]; then
+    insufficient="$insufficient modo $m: n=$n"
+  fi
+done
+
+if [ -n "$insufficient" ]; then
+  echo "$out"
+  echo "VERDICT: INSUFFICIENT_DATA ($insufficient) — <3 filas por modo, exit 2"
+  exit 2
+fi
+
+rank="$(jq -r '[.modes[] | {mode, avg_density}] | sort_by(-.avg_density) | map(.mode + ":" + (.avg_density | tostring)) | join(" > ")' <<<"$out")"
+verdict="$(jq -r '
+  def m($x): .modes[] | select(.mode == $x);
+  if (m("C").avg_density >= m("B").avg_density and
+      m("B").avg_density >= m("A").avg_density and
+      m("C").success_rate >= m("A").success_rate) then "PASS" else "FAIL" end
+' <<<"$out")"
+
+echo "$out"
+echo "RANKING (avg_density): $rank"
+echo "VERDICT: $verdict"
+if [ "$verdict" = "PASS" ]; then exit 0; else exit 1; fi
