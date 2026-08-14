@@ -1,5 +1,5 @@
 {
-  "name": "contextforge",
+  "name": "context-query-engine",
   "version": "0.1.0",
   "private": true,
   "description": "Context query language, optimizer y motor de retrieval para agentes LLM",

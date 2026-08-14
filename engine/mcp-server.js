@@ -124,7 +124,7 @@ rl.on('line', (line) => {
       respond(id, {
         protocolVersion: '2024-11-05',
         capabilities: { tools: {} },
-        serverInfo: { name: 'contextforge', version: '0.1.0' },
+        serverInfo: { name: 'context-query-engine', version: '0.1.0' },
       });
       break;
     case 'notifications/initialized':

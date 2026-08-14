@@ -1,4 +1,4 @@
-# ContextForge
+# context-query-engine
 
 **Motor de retrieval y gestión de contexto para agentes LLM.** Convierte la búsqueda de contexto en una consulta optimizable: interpreta lo que el agente necesita, planifica cómo obtenerlo y devuelve solo el contexto útil dentro de un presupuesto de tokens.
 
@@ -28,9 +28,9 @@ Un agente LLM que trabaja sobre un codebase gasta la mayor parte de su ventana d
 Information Density = useful_context_tokens / total_context_tokens
 ```
 
-ContextForge resuelve esto aplicando la analogía de un optimizador de consultas de base de datos al retrieval de código:
+context-query-engine resuelve esto aplicando la analogía de un optimizador de consultas de base de datos al retrieval de código:
 
-| Base de datos | ContextForge |
+| Base de datos | context-query-engine |
 |---|---|
 | SQL | Context Query (CQP) |
 | Query parser | `interpreter.js` + `cqp.js` |
@@ -40,13 +40,13 @@ ContextForge resuelve esto aplicando la analogía de un optimizador de consultas
 | Result set | Context fusionado y acotado por presupuesto |
 | Statistics | Telemetría de ejecución (`telemetry.ndjson`) |
 
-El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qué herramienta usar, con qué scope, cuánto contexto devolver y cuándo detenerse.
+El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine decide qué herramienta usar, con qué scope, cuánto contexto devolver y cuándo detenerse.
 
 ---
 
 ## Estado actual
 
-> Honestidad primero: hoy ContextForge es un **router de herramientas con modelo de costo lineal**, en camino a ser un query optimizer completo. Lo implementado y lo pendiente:
+> Honestidad primero: hoy context-query-engine es un **router de herramientas con modelo de costo lineal**, en camino a ser un query optimizer completo. Lo implementado y lo pendiente:
 
 **Implementado**
 
@@ -164,8 +164,8 @@ sudo dnf install ripgrep fd-find jq yq fzf tokei
 **Clonar e instalar la skill** en tu agente (OpenCode, Claude, etc.):
 
 ```bash
-git clone https://github.com/khnker/contextforge.git
-cd contextforge
+git clone https://github.com/khnker/context-query-engine.git
+cd context-query-engine
 
 # Instalar la skill de retrieval (symlink al directorio de skills de tu agente):
 ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
@@ -263,7 +263,7 @@ No está en el roadmap: clasificador ML de intención (el interpreter heurístic
 ## Estructura del repo
 
 ```text
-contextforge/
+context-query-engine/
 ├── agent-context-engineering/     # skill de agente
 │   ├── SKILL.md                   # activación, árbol de decisión, escalación, budgets, anti-patterns
 │   ├── references/                # 10 docs de política de retrieval
@@ -289,7 +289,7 @@ contextforge/
 
 ## Naming: CQ / CIR / CQP
 
-El lenguaje de consultas de ContextForge se llama **CQP (Context Query Plan)** — deliberadamente no "CQL", que colisiona con estándares de terceros (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
+El lenguaje de consultas de context-query-engine se llama **CQP (Context Query Plan)** — deliberadamente no "CQL", que colisiona con estándares de terceros (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
 
 ```text
 Context Query (CQ)          → texto de la consulta del agente

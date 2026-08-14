@@ -1,4 +1,4 @@
-# ContextForge
+# context-query-engine
 
 **Retrieval and context management engine for LLM agents.** Turns context search into an optimizable query: it interprets what the agent needs, plans how to obtain it, and returns only useful context within a token budget.
 
@@ -28,9 +28,9 @@ An LLM agent working on a large codebase spends most of its context window on in
 Information Density = useful_context_tokens / total_context_tokens
 ```
 
-ContextForge fixes this by applying the database query optimizer analogy to code retrieval:
+context-query-engine fixes this by applying the database query optimizer analogy to code retrieval:
 
-| Database | ContextForge |
+| Database | context-query-engine |
 |---|---|
 | SQL | Context Query (CQP) |
 | Query parser | `interpreter.js` + `cqp.js` |
@@ -40,13 +40,13 @@ ContextForge fixes this by applying the database query optimizer analogy to code
 | Result set | Fused context bounded by budget |
 | Statistics | Execution telemetry (`telemetry.ndjson`) |
 
-The agent says **what** it needs, not **how** to find it. ContextForge decides which tool to use, with what scope, how much context to return, and when to stop.
+The agent says **what** it needs, not **how** to find it. context-query-engine decides which tool to use, with what scope, how much context to return, and when to stop.
 
 ---
 
 ## Current state
 
-> Honesty first: today ContextForge is a **tool router with a linear cost model**, on its way to becoming a full query optimizer. Implemented and pending:
+> Honesty first: today context-query-engine is a **tool router with a linear cost model**, on its way to becoming a full query optimizer. Implemented and pending:
 
 **Implemented**
 
@@ -164,8 +164,8 @@ sudo dnf install ripgrep fd-find jq yq fzf tokei
 **Clone and install the skill** into your agent (OpenCode, Claude, etc.):
 
 ```bash
-git clone https://github.com/khnker/contextforge.git
-cd contextforge
+git clone https://github.com/khnker/context-query-engine.git
+cd context-query-engine
 
 # Install the retrieval skill (symlink into your agent's skills directory):
 ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
@@ -263,7 +263,7 @@ Not on the roadmap: an ML intent classifier (the heuristic interpreter + statist
 ## Repository structure
 
 ```text
-contextforge/
+context-query-engine/
 ├── agent-context-engineering/     # agent skill
 │   ├── SKILL.md                   # activation, decision tree, escalation, budgets, anti-patterns
 │   ├── references/                # 10 retrieval policy docs
@@ -289,7 +289,7 @@ contextforge/
 
 ## Naming: CQ / CIR / CQP
 
-ContextForge's query language is called **CQP (Context Query Plan)** — deliberately not "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
+context-query-engine's query language is called **CQP (Context Query Plan)** — deliberately not "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
 
 ```
 Context Query (CQ)          → the agent's request text
