@@ -121,7 +121,7 @@ El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qu�
 | `engine/` | **Motor Node (ESM, stdlib-only, sin dependencias)** — parser CQP, interpreter, optimizer, pipeline, cache y MCP server. |
 | `scripts/` | **CLIs** — 9 wrappers de las herramientas de retrieval. |
 | `evals/` | **Benchmark** — 10 tareas, runner skill-vs-baseline y analizador de 4 targets. |
-| `openspec/` | **Especificación spec-driven** del proyecto (governance). |
+| `openspec/` | **Especificación spec-driven** (governance, solo-local, git-ignored). |
 
 ---
 
@@ -278,7 +278,7 @@ contextforge/
 │   └── README.md
 ├── scripts/                       # 9 CLIs (project-map, search-code, search-structure, ...)
 ├── evals/                         # benchmark + analizador de targets
-└── openspec/                      # especificación spec-driven
+└── openspec/                      # especificación spec-driven (local, git-ignored)
 ```
 
 ---
