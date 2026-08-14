@@ -14,7 +14,6 @@
 - [Benchmark: context savings](#benchmark-context-savings)
 - [Roadmap](#roadmap)
 - [Repository structure](#repository-structure)
-- [Development](#development)
 - [License](#license)
 
 > Read this in [Español](README.es.md)
@@ -288,10 +287,6 @@ contextforge/
 ```
 
 ---
-
-## Development
-
-Governed by [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec-driven): every change lives in `openspec/changes/<feature>/` with proposal, spec, design and tasks; validated with `openspec validate --all --strict` before archiving.
 
 ## License
 

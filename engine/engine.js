@@ -207,7 +207,7 @@ function runPlan(logicalPlan, rawText) {
     recordExecution(logicalPlan.query_type, 'cache', {
       tokens: 0, latency_ms: 0, results: cached.results.length,
       relevant: cached.results.length, satisfied: true, cache_hit: true,
-    });
+    }, phys.pred_class);
     return { plan: phys, results: cached.results, stats, cached: true };
   }
 
@@ -218,17 +218,22 @@ function runPlan(logicalPlan, rawText) {
   for (const op of selected.ops) {
     if (op.tool === 'assemble-context') continue;
     stats.tool_calls += 1;
-    const results = execOp(op, logicalPlan);
+    const results = execOp(op, logicalPlan, pool);
     const relevant = results.filter((r) => RELEVANT.has(r.match_type));
     pool.push(...results);
     recordExecution(logicalPlan.query_type, op.tool, {
-      tokens: op.tokens_est, latency_ms: op.latency_est,
+      tokens: op.tokens ?? 0, latency_ms: op.latency_ms ?? 0,
       results: results.length, relevant: relevant.length,
       satisfied: relevant.length > 0, cache_hit: false,
-    });
+    }, phys.pred_class);
     if (relevant.length > 0) {
-      stats.early_terminated = true; // op satisfizo → no ejecutar el resto
-      break;
+      // D14 — early termination solo si no quedan ops dependientes (FOLLOW/INCLUDE)
+      const pending = selected.ops.slice(selected.ops.indexOf(op) + 1)
+        .some((o) => o.tool === 'follow' || o.tool === 'include');
+      if (!pending) {
+        stats.early_terminated = true; // op satisfizo → no ejecutar el resto
+        break;
+      }
     }
   }
 
