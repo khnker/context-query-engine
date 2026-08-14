@@ -30,6 +30,7 @@ const COST_TABLE = {
   'rg-files':         { tokens: 100, latency_ms: 10,  tool_calls: 1, relevance: 0.85 },
   'follow':           { tokens: 300, latency_ms: 25,  tool_calls: 1, relevance: 0.6  },
   'include':          { tokens: 200, latency_ms: 20,  tool_calls: 1, relevance: 0.4  },
+  'git-log':          { tokens: 300, latency_ms: 150, tool_calls: 1, relevance: 0.6  },
 };
 
 // D13 — cardinalidad default por clase de predicado (sin stats)
@@ -166,6 +167,11 @@ function plansFor(queryType, target = {}, relations = [], inclusions = []) {
   const tail = [];
   if (relations.length) tail.push({ tool: 'follow', args: [], relations });
   if (inclusions.length) tail.push({ tool: 'include', args: [], inclusions });
+  // D33 — git-log: concept con semántica de historia (nivel 6 de evidencia)
+  if (target.kind === 'concept' && /recent|change|histor|modif|diff|log/i.test(target.name)) {
+    const pathTok = (target.name.split(/\s+/).find((w) => w.includes('.'))) || null;
+    tail.push({ tool: 'git-log', args: pathTok ? [pathTok] : [], keyword: pathTok ? null : target.name });
+  }
   return base.map((p) => ({ id: p.id, ops: [...p.ops, ...tail] }));
 }
 
@@ -196,7 +202,7 @@ function rewritePlan(ops) {
   const search = [];
   const tail = [];
   for (const op of ops) {
-    if (op.tool === 'follow' || op.tool === 'include' || op.tool === 'assemble-context') tail.push(op);
+    if (op.tool === 'follow' || op.tool === 'include' || op.tool === 'git-log' || op.tool === 'assemble-context') tail.push(op);
     else search.push(op);
   }
   search.sort((a, b) =>

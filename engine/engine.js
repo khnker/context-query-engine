@@ -148,6 +148,30 @@ function execOp(op, plan, pool = []) {
     }
     case 'assemble-context':
       return []; // op de fusión — se resuelve en fuse()
+    case 'git-log': {
+      // git-operator — historial: git log --name-only --oneline -10 (+ -S<kw> / -- <path>)
+      const kw = op.keyword || (op.args?.[0] && !String(op.args[0]).includes('/') ? String(op.args[0]) : null);
+      const pathArg = (op.args?.[0] && String(op.args[0]).includes('/')) ? String(op.args[0]) : null;
+      let gargs = ['log', '--name-only', '--oneline', '-10'];
+      if (pathArg) gargs = [...gargs, '--', pathArg];
+      else if (kw && kw !== 'recent changes') gargs = [...gargs, '-S' + kw];
+      let out = '';
+      try {
+        out = execFileSync('git', gargs, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      } catch {
+        return []; // repo sin git o sin commits — 0 resultados, no crash
+      }
+      const seen = new Set();
+      const rows = [];
+      for (const l of out.split('\n')) {
+        const f = l.trim();
+        if (!f || !/[./]/.test(f) || f.includes(' ')) continue;
+        if (seen.has(f)) continue;
+        seen.add(f);
+        rows.push({ source: 'git-log', path: f, line_start: 1, line_end: 1, match_type: 'git', score: 0.6, token_estimate: 5, reason: 'git history: file changed in recent commits' });
+      }
+      return rows;
+    }
     case 'follow': {
       // D14 — FOLLOW: resuelve relations (references/definitions/usages) sobre candidatos del SEARCH
       const relations = op.relations ?? [];
@@ -179,6 +203,23 @@ function execOp(op, plan, pool = []) {
         }
       }
       return out;
+    }
+    case 'git-log': {
+      // D32 — historial: git log --name-only --oneline -10 (+ -- <path> | -S<kw>)
+      const kw = op.keyword && op.keyword !== 'recent changes' ? op.keyword : null;
+      const pathArg = op.args?.[0] && op.args[0].includes('/') ? op.args[0] : null;
+      let args;
+      if (pathArg) args = ['log', '--name-only', '--oneline', '-10', '--', pathArg];
+      else if (kw) args = ['log', '--name-only', '--oneline', '-10', '-S' + kw];
+      else args = ['log', '--name-only', '--oneline', '-10'];
+      let out = '';
+      try {
+        out = execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      } catch {
+        return []; // repo sin commits o git ausente
+      }
+      const files = [...new Set(out.split('\n').filter((l) => l && !l.startsWith('commit') && !/^[0-9a-f]{7,}\s/.test(l) && (l.includes('.') || l.includes('/'))))];
+      return files.map((p) => ({ source: 'git-log', path: p, line_start: 1, line_end: 1, match_type: 'git', score: 0.6, token_estimate: 5, reason: 'git history: changed in recent commits' }));
     }
     default:
       return [];
