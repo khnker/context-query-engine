@@ -53,20 +53,15 @@ The agent says **what** it needs, not **how** to find it. ContextForge decides w
 - CQL (declarative query language) + parser
 - Heuristic intent interpreter (no ML)
 - Candidate physical plans A/B/C per query type
-- Cost function: `cost = w1·tokens + w2·latency + w3·tool_calls − w4·relevance` (weights via env `CF_W1..W4`)
-- Ordered execution with **early termination**
+- Statistics store per `(operator, predicate_class)`: avg candidates, p95 tokens, latency, success rate (≥3 records)
+- Cardinality estimation per predicate class, refined with post-execution actuals
+- Cost/Quality split: `utility = quality / cost` (CostModel `CF_COST_*`, QualityModel `CF_QUALITY_*`)
+- Plan rewriting: cheap/high-selectivity operators first (dependency-safe)
+- `FOLLOW` (references/definitions/usages) and `INCLUDE` (tests) operators executed
+- Ordered execution with informed **early termination**
 - Fusion: cross-tool dedup, multi-factor ranking, token budget, tiered ordering
 - Intra-session cache (5 min TTL, persisted between processes)
-- Execution telemetry + *learned mappings* (≥3 records override the static policy)
 - MCP server (stdio, zero dependencies)
-
-**Pending (roadmap)**
-
-- Aggregated statistics store per operator/predicate (currently raw NDJSON log)
-- Cardinality / selectivity estimation before execution (currently per-tool constants)
-- `FOLLOW` and `INCLUDE` operators (parsed by CQL but not yet executed)
-- Operator reordering (plan rewriting)
-- Separate Cost model / Quality model
 
 ---
 

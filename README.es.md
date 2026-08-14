@@ -53,20 +53,15 @@ El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qu�
 - CQL (lenguaje de consultas declarativo) + parser
 - Interpreter heurístico de intención (sin ML)
 - Planes físicos candidatos A/B/C por tipo de query
-- Función de costo: `cost = w1·tokens + w2·latency + w3·tool_calls − w4·relevance` (pesos vía env `CF_W1..W4`)
-- Ejecución ordenada con **early termination**
+- Statistics store por `(operador, clase de predicado)`: avg candidates, p95 tokens, latencia, success rate (≥3 registros)
+- Estimación de cardinalidad por clase de predicado, refinada con los valores reales post-ejecución
+- Separación Cost/Quality: `utility = quality / cost` (CostModel `CF_COST_*`, QualityModel `CF_QUALITY_*`)
+- Reescritura de planes: operadores baratos/de alta selectividad primero (respetando dependencias)
+- Operadores `FOLLOW` (references/definitions/usages) e `INCLUDE` (tests) ejecutados
+- Ejecución ordenada con **early termination** informada
 - Fusión: dedup cross-tool, ranking multi-factor, presupuesto de tokens, orden por tiers
 - Cache intra-sesión (TTL 5 min, persistido entre procesos)
-- Telemetría de ejecuciones + *learned mappings* (≥3 registros sobreescriben la política estática)
 - MCP server (stdio, sin dependencias)
-
-**Pendiente (roadmap)**
-
-- Statistics store agregado por operador/predicado (hoy es log NDJSON)
-- Estimación de cardinalidad / selectivity pre-ejecución (hoy los costos son constantes por herramienta)
-- Operadores `FOLLOW` y `INCLUDE` (se parsean en CQL pero aún no se ejecutan)
-- Reordenamiento de operadores (plan rewriting)
-- Separación Cost model / Quality model
 
 ---
 
