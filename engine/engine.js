@@ -121,8 +121,8 @@ function parseStructural(out) {
   return results;
 }
 
-// 13.1 — ejecuta una op del plan físico
-function execOp(op, plan) {
+// 13.1 — ejecuta una op del plan físico (pool = resultados acumulados, usado por FOLLOW/INCLUDE)
+function execOp(op, plan, pool = []) {
   const name = String(plan.target?.name ?? '').trim();
   if (!name) return [];
   switch (op.tool) {
@@ -147,6 +147,38 @@ function execOp(op, plan) {
     }
     case 'assemble-context':
       return []; // op de fusión — se resuelve en fuse()
+    case 'follow': {
+      // D14 — FOLLOW: resuelve relations (references/definitions/usages) sobre candidatos del SEARCH
+      const relations = op.relations ?? [];
+      const targets = pool.slice(0, 5).map((r) => r.path).filter(Boolean);
+      const out = [];
+      for (const file of targets) {
+        for (const rel of relations) {
+          const res = runScript('rg', ['-n', name, file]);
+          out.push(...parseGrep(res.out).map((m) => ({ ...m, source: 'follow', match_type: rel })));
+        }
+      }
+      return out;
+    }
+    case 'include': {
+      // D14 — INCLUDE: incorpora inclusions (tests/config) relacionadas con candidatos
+      const inclusions = op.inclusions ?? [];
+      const targets = pool.slice(0, 5).map((r) => r.path).filter(Boolean);
+      const out = [];
+      for (const file of targets) {
+        const dir = path.dirname(file);
+        const res = runScript('rg', ['--files', dir]);
+        for (const p of res.out.split('\n').filter(Boolean)) {
+          const base = path.basename(p);
+          if (inclusions.includes('tests') && /test|spec/i.test(base) && !/node_modules/.test(p)) {
+            out.push({ source: 'include', path: p, match_type: 'test', score: 0.5, token_estimate: 10 });
+          } else if (inclusions.includes('config') && /(^config|\.env|\.ya?ml$|\.toml$|\.json$)/i.test(base)) {
+            out.push({ source: 'include', path: p, match_type: 'config', score: 0.4, token_estimate: 10 });
+          }
+        }
+      }
+      return out;
+    }
     default:
       return [];
   }

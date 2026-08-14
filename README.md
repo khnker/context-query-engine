@@ -1,87 +1,87 @@
 # ContextForge
 
-**Motor de retrieval y gestión de contexto para agentes LLM.** Convierte la búsqueda de contexto en una consulta optimizable: interpreta lo que el agente necesita, planifica cómo obtenerlo y devuelve solo el contexto útil dentro de un presupuesto de tokens.
+**Retrieval and context management engine for LLM agents.** Turns context search into an optimizable query: it interprets what the agent needs, plans how to obtain it, and returns only useful context within a token budget.
 
-## Tabla de contenidos
+## Table of contents
 
-- [¿Qué es?](#qué-es)
-- [Estado actual](#estado-actual)
-- [Arquitectura](#arquitectura)
-- [Componentes](#componentes)
-- [Cómo funciona](#cómo-funciona)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Benchmark: ahorro de contexto](#benchmark-ahorro-de-contexto)
+- [What is it?](#what-is-it)
+- [Current state](#current-state)
+- [Architecture](#architecture)
+- [Components](#components)
+- [How it works](#how-it-works)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Benchmark: context savings](#benchmark-context-savings)
 - [Roadmap](#roadmap)
-- [Estructura del repo](#estructura-del-repo)
-- [Desarrollo](#desarrollo)
-- [Licencia](#licencia)
+- [Repository structure](#repository-structure)
+- [Development](#development)
+- [License](#license)
 
-> Read this in [English](README.en.md)
+> Read this in [Español](README.es.md)
 
 ---
 
-## ¿Qué es?
+## What is it?
 
-Un agente LLM que trabaja sobre un codebase gasta la mayor parte de su ventana de contexto en retrieval ineficiente: `grep` globales, `cat` de archivos completos, resultados duplicados, búsquedas redundantes. El resultado es baja **información útil por token**:
+An LLM agent working on a large codebase spends most of its context window on inefficient retrieval: global `grep`s, `cat` of whole files, duplicated results, redundant searches. The outcome is low **useful information per token**:
 
 ```text
 Information Density = useful_context_tokens / total_context_tokens
 ```
 
-ContextForge resuelve esto aplicando la analogía de un optimizador de consultas de base de datos al retrieval de código:
+ContextForge fixes this by applying the database query optimizer analogy to code retrieval:
 
-| Base de datos | ContextForge |
+| Database | ContextForge |
 |---|---|
 | SQL | Context Query (CQL) |
 | Query parser | `interpreter.js` + `cql.js` |
-| Logical plan | Plan con target, relations, inclusions, budget |
-| Query optimizer | `optimizer.js` (cost model + planes candidatos) |
+| Logical plan | Plan with target, relations, inclusions, budget |
+| Query optimizer | `optimizer.js` (cost model + candidate plans) |
 | Table scan / index | rg / fd / ast-grep / Probe |
-| Result set | Context fusionado y acotado por presupuesto |
-| Statistics | Telemetría de ejecución (`telemetry.ndjson`) |
+| Result set | Fused context bounded by budget |
+| Statistics | Execution telemetry (`telemetry.ndjson`) |
 
-El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qué herramienta usar, con qué scope, cuánto contexto devolver y cuándo detenerse.
-
----
-
-## Estado actual
-
-> Honestidad primero: hoy ContextForge es un **router de herramientas con modelo de costo lineal**, en camino a ser un query optimizer completo. Lo implementado y lo pendiente:
-
-**Implementado**
-
-- CQL (lenguaje de consultas declarativo) + parser
-- Interpreter heurístico de intención (sin ML)
-- Planes físicos candidatos A/B/C por tipo de query
-- Función de costo: `cost = w1·tokens + w2·latency + w3·tool_calls − w4·relevance` (pesos vía env `CF_W1..W4`)
-- Ejecución ordenada con **early termination**
-- Fusión: dedup cross-tool, ranking multi-factor, presupuesto de tokens, orden por tiers
-- Cache intra-sesión (TTL 5 min, persistido entre procesos)
-- Telemetría de ejecuciones + *learned mappings* (≥3 registros sobreescriben la política estática)
-- MCP server (stdio, sin dependencias)
-
-**Pendiente (roadmap)**
-
-- Statistics store agregado por operador/predicado (hoy es log NDJSON)
-- Estimación de cardinalidad / selectivity pre-ejecución (hoy los costos son constantes por herramienta)
-- Operadores `FOLLOW` y `INCLUDE` (se parsean en CQL pero aún no se ejecutan)
-- Reordenamiento de operadores (plan rewriting)
-- Separación Cost model / Quality model
+The agent says **what** it needs, not **how** to find it. ContextForge decides which tool to use, with what scope, how much context to return, and when to stop.
 
 ---
 
-## Arquitectura
+## Current state
+
+> Honesty first: today ContextForge is a **tool router with a linear cost model**, on its way to becoming a full query optimizer. Implemented and pending:
+
+**Implemented**
+
+- CQL (declarative query language) + parser
+- Heuristic intent interpreter (no ML)
+- Candidate physical plans A/B/C per query type
+- Cost function: `cost = w1·tokens + w2·latency + w3·tool_calls − w4·relevance` (weights via env `CF_W1..W4`)
+- Ordered execution with **early termination**
+- Fusion: cross-tool dedup, multi-factor ranking, token budget, tiered ordering
+- Intra-session cache (5 min TTL, persisted between processes)
+- Execution telemetry + *learned mappings* (≥3 records override the static policy)
+- MCP server (stdio, zero dependencies)
+
+**Pending (roadmap)**
+
+- Aggregated statistics store per operator/predicate (currently raw NDJSON log)
+- Cardinality / selectivity estimation before execution (currently per-tool constants)
+- `FOLLOW` and `INCLUDE` operators (parsed by CQL but not yet executed)
+- Operator reordering (plan rewriting)
+- Separate Cost model / Quality model
+
+---
+
+## Architecture
 
 ```text
-                    AGENTE LLM
+                    LLM AGENT
                         │
                         ▼
-              context_query() ── MCP o CLI
+              context_query() ── MCP or CLI
                         │
                         ▼
                ┌──────────────────────┐
-               │   cql.js / interpreter │  parse + clasificar intención
+               │   cql.js / interpreter │  parse + classify intent
                └──────────┬───────────┘
                           ▼
                ┌──────────────────────┐
@@ -89,11 +89,11 @@ El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qu�
                └──────────┬───────────┘
                           ▼
                ┌──────────────────────┐
-               │   optimizer.js       │  planes A/B/C → cost model → selección
-               └──────────┬───────────┘     + learned mappings (telemetría)
+               │   optimizer.js       │  plans A/B/C → cost model → selection
+               └──────────┬───────────┘     + learned mappings (telemetry)
                           ▼
                ┌──────────────────────┐
-               │   Physical Plan      │  secuencia ordenada de ops
+               │   Physical Plan      │  ordered sequence of ops
                └──────────┬───────────┘
                           ▼
         ┌─────────┬────────┼─────────┬─────────┐
@@ -105,35 +105,35 @@ El agente dice **qué** necesita, no **cómo** buscarlo. ContextForge decide qu�
                │   assemble-context   │  normalize → filter → dedup → rank → budget → order
                └──────────┬───────────┘
                           ▼
-                    CONTEXTO FINAL (bajo presupuesto)
+                    FINAL CONTEXT (under budget)
                           ▼
                         LLM
 ```
 
-### Fases
+### Phases
 
-1. **Interpretación** — el agente emite una query CQL (`FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000`) o texto natural (`--intent '¿dónde se define parseConfig?'`). `cql.js` la convierte en un logical plan; `interpreter.js` clasifica la intención en `query_type` + `confidence`.
-2. **Optimización** — `optimizer.js` genera planes físicos candidatos por tipo de query y selecciona el de menor costo estimado. La telemetría acumulada permite *learned mappings*: si `search-structure` tiene mejor historial que `search-code` para `definitions`, el plan se reordena.
-3. **Ejecución** — las ops del plan se ejecutan en orden con **early termination**: si la primera op satisface la query, no se ejecutan las demás. Cada op produce líneas NDJSON del schema normalizado.
-4. **Fusión** — `assemble-context` aplica el pipeline sobre los resultados: excluye paths de bajo valor, deduplica por `path:line_start:line_end` (colapsa matches cross-tool), rankea multi-factor, recorta al presupuesto y ordena por tiers de confianza (T1 constraints → T4 baja confianza).
+1. **Interpretation** — the agent issues a CQL query (`FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000`) or natural language (`--intent 'where is parseConfig defined?'`). `cql.js` turns it into a logical plan; `interpreter.js` classifies the intent into `query_type` + `confidence`.
+2. **Optimization** — `optimizer.js` generates candidate physical plans per query type and selects the lowest estimated cost. Accumulated telemetry enables *learned mappings*: if `search-structure` has a better track record than `search-code` for `definitions`, the plan is reordered.
+3. **Execution** — plan ops run in order with **early termination**: if the first op satisfies the query, the rest are skipped. Each op emits NDJSON lines of the normalized schema.
+4. **Fusion** — `assemble-context` runs the pipeline over results: excludes low-value paths, dedups by `path:line_start:line_end` (collapses cross-tool matches), ranks multi-factor, trims to budget, orders by confidence tiers (T1 constraints → T4 low confidence).
 
 ---
 
-## Componentes
+## Components
 
-| Módulo | Descripción |
+| Module | Description |
 |---|---|
-| `agent-context-engineering/` | **Skill de agente** — `SKILL.md` + 10 references de política (retrieval-policy, tool-selection, context-budget con niveles 2000/8000/20000/30000, dedup, semántica, filesystem, evaluación, métricas, schema de resultados, toolchain). Enseña al agente las reglas; no contiene lógica del motor. |
-| `engine/` | **Motor Node (ESM, stdlib-only, sin dependencias)** — parser CQL, interpreter, optimizer, pipeline, cache y MCP server. |
-| `scripts/` | **CLIs** — 9 wrappers de las herramientas de retrieval. |
-| `evals/` | **Benchmark** — 10 tareas, runner skill-vs-baseline y analizador de 4 targets. |
-| `openspec/` | **Especificación spec-driven** del proyecto (governance). |
+| `agent-context-engineering/` | **Agent skill** — `SKILL.md` + 10 policy references (retrieval-policy, tool-selection, context-budget with levels 2000/8000/20000/30000, dedup, semantics, filesystem, evaluation, metrics, result schema, toolchain). Teaches the agent the rules; contains no engine logic. |
+| `engine/` | **Node engine (ESM, stdlib-only, zero deps)** — CQL parser, interpreter, optimizer, pipeline, cache and MCP server. |
+| `scripts/` | **CLIs** — 9 wrappers around the retrieval tools. |
+| `evals/` | **Benchmark** — 10 tasks, skill-vs-baseline runner and 4-target analyzer. |
+| `openspec/` | **Spec-driven specification** of the project (governance). |
 
 ---
 
-## Cómo funciona
+## How it works
 
-Ejemplo real — query CQL:
+Real example — CQL query:
 
 ```bash
 node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
@@ -144,93 +144,93 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
                      target: {kind:"concept", name:"provider fallback"},
                      relations: ["references"], inclusions: ["tests"],
                      limit: 8000, budget: 8000 }
-2. optimizer.js  → 3 planes candidatos (A: search-code; B: search-code + search-structure;
-                     C: search-semantic + search-code) → selecciona el de menor costo
-3. engine.js     → ejecuta ops en orden, early termination si una satisface,
-                     fusiona con assemble-context
-4. Resultado     → contexto acotado al presupuesto, deduplicado y rankeado
+2. optimizer.js  → 3 candidate plans (A: search-code; B: search-code + search-structure;
+                     C: search-semantic + search-code) → picks lowest cost
+3. engine.js     → executes ops in order, early termination if one satisfies,
+                     fuses with assemble-context
+4. Result        → context bounded to budget, deduplicated and ranked
 ```
 
-Presupuestos: `BUDGET` mapea a los niveles 2000 / 8000 / 20000 / 30000 (valores intermedios hacia abajo: `5000 → 2000`).
+Budgets: `BUDGET` maps to levels 2000 / 8000 / 20000 / 30000 (intermediate values round down: `5000 → 2000`).
 
 ---
 
-## Instalación
+## Installation
 
-**Requisitos** (Fedora):
+**Requirements** (Fedora):
 
 ```bash
 sudo dnf install ripgrep fd-find jq yq fzf tokei
 ```
 
-- `rg` (búsqueda de texto), `fd` (nombres), `ast-grep`/`sg` (estructural), `jq` (JSON), `tokei` (métricas LOC, opcional)
-- **Probe** (opcional, retrieval semántico): `npm install -g @probelabs/probe`
-- **Node.js ≥ 18** (el engine no usa dependencias npm)
+- `rg` (text search), `fd` (names), `ast-grep`/`sg` (structural), `jq` (JSON), `tokei` (LOC metrics, optional)
+- **Probe** (optional, semantic retrieval): `npm install -g @probelabs/probe`
+- **Node.js ≥ 18** (the engine uses no npm dependencies)
 
-**Clonar e instalar la skill** en tu agente (OpenCode, Claude, etc.):
+**Clone and install the skill** into your agent (OpenCode, Claude, etc.):
 
 ```bash
 git clone https://github.com/khnker/contextforge.git
 cd contextforge
 
-# Instalar la skill de retrieval (symlink al directorio de skills de tu agente):
+# Install the retrieval skill (symlink into your agent's skills directory):
 ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
 ```
 
-**Verificar el toolchain**:
+**Verify the toolchain**:
 
 ```bash
-scripts/check-tools   # exit 0 si rg/fd/jq están presentes; las opcionales no bloquean
+scripts/check-tools   # exit 0 if rg/fd/jq present; optional tools don't block
 ```
 
-Detalles de instalación por distro y fallbacks sin sudo en `agent-context-engineering/references/toolchain-install.md`.
+Per-distro install details and sudo-free fallbacks in `agent-context-engineering/references/toolchain-install.md`.
 
 ---
 
-## Uso
+## Usage
 
-**Búsqueda rápida (CLI directa):**
+**Quick search (direct CLI):**
 
 ```bash
-scripts/project-map                                          # shape del repo (dirs, lenguajes, LOC)
-scripts/search-code -d src "provider"                        # rg scoped con exclusiones default
-scripts/search-code -i -l "retry"                            # solo archivos, case-insensitive
-scripts/search-structure -d src 'class $A'                   # patrón AST (ast-grep)
-scripts/extract-context src/router.ts 40 60                  # unidad semántica (rango de líneas)
+scripts/project-map                                          # repo shape (dirs, languages, LOC)
+scripts/search-code -d src "provider"                        # scoped rg with default exclusions
+scripts/search-code -i -l "retry"                            # files only, case-insensitive
+scripts/search-structure -d src 'class $A'                   # AST pattern (ast-grep)
+scripts/extract-context src/router.ts 40 60                  # semantic unit (line range)
 ```
 
-**Motor completo:**
+**Full engine:**
 
 ```bash
-# Query CQL
+# CQL query
 node engine/engine.js 'FIND definitions OF symbol parseConfig'
 
-# Query de lenguaje natural
-node engine/engine.js --intent '¿dónde se define parseConfig?'
+# Natural language query
+node engine/engine.js --intent 'where is parseConfig defined?'
 
-# Misma query 2 veces → 2ª corrida con cache hit
+# Same query twice → 2nd run hits the cache
 node engine/engine.js 'FIND implementation OF concept "provider fallback"'  # cache_hits: 0
 node engine/engine.js 'FIND implementation OF concept "provider fallback"'  # cache_hits: 1
 ```
 
-**MCP (para agentes):**
+**MCP (for agents):**
 
 ```bash
 engine/mcp-test.sh    # initialize → tools/list → context_query
 ```
 
-Superficie MCP mínima a propósito:
+Deliberately minimal MCP surface:
 
-- `context_query({intent, constraints})` — abstracción principal
-- `search_files` / `read_file` — escape de bajo nivel
+- `context_query({intent, constraints})` — main abstraction
+- `search_files` / `read_file` — low-level escape hatches
 
 ---
 
-## Benchmark: ahorro de contexto
+## Benchmark: context savings
 
-Medición real sobre `/home/nicolas/dev/polar` (2,129 archivos, 50k+ LOC), **skill vs baseline naive** (`grep` / `cat` / `find` — lo que hace un agente sin política):
+Real measurement on `/home/nicolas/dev/polar` (2,129 files, 50k+ LOC), **skill vs naive baseline** (`grep` / `cat` / `find` — what an agent does without a policy):
 
-| Tarea | Skill tokens | Baseline tokens | % ahorro | correct S/B |
+| Task | Skill tokens | Baseline tokens | % savings | correct S/B |
 |-------|-------------|-----------------|----------|-------------|
 | identifier | 344 | 2,740 | 87.4% | ✅ / ✅ |
 | filename | 305 | 2,792 | 89.1% | ✅ / ✅ |
@@ -240,59 +240,59 @@ Medición real sobre `/home/nicolas/dev/polar` (2,129 archivos, 50k+ LOC), **ski
 | repo_map | 199 | 4,698,530 | 99.996% | ✅ / ✅ |
 | **Σ** | **2,466** | **4,711,545** | **99.95%** | **6/6** |
 
-Lectura:
+Takeaways:
 
-- **~82–90%** de ahorro en queries de código; **~99.9%** en mapeo de repo (el baseline `find` plano devuelve el árbol completo de archivos).
-- Excluyendo repo_map: **82.6%** de ahorro global de tokens.
-- Llamadas a herramientas: **13 vs 12** (empate) → la ganancia es de **contexto**, no de número de comandos.
-- Correctitud: **6/6** en ambas vías — el ahorro no degrada el resultado.
-- Comportamiento del engine: `cache_hits: 1` en segunda corrida, `early_terminated: true` cuando la primera op del plan satisface.
+- **~82–90%** savings on code queries; **~99.9%** on repo mapping (the flat `find` baseline returns the entire file tree).
+- Excluding repo_map: **82.6%** overall token savings.
+- Tool calls: **13 vs 12** (tie) → the gain is in **context**, not in command count.
+- Correctness: **6/6** on both paths — savings don't degrade results.
+- Engine behavior: `cache_hits: 1` on the second run, `early_terminated: true` when the first plan op satisfies.
 
-El benchmark es reproducible: `evals/run-benchmark` + `evals/analyze` (10 tareas, 4 targets de aceptación).
+The benchmark is reproducible: `evals/run-benchmark` + `evals/analyze` (10 tasks, 4 acceptance targets).
 
 ---
 
 ## Roadmap
 
-Para pasar de router heurístico a query optimizer completo (en orden de valor):
+To move from heuristic router to full query optimizer (in value order):
 
-1. **Statistics store** — agregar `telemetry.ndjson` por `(operador, clase de predicado)`: `avg_candidates`, `p95_tokens`, `latency_ms`, `success_rate`.
-2. **Cardinality estimation** — estimar candidatos **antes** de ejecutar cada op y refinar con el conteo real post-ejecución (analogía `autoanalyze` de PostgreSQL). Hoy los costos son constantes por herramienta.
-3. **Operadores `FOLLOW` / `INCLUDE`** — ejecutar `relations` y `inclusions` que CQL ya parsea (referencias, tests).
-4. **Plan rewriting** — conmutar/reordenar ops cuando el estimado lo justifique.
-5. **Cost / Quality separados** — `utility = Quality(plan) / Cost(plan)`, con relevance/coverage/confidence fuera de la fórmula de costo.
+1. **Statistics store** — aggregate `telemetry.ndjson` per `(operator, predicate class)`: `avg_candidates`, `p95_tokens`, `latency_ms`, `success_rate`.
+2. **Cardinality estimation** — estimate candidates **before** running each op and refine with the real post-execution count (PostgreSQL `autoanalyze` analogy). Today costs are per-tool constants.
+3. **`FOLLOW` / `INCLUDE` operators** — execute the `relations` and `inclusions` that CQL already parses (references, tests).
+4. **Plan rewriting** — commute/reorder ops when the estimate justifies it.
+5. **Separate Cost / Quality** — `utility = Quality(plan) / Cost(plan)`, with relevance/coverage/confidence outside the cost formula.
 
-No está en el roadmap: clasificador ML de intención (el interpreter heurístico + estadísticas son suficientes) y un MCP gigante (la superficie se mantiene pequeña).
+Not on the roadmap: an ML intent classifier (the heuristic interpreter + statistics are enough) and a giant MCP (the surface stays small).
 
 ---
 
-## Estructura del repo
+## Repository structure
 
 ```text
 contextforge/
-├── agent-context-engineering/     # skill de agente
-│   ├── SKILL.md                   # activación, árbol de decisión, escalación, budgets, anti-patterns
-│   ├── references/                # 10 docs de política de retrieval
-│   ├── config/exclusions.json     # exclusiones default (node_modules, dist, ...)
+├── agent-context-engineering/     # agent skill
+│   ├── SKILL.md                   # activation, decision tree, escalation, budgets, anti-patterns
+│   ├── references/                # 10 retrieval policy docs
+│   ├── config/exclusions.json     # default exclusions (node_modules, dist, ...)
 │   └── scripts/check-tools
-├── engine/                        # motor (Node, stdlib-only)
-│   ├── cql.js                     # parser CQL → logical plan
-│   ├── interpreter.js             # clasificador de intención (heurístico)
-│   ├── optimizer.js               # planes candidatos + cost model + telemetría + learned mappings
-│   ├── engine.js                  # pipeline: parse → optimize → ejecutar → fusionar (+ cache)
+├── engine/                        # engine (Node, stdlib-only)
+│   ├── cql.js                     # CQL parser → logical plan
+│   ├── interpreter.js             # intent classifier (heuristic)
+│   ├── optimizer.js               # candidate plans + cost model + telemetry + learned mappings
+│   ├── engine.js                  # pipeline: parse → optimize → execute → fuse (+ cache)
 │   ├── mcp-server.js              # MCP stdio: context_query / search_files / read_file
 │   └── README.md
 ├── scripts/                       # 9 CLIs (project-map, search-code, search-structure, ...)
-├── evals/                         # benchmark + analizador de targets
-└── openspec/                      # especificación spec-driven
+├── evals/                         # benchmark + target analyzer
+└── openspec/                      # spec-driven specification
 ```
 
 ---
 
-## Desarrollo
+## Development
 
-Proyecto gobernado por [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec-driven): cada cambio vive en `openspec/changes/<feature>/` con proposal, spec, design y tasks; se valida con `openspec validate --all --strict` antes de archivar.
+Governed by [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec-driven): every change lives in `openspec/changes/<feature>/` with proposal, spec, design and tasks; validated with `openspec validate --all --strict` before archiving.
 
-## Licencia
+## License
 
 [MIT](LICENSE)
