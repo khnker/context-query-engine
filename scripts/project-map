@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# 3.1 project-map — shape del repo, bajo costo.
+# Uso: project-map [DIR]
+# Output JSON: {"root":"...","dirs":[...],"files":N,"languages":[{"name":"X","code":N}]}
+# Exit: 0 OK, 2 tool-missing (fd), 1 error de argumento
+
+set -uo pipefail
+
+if ! command -v fd >/dev/null 2>&1; then
+  echo '{"error":"project-map: fd not found"}' >&2
+  exit 2
+fi
+
+ROOT="${1:-$(pwd)}"
+ROOT="$(cd "$ROOT" 2>/dev/null && pwd)" || { echo '{"error":"project-map: directorio invalido"}' >&2; exit 1; }
+
+# dirs: subdirectorios de primer nivel (sin ocultos)
+mapfile -t DIRS < <(fd -t d -d 1 . "$ROOT" | sed "s|^$ROOT/||" | sort)
+DIRS_JSON=$(printf '%s\n' "${DIRS[@]}" | jq -Rs 'split("\n") | map(select(length > 0))')
+
+# files: conteo total
+FILES=$(fd -t f . "$ROOT" | wc -l | tr -d ' ')
+
+# languages: tokei si está, si no fallback por extensión
+LANG_JSON='[]'
+if command -v tokei >/dev/null 2>&1; then
+  LANG_JSON=$(tokei -o json "$ROOT" 2>/dev/null \
+    | jq -c 'to_entries | map(select(.key != "Total")) | map({name: .key, code: .value.code}) | sort_by(-.code) | .[0:5]') || LANG_JSON='[]'
+fi
+if [ "$LANG_JSON" = "[]" ] || [ "$LANG_JSON" = "" ]; then
+  LANG_JSON=$(fd -t f . "$ROOT" --exclude node_modules --exclude .git \
+    | jq -Rs 'split("\n") | map(select(length > 0)) | map((match("\\.[A-Za-z0-9]+$").string // "") | select(length > 0)) | group_by(.) | map({name: .[0], code: length}) | sort_by(-.code) | .[0:5]') || LANG_JSON='[]'
+fi
+
+jq -n --arg root "$ROOT" \
+      --argjson dirs "$DIRS_JSON" \
+      --argjson files "$FILES" \
+      --argjson languages "$LANG_JSON" \
+  '{root: $root, dirs: $dirs, files: $files, languages: $languages}'

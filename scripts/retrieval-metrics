@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# 3.6 retrieval-metrics — metricas de recuperacion (evals/metrics.ndjson)
+# Uso:
+#   retrieval-metrics record TASK JSON_LINE   -> append a evals/metrics.ndjson
+#   retrieval-metrics report TASK            -> aggregate JSON
+#     {count, avg_tokens, avg_latency_ms, hits, sum_tool_calls}
+# Exit: 0 OK, 2 tool-missing (jq), 1 error de uso / JSON invalido
+
+set -uo pipefail
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "retrieval-metrics: jq not found" >&2
+  exit 2
+fi
+
+EVALS_DIR="$(pwd)/evals"
+METRICS_FILE="$EVALS_DIR/metrics.ndjson"
+
+cmd="${1:-}"
+if [ -z "$cmd" ]; then
+  echo "retrieval-metrics: uso: record TASK JSON_LINE | report TASK" >&2
+  exit 1
+fi
+shift
+
+case "$cmd" in
+  record)
+    if [ $# -ne 2 ]; then
+      echo "retrieval-metrics: uso: record TASK JSON_LINE" >&2
+      exit 1
+    fi
+    TASK="$1"
+    JSON_LINE="$2"
+
+    if ! echo "$JSON_LINE" | jq -e . >/dev/null 2>&1; then
+      echo "retrieval-metrics: JSON_LINE no es JSON valido" >&2
+      exit 1
+    fi
+
+    mkdir -p "$EVALS_DIR"
+    LINE=$(echo "$JSON_LINE" | jq -c --arg task "$TASK" '.task = $task')
+    printf '%s\n' "$LINE" >> "$METRICS_FILE"
+    echo "$LINE"
+    ;;
+
+  report)
+    if [ $# -ne 1 ]; then
+      echo "retrieval-metrics: uso: report TASK" >&2
+      exit 1
+    fi
+    TASK="$1"
+
+    if [ ! -f "$METRICS_FILE" ]; then
+      echo '{"count":0}'
+      exit 0
+    fi
+
+    jq -s --arg task "$TASK" '
+      [ .[] | select(.task == $task) ] as $rows |
+      if ($rows | length) == 0 then {count: 0}
+      else {
+        count: ($rows | length),
+        avg_tokens: ($rows | map(.tokens // 0) | add / length),
+        avg_latency_ms: ($rows | map(.latency_ms // 0) | add / length),
+        hits: ($rows | map(.hits // 0) | add),
+        sum_tool_calls: ($rows | map(.tool_calls // 0) | add)
+      } end
+    ' "$METRICS_FILE"
+    ;;
+
+  *)
+    echo "retrieval-metrics: comando desconocido: $cmd" >&2
+    exit 1
+    ;;
+esac

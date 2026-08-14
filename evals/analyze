@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# 6.5 analyze — valida targets del benchmark contra evals/metrics.ndjson.
+# Targets (skill vs baseline):
+#   tokens_ratio     avg tokens skill <= 0.70 * baseline  (>=30% menos)
+#   tool_calls_ratio avg tool_calls skill <= 0.80 * baseline (>=20% menos)
+#   dupes_ratio      avg dupes skill <= 0.80 * baseline
+#   success          % tareas con correctness OK skill >= baseline
+# Output JSON: {"targets":{...},"summary":{...},"PASS":bool}
+# Exit: 0 todos PASS, 1 alguno falla, 2 datos insuficientes (<3 pares o ndjson vacio).
+
+set -uo pipefail
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo '{"status":"error","error":"jq not found"}' >&2
+  exit 2
+fi
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -n "${1:-}" ]; then
+  METRICS="$1"
+elif [ -f "$(pwd)/evals/metrics.ndjson" ]; then
+  METRICS="$(pwd)/evals/metrics.ndjson"
+else
+  METRICS="$HERE/metrics.ndjson"
+fi
+[ -f "$METRICS" ] || { echo '{"status":"insufficient","reason":"metrics.ndjson no existe"}' >&2; exit 2; }
+
+JQ='
+def ok($x): $x == true or $x == 1;
+def rows($v):
+  [ .[] | select(((.task // "") | test("^t[0-9]+$")) and .via == $v and .skipped != true) ];
+def avg($a): if ($a | length) == 0 then 0 else ($a | add / length) end;
+def r3($x): (($x * 1000) | round) / 1000;
+(rows("skill")) as $s
+| (rows("baseline")) as $b
+| ([($s | map(.task))[]] + [($b | map(.task))[]] | unique | length) as $tasks
+| ([($s | map(.task) | unique)[]] as $st
+   | [($b | map(.task) | unique)[]] as $bt
+   | ([$st[] | select(. as $t | $bt | index($t))] | length)) as $pairs
+| (avg([$s[].tokens // 0])) as $ts | (avg([$b[].tokens // 0])) as $tb
+| (avg([$s[].tool_calls // 0])) as $cs | (avg([$b[].tool_calls // 0])) as $cb
+| (avg([$s[].dupes // 0])) as $ds | (avg([$b[].dupes // 0])) as $db
+| (if ($s | length) > 0 then ([$s[] | select(.satisfied == true or .satisfied == 1)] | length) / ($s | length) else 0 end) as $ss
+| (if ($b | length) > 0 then ([$b[] | select(.satisfied == true or .satisfied == 1)] | length) / ($b | length) else 0 end) as $sb
+| (if $tb == 0 then (if $ts == 0 then 0 else null end) else r3($ts / $tb) end) as $tr
+| (if $cb == 0 then (if $cs == 0 then 0 else null end) else r3($cs / $cb) end) as $cr
+| (if $db == 0 then (if $ds == 0 then 0 else null end) else r3($ds / $db) end) as $dr
+| {
+    status: "ok",
+    targets: {
+      tokens_ratio:     { actual: $tr, threshold: 0.70, PASS: ($tr != null and $tr <= 0.70) },
+      tool_calls_ratio: { actual: $cr, threshold: 0.80, PASS: ($cr != null and $cr <= 0.80) },
+      dupes_ratio:      { actual: $dr, threshold: 0.80, PASS: ($dr != null and $dr <= 0.80) },
+      success:          { actual: r3($ss), baseline: r3($sb), PASS: ($ss >= $sb) }
+    },
+    summary: {
+      pairs: $pairs,
+      tasks: $tasks,
+      avg_tokens_skill: r3($ts), avg_tokens_baseline: r3($tb),
+      avg_tool_calls_skill: r3($cs), avg_tool_calls_baseline: r3($cb),
+      avg_dupes_skill: r3($ds), avg_dupes_baseline: r3($db),
+      success_skill: r3($ss), success_baseline: r3($sb)
+    },
+    PASS: ($tr != null and $tr <= 0.70 and $cr != null and $cr <= 0.80
+           and $dr != null and $dr <= 0.80 and $ss >= $sb)
+  }'
+
+OUT=$(jq -s "$JQ" "$METRICS" 2>/dev/null) || {
+  echo '{"status":"error","error":"jq fallo al parsear metrics.ndjson"}' >&2
+  exit 1
+}
+
+pairs=$(jq -r '.summary.pairs' <<<"$OUT")
+if [ "${pairs:-0}" -lt 3 ]; then
+  echo "{\"status\":\"insufficient\",\"pairs\":${pairs:-0}}"
+  exit 2
+fi
+
+PASS=$(jq -r '.PASS' <<<"$OUT")
+echo "$OUT"
+[ "$PASS" = "true" ] && exit 0 || exit 1

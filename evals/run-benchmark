@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+# 6.3+6.4 run-benchmark — ejecuta corpus de evals/retrieval.json por dos vias:
+#   A) skill    : el `command` declarado (scripts/ del repo), con `fallback` opcional
+#   B) baseline : `baseline_command` naive (find/grep/cat) equivalente
+# Registra cada corrida en evals/metrics.ndjson via scripts/retrieval-metrics record.
+# Correctness: hits (paths distintos de la salida que matchean expect.path_glob) >= expect.min_hits.
+# Tareas sin archivos esperados en el repo -> skipped:true, se continua sin fallar.
+# Exit 0 con resumen: N tareas, M pares skill/baseline completos.
+
+set -uo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$HERE/.." && pwd)"
+SCRIPTS="$ROOT/scripts"
+CORPUS="$HERE/retrieval.json"
+cd "$ROOT"   # retrieval-metrics escribe en $(pwd)/evals/metrics.ndjson
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "run-benchmark: jq not found" >&2
+  exit 2
+fi
+[ -f "$CORPUS" ] || { echo "run-benchmark: $CORPUS no existe" >&2; exit 1; }
+
+# glob (path_glob) -> regex (grep -E)
+glob2re() { printf '%s' "${1:-*}" | sed 's/\./\\./g; s/\*/.*/g; s/\?/./g'; }
+
+# tokens estimados: wc -c / 4
+tok() { echo $(( $(wc -c < "$1" 2>/dev/null || echo 0) / 4 )); }
+
+# tool_calls: segmentos separados por ||, && o ; + fallbacks ejecutados
+toolcalls() { # cmd fallbacks(0|1)
+  local n seg
+  n=$(printf '%s' "$1" | grep -oE '\|\||&&|;' | wc -l)
+  seg=$((n + 1 + ${2:-0}))
+  echo "$seg"
+}
+
+# duplicados: pares path:line repetidos en la salida
+dupes() {
+  local out="$1" n=0
+  if [ -s "$out" ] && jq -e 'type == "array"' "$out" >/dev/null 2>&1; then
+    n=$(jq -r '.[]? | (.path // "") + ":" + ((.line_start // .line // 0) | tostring)' "$out" 2>/dev/null | grep -v '^:' | sort | uniq -d | wc -l)
+  else
+    n=$(sed -nE 's|^([^:]+):([0-9]+):.*|\1:\2|p' "$out" | sort | uniq -d | wc -l)
+  fi
+  echo "$n"
+}
+
+# correctness: 1 si hits >= min, 0 si no. hits = paths distintos de la salida que matchean el glob.
+correct() {
+  local out="$1" glob="$2" min="${3:-1}" re hits=0
+  re="$(glob2re "$glob")"
+  if [ -s "$out" ] && jq -e 'type == "array"' "$out" >/dev/null 2>&1; then
+    hits=$(jq -r '[.[]?.path // empty] | unique[]' "$out" 2>/dev/null | grep -cE "$re" || true)
+  elif [ -s "$out" ] && jq -e 'type == "object"' "$out" >/dev/null 2>&1; then
+    hits=$(jq -r '.. | strings' "$out" 2>/dev/null | grep '/' | grep -cE "$re" || true)
+  else
+    hits=$(grep -oE '[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)+(\.[A-Za-z0-9]+)?' "$out" 2>/dev/null | sort -u | grep -cE "$re" || true)
+  fi
+  [ "${hits:-0}" -ge "${min:-1}" ] && echo 1 || echo 0
+}
+
+# ejecutar una via y registrarla en metrics.ndjson
+run_via() { # via id qtype cmd glob min outfile [fallback_cmd]
+  local via="$1" id="$2" qtype="$3" cmd="$4" glob="$5" min="$6" out="$7" fallback="${8:-}"
+  local start end latency tokens tc dupes_ sat results relevant fb=0 jline
+  start=$(date +%s%N)
+  eval "$cmd" > "$out" 2>/dev/null || true
+  if [ ! -s "$out" ] && [ -n "$fallback" ]; then
+    eval "$fallback" > "$out" 2>/dev/null || true
+    fb=1
+  fi
+  end=$(date +%s%N)
+  latency=$(( (end - start) / 1000000 ))
+  tokens=$(tok "$out")
+  tc=$(toolcalls "$cmd" "$fb")
+  dupes_=$(dupes "$out")
+  sat=$(correct "$out" "$glob" "$min")
+  results=$(grep -oE '[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)+(\.[A-Za-z0-9]+)?' "$out" 2>/dev/null | sort -u | wc -l)
+  relevant=$(( sat ))
+  jline=$(jq -n \
+    --arg qtype "$qtype" --arg tool "$via" --argjson tokens "$tokens" \
+    --argjson relevant "$relevant" --argjson results "$results" \
+    --argjson latency_ms "$latency" --argjson tool_calls "$tc" \
+    --argjson dupes "$dupes_" --argjson satisfied "$sat" --argjson skipped false \
+    '{query_type:$qtype, tool:$tool, tokens:$tokens, relevant:$relevant, results:$results, latency_ms:$latency_ms, tool_calls:$tool_calls, dupes:$dupes, satisfied:$satisfied, skipped:$skipped, via:$tool}')
+  "$SCRIPTS/retrieval-metrics" record "$id" "$jline" >/dev/null 2>&1 \
+    || echo "run-benchmark: fallo al registrar $id/$via" >&2
+  printf '  %s %-8s latency=%-5sms tokens=%-5s tool_calls=%s dupes=%s satisfied=%s\n' \
+    "$id" "$via" "$latency" "$tokens" "$tc" "$dupes_" "$sat"
+}
+
+total=0; skipped=0
+while IFS= read -r t; do
+  id=$(jq -r '.id' <<<"$t"); qtype=$(jq -r '.type' <<<"$t")
+  cmd=$(jq -r '.command' <<<"$t"); bcmd=$(jq -r '.baseline_command' <<<"$t")
+  glob=$(jq -r '.expect.path_glob' <<<"$t"); min=$(jq -r '.expect.min_hits // 1' <<<"$t")
+  fallback=$(jq -r '.fallback // empty' <<<"$t")
+  total=$((total + 1))
+
+  # aplicabilidad: el repo debe tener >= min files que matcheen el glob esperado
+  repo_hits=$(rg --files "$ROOT" 2>/dev/null | rg -c "$(glob2re "$glob")" || true)
+  if [ "${repo_hits:-0}" -lt "$min" ]; then
+    skipped=$((skipped + 1))
+    jline=$(jq -n --arg qtype "$qtype" \
+      '{query_type:$qtype, tool:"skill", tokens:0, relevant:0, results:0, latency_ms:0, tool_calls:0, dupes:0, satisfied:false, skipped:true, via:"skill"}')
+    "$SCRIPTS/retrieval-metrics" record "$id" "$jline" >/dev/null 2>&1 || true
+    echo "  $id [$qtype]: SKIPPED (repo sin files esperados para glob=$glob)"
+    continue
+  fi
+
+  outA=$(mktemp); outB=$(mktemp)
+  echo "== $id [$qtype] =="
+  run_via "skill" "$id" "$qtype" "$cmd" "$glob" "$min" "$outA" "$fallback"
+  run_via "baseline" "$id" "$qtype" "$bcmd" "$glob" "$min" "$outB" ""
+  rm -f "$outA" "$outB"
+done < <(jq -c '.[]' "$CORPUS")
+
+# resumen: pares = tareas con registro skill Y baseline, ambas no-skipped
+pairs=$(jq -s '
+  ([.[] | select(.via == "skill" and .skipped != true and ((.task // "") | test("^t[0-9]+$"))) | .task] | unique) as $s |
+  ([.[] | select(.via == "baseline" and .skipped != true and ((.task // "") | test("^t[0-9]+$"))) | .task] | unique) as $b |
+  ([$s[] | select(. as $t | $b | index($t))] | length)' "$ROOT/evals/metrics.ndjson" 2>/dev/null || echo 0)
+tasks=$(jq 'length' "$CORPUS")
+
+echo ""
+echo "=== resumen run-benchmark ==="
+echo "tareas corpus: $tasks"
+echo "pares skill/baseline completos: ${pairs:-0}"
+echo "tareas skipped: $skipped"
+exit 0

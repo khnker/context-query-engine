@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# 5.1 search-semantic — wrapper Probe (retrieval semántico AST-aware)
+# Uso: search-semantic [-d DIR] [-n N] QUERY
+# Output: NDJSON schema grupo 4:
+#   {"source":"probe","path":...,"symbol":...,"language":...,"line_start":...,
+#    "line_end":...,"match_type":"semantic","score":...,"token_estimate":...,
+#    "reason":"semantic match"}
+# Exit: 0 OK, 1 uso, 2 probe not found, 3 probe error (tras degradación)
+
+set -uo pipefail
+
+if ! command -v probe >/dev/null 2>&1; then
+  echo "search-semantic: probe not found" >&2
+  exit 2
+fi
+
+DIR="."
+N=10
+while getopts ":d:n:" opt; do
+  case "$opt" in
+    d) DIR="$OPTARG" ;;
+    n) N="$OPTARG" ;;
+    *) echo "search-semantic: opcion invalida -$OPTARG" >&2; exit 1 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [ $# -lt 1 ]; then
+  echo "search-semantic: falta QUERY (uso: search-semantic [-d DIR] [-n N] QUERY)" >&2
+  exit 1
+fi
+
+QUERY="$1"
+ERR="$(mktemp)"
+trap 'rm -f "$ERR"' EXIT
+
+# Comando real; degradación: probe search si query falla
+if ! OUTPUT="$(probe query "$QUERY" --limit "$N" 2>"$ERR")"; then
+  if ! OUTPUT="$(probe search "$QUERY" 2>"$ERR")"; then
+    echo "search-semantic: probe falló para query '$QUERY'" >&2
+    cat "$ERR" >&2
+    exit 3
+  fi
+fi
+
+# JSON (array u objeto) → NDJSON con mapeo defensivo (campos típicos + defaults)
+if echo "$OUTPUT" | jq -e 'type == "array" or type == "object"' >/dev/null 2>&1; then
+  echo "$OUTPUT" | jq -c '
+    if type == "array" then . else [.] end
+    | .[]
+    | . as $r
+    | (($r.start_line // $r.StartLine // $r.startLine // $r.line // 0) | tonumber? // 0) as $sl
+    | (($r.end_line // $r.EndLine // $r.endLine // $sl) | tonumber? // $sl) as $el
+    | {
+        source: "probe",
+        path: ($r.file // $r.File // $r.Path // $r.path // $r.filename // "unknown"),
+        symbol: ($r.symbol // $r.name // $r.symbol_name // null),
+        language: ($r.language // $r.lang // null),
+        line_start: $sl,
+        line_end: $el,
+        match_type: "semantic",
+        score: (($r.score // $r.Similarity // $r.similarity // $r.relevance // 0) | tonumber? // 0),
+        token_estimate: (($el - $sl) + 1) * 5,
+        reason: "semantic match"
+      }'
+else
+  # Formato no-JSON: línea por línea, registro mínimo defensivo
+  echo "$OUTPUT" | grep -v '^[[:space:]]*$' | jq -Rc '
+    {source: "probe", path: ., symbol: null, language: null,
+     line_start: 0, line_end: 0, match_type: "semantic",
+     score: 0, token_estimate: 5, reason: "semantic match"}'
+fi

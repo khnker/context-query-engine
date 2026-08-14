@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# 3.2 search-code — wrapper rg (ripgrep)
+# Uso: search-code [-d DIR] [-i] [-l] PATTERN
+# Exclusiones: agent-context-engineering/config/exclusions.json
+#   (defaults + project_overrides del repo actual detectado por root dir)
+#   Fallback inline si el JSON no existe o jq falla.
+# Exit: 0 matches, 1 sin matches (semántica rg), 2 tool-missing, 1 error de uso
+
+set -uo pipefail
+
+if ! command -v rg >/dev/null 2>&1; then
+  echo "search-code: rg not found" >&2
+  exit 2
+fi
+
+DIR="."
+CASE=""
+LIST=""
+while getopts ":d:il" opt; do
+  case "$opt" in
+    d) DIR="$OPTARG" ;;
+    i) CASE="-i" ;;
+    l) LIST="-l" ;;
+    *) echo "search-code: opcion invalida -$OPTARG" >&2; exit 1 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [ $# -lt 1 ]; then
+  echo "search-code: falta PATTERN (uso: search-code [-d DIR] [-i] [-l] PATTERN)" >&2
+  exit 1
+fi
+
+PATTERN="$1"
+
+EXC_JSON="$(dirname "$0")/../agent-context-engineering/config/exclusions.json"
+DEFAULT_EXCLUDES=(--glob '!node_modules/' --glob '!.git/' --glob '!dist/' --glob '!build/' --glob '!coverage/' --glob '!vendor/' --glob '!target/' --glob '!__pycache__/' --glob '!.next/')
+
+EXCLUDES=()
+if [ -f "$EXC_JSON" ] && command -v jq >/dev/null 2>&1; then
+  list="$(jq -r '.defaults[]?' "$EXC_JSON" 2>/dev/null)"
+  repo_root="$(basename "$(cd "$DIR" 2>/dev/null && pwd)")"
+  list="$(printf '%s\n%s' "$list" "$(jq -r --arg r "$repo_root" '.project_overrides[$r][]?' "$EXC_JSON" 2>/dev/null)")"
+  while IFS= read -r pat; do
+    [ -n "$pat" ] && EXCLUDES+=(--glob "!${pat}/")
+  done <<< "$list"
+fi
+if [ ${#EXCLUDES[@]} -eq 0 ]; then
+  EXCLUDES=("${DEFAULT_EXCLUDES[@]}")
+fi
+
+rg $CASE $LIST "${EXCLUDES[@]}" -n -- "$PATTERN" "$DIR"

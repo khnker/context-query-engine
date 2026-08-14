@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Verificación de disponibilidad de toolchain (task 2.4).
+# Tools faltantes no bloquean operación básica: exit 0 si core (rg fd jq) presente.
+export PATH="$HOME/.local/bin:$PATH"
+CORE="rg fd jq"
+OPT="yq sg tokei probe"
+CORE_OK=1
+for tool in $CORE $OPT; do
+  if command -v "$tool" >/dev/null 2>&1; then
+    printf "%-8s OK   %s\n" "$tool" "$(command -v "$tool")"
+  else
+    printf "%-8s MISSING\n" "$tool"
+    case " $CORE " in
+      *" $tool "*) CORE_OK=0 ;;
+    esac
+  fi
+done
+exit $((1 - CORE_OK))

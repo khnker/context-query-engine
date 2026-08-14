@@ -1,0 +1,4 @@
+{
+  "defaults": ["node_modules", ".git", "dist", "build", "coverage", "vendor", "target", "__pycache__", ".next"],
+  "project_overrides": {}
+}

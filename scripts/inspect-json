@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# 3.5 inspect-json — wrapper jq
+# Uso: inspect-json [JQ_FILTER] FILE   (FILE "-" = stdin)
+# Sin filter: jq .
+# Exit: 0 OK, 2 tool-missing (jq), 1 error de uso
+
+set -uo pipefail
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "inspect-json: jq not found" >&2
+  exit 2
+fi
+
+if [ $# -eq 1 ]; then
+  FILTER="."
+  FILE="$1"
+elif [ $# -eq 2 ]; then
+  FILTER="$1"
+  FILE="$2"
+else
+  echo "inspect-json: uso: inspect-json [JQ_FILTER] FILE (FILE '-' = stdin)" >&2
+  exit 1
+fi
+
+if [ "$FILE" = "-" ]; then
+  jq "$FILTER"
+else
+  jq "$FILTER" "$FILE"
+fi

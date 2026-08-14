@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+# 4.x assemble-context — pipeline de ensamblado de contexto desde retrieval NDJSON
+# Uso:
+#   assemble-context [BUDGET] < results.ndjson
+# BUDGET en tokens (default 8000; niveles tipicos 2000/8000/20000/30000)
+# Pipeline: normalize -> filter -> deduplicate -> rank -> budget -> order
+# Salida: NDJSON con "tier" (T1..T4) por linea, stats de budget en stderr.
+# Exit: 0 si entraron lineas (aunque todas se filtren), 1 si stdin vacio o error.
+
+set -uo pipefail
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "assemble-context: jq not found" >&2
+  exit 1
+fi
+
+BUDGET="${1:-8000}"
+case "$BUDGET" in
+  ''|*[!0-9]*) BUDGET=8000 ;;
+esac
+
+# stdin vacio -> exit 1
+if ! IFS= read -r first_line; then
+  echo "assemble-context: error: stdin vacio (sin lineas NDJSON)" >&2
+  exit 1
+fi
+
+TMP_IN="$(mktemp)"
+TMP_OUT="$(mktemp)"
+trap 'rm -f "$TMP_IN" "$TMP_OUT"' EXIT
+
+{ printf '%s\n' "$first_line"; cat; } > "$TMP_IN"
+
+if ! jq -s -c --argjson BUDGET "$BUDGET" '
+  # ---- normalize ----
+  def bad_path:
+    all((.path | split("/"))[]; . as $s |
+      (["node_modules",".git","dist","build","coverage","vendor"] | index($s) | not));
+  def exactness:
+    if .match_type == "exact" then 1
+    elif .match_type == "filename" then 0.8
+    elif .match_type == "structural" then 0.7
+    elif .match_type == "reference" then 0.6
+    elif .match_type == "semantic" then 0.5
+    elif .match_type == "test" then 0.4
+    elif .match_type == "config" then 0.3
+    else 0.5 end;
+  def path_relevance:
+    if (.match_type == "test" and ((.path | contains("tests")) or (.path | contains("spec")))) then 0.5
+    elif (.match_type == "config" and (.path | contains("config"))) then 0.5
+    else 0.3 end;
+  def token_efficiency: 1 - ([.token_estimate, 400] | min) / 400;
+  def tier:
+    if (.match_type == "exact" or .match_type == "filename") then 1
+    elif (.match_type == "structural" or .match_type == "reference") then 2
+    elif (.match_type == "semantic") then 3
+    else 4 end;
+
+  map(select((( .path        | type) == "string") and (.path        | length > 0)
+             and ((.line_start | type) == "number")
+             and ((.line_end   | type) == "number"))
+      | .path |= (if startswith("./") then .[2:] else . end)
+      | .score = (if ((.score | type) == "number") then .score else 0.5 end)
+      | .token_estimate = (if ((.token_estimate | type) == "number")
+                           then .token_estimate
+                           else ((.line_end - .line_start + 1) * 5) end)
+      | .source = (.source // "unknown")
+      | .match_type = (.match_type // "semantic")
+      | .reason = (.reason // "")
+      | .symbol = (.symbol // null)
+      | .language = (.language // null))
+  # ---- filter ----
+  | map(select((.score >= 0.2) and (.token_estimate > 0) and bad_path))
+  # ---- deduplicate: clave path:line_start:line_end, max score, sources acumuladas ----
+  | group_by(.path, .line_start, .line_end)
+  | map(. as $g | ($g | max_by(.score)) as $best
+        | $best + { score: ($g | map(.score) | max), sources: [ $g[].source ] })
+  # ---- rank: score_final multi-factor ----
+  | map(. + { score_final: (0.35 * exactness + 0.3 * .score
+                             + 0.2 * path_relevance + 0.15 * token_efficiency) })
+  | sort_by(-.score_final)
+  # ---- budget: consume en orden de rank hasta BUDGET; siempre el mejor de cada cluster ----
+  | . as $ranked
+  | reduce $ranked[] as $c ({ kept: [], used: 0 };
+      if (.used + $c.token_estimate <= $BUDGET) or (([.kept[].path] | index($c.path)) == null) then
+        .kept += [$c] | .used += ($c.token_estimate)
+      else . end)
+  | . as $res
+  | { stats: { budget: $BUDGET,
+               tokens_used: $res.used,
+               kept: ($res.kept | length),
+               dropped: (($ranked | length) - ($res.kept | length)) },
+      items: ($res.kept
+              | map(. + { tier: tier })
+              | sort_by(.tier, -.score_final)) }
+  | (.stats, .items[])
+' "$TMP_IN" > "$TMP_OUT"; then
+  echo "assemble-context: error: jq fallo procesando input" >&2
+  exit 1
+fi
+
+# primera linea = stats -> stderr; resto = NDJSON -> stdout
+IFS= read -r stats < "$TMP_OUT"
+printf '%s\n' "$stats" >&2
+sed -n '2,$p' "$TMP_OUT"
