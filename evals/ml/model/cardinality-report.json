@@ -1,0 +1,32 @@
+{
+  "rows": {
+    "train": 690,
+    "val": 147,
+    "test": 148
+  },
+  "operators": [
+    "follow",
+    "git-log",
+    "include",
+    "rg-files",
+    "search-code",
+    "search-structure"
+  ],
+  "query_classes": [
+    "definitions",
+    "filename",
+    "implementation",
+    "references"
+  ],
+  "ml_ridge": {
+    "mape": 0.49808616338939316,
+    "p50": 0.24183081042402158,
+    "p95": 2.020205846776027
+  },
+  "heuristic_baseline": {
+    "mape": 1.4180674366526673,
+    "p50": 0.2908468776732249,
+    "p95": 5.431467181467181
+  },
+  "verdict": "ML ADOPTED"
+}
