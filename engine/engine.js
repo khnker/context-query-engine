@@ -20,6 +20,7 @@ import { parseCQP } from './cqp.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
 import { record } from './statistics.js';
+import { available as modelAvailable, rerankSync } from './local-model.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
@@ -313,6 +314,23 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         }, phys.pred_class);
       } catch { /* probe ausente o roto — sin crash */ }
     }
+  }
+
+  // 12.2 — rerank opcional (tinybert-reranker): si hay modelo local, reordena el
+  // pool por relevancia (scores) antes de la fusión; null/fallo → orden heurístico.
+  if (modelAvailable() && pool.length > 1) {
+    try {
+      const t0 = Date.now();
+      const rr = rerankSync(pool, logicalPlan.target?.name ?? rawText);
+      if (rr?.scores?.length) {
+        const scored = pool.map((r, i) => ({ r, s: rr.scores[i] ?? 0 }));
+        scored.sort((a, b) => b.s - a.s);
+        pool.length = 0;
+        pool.push(...scored.map((x) => x.r));
+        stats.reranked = true;
+        stats.rerank_latency_ms = rr.latencyMs ?? Date.now() - t0;
+      }
+    } catch { /* fallback heurístico */ }
   }
 
   const results = fuse(pool, logicalPlan.budget ?? 8000);

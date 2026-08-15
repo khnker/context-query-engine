@@ -7,7 +7,7 @@ import { rmSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-const { available, run, rerank, CAPACITIES } = await import('../engine/local-model.js');
+const { available, run, rerank, rerankSync, CAPACITIES } = await import('../engine/local-model.js');
 
 test('10.1 sin modelo configurado: available()=false y run()=null (fallback heurístico)', async () => {
   const prev = process.env.CF_MODEL_CMD;
@@ -107,6 +107,43 @@ test('12.1 rerank: clamp de scores fuera de rango', async () => {
     assert.deepEqual(r.scores, [1, 0, 0.5, 0], 'clamp a 0..1 y no-numérico → 0');
   } finally {
     rmSync(dir, { recursive: true, force: true });
+    if (prev !== undefined) process.env.CF_MODEL_CMD = prev;
+    else delete process.env.CF_MODEL_CMD;
+  }
+});
+
+test('12.2 rerankSync: contrato síncrono, scores alineados + clamp', () => {
+  const prev = process.env.CF_MODEL_CMD;
+  const dir = mkdtempSync(path.join(tmpdir(), 'cf-reranksync-'));
+  const script = path.join(dir, 'model.mjs');
+  writeFileSync(script, 'console.log(JSON.stringify({scores:[0.1,0.9]}))\n');
+  process.env.CF_MODEL_CMD = `node ${script}`;
+  try {
+    const r = rerankSync([{ path: 'a.ts', content: 'x' }, { path: 'b.ts', content: 'y' }], 'q');
+    assert.ok(r);
+    assert.deepEqual(r.scores, [0.1, 0.9]);
+    assert.equal(typeof r.latencyMs, 'number');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+    if (prev !== undefined) process.env.CF_MODEL_CMD = prev;
+    else delete process.env.CF_MODEL_CMD;
+  }
+});
+
+test('12.2 rerankSync: sin modelo / binario ausente / salida corrupta → null', () => {
+  const prev = process.env.CF_MODEL_CMD;
+  delete process.env.CF_MODEL_CMD;
+  try {
+    assert.equal(rerankSync([{ path: 'a.ts' }], 'q'), null, 'sin modelo → null');
+    process.env.CF_MODEL_CMD = '/bin/no-existe-xyz';
+    assert.equal(rerankSync([{ path: 'a.ts' }], 'q'), null, 'binario ausente → null');
+    const dir = mkdtempSync(path.join(tmpdir(), 'cf-reranksync2-'));
+    const script = path.join(dir, 'model.mjs');
+    writeFileSync(script, "console.log('garbage')\n");
+    process.env.CF_MODEL_CMD = `node ${script}`;
+    assert.equal(rerankSync([{ path: 'a.ts' }], 'q'), null, 'salida corrupta → null');
+    rmSync(dir, { recursive: true, force: true });
+  } finally {
     if (prev !== undefined) process.env.CF_MODEL_CMD = prev;
     else delete process.env.CF_MODEL_CMD;
   }
