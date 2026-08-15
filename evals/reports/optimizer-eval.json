@@ -1,0 +1,418 @@
+{
+  "report": {
+    "date": "2026-08-15",
+    "tasks": 8,
+    "plan_accuracy": {
+      "first_match": 0.5,
+      "heuristic": 0.875,
+      "learned": 0.875,
+      "oracle": 1
+    },
+    "regret": {
+      "first_match": 0.45495228200861865,
+      "heuristic": 0,
+      "learned": 0
+    },
+    "avg_tokens": {
+      "first_match": 130.875,
+      "heuristic": 88.5,
+      "learned": 88.5,
+      "oracle": 88.5
+    },
+    "avg_latency_ms": {
+      "heuristic": 109.125,
+      "learned": 110.625
+    },
+    "gt_recall": {
+      "first_match": 1,
+      "heuristic": 1,
+      "learned": 1
+    }
+  },
+  "records": [
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol register LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 200,
+          "actual_tokens": 79,
+          "latency_ms": 103,
+          "gt_hits": 7
+        },
+        {
+          "id": "B",
+          "est_tokens": 500,
+          "actual_tokens": 79,
+          "latency_ms": 94,
+          "gt_hits": 7
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 264,
+          "latency_ms": 286,
+          "gt_hits": 9
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "A",
+      "selected_learned": "A",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 7,
+        "heur": 7,
+        "learned": 7,
+        "gt": 3
+      },
+      "tokens": {
+        "first": 79,
+        "heur": 79,
+        "learned": 79,
+        "oracle": 79
+      },
+      "latency_ms": {
+        "heur": 101,
+        "learned": 145
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol HttpHandler LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 200,
+          "actual_tokens": 19,
+          "latency_ms": 102,
+          "gt_hits": 2
+        },
+        {
+          "id": "B",
+          "est_tokens": 500,
+          "actual_tokens": 19,
+          "latency_ms": 93,
+          "gt_hits": 2
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 189,
+          "latency_ms": 262,
+          "gt_hits": 3
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "A",
+      "selected_learned": "A",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 2,
+        "heur": 2,
+        "learned": 2,
+        "gt": 1
+      },
+      "tokens": {
+        "first": 19,
+        "heur": 19,
+        "learned": 19,
+        "oracle": 19
+      },
+      "latency_ms": {
+        "heur": 105,
+        "learned": 97
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"try catch fallback\" LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 800,
+          "actual_tokens": 310,
+          "latency_ms": 299,
+          "gt_hits": 1
+        },
+        {
+          "id": "B",
+          "est_tokens": 250,
+          "actual_tokens": 247,
+          "latency_ms": 95,
+          "gt_hits": 8
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 557,
+          "latency_ms": 319,
+          "gt_hits": 9
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "B",
+      "selected_learned": "B",
+      "oracle_plan": "B",
+      "quality": {
+        "first": 1,
+        "heur": 8,
+        "learned": 8,
+        "gt": 2
+      },
+      "tokens": {
+        "first": 310,
+        "heur": 247,
+        "learned": 247,
+        "oracle": 247
+      },
+      "latency_ms": {
+        "heur": 89,
+        "learned": 90
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"handler registration\" LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 800,
+          "actual_tokens": 170,
+          "latency_ms": 285,
+          "gt_hits": 2
+        },
+        {
+          "id": "B",
+          "est_tokens": 250,
+          "actual_tokens": 67,
+          "latency_ms": 91,
+          "gt_hits": 2
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 237,
+          "latency_ms": 293,
+          "gt_hits": 4
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "B",
+      "selected_learned": "B",
+      "oracle_plan": "B",
+      "quality": {
+        "first": 2,
+        "heur": 2,
+        "learned": 2,
+        "gt": 3
+      },
+      "tokens": {
+        "first": 170,
+        "heur": 67,
+        "learned": 67,
+        "oracle": 67
+      },
+      "latency_ms": {
+        "heur": 92,
+        "learned": 90
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "query": "FIND references OF symbol DEFAULT_TIMEOUT_MS AND FOLLOW references LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 500,
+          "actual_tokens": 74,
+          "latency_ms": 106,
+          "gt_hits": 4
+        },
+        {
+          "id": "B",
+          "est_tokens": 800,
+          "actual_tokens": 74,
+          "latency_ms": 118,
+          "gt_hits": 4
+        },
+        {
+          "id": "C",
+          "est_tokens": 1300,
+          "actual_tokens": 229,
+          "latency_ms": 284,
+          "gt_hits": 6
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "A",
+      "selected_learned": "A",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 4,
+        "heur": 4,
+        "learned": 4,
+        "gt": 2
+      },
+      "tokens": {
+        "first": 74,
+        "heur": 74,
+        "learned": 74,
+        "oracle": 74
+      },
+      "latency_ms": {
+        "heur": 99,
+        "learned": 114
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"registry tests\" AND INCLUDE tests LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 1000,
+          "actual_tokens": 90,
+          "latency_ms": 253,
+          "gt_hits": 1
+        },
+        {
+          "id": "B",
+          "est_tokens": 450,
+          "actual_tokens": 50,
+          "latency_ms": 126,
+          "gt_hits": 1
+        },
+        {
+          "id": "C",
+          "est_tokens": 1200,
+          "actual_tokens": 140,
+          "latency_ms": 292,
+          "gt_hits": 2
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "B",
+      "selected_learned": "B",
+      "oracle_plan": "B",
+      "quality": {
+        "first": 1,
+        "heur": 1,
+        "learned": 1,
+        "gt": 3
+      },
+      "tokens": {
+        "first": 90,
+        "heur": 50,
+        "learned": 50,
+        "oracle": 50
+      },
+      "latency_ms": {
+        "heur": 113,
+        "learned": 109
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"get fallback test\" AND INCLUDE tests LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 1000,
+          "actual_tokens": 260,
+          "latency_ms": 265,
+          "gt_hits": 1
+        },
+        {
+          "id": "B",
+          "est_tokens": 450,
+          "actual_tokens": 127,
+          "latency_ms": 123,
+          "gt_hits": 6
+        },
+        {
+          "id": "C",
+          "est_tokens": 1200,
+          "actual_tokens": 387,
+          "latency_ms": 297,
+          "gt_hits": 7
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "B",
+      "selected_learned": "B",
+      "oracle_plan": "B",
+      "quality": {
+        "first": 1,
+        "heur": 6,
+        "learned": 6,
+        "gt": 3
+      },
+      "tokens": {
+        "first": 260,
+        "heur": 127,
+        "learned": 127,
+        "oracle": 127
+      },
+      "latency_ms": {
+        "heur": 178,
+        "learned": 133
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"recent changes\" LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 1100,
+          "actual_tokens": 45,
+          "latency_ms": 190,
+          "gt_hits": 1
+        },
+        {
+          "id": "B",
+          "est_tokens": 550,
+          "actual_tokens": 45,
+          "latency_ms": 94,
+          "gt_hits": 1
+        },
+        {
+          "id": "C",
+          "est_tokens": 1300,
+          "actual_tokens": 45,
+          "latency_ms": 212,
+          "gt_hits": 1
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "B",
+      "selected_learned": "B",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 1,
+        "heur": 1,
+        "learned": 1,
+        "gt": 1
+      },
+      "tokens": {
+        "first": 45,
+        "heur": 45,
+        "learned": 45,
+        "oracle": 45
+      },
+      "latency_ms": {
+        "heur": 96,
+        "learned": 107
+      }
+    }
+  ]
+}

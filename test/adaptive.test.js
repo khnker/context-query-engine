@@ -21,7 +21,9 @@ const QUERY = 'FIND definitions OF symbol "zzz_nonexistent_xyz" AND FOLLOW refer
 
 function runEngine(query, extraEnv) {
   if (fs.existsSync(CACHE)) fs.rmSync(CACHE);
-  const env = { ...process.env, FORCE_PLAN: 'C', ...extraEnv };
+  const statsFile = path.join(ROOT, '.tmp', `adaptive-${process.pid}-${Date.now()}.ndjson`);
+  fs.writeFileSync(statsFile, '');
+  const env = { ...process.env, CF_STATS_FILE: statsFile, FORCE_PLAN: 'C', ...extraEnv };
   const out = execFileSync('node', [ENGINE, query], { cwd: FIXTURE, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
   return JSON.parse(out);
 }

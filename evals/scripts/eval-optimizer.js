@@ -79,10 +79,10 @@ function main() {
 
   const records = [];
   const acc = {
-    plan_acc_heur: 0, plan_acc_learned: 0, n: 0,
-    regret_heur: [], regret_learned: [],
-    tokens: { heur: 0, learned: 0, oracle: 0 }, latency: { heur: 0, learned: 0 },
-    gt_hits: { heur: 0, learned: 0 }, total_gt: 0,
+    plan_acc_first: 0, plan_acc_heur: 0, plan_acc_learned: 0, n: 0,
+    regret_first: [], regret_heur: [], regret_learned: [],
+    tokens: { first: 0, heur: 0, learned: 0, oracle: 0 }, latency: { heur: 0, learned: 0 },
+    gt_hits: { first: 0, heur: 0, learned: 0 }, total_gt: 0,
   };
 
   for (const t of list) {
@@ -103,23 +103,29 @@ function main() {
         actual_tokens: forced[id].tokens, latency_ms: forced[id].latency_ms,
         gt_hits: gtHits(forced[id].results, ground),
       })),
+      selected_first: 'A',
       selected_heuristic: heur.selected,
       selected_learned: learned.selected,
       oracle_plan: oracle,
       quality: {
+        first: gtHits(forced.A.results, ground),
         heur: gtHits(heur.results, ground), learned: gtHits(learned.results, ground),
         gt: ground.length,
       },
-      tokens: { heur: heur.tokens, learned: learned.tokens, oracle: forced[oracle].tokens },
+      tokens: { first: forced.A.tokens, heur: heur.tokens, learned: learned.tokens, oracle: forced[oracle].tokens },
       latency_ms: { heur: heur.latency_ms, learned: learned.latency_ms },
     });
     acc.n += 1;
+    if ('A' === oracle) acc.plan_acc_first += 1;
     if (heur.selected === oracle) acc.plan_acc_heur += 1;
     if (learned.selected === oracle) acc.plan_acc_learned += 1;
+    acc.regret_first.push((forced.A.tokens - forced[oracle].tokens) / Math.max(1, forced[oracle].tokens));
     acc.regret_heur.push((heur.tokens - forced[oracle].tokens) / Math.max(1, forced[oracle].tokens));
     acc.regret_learned.push((learned.tokens - forced[oracle].tokens) / Math.max(1, forced[oracle].tokens));
+    acc.tokens.first += forced.A.tokens;
     acc.tokens.heur += heur.tokens; acc.tokens.learned += learned.tokens; acc.tokens.oracle += forced[oracle].tokens;
     acc.latency.heur += heur.latency_ms; acc.latency.learned += learned.latency_ms;
+    acc.gt_hits.first += Math.min(1, gtHits(forced.A.results, ground));
     acc.gt_hits.heur += Math.min(1, gtHits(heur.results, ground));
     acc.gt_hits.learned += Math.min(1, gtHits(learned.results, ground));
     acc.total_gt += 1; // 1 por task → recall = fracción de tasks con ≥1 GT hit
@@ -129,13 +135,15 @@ function main() {
   const report = {
     date: new Date().toISOString().slice(0, 10),
     tasks: acc.n,
-    plan_accuracy: { heuristic: acc.plan_acc_heur / acc.n, learned: acc.plan_acc_learned / acc.n, oracle: 1 },
-    regret: { heuristic: mean(acc.regret_heur), learned: mean(acc.regret_learned) },
+    plan_accuracy: { first_match: acc.plan_acc_first / acc.n, heuristic: acc.plan_acc_heur / acc.n, learned: acc.plan_acc_learned / acc.n, oracle: 1 },
+    regret: { first_match: mean(acc.regret_first), heuristic: mean(acc.regret_heur), learned: mean(acc.regret_learned) },
     avg_tokens: {
+      first_match: acc.tokens.first / acc.n,
       heuristic: acc.tokens.heur / acc.n, learned: acc.tokens.learned / acc.n, oracle: acc.tokens.oracle / acc.n,
     },
     avg_latency_ms: { heuristic: acc.latency.heur / acc.n, learned: acc.latency.learned / acc.n },
     gt_recall: {
+      first_match: Math.min(1, acc.gt_hits.first / Math.max(1, acc.total_gt)),
       heuristic: Math.min(1, acc.gt_hits.heur / Math.max(1, acc.total_gt)),
       learned: Math.min(1, acc.gt_hits.learned / Math.max(1, acc.total_gt)),
     },
