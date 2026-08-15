@@ -1,0 +1,16 @@
+{
+  "id": "T2",
+  "description": "polar (real repo, 2,129 files), 8 queries TEST split, budget 8000",
+  "repos": [
+    { "name": "polar", "path": "/home/nicolas/dev/polar", "commit": "HEAD" }
+  ],
+  "queries": "evals/datasets/queries-test.jsonl",
+  "budget": 8000,
+  "runs": 3,
+  "warmup": 1,
+  "thresholds": {
+    "correctness_min": 0.857,
+    "regret_max": 0.6886,
+    "token_reduction_min": null
+  }
+}

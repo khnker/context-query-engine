@@ -1,0 +1,16 @@
+{
+  "id": "DEV",
+  "description": "dev workspace tree (24 GB / 164k files), 14 queries ground-truth real, budget 8000",
+  "repos": [
+    { "name": "dev", "path": "/home/nicolas/dev", "commit": "HEAD" }
+  ],
+  "queries": "evals/datasets/tasks-dev.json",
+  "budget": 8000,
+  "runs": 3,
+  "warmup": 1,
+  "thresholds": {
+    "correctness_min": 0.857,
+    "regret_max": 0.6886,
+    "token_reduction_min": null
+  }
+}

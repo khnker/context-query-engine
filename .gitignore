@@ -5,3 +5,4 @@ dist/
 *.ndjson
 engine/.cache.json
 openspec/
+evals/results/

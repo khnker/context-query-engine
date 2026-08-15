@@ -449,6 +449,32 @@ npm test    # 34 unit tests + smoke + e2e
 npm run bench  # métricas duras: tokens y latencia reales (C vs A) con guardas de regresión
 ```
 
+## Reproducibility
+
+All headline benchmark numbers are generated from versioned datasets, pinned repository commits, fixed query sets, reproducible execution manifests, and raw per-query results.
+
+```bash
+./evals/reproduce.sh T1          # in-repo fixtures (32 queries)
+./evals/reproduce.sh T2          # polar, TEST split (8 queries)
+./evals/reproduce.sh dev         # dev workspace tree (14 queries, ground truth real)
+./evals/reproduce.sh T1 --smoke  # CI rápido: 2 queries, runs=1
+```
+
+Cada run produce un artefacto verificable en `evals/results/<BENCH>-<TS>/`: `manifest.json` (thresholds + SHA256 inputs), `environment.json` (machine/commits/model sha256), `queries.jsonl` (dataset congelado), `raw-results.jsonl` (una fila por query×modo×run), `metrics.json`, `statistical-tests.json` (bootstrap pareado, 95% CI) y `report.md` con veredicto PASS/FAIL (exit 0/1).
+
+The benchmark does not assume that lower token usage is better by itself; results are evaluated jointly on correctness, context cost, latency, information density, and optimizer regret.
+
+| Claim | Test | Baseline | Primary metric |
+|-------|------|----------|----------------|
+| Reduce context | T1/T2 | rg/fd | tokens |
+| No information loss | T1/T2 | baseline | correctness |
+| Improves efficiency | T1/T2 | baseline | tokens + latency |
+| Improves density | T1/T2 | baseline | information density |
+| Optimizes plans | Oracle | heuristic | regret |
+| ML improves estimation | held-out | heuristic | MAPE |
+| ML improves decisions | Oracle | heuristic | regret |
+| Reranker helps | E2E | deterministic | MRR + recall + density |
+
 ## Repository structure
 
 ```text

@@ -1,0 +1,17 @@
+{
+  "id": "T1",
+  "description": "t1-basic + t1-modular fixtures (in-repo), 32 queries, budget 8000",
+  "repos": [
+    { "name": "t1-basic", "path": "evals/datasets/repos/t1-basic", "commit": "HEAD" },
+    { "name": "t1-modular", "path": "evals/datasets/repos/t1-modular", "commit": "HEAD" }
+  ],
+  "queries": "evals/datasets/tasks.json",
+  "budget": 8000,
+  "runs": 3,
+  "warmup": 1,
+  "thresholds": {
+    "correctness_min": 1.0,
+    "regret_max": 0.6886,
+    "token_reduction_min": null
+  }
+}
