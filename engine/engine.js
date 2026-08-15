@@ -147,6 +147,7 @@ function execOp(op, plan, pool = []) {
       const r = runScript('rg', ['--files', '.']);
       const q = name.toLowerCase();
       return r.out.split('\n').filter(Boolean)
+        .filter((p) => !/node_modules/.test(p))
         .filter((p) => p.toLowerCase().includes(q))
         .map((p) => ({ source: 'rg-files', path: p, match_type: 'filename', score: 0.8, token_estimate: 10 }));
     }
