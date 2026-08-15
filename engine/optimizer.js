@@ -273,9 +273,15 @@ function euConfig() {
   };
 }
 
-function planPCorrect(ops, queryType, stats) {
-  // P(correct) desde varianceTokens del estimator, promediada sobre los ops del
-  // plan (no solo el primario): si todos los ops son estables → confianza alta.
+function planPCorrect(ops, queryType, stats, planId) {
+  // plan-variant-confidence — successRate por plan id (telemetría plan:<id>|queryClass,
+  // success = relevant encontrado). Evidencia n≥5 → P del plan; si no, varianza de ops.
+  const pe = stats.get(`plan:${planId}|${queryType}`);
+  if (pe && pe.n >= 5) {
+    const c = confidence(pe.n);
+    return Math.max(0.1, Math.min(0.99, pe.successRate * 0.6 + c * 0.4));
+  }
+  // fallback: P desde varianceTokens del estimator, promedio sobre los ops del plan
   let wsum = 0, nw = 0;
   for (const op of ops) {
     const e = stats.get(`${op.tool}|${queryType}`);
@@ -324,7 +330,7 @@ export function optimize(logicalPlan = {}) {
       return variants.map((v, i) => {
         const cost = planCost(v, cw);
         const quality = planQuality(v, qw, confidence);
-        const pc = euMode ? planPCorrect(v, queryType, stats) : null;
+        const pc = euMode ? planPCorrect(v, queryType, stats, p.id + (i ? 'r' : '')) : null;
         return {
           id: p.id + (i ? 'r' : ''),
           ops: v,

@@ -262,6 +262,7 @@ function fuse(pool, budget) {
 
 // --- pipeline principal ---
 function runPlan(logicalPlan, rawText, opts = {}) {
+  const planT0 = Date.now();
   const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0 };
   const key = `${rawText}|${effectiveBudget(logicalPlan)}`;
   const phys = optimize(logicalPlan);
@@ -407,6 +408,28 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       }
     } catch { /* fallback heurístico */ }
   }
+
+  // plan-variant-confidence — telemetría por plan: success = matches relevantes en
+  // el pool final (NO candidates>0); skipBlend → no contamina el blend de cardinalidad
+  try {
+    record({
+      operator: `plan:${phys.selected}`,
+      queryClass: logicalPlan.query_type,
+      scope: opts.scope ?? '',
+      skipBlend: true,
+      estimated: {
+        candidates: selected.ops.reduce((a, o) => a + (o.est_candidates ?? 0), 0),
+        tokens: selected.ops.reduce((a, o) => a + (o.tokens ?? 0), 0),
+        latencyMs: selected.ops.reduce((a, o) => a + (o.latency_ms ?? 0), 0),
+      },
+      actual: {
+        candidates: pool.length,
+        tokens: stats.tokens_used,
+        latencyMs: Date.now() - planT0,
+        success: pool.some((r) => RELEVANT.has(r.match_type)) ? 1 : 0,
+      },
+    });
+  } catch { /* telemetría best-effort */ }
 
   const results = fuse(pool, effectiveBudget(logicalPlan));
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);

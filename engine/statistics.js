@@ -78,7 +78,7 @@ export function load() {
     if (days <= 1 / 24) return 1;
     return Math.exp(-days / DECAY_DAYS);
   };
-  const accumulate = (e, o, cand, tokens, latency, estCand) => {
+  const accumulate = (e, o, cand, tokens, latency, estCand, successFlag) => {
     const w = weightFor(o);
     e.n += 1;
     e._w += w;
@@ -86,7 +86,8 @@ export function load() {
     e._wLat += latency * w;
     e._wEst += estCand * w;
     e._tokens.push(tokens);
-    if (cand > 0) e._wSuccess += w;
+    if (successFlag !== undefined) e._wSuccess += w * (successFlag ? 1 : 0);
+    else if (cand > 0) e._wSuccess += w;
   };
 
   for (const l of lines) {
@@ -101,10 +102,13 @@ export function load() {
     const tokens = Number(actual.tokens) || 0;
     const latency = Number(actual.latencyMs) || 0;
     const estCand = Number(estimated.candidates) || 0;
-    accumulate(ensure(`${operator}|${queryClass}`), o, cand, tokens, latency, estCand);
-    accumulate(ensure(queryClass), o, cand, tokens, latency, estCand);
+    const successFlag = actual.success; // plan-variant: success explícito (relevant encontrado)
+    accumulate(ensure(`${operator}|${queryClass}`), o, cand, tokens, latency, estCand, successFlag);
+    if (!o.skipBlend) { // plan:<id> no entra al blend plano de queryClass (contamina cardinalidad)
+      accumulate(ensure(queryClass), o, cand, tokens, latency, estCand, successFlag);
+    }
     if (scope) {
-      accumulate(ensure(`${operator}|${queryClass}|${scope}`), o, cand, tokens, latency, estCand);
+      accumulate(ensure(`${operator}|${queryClass}|${scope}`), o, cand, tokens, latency, estCand, successFlag);
     }
   }
 

@@ -85,6 +85,17 @@ function main() {
   };
   const records = [];
 
+  // plan-variant-confidence — preheat: pasada 1 con selección default para acumular
+  // telemetría plan:<id>|queryClass (n≥5) ANTES de medir EU en la pasada 2
+  if (process.env.CF_PREHEAT === '1' && process.env.CF_TASKS === 't1') {
+    for (const t of list) {
+      const repoDir = REPO_DIRS[t.repo];
+      if (!repoDir || !t.cqp) continue;
+      run(t.cqp, repoDir, {});
+      run(t.cqp, repoDir, { utility: true });
+    }
+  }
+
   for (const t of list) {
     const repoDir = REPO_DIRS[t.repo];
     if (!repoDir || !t.cqp) continue;

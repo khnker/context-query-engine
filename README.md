@@ -640,7 +640,7 @@ Medición (`evals/scripts/eval-indexing.js`, tasks 3.1-3.5 del change `indexing-
 ## Derived tasks (roadmap v1.6)
 
 - **Índice BM25 incremental persistente**: ✅ DONE (bm25-incremental-index) — índice persistido a `engine/.bm25-index.json` con validación por mtime; reuse entre procesos polar 335→180ms / dev 714→317ms (~2.1-2.2×, umbral 0.6×). Resta: incremental por archivo (hoy touch 1 archivo → rebuild full, 973-1828ms). Ver `evals/reports/index-persist-<TS>.json`.
-- **Señal de incertidumbre por variante de plan**: varianza de est_candidates o success rate por plan id; sin esto la EU degenera a ranking por costo (expected-utility-cost REJECT).
+- **Señal de incertidumbre por variante de plan**: ✅ DONE (plan-variant-confidence) — telemetría `plan:<id>|queryClass` con success=relevant encontrado (skipBlend); planPCorrect usa successRate por plan (n≥5). La señal discrimina (P 0.84-0.96 vs fallback 0; expected_total_cost 202→105: EU evita retry) pero NO flipea selección en T1: A/B quedan con P similar y el término de costo domina → regret sin cambio (0.1660 = 0.1660). REJECT igual que expected-utility-cost, con la causa aislada: para flipear hace falta P que difiera entre variantes en queries donde los costos empatan (hoy el oráculo gana por tie-break de gt_hits, no capturable por tokens). Ver `evals/reports/utility-<TS>.json` (último run con preheat).
 - **Cost model OOD**: retrain por repo o regularización/feature engineering antes de confiar el cardinality ML fuera de distribución (distribution-shift FAIL).
 - **Mitigaciones adversarial**: M1 fallback estructural para concept (deep-dependency-chain), M2 --no-ignore opt-in (generated-code), M3 enforcement de budget / cap fan-out (token explosion) (adversarial-workloads).
 
