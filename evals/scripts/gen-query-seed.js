@@ -44,6 +44,9 @@ const TEMPLATES = {
       '¿Dónde está definido {s}?',
     '¿Dónde se define {s}?',
     'Busca la definición de {s}.',
+    '¿Dónde está la constante {s}?',
+    'Encuentra el enum {s}.',
+    '¿Dónde aparece {s}?',
 ],
   STRUCTURAL: [
     'Which classes implement {s}?', 'What interfaces extend {s}?',
@@ -53,6 +56,9 @@ const TEMPLATES = {
       '¿Qué clases implementan {s}?',
     '¿Qué interfaces extienden {s}?',
     '¿Qué archivos declaran {s}?',
+    '¿Cuál es la jerarquía de {s}?',
+    'Muestra los componentes de {f}.',
+    '¿Qué entidad define {s}?',
 ],
   SEMANTIC: [
     'How does {c} work?', 'Why was {c} introduced?', 'Explain the logic behind {c}.',
@@ -61,6 +67,10 @@ const TEMPLATES = {
       '¿Cómo funciona {c}?',
     '¿Por qué se introdujo {c}?',
     '¿Qué código maneja {c}?',
+    '¿Qué hace {s}?',
+    '¿Cuál es el propósito de {s}?',
+    'Explica {c}.',
+    '¿Cómo se implementa {c}?',
 ],
   DEPENDENCY: [
     'Who depends on {s}?', 'What does {s} import?', 'Which modules use {s}?',
@@ -68,6 +78,11 @@ const TEMPLATES = {
     'Which services depend on {s}?', 'How does {s} relate to {f}?',
       '¿Quién usa {s}?',
     '¿Qué módulos dependen de {s}?',
+    '¿De qué depende {s}?',
+    '¿Qué importa {s}?',
+    '¿Qué servicios usan {s}?',
+    '¿De qué depende el módulo {f}?',
+    '¿Qué módulos importan {s}?',
 ],
   CONFIGURATION: [
     'Where is the {f} configuration?', 'How is {f} configured?',
@@ -76,6 +91,9 @@ const TEMPLATES = {
       '¿Dónde está la configuración de {f}?',
     '¿Cómo se configura {f}?',
     '¿Dónde están las env vars de {f}?',
+    '¿Qué archivo configura {f}?',
+    'Muestra los settings de {c}.',
+    '¿Dónde se conecta {f}?',
 ],
   TEST: [
     'Which tests cover {s}?', 'Where are the specs for {f}?',
@@ -84,6 +102,9 @@ const TEMPLATES = {
       '¿Qué tests cubren {s}?',
     '¿Dónde está el spec de {f}?',
     '¿Qué spec prueba {c}?',
+    '¿Dónde se testea {s}?',
+    'Muestra los tests de {s}.',
+    '¿Qué pruebas hay para {c}?',
 ],
   GIT: [
     'What changed recently in {f}?', 'Show the recent commits touching {s}.',
@@ -92,6 +113,9 @@ const TEMPLATES = {
       '¿Qué cambió recientemente en {f}?',
     '¿Quién modificó {s} la última vez?',
     '¿Qué archivos cambiaron en la última release?',
+    '¿Qué se cambió en {f}?',
+    'Muestra el historial de {s}.',
+    '¿Qué commits tocaron {s}?',
 ],
   SYMBOL: [
     'Where is the definition of {s}?', 'Find symbol {s}.', 'Locate {s} declaration.',
@@ -99,6 +123,9 @@ const TEMPLATES = {
       '¿Dónde está la definición de {s}?',
     'Encuentra el símbolo {s}.',
     '¿Qué archivo contiene {s}?',
+    'Muestra el source de {s}.',
+    'Localiza la declaración de {s}.',
+    '¿Dónde está la clase {s}?',
 ],
   REFERENCE: [
     'Who calls {u}?', 'Where is {s} referenced?', 'Find all references to {s}.',
@@ -106,6 +133,14 @@ const TEMPLATES = {
       '¿Quién llama a {u}?',
     '¿Dónde se referencia {s}?',
     '¿Dónde se usa {s}?',
+    '¿Qué código usa {s}?',
+    '¿Quién referencia {s}?',
+    '¿En qué archivos se usa {s}?',
+    'Lista los callers de {u}.',
+    '¿Quién invoca a {u}?',
+    '¿Qué funciones llaman a {u}?',
+    '¿Dónde se invoca {s}?',
+    '¿Qué métodos llaman a {u}?',
 ],
   COMPOSITE: [
     'Find {s} and its callers.', 'Show {s} with related tests.', 'Explain {c} and who uses it.',
@@ -113,6 +148,9 @@ const TEMPLATES = {
       'Encuentra {s} y sus llamadores.',
     'Explica {c} y quién lo usa.',
     'Traza {c} desde la config hasta el uso.',
+    'Muestra {s} con sus tests.',
+    'Encuentra la definición de {s} y sus referencias.',
+    '¿Qué es {c} y quién lo usa?',
 ],
 };
 

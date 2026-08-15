@@ -66,6 +66,15 @@
 {"text":"Busca la definición de parseConfig.","label":"LEXICAL","source":"synthetic"}
 {"text":"Busca la definición de provider fallback.","label":"LEXICAL","source":"synthetic"}
 {"text":"Busca la definición de config.","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante parseConfig?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante provider fallback?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante config?","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum parseConfig.","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum provider fallback.","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum config.","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece parseConfig?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece provider fallback?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece config?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is ModelRouter defined?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is retry behavior defined?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is database defined?","label":"LEXICAL","source":"synthetic"}
@@ -93,6 +102,15 @@
 {"text":"Busca la definición de ModelRouter.","label":"LEXICAL","source":"synthetic"}
 {"text":"Busca la definición de retry behavior.","label":"LEXICAL","source":"synthetic"}
 {"text":"Busca la definición de database.","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante ModelRouter?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante retry behavior?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está la constante database?","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum ModelRouter.","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum retry behavior.","label":"LEXICAL","source":"synthetic"}
+{"text":"Encuentra el enum database.","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece ModelRouter?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece retry behavior?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde aparece database?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is CylinderType defined?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is payment processing defined?","label":"LEXICAL","source":"synthetic"}
 {"text":"Where is auth defined?","label":"LEXICAL","source":"synthetic"}
@@ -114,24 +132,6 @@
 {"text":"Search for the string \"CylinderType\".","label":"LEXICAL","source":"synthetic"}
 {"text":"Search for the string \"payment processing\".","label":"LEXICAL","source":"synthetic"}
 {"text":"Search for the string \"auth\".","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde se define CylinderType?","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde se define payment processing?","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde se define auth?","label":"LEXICAL","source":"synthetic"}
-{"text":"Busca la definición de CylinderType.","label":"LEXICAL","source":"synthetic"}
-{"text":"Busca la definición de payment processing.","label":"LEXICAL","source":"synthetic"}
-{"text":"Busca la definición de auth.","label":"LEXICAL","source":"synthetic"}
-{"text":"Where is PricesCascadeService defined?","label":"LEXICAL","source":"synthetic"}
-{"text":"Where is token validation defined?","label":"LEXICAL","source":"synthetic"}
-{"text":"Where is sales defined?","label":"LEXICAL","source":"synthetic"}
-{"text":"Find the definition of PricesCascadeService.","label":"LEXICAL","source":"synthetic"}
-{"text":"Find the definition of token validation.","label":"LEXICAL","source":"synthetic"}
-{"text":"Find the definition of sales.","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde está definido PricesCascadeService?","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde está definido token validation?","label":"LEXICAL","source":"synthetic"}
-{"text":"¿Dónde está definido sales?","label":"LEXICAL","source":"synthetic"}
-{"text":"Locate the constant PricesCascadeService.","label":"LEXICAL","source":"synthetic"}
-{"text":"Locate the constant token validation.","label":"LEXICAL","source":"synthetic"}
-{"text":"Locate the constant sales.","label":"LEXICAL","source":"synthetic"}
 {"text":"Which classes implement parseConfig?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement provider fallback?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement config?","label":"STRUCTURAL","source":"synthetic"}
@@ -165,6 +165,15 @@
 {"text":"¿Qué archivos declaran parseConfig?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"¿Qué archivos declaran provider fallback?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"¿Qué archivos declaran config?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de parseConfig?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de provider fallback?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de config?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de parseConfig.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de provider fallback.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de config.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define parseConfig?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define provider fallback?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define config?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement ModelRouter?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement retry behavior?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement database?","label":"STRUCTURAL","source":"synthetic"}
@@ -198,6 +207,15 @@
 {"text":"¿Qué archivos declaran ModelRouter?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"¿Qué archivos declaran retry behavior?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"¿Qué archivos declaran database?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de ModelRouter?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de retry behavior?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Cuál es la jerarquía de database?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de ModelRouter.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de retry behavior.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Muestra los componentes de database.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define ModelRouter?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define retry behavior?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"¿Qué entidad define database?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement CylinderType?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement payment processing?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which classes implement auth?","label":"STRUCTURAL","source":"synthetic"}
@@ -208,24 +226,6 @@
 {"text":"Show the class hierarchy of payment processing.","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Show the class hierarchy of auth.","label":"STRUCTURAL","source":"synthetic"}
 {"text":"Which files declare CylinderType?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Which files declare payment processing?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Which files declare auth?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Find classes related to CylinderType.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Find classes related to payment processing.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Find classes related to auth.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"What is the structure of module CylinderType?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"What is the structure of module payment processing?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"What is the structure of module auth?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Show the components of CylinderType.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Show the components of payment processing.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Show the components of auth.","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Which entity defines CylinderType?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Which entity defines payment processing?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"Which entity defines auth?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"¿Qué clases implementan CylinderType?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"¿Qué clases implementan payment processing?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"¿Qué clases implementan auth?","label":"STRUCTURAL","source":"synthetic"}
-{"text":"¿Qué interfaces extienden CylinderType?","label":"STRUCTURAL","source":"synthetic"}
 {"text":"How does parseConfig work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does provider fallback work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does config work?","label":"SEMANTIC","source":"synthetic"}
@@ -256,6 +256,18 @@
 {"text":"¿Qué código maneja parseConfig?","label":"SEMANTIC","source":"synthetic"}
 {"text":"¿Qué código maneja provider fallback?","label":"SEMANTIC","source":"synthetic"}
 {"text":"¿Qué código maneja config?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace parseConfig?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace provider fallback?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace config?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de parseConfig?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de provider fallback?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de config?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica parseConfig.","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica provider fallback.","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica config.","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa parseConfig?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa provider fallback?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa config?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does ModelRouter work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does retry behavior work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does database work?","label":"SEMANTIC","source":"synthetic"}
@@ -286,6 +298,18 @@
 {"text":"¿Qué código maneja ModelRouter?","label":"SEMANTIC","source":"synthetic"}
 {"text":"¿Qué código maneja retry behavior?","label":"SEMANTIC","source":"synthetic"}
 {"text":"¿Qué código maneja database?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace ModelRouter?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace retry behavior?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Qué hace database?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de ModelRouter?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de retry behavior?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cuál es el propósito de database?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica ModelRouter.","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica retry behavior.","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explica database.","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa ModelRouter?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa retry behavior?","label":"SEMANTIC","source":"synthetic"}
+{"text":"¿Cómo se implementa database?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does CylinderType work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does payment processing work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"How does auth work?","label":"SEMANTIC","source":"synthetic"}
@@ -295,30 +319,6 @@
 {"text":"Explain the logic behind CylinderType.","label":"SEMANTIC","source":"synthetic"}
 {"text":"Explain the logic behind payment processing.","label":"SEMANTIC","source":"synthetic"}
 {"text":"Explain the logic behind auth.","label":"SEMANTIC","source":"synthetic"}
-{"text":"What is the purpose of CylinderType?","label":"SEMANTIC","source":"synthetic"}
-{"text":"What is the purpose of payment processing?","label":"SEMANTIC","source":"synthetic"}
-{"text":"What is the purpose of auth?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How is CylinderType implemented?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How is payment processing implemented?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How is auth implemented?","label":"SEMANTIC","source":"synthetic"}
-{"text":"Which code handles CylinderType?","label":"SEMANTIC","source":"synthetic"}
-{"text":"Which code handles payment processing?","label":"SEMANTIC","source":"synthetic"}
-{"text":"Which code handles auth?","label":"SEMANTIC","source":"synthetic"}
-{"text":"Describe the behavior of CylinderType.","label":"SEMANTIC","source":"synthetic"}
-{"text":"Describe the behavior of payment processing.","label":"SEMANTIC","source":"synthetic"}
-{"text":"Describe the behavior of auth.","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Cómo funciona CylinderType?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Cómo funciona payment processing?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Cómo funciona auth?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Por qué se introdujo CylinderType?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Por qué se introdujo payment processing?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Por qué se introdujo auth?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Qué código maneja CylinderType?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Qué código maneja payment processing?","label":"SEMANTIC","source":"synthetic"}
-{"text":"¿Qué código maneja auth?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How does PricesCascadeService work?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How does token validation work?","label":"SEMANTIC","source":"synthetic"}
-{"text":"How does sales work?","label":"SEMANTIC","source":"synthetic"}
 {"text":"Who depends on parseConfig?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on provider fallback?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on config?","label":"DEPENDENCY","source":"synthetic"}
@@ -346,6 +346,21 @@
 {"text":"¿Qué módulos dependen de parseConfig?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"¿Qué módulos dependen de provider fallback?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"¿Qué módulos dependen de config?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende parseConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende provider fallback?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende config?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa parseConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa provider fallback?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa config?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan parseConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan provider fallback?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan config?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo parseConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo provider fallback?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo config?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan parseConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan provider fallback?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan config?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on retry behavior?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on database?","label":"DEPENDENCY","source":"synthetic"}
@@ -373,6 +388,21 @@
 {"text":"¿Qué módulos dependen de ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"¿Qué módulos dependen de retry behavior?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"¿Qué módulos dependen de database?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende retry behavior?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende database?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa retry behavior?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué importa database?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan retry behavior?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué servicios usan database?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo retry behavior?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿De qué depende el módulo database?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan retry behavior?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"¿Qué módulos importan database?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on CylinderType?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on payment processing?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Who depends on auth?","label":"DEPENDENCY","source":"synthetic"}
@@ -382,36 +412,6 @@
 {"text":"Which modules use CylinderType?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Which modules use payment processing?","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Which modules use auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of CylinderType.","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of paymentprocessing.","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of auth.","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What are the dependencies of CylinderType?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What are the dependencies of payment processing?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What are the dependencies of auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which services depend on CylinderType?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which services depend on payment processing?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which services depend on auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"How does CylinderType relate to CylinderType?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"How does payment processing relate to payment processing?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"How does auth relate to auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Quién usa CylinderType?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Quién usa payment processing?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Quién usa auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Qué módulos dependen de CylinderType?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Qué módulos dependen de payment processing?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"¿Qué módulos dependen de auth?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Who depends on PricesCascadeService?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Who depends on token validation?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Who depends on sales?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What does PricesCascadeService import?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What does token validation import?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"What does sales import?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which modules use PricesCascadeService?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which modules use token validation?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"Which modules use sales?","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of PricesCascadeService.","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of tokenvalidation.","label":"DEPENDENCY","source":"synthetic"}
-{"text":"List the callers of sales.","label":"DEPENDENCY","source":"synthetic"}
 {"text":"Where is the parseConfig configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the provider fallback configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the config configuration?","label":"CONFIGURATION","source":"synthetic"}
@@ -439,6 +439,15 @@
 {"text":"¿Dónde están las env vars de parseConfig?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Dónde están las env vars de provider fallback?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Dónde están las env vars de config?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura parseConfig?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura provider fallback?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura config?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de parseConfig.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de provider fallback.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de config.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta parseConfig?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta provider fallback?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta config?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the ModelRouter configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the retry behavior configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the database configuration?","label":"CONFIGURATION","source":"synthetic"}
@@ -466,6 +475,15 @@
 {"text":"¿Dónde están las env vars de ModelRouter?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Dónde están las env vars de retry behavior?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Dónde están las env vars de database?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura ModelRouter?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura retry behavior?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Qué archivo configura database?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de ModelRouter.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de retry behavior.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Muestra los settings de database.","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta ModelRouter?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta retry behavior?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"¿Dónde se conecta database?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the CylinderType configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the payment processing configuration?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Where is the auth configuration?","label":"CONFIGURATION","source":"synthetic"}
@@ -489,24 +507,6 @@
 {"text":"¿Dónde está la configuración de auth?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Cómo se configura CylinderType?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"¿Cómo se configura payment processing?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"¿Cómo se configura auth?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"¿Dónde están las env vars de CylinderType?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"¿Dónde están las env vars de payment processing?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"¿Dónde están las env vars de auth?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where is the PricesCascadeService configuration?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where is the token validation configuration?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where is the sales configuration?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"How is PricesCascadeService configured?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"How is token validation configured?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"How is sales configured?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Which file sets up PricesCascadeService?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Which file sets up token validation?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Which file sets up sales?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where are the env vars for PricesCascadeService?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where are the env vars for token validation?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"Where are the env vars for sales?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"How is the connection to PricesCascadeService configured?","label":"CONFIGURATION","source":"synthetic"}
-{"text":"How is the connection to token validation configured?","label":"CONFIGURATION","source":"synthetic"}
 {"text":"Which tests cover parseConfig?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover provider fallback?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover config?","label":"TEST","source":"synthetic"}
@@ -534,6 +534,15 @@
 {"text":"¿Qué spec prueba parseConfig?","label":"TEST","source":"synthetic"}
 {"text":"¿Qué spec prueba provider fallback?","label":"TEST","source":"synthetic"}
 {"text":"¿Qué spec prueba config?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea parseConfig?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea provider fallback?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea config?","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de parseConfig.","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de provider fallback.","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de config.","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para parseConfig?","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para provider fallback?","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para config?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover ModelRouter?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover retry behavior?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover database?","label":"TEST","source":"synthetic"}
@@ -561,6 +570,15 @@
 {"text":"¿Qué spec prueba ModelRouter?","label":"TEST","source":"synthetic"}
 {"text":"¿Qué spec prueba retry behavior?","label":"TEST","source":"synthetic"}
 {"text":"¿Qué spec prueba database?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea ModelRouter?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea retry behavior?","label":"TEST","source":"synthetic"}
+{"text":"¿Dónde se testea database?","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de ModelRouter.","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de retry behavior.","label":"TEST","source":"synthetic"}
+{"text":"Muestra los tests de database.","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para ModelRouter?","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para retry behavior?","label":"TEST","source":"synthetic"}
+{"text":"¿Qué pruebas hay para database?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover CylinderType?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover payment processing?","label":"TEST","source":"synthetic"}
 {"text":"Which tests cover auth?","label":"TEST","source":"synthetic"}
@@ -583,24 +601,6 @@
 {"text":"¿Qué tests cubren payment processing?","label":"TEST","source":"synthetic"}
 {"text":"¿Qué tests cubren auth?","label":"TEST","source":"synthetic"}
 {"text":"¿Dónde está el spec de CylinderType?","label":"TEST","source":"synthetic"}
-{"text":"¿Dónde está el spec de payment processing?","label":"TEST","source":"synthetic"}
-{"text":"¿Dónde está el spec de auth?","label":"TEST","source":"synthetic"}
-{"text":"¿Qué spec prueba CylinderType?","label":"TEST","source":"synthetic"}
-{"text":"¿Qué spec prueba payment processing?","label":"TEST","source":"synthetic"}
-{"text":"¿Qué spec prueba auth?","label":"TEST","source":"synthetic"}
-{"text":"Which tests cover PricesCascadeService?","label":"TEST","source":"synthetic"}
-{"text":"Which tests cover token validation?","label":"TEST","source":"synthetic"}
-{"text":"Which tests cover sales?","label":"TEST","source":"synthetic"}
-{"text":"Where are the specs for PricesCascadeService?","label":"TEST","source":"synthetic"}
-{"text":"Where are the specs for token validation?","label":"TEST","source":"synthetic"}
-{"text":"Where are the specs for sales?","label":"TEST","source":"synthetic"}
-{"text":"Show the test file for PricesCascadeService.","label":"TEST","source":"synthetic"}
-{"text":"Show the test file for token validation.","label":"TEST","source":"synthetic"}
-{"text":"Show the test file for sales.","label":"TEST","source":"synthetic"}
-{"text":"Which spec tests PricesCascadeService?","label":"TEST","source":"synthetic"}
-{"text":"Which spec tests token validation?","label":"TEST","source":"synthetic"}
-{"text":"Which spec tests sales?","label":"TEST","source":"synthetic"}
-{"text":"Where is PricesCascadeService tested?","label":"TEST","source":"synthetic"}
 {"text":"What changed recently in parseConfig?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in provider fallback?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in config?","label":"GIT","source":"synthetic"}
@@ -624,6 +624,15 @@
 {"text":"¿Quién modificó provider fallback la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Quién modificó config la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Qué archivos cambiaron en la última release?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en parseConfig?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en provider fallback?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en config?","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de parseConfig.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de provider fallback.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de config.","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron parseConfig?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron provider fallback?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron config?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in ModelRouter?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in retry behavior?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in database?","label":"GIT","source":"synthetic"}
@@ -645,6 +654,15 @@
 {"text":"¿Quién modificó ModelRouter la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Quién modificó retry behavior la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Quién modificó database la última vez?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en ModelRouter?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en retry behavior?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en database?","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de ModelRouter.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de retry behavior.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de database.","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron ModelRouter?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron retry behavior?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron database?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in CylinderType?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in payment processing?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in auth?","label":"GIT","source":"synthetic"}
@@ -666,39 +684,21 @@
 {"text":"¿Quién modificó CylinderType la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Quién modificó payment processing la última vez?","label":"GIT","source":"synthetic"}
 {"text":"¿Quién modificó auth la última vez?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en CylinderType?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en payment processing?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué se cambió en auth?","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de CylinderType.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de payment processing.","label":"GIT","source":"synthetic"}
+{"text":"Muestra el historial de auth.","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron CylinderType?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron payment processing?","label":"GIT","source":"synthetic"}
+{"text":"¿Qué commits tocaron auth?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in PricesCascadeService?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in token validation?","label":"GIT","source":"synthetic"}
 {"text":"What changed recently in sales?","label":"GIT","source":"synthetic"}
 {"text":"Show the recent commits touching PricesCascadeService.","label":"GIT","source":"synthetic"}
 {"text":"Show the recent commits touching token validation.","label":"GIT","source":"synthetic"}
 {"text":"Show the recent commits touching sales.","label":"GIT","source":"synthetic"}
-{"text":"Who modified PricesCascadeService last?","label":"GIT","source":"synthetic"}
-{"text":"Who modified token validation last?","label":"GIT","source":"synthetic"}
-{"text":"Who modified sales last?","label":"GIT","source":"synthetic"}
-{"text":"Show the history of PricesCascadeService.","label":"GIT","source":"synthetic"}
-{"text":"Show the history of token validation.","label":"GIT","source":"synthetic"}
-{"text":"Show the history of sales.","label":"GIT","source":"synthetic"}
-{"text":"What was the last change to PricesCascadeService?","label":"GIT","source":"synthetic"}
-{"text":"What was the last change to token validation?","label":"GIT","source":"synthetic"}
-{"text":"What was the last change to sales?","label":"GIT","source":"synthetic"}
-{"text":"¿Qué cambió recientemente en PricesCascadeService?","label":"GIT","source":"synthetic"}
-{"text":"¿Qué cambió recientemente en token validation?","label":"GIT","source":"synthetic"}
-{"text":"¿Qué cambió recientemente en sales?","label":"GIT","source":"synthetic"}
-{"text":"¿Quién modificó PricesCascadeService la última vez?","label":"GIT","source":"synthetic"}
-{"text":"¿Quién modificó token validation la última vez?","label":"GIT","source":"synthetic"}
-{"text":"¿Quién modificó sales la última vez?","label":"GIT","source":"synthetic"}
-{"text":"What changed recently in DeclararVentaService?","label":"GIT","source":"synthetic"}
-{"text":"What changed recently in price cascade?","label":"GIT","source":"synthetic"}
-{"text":"What changed recently in invoice?","label":"GIT","source":"synthetic"}
-{"text":"Show the recent commits touching DeclararVentaService.","label":"GIT","source":"synthetic"}
-{"text":"Show the recent commits touching price cascade.","label":"GIT","source":"synthetic"}
-{"text":"Show the recent commits touching invoice.","label":"GIT","source":"synthetic"}
-{"text":"Who modified DeclararVentaService last?","label":"GIT","source":"synthetic"}
-{"text":"Who modified price cascade last?","label":"GIT","source":"synthetic"}
-{"text":"Who modified invoice last?","label":"GIT","source":"synthetic"}
-{"text":"Show the history of DeclararVentaService.","label":"GIT","source":"synthetic"}
-{"text":"Show the history of price cascade.","label":"GIT","source":"synthetic"}
-{"text":"Show the history of invoice.","label":"GIT","source":"synthetic"}
 {"text":"Where is the definition of parseConfig?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of provider fallback?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of config?","label":"SYMBOL","source":"synthetic"}
@@ -726,6 +726,15 @@
 {"text":"¿Qué archivo contiene parseConfig?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene provider fallback?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene config?","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de parseConfig.","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de provider fallback.","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de config.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de parseConfig.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de provider fallback.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de config.","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase parseConfig?","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase provider fallback?","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase config?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of ModelRouter?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of retry behavior?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of database?","label":"SYMBOL","source":"synthetic"}
@@ -753,6 +762,15 @@
 {"text":"¿Qué archivo contiene ModelRouter?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene retry behavior?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene database?","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de ModelRouter.","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de retry behavior.","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de database.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de ModelRouter.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de retry behavior.","label":"SYMBOL","source":"synthetic"}
+{"text":"Localiza la declaración de database.","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase ModelRouter?","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase retry behavior?","label":"SYMBOL","source":"synthetic"}
+{"text":"¿Dónde está la clase database?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of CylinderType?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of payment processing?","label":"SYMBOL","source":"synthetic"}
 {"text":"Where is the definition of auth?","label":"SYMBOL","source":"synthetic"}
@@ -780,25 +798,7 @@
 {"text":"¿Qué archivo contiene CylinderType?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene payment processing?","label":"SYMBOL","source":"synthetic"}
 {"text":"¿Qué archivo contiene auth?","label":"SYMBOL","source":"synthetic"}
-{"text":"Where is the definition of PricesCascadeService?","label":"SYMBOL","source":"synthetic"}
-{"text":"Where is the definition of token validation?","label":"SYMBOL","source":"synthetic"}
-{"text":"Where is the definition of sales?","label":"SYMBOL","source":"synthetic"}
-{"text":"Find symbol PricesCascadeService.","label":"SYMBOL","source":"synthetic"}
-{"text":"Find symbol token validation.","label":"SYMBOL","source":"synthetic"}
-{"text":"Find symbol sales.","label":"SYMBOL","source":"synthetic"}
-{"text":"Locate PricesCascadeService declaration.","label":"SYMBOL","source":"synthetic"}
-{"text":"Locate token validation declaration.","label":"SYMBOL","source":"synthetic"}
-{"text":"Locate sales declaration.","label":"SYMBOL","source":"synthetic"}
-{"text":"Which file contains PricesCascadeService?","label":"SYMBOL","source":"synthetic"}
-{"text":"Which file contains token validation?","label":"SYMBOL","source":"synthetic"}
-{"text":"Which file contains sales?","label":"SYMBOL","source":"synthetic"}
-{"text":"Show the source of PricesCascadeService.","label":"SYMBOL","source":"synthetic"}
-{"text":"Show the source of token validation.","label":"SYMBOL","source":"synthetic"}
-{"text":"Show the source of sales.","label":"SYMBOL","source":"synthetic"}
-{"text":"Find the symbol PricesCascadeService.","label":"SYMBOL","source":"synthetic"}
-{"text":"Find the symbol token validation.","label":"SYMBOL","source":"synthetic"}
-{"text":"Find the symbol sales.","label":"SYMBOL","source":"synthetic"}
-{"text":"¿Dónde está la definición de PricesCascadeService?","label":"SYMBOL","source":"synthetic"}
+{"text":"Muestra el source de CylinderType.","label":"SYMBOL","source":"synthetic"}
 {"text":"Who calls parseConfig?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls providerfallback?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls config?","label":"REFERENCE","source":"synthetic"}
@@ -824,6 +824,30 @@
 {"text":"¿Dónde se usa parseConfig?","label":"REFERENCE","source":"synthetic"}
 {"text":"¿Dónde se usa provider fallback?","label":"REFERENCE","source":"synthetic"}
 {"text":"¿Dónde se usa config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa provider fallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia provider fallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa provider fallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa config?","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de parseConfig.","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de providerfallback.","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de config.","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a providerfallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a providerfallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca provider fallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca config?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a parseConfig?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a providerfallback?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a config?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls ModelRouter?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls retrybehavior?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls database?","label":"REFERENCE","source":"synthetic"}
@@ -849,56 +873,32 @@
 {"text":"¿Dónde se usa ModelRouter?","label":"REFERENCE","source":"synthetic"}
 {"text":"¿Dónde se usa retry behavior?","label":"REFERENCE","source":"synthetic"}
 {"text":"¿Dónde se usa database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa retry behavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué código usa database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia retry behavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién referencia database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa retry behavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿En qué archivos se usa database?","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de ModelRouter.","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de retrybehavior.","label":"REFERENCE","source":"synthetic"}
+{"text":"Lista los callers de database.","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a retrybehavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Quién invoca a database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a retrybehavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué funciones llaman a database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca retry behavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Dónde se invoca database?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a ModelRouter?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a retrybehavior?","label":"REFERENCE","source":"synthetic"}
+{"text":"¿Qué métodos llaman a database?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls CylinderType?","label":"REFERENCE","source":"synthetic"}
 {"text":"Who calls paymentprocessing?","label":"REFERENCE","source":"synthetic"}
-{"text":"Who calls auth?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is CylinderType referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is payment processing referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is auth referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to CylinderType.","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to payment processing.","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to auth.","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses CylinderType?","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses paymentprocessing?","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses auth?","label":"REFERENCE","source":"synthetic"}
-{"text":"List the callers of payment processing.","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is CylinderType used?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is payment processing used?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is auth used?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a CylinderType?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a paymentprocessing?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a auth?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia CylinderType?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia payment processing?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia auth?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa CylinderType?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa payment processing?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa auth?","label":"REFERENCE","source":"synthetic"}
-{"text":"Who calls PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
-{"text":"Who calls tokenvalidation?","label":"REFERENCE","source":"synthetic"}
-{"text":"Who calls sales?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is PricesCascadeService referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is token validation referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is sales referenced?","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to PricesCascadeService.","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to token validation.","label":"REFERENCE","source":"synthetic"}
-{"text":"Find all references to sales.","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses tokenvalidation?","label":"REFERENCE","source":"synthetic"}
-{"text":"Which code uses sales?","label":"REFERENCE","source":"synthetic"}
-{"text":"List the callers of token validation.","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is PricesCascadeService used?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is token validation used?","label":"REFERENCE","source":"synthetic"}
-{"text":"Where is sales used?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a tokenvalidation?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Quién llama a sales?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia token validation?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se referencia sales?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa token validation?","label":"REFERENCE","source":"synthetic"}
-{"text":"¿Dónde se usa sales?","label":"REFERENCE","source":"synthetic"}
 {"text":"Find parseConfig and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find provider fallback and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find config and its callers.","label":"COMPOSITE","source":"synthetic"}
@@ -923,6 +923,15 @@
 {"text":"Traza parseConfig desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza provider fallback desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza config desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra parseConfig con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra provider fallback con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra config con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de parseConfig y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de provider fallback y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de config y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es parseConfig y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es provider fallback y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es config y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find ModelRouter and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find retry behavior and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find database and its callers.","label":"COMPOSITE","source":"synthetic"}
@@ -947,6 +956,15 @@
 {"text":"Traza ModelRouter desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza retry behavior desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza database desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra ModelRouter con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra retry behavior con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra database con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de ModelRouter y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de retry behavior y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de database y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es ModelRouter y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es retry behavior y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es database y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find CylinderType and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find payment processing and its callers.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Find auth and its callers.","label":"COMPOSITE","source":"synthetic"}
@@ -971,30 +989,12 @@
 {"text":"Traza CylinderType desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza payment processing desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
 {"text":"Traza auth desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find PricesCascadeService and its callers.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find token validation and its callers.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find sales and its callers.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Show PricesCascadeService with related tests.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Show token validation with related tests.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Show sales with related tests.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explain PricesCascadeService and who uses it.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explain token validation and who uses it.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explain sales and who uses it.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find the definition of PricesCascadeService and its references.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find the definition of token validation and its references.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find the definition of sales and its references.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Trace PricesCascadeService from config to usage.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Trace token validation from config to usage.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Trace sales from config to usage.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Encuentra PricesCascadeService y sus llamadores.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Encuentra token validation y sus llamadores.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Encuentra sales y sus llamadores.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explica PricesCascadeService y quién lo usa.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explica token validation y quién lo usa.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Explica sales y quién lo usa.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Traza PricesCascadeService desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Traza token validation desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Traza sales desde la config hasta el uso.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find DeclararVentaService and its callers.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find price cascade and its callers.","label":"COMPOSITE","source":"synthetic"}
-{"text":"Find invoice and its callers.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra CylinderType con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra payment processing con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Muestra auth con sus tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de CylinderType y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de payment processing y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Encuentra la definición de auth y sus referencias.","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es CylinderType y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es payment processing y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
+{"text":"¿Qué es auth y quién lo usa?","label":"COMPOSITE","source":"synthetic"}
