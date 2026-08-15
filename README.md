@@ -551,6 +551,22 @@ Dataset: 24 queries no-gold (13 símbolos/archivos fabricados + 11 conceptos aus
 
 Veredicto umbral 6.5 (precision ≥ 0.7 ∧ coverage_gold ≥ 0.8): **PASS**. Los 8 FP son queries semánticas no-gold cuyo ruido weak (match_type semantic, 0 hits reales) supera el umbral; los 2.7k-7.8k tokens muestran escalación semántica sobre consultas inexistentes. FN restante: sem-04 (concept gold con evidencia solo-semántica). Tuning posible: umbral de score en evidencia semántica (hoy binario por match_type).
 
+
+## Expected Utility Cost Model (REJECT)
+
+El optimizer puede seleccionar por utilidad esperada (`CF_UTILITY=1`): EU = P(correct|plan)·value − tokens·Wt − latency·Wl − (1−P)·failure_penalty·Wf, con P(correct) derivada de la varianza del cardinality estimator (varianceTokens). Ablación sobre T1 (32 tasks) vs selección actual (cost/quality): **no mejora** — correctness 1.000 = 1.000, pero regret 0.1633 = 0.1633 (0% reducción, umbral 10%).
+
+```bash
+TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-utility.js   # → evals/reports/utility-<TS>.json
+```
+
+| selector | plan_acc | regret | tokens | correctness |
+|----------|----------|--------|--------|-------------|
+| cost/quality (actual) | 0.906 | 0.163 | 105 | 1.000 |
+| EU (CF_UTILITY=1) | 0.438 | 0.163 | 105 | 1.000 |
+
+Root cause: la señal de varianza no diferencia variantes de plan (comparten el op primario y costos de tokens casi idénticos) → EU degenera a ranking por costo. El oráculo distingue por tie-break de gt_hits, no por tokens. Fix necesario (tarea derivada): señal de incertidumbre POR VARIANTE (varianza de est_candidates o success rate por plan id). El modo queda disponible sin tocar el default.
+
 ## Repository structure
 
 ```text

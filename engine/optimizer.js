@@ -260,6 +260,40 @@ function modelEstimate(tool, queryClass, scope, heur) {
   return out;
 }
 
+// expected-utility-cost — CF_UTILITY=1: selección por utilidad esperada
+// EU = P(correct|plan)·value − tokens·Wt − latency·Wl − (1−P)·failure_penalty·Wf
+// P(correct) desde varianceTokens del estimator (7.2): var pequeña → confianza alta.
+function euConfig() {
+  return {
+    value: Number(process.env.CF_UTIL_VALUE ?? 1000),
+    wt: Number(process.env.CF_UTIL_WT ?? 0.02),
+    wl: Number(process.env.CF_UTIL_WL ?? 0.002),
+    penalty: Number(process.env.CF_UTIL_PENALTY ?? 500),
+    wf: Number(process.env.CF_UTIL_WF ?? 0.5),
+  };
+}
+
+function planPCorrect(ops, queryType, stats) {
+  // P(correct) desde varianceTokens del estimator, promediada sobre los ops del
+  // plan (no solo el primario): si todos los ops son estables → confianza alta.
+  let wsum = 0, nw = 0;
+  for (const op of ops) {
+    const e = stats.get(`${op.tool}|${queryType}`);
+    if (!e || e.n < 5) continue;
+    const varNorm = e.varianceTokens / (1 + (e.p50Tokens || 1) ** 2);
+    wsum += 1 / (1 + varNorm);
+    nw += 1;
+  }
+  if (!nw) return 0.8; // sin evidencia → prior
+  return Math.max(0.1, Math.min(0.99, wsum / nw));
+}
+
+function planEU(ops, p, cfg) {
+  const tokens = ops.reduce((a, o) => a + (o.tokens ?? 0), 0);
+  const latency = ops.reduce((a, o) => a + (o.latency_ms ?? 0), 0);
+  return p * cfg.value - tokens * cfg.wt - latency * cfg.wl - (1 - p) * cfg.penalty * cfg.wf;
+}
+
 export function optimize(logicalPlan = {}) {
   const queryType = logicalPlan.query_type ?? 'implementation';
   const target = logicalPlan.target ?? {};
@@ -270,6 +304,8 @@ export function optimize(logicalPlan = {}) {
   const cw = costWeights();
   const qw = qualityWeights();
   const confidence = logicalPlan.confidence ?? 0.5;
+  const euMode = process.env.CF_UTILITY === '1';
+  const euCfg = euConfig();
 
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
@@ -288,20 +324,28 @@ export function optimize(logicalPlan = {}) {
       return variants.map((v, i) => {
         const cost = planCost(v, cw);
         const quality = planQuality(v, qw, confidence);
+        const pc = euMode ? planPCorrect(v, queryType, stats) : null;
         return {
           id: p.id + (i ? 'r' : ''),
           ops: v,
           cost,
           quality,
           utility: cost > 0 ? quality / cost : Number.POSITIVE_INFINITY,
+          eu: pc !== null ? planEU(v, pc, euCfg) : null,
+          p_correct: pc,
         };
       });
     });
 
-  const selected = plans.reduce((a, b) => (b.utility > a.utility ? b : a));
-  const reason = `plan ${selected.id}: utility ${selected.utility.toFixed(3)} ` +
-    `(quality ${selected.quality.toFixed(2)} / cost ${selected.cost.toFixed(3)}) ` +
-    `para query_type "${queryType}" pred_class "${predClass}"`;
+  // expected-utility-cost — selección por EU (CF_UTILITY=1) vs cost/quality (default)
+  const selected = euMode
+    ? plans.reduce((a, b) => (b.eu > a.eu ? b : a))
+    : plans.reduce((a, b) => (b.utility > a.utility ? b : a));
+  const reason = euMode
+    ? `plan ${selected.id}: EU ${selected.eu.toFixed(1)} (P ${selected.p_correct.toFixed(2)}·${euCfg.value} − ${selected.cost.toFixed(2)}) para query_type "${queryType}" pred_class "${predClass}"`
+    : `plan ${selected.id}: utility ${selected.utility.toFixed(3)} ` +
+      `(quality ${selected.quality.toFixed(2)} / cost ${selected.cost.toFixed(3)}) ` +
+      `para query_type "${queryType}" pred_class "${predClass}"`;
 
   return { selected: selected.id, plans, reason, pred_class: predClass };
 }
