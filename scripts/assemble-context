@@ -38,11 +38,12 @@ if [ "${CF_INCLUDE_GENERATED:-}" = "1" ]; then
   BAD_PATH_LIST='["node_modules",".git","coverage","vendor"]'
 fi
 
-# M3 (adversarial-mitigations): CF_STRICT_BUDGET=1 → budget duro (sin la cláusula
-# path-cluster que permitía exceder; opt-in, default preserva el comportamiento)
-STRICT_FLAG=false
-if [ "${CF_STRICT_BUDGET:-}" = "1" ]; then
-  STRICT_FLAG=true
+# M3 (adversarial-mitigations) + strict-budget-default: budget duro POR DEFECTO
+# (sin la cláusula path-cluster que permitía exceder — mo-26: 15836 vs 8000 =
+# failure duro de correctness). Opt-out con CF_STRICT_BUDGET=0 (comportamiento legacy).
+STRICT_FLAG=true
+if [ "${CF_STRICT_BUDGET:-}" = "0" ]; then
+  STRICT_FLAG=false
 fi
 
 if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" '
