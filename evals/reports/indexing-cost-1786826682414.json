@@ -1,0 +1,159 @@
+{
+  "date": "2026-08-15",
+  "repos": {
+    "t1-basic": {
+      "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
+      "query": "Where is retryWithFallback defined?",
+      "note": {
+        "t_incremental": "impl actual reindexa full por proceso; touch 5 files no reduce coste (proxy = build completo)",
+        "n_break_even": "denominador <= 0: CQE warm no es más barato por query que el baseline (overhead node+engine ~77ms domina en repos chicos) → setup nunca se amortiza; N=0 por regla 3.3",
+        "n_break_even_bm25": "vs BM25-only cold (reindexa por proceso cada query): CQE evita re-indexar → quiebre en ~1 query"
+      },
+      "file_count": 9,
+      "total_bytes": 3316,
+      "index_ms": {
+        "mean": 2.1348753333333335,
+        "median": 2.327541
+      },
+      "rss_peak_mb": 45.9,
+      "t_incremental_ms": 1.506964,
+      "query_cold_ms": {
+        "mean": 133.66666666666666,
+        "median": 132
+      },
+      "query_warm_ms": {
+        "mean": 81,
+        "median": 77
+      },
+      "baseline_rg_ms": {
+        "mean": 7.333333333333333,
+        "median": 6
+      },
+      "bm25_cold_ms": {
+        "mean": 112.5,
+        "median": 117
+      },
+      "n_break_even": 0,
+      "n_break_even_bm25": 0.058188525000000005,
+      "verdict": "CQE warm (77ms) >= rg (6ms) por query; setup nunca se amortiza (N=0, regla 3.3); en repos chicos conviene rg directo"
+    },
+    "t1-modular": {
+      "cqp": "FIND definitions OF symbol register LIMIT 10",
+      "query": "Where is register defined?",
+      "note": {
+        "t_incremental": "impl actual reindexa full por proceso; touch 5 files no reduce coste (proxy = build completo)",
+        "n_break_even": "denominador <= 0: CQE warm no es más barato por query que el baseline (overhead node+engine ~80ms domina en repos chicos) → setup nunca se amortiza; N=0 por regla 3.3",
+        "n_break_even_bm25": "vs BM25-only cold (reindexa por proceso cada query): CQE evita re-indexar → quiebre en ~1 query"
+      },
+      "file_count": 11,
+      "total_bytes": 1760,
+      "index_ms": {
+        "mean": 1.7378553333333333,
+        "median": 1.802334
+      },
+      "rss_peak_mb": 45.7,
+      "t_incremental_ms": 1.758016,
+      "query_cold_ms": {
+        "mean": 128.33333333333334,
+        "median": 128
+      },
+      "query_warm_ms": {
+        "mean": 78.33333333333333,
+        "median": 80
+      },
+      "baseline_rg_ms": {
+        "mean": 6.666666666666667,
+        "median": 7
+      },
+      "bm25_cold_ms": {
+        "mean": 105,
+        "median": 106
+      },
+      "n_break_even": 0,
+      "n_break_even_bm25": 0.06932053846153846,
+      "verdict": "CQE warm (80ms) >= rg (7ms) por query; setup nunca se amortiza (N=0, regla 3.3); en repos chicos conviene rg directo"
+    },
+    "polar": {
+      "cqp": "FIND definitions OF symbol \"CylinderType\" LIMIT 5",
+      "query": "¿Dónde está definida la entidad que modela los tipos de cilindros de gas?",
+      "note": {
+        "t_incremental": "impl actual reindexa full por proceso; touch 5 files no reduce coste (proxy = build completo)",
+        "n_break_even": "N = T_index(418ms) / (rg 712ms − warm 93ms)",
+        "n_break_even_bm25": "vs BM25-only cold (reindexa por proceso cada query): CQE evita re-indexar → quiebre en ~1 query"
+      },
+      "file_count": 1000,
+      "total_bytes": 11360537,
+      "index_ms": {
+        "mean": 411.65986599999997,
+        "median": 418.341697
+      },
+      "rss_peak_mb": 141.6,
+      "t_incremental_ms": 407.982731,
+      "query_cold_ms": {
+        "mean": 147.66666666666666,
+        "median": 150
+      },
+      "query_warm_ms": {
+        "mean": 91,
+        "median": 93
+      },
+      "baseline_rg_ms": {
+        "mean": 713.3333333333334,
+        "median": 712
+      },
+      "bm25_cold_ms": {
+        "mean": 518.5,
+        "median": 523
+      },
+      "n_break_even": 0.6758347285945073,
+      "n_break_even_bm25": 0.9728876674418605,
+      "verdict": "CQE paga su setup tras <=100 queries (N=0.7); indexación recomendable"
+    },
+    "dev": {
+      "cqp": "FIND filename OF file \"server.js\" LIMIT 10",
+      "query": "dashboard de monitoreo y control de servicios con PM2",
+      "note": {
+        "t_incremental": "impl actual reindexa full por proceso; touch 5 files no reduce coste (proxy = build completo)",
+        "n_break_even": "N = T_index(924ms) / (rg 822ms − warm 100ms)",
+        "n_break_even_bm25": "vs BM25-only cold (reindexa por proceso cada query): CQE evita re-indexar → quiebre en ~1 query"
+      },
+      "file_count": 1000,
+      "total_bytes": 17875537,
+      "index_ms": {
+        "mean": 891.9938616666667,
+        "median": 923.723211
+      },
+      "rss_peak_mb": 181.2,
+      "t_incremental_ms": 920.327464,
+      "query_cold_ms": {
+        "mean": 378.3333333333333,
+        "median": 383
+      },
+      "query_warm_ms": {
+        "mean": 103.66666666666667,
+        "median": 100
+      },
+      "baseline_rg_ms": {
+        "mean": 821,
+        "median": 822
+      },
+      "bm25_cold_ms": {
+        "mean": 1040,
+        "median": 1082
+      },
+      "n_break_even": 1.2793950290858727,
+      "n_break_even_bm25": 0.9406550010183299,
+      "verdict": "CQE paga su setup tras <=100 queries (N=1.3); indexación recomendable"
+    }
+  },
+  "verdict": {
+    "threshold": 100,
+    "rule": "repos con N_break_even > 100: usar rg para workloads < N queries",
+    "per_repo": {
+      "t1-basic": "CQE warm (77ms) >= rg (6ms) por query; setup nunca se amortiza (N=0, regla 3.3); en repos chicos conviene rg directo",
+      "t1-modular": "CQE warm (80ms) >= rg (7ms) por query; setup nunca se amortiza (N=0, regla 3.3); en repos chicos conviene rg directo",
+      "polar": "CQE paga su setup tras <=100 queries (N=0.7); indexación recomendable",
+      "dev": "CQE paga su setup tras <=100 queries (N=1.3); indexación recomendable"
+    }
+  }
+}

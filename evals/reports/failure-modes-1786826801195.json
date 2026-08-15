@@ -1,0 +1,475 @@
+{
+  "date": "2026-08-15",
+  "tasks": 24,
+  "per_category": {
+    "exact-filename": {
+      "raw": {
+        "correctness": 0.25,
+        "tokens_mean": 4197361,
+        "latency_mean": 66.25
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 10,
+        "latency_mean": 102
+      }
+    },
+    "exact-symbol": {
+      "raw": {
+        "correctness": 0.25,
+        "tokens_mean": 4197863.5,
+        "latency_mean": 66.5
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 85.75,
+        "latency_mean": 123.25
+      }
+    },
+    "single-file": {
+      "raw": {
+        "correctness": 0.25,
+        "tokens_mean": 4197425.25,
+        "latency_mean": 67.75
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 40.25,
+        "latency_mean": 122.5
+      }
+    },
+    "one-shot": {
+      "raw": {
+        "correctness": 0.5,
+        "tokens_mean": 4197900,
+        "latency_mean": 70.75
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 95,
+        "latency_mean": 125.25
+      }
+    },
+    "tiny-repo": {
+      "raw": {
+        "correctness": 0,
+        "tokens_mean": 29.25,
+        "latency_mean": 16.5
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 108.5,
+        "latency_mean": 113.25
+      }
+    },
+    "trivial-regex": {
+      "raw": {
+        "correctness": 0.5,
+        "tokens_mean": 35.25,
+        "latency_mean": 16.5
+      },
+      "cqe": {
+        "correctness": 1,
+        "tokens_mean": 100.75,
+        "latency_mean": 114.5
+      }
+    }
+  },
+  "overhead": {
+    "latency_mean_ms": 66.08333333333333,
+    "tokens_mean": -2798362.3333333335
+  },
+  "verdict": {
+    "lose_rate": 0,
+    "threshold_30pct": 0.3,
+    "mitigation_needed": false,
+    "pass": true,
+    "lost": []
+  },
+  "rows": [
+    {
+      "id": "fm-filename-01",
+      "category": "exact-filename",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 117,
+        "latencyMs": 8
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 95,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-filename-02",
+      "category": "exact-filename",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": false,
+        "tokens": 74,
+        "latencyMs": 8
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 98,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-filename-03",
+      "category": "exact-filename",
+      "repo": "polar",
+      "raw": {
+        "correct": false,
+        "tokens": 16789136,
+        "latencyMs": 231
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 115,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-filename-04",
+      "category": "exact-filename",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": true,
+        "tokens": 117,
+        "latencyMs": 18
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 100,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-symbol-01",
+      "category": "exact-symbol",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 16,
+        "latencyMs": 121,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-symbol-02",
+      "category": "exact-symbol",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": true,
+        "tokens": 17,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 11,
+        "latencyMs": 117,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-symbol-03",
+      "category": "exact-symbol",
+      "repo": "polar",
+      "raw": {
+        "correct": false,
+        "tokens": 16791437,
+        "latencyMs": 217
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 292,
+        "latencyMs": 140,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-symbol-04",
+      "category": "exact-symbol",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 15
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 24,
+        "latencyMs": 115,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-single-01",
+      "category": "single-file",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": true,
+        "tokens": 237,
+        "latencyMs": 15
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 90,
+        "latencyMs": 114,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-single-02",
+      "category": "single-file",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": false,
+        "tokens": 74,
+        "latencyMs": 14
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 43,
+        "latencyMs": 113,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-single-03",
+      "category": "single-file",
+      "repo": "polar",
+      "raw": {
+        "correct": false,
+        "tokens": 16789316,
+        "latencyMs": 226
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 149,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-single-04",
+      "category": "single-file",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": false,
+        "tokens": 74,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 18,
+        "latencyMs": 114,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-shot-01",
+      "category": "one-shot",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 24,
+        "latencyMs": 119,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-shot-02",
+      "category": "one-shot",
+      "repo": "polar",
+      "raw": {
+        "correct": false,
+        "tokens": 16791239,
+        "latencyMs": 234
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 187,
+        "latencyMs": 149,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-shot-03",
+      "category": "one-shot",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": true,
+        "tokens": 124,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 79,
+        "latencyMs": 116,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-shot-04",
+      "category": "one-shot",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": true,
+        "tokens": 237,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 90,
+        "latencyMs": 117,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-tiny-01",
+      "category": "tiny-repo",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 117,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 10,
+        "latencyMs": 102,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-tiny-02",
+      "category": "tiny-repo",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 239,
+        "latencyMs": 122,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-tiny-03",
+      "category": "tiny-repo",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 74,
+        "latencyMs": 118,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-tiny-04",
+      "category": "tiny-repo",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 111,
+        "latencyMs": 111,
+        "selected_plan": "A"
+      }
+    },
+    {
+      "id": "fm-regex-01",
+      "category": "trivial-regex",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 74,
+        "latencyMs": 112,
+        "selected_plan": "B"
+      }
+    },
+    {
+      "id": "fm-regex-02",
+      "category": "trivial-regex",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": true,
+        "tokens": 124,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 79,
+        "latencyMs": 119,
+        "selected_plan": "B"
+      }
+    },
+    {
+      "id": "fm-regex-03",
+      "category": "trivial-regex",
+      "repo": "t1-basic",
+      "raw": {
+        "correct": false,
+        "tokens": 0,
+        "latencyMs": 17
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 239,
+        "latencyMs": 113,
+        "selected_plan": "B"
+      }
+    },
+    {
+      "id": "fm-regex-04",
+      "category": "trivial-regex",
+      "repo": "t1-modular",
+      "raw": {
+        "correct": true,
+        "tokens": 17,
+        "latencyMs": 16
+      },
+      "cqe": {
+        "correct": true,
+        "tokens": 11,
+        "latencyMs": 114,
+        "selected_plan": "B"
+      }
+    }
+  ]
+}

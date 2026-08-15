@@ -1,0 +1,242 @@
+[
+  {
+    "id": "fm-filename-01",
+    "category": "exact-filename",
+    "repo": "t1-basic",
+    "query": "¿Dónde está el archivo config.ts?",
+    "cqp": "FIND filename OF file config.ts",
+    "primary": ["src/config.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-filename-02",
+    "category": "exact-filename",
+    "repo": "t1-modular",
+    "query": "¿Dónde está el archivo file.py?",
+    "cqp": "FIND filename OF file file.py",
+    "primary": ["app/handlers/file.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-filename-03",
+    "category": "exact-filename",
+    "repo": "polar",
+    "query": "¿Dónde está app.module.ts?",
+    "cqp": "FIND filename OF file app.module.ts",
+    "primary": ["api-polar/src/app.module.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-filename-04",
+    "category": "exact-filename",
+    "repo": "t1-basic",
+    "query": "¿Dónde está el archivo fallback.test.ts?",
+    "cqp": "FIND filename OF file fallback.test.ts",
+    "primary": ["tests/fallback.test.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-symbol-01",
+    "category": "exact-symbol",
+    "repo": "t1-basic",
+    "query": "¿Dónde se define effectiveTimeout?",
+    "cqp": "FIND definitions OF symbol effectiveTimeout",
+    "primary": ["src/config.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-symbol-02",
+    "category": "exact-symbol",
+    "repo": "t1-modular",
+    "query": "¿Dónde se define get_provider_config?",
+    "cqp": "FIND definitions OF symbol get_provider_config",
+    "primary": ["app/core/config.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-symbol-03",
+    "category": "exact-symbol",
+    "repo": "polar",
+    "query": "¿Dónde se define DeclararVentaService?",
+    "cqp": "FIND definitions OF symbol DeclararVentaService",
+    "primary": ["api-polar/src/modules/declarar-venta/declarar-venta.service.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-symbol-04",
+    "category": "exact-symbol",
+    "repo": "t1-basic",
+    "query": "¿Dónde se define loadProviders?",
+    "cqp": "FIND definitions OF symbol loadProviders",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-single-01",
+    "category": "single-file",
+    "repo": "t1-basic",
+    "query": "¿Dónde está la función timeout?",
+    "cqp": "FIND definitions OF symbol timeout",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-single-02",
+    "category": "single-file",
+    "repo": "t1-modular",
+    "query": "¿Dónde está la variable _SETTINGS?",
+    "cqp": "FIND definitions OF symbol _SETTINGS",
+    "primary": ["app/core/config.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-single-03",
+    "category": "single-file",
+    "repo": "polar",
+    "query": "¿Dónde está TestFactoriesPlaceholder?",
+    "cqp": "FIND definitions OF symbol TestFactoriesPlaceholder",
+    "primary": ["api-polar/src/test-factories.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-single-04",
+    "category": "single-file",
+    "repo": "t1-modular",
+    "query": "¿Dónde está la constante DEFAULT_HANDLER?",
+    "cqp": "FIND definitions OF symbol DEFAULT_HANDLER",
+    "primary": ["app/core/registry.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-shot-01",
+    "category": "one-shot",
+    "repo": "t1-basic",
+    "query": "¿Dónde se define loadProviders? (top-1)",
+    "cqp": "FIND definitions OF symbol loadProviders LIMIT 1",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-shot-02",
+    "category": "one-shot",
+    "repo": "polar",
+    "query": "¿Dónde se define RendicionSinCargaService? (top-1)",
+    "cqp": "FIND definitions OF symbol RendicionSinCargaService LIMIT 1",
+    "primary": ["api-polar/src/modules/rendicion-sin-carga/rendicion-sin-carga.service.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-shot-03",
+    "category": "one-shot",
+    "repo": "t1-modular",
+    "query": "¿Dónde se define register? (top-1)",
+    "cqp": "FIND definitions OF symbol register LIMIT 1",
+    "primary": ["app/core/registry.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-shot-04",
+    "category": "one-shot",
+    "repo": "t1-basic",
+    "query": "¿Dónde está la función timeout? (top-1)",
+    "cqp": "FIND definitions OF symbol timeout LIMIT 1",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-tiny-01",
+    "category": "tiny-repo",
+    "repo": "t1-basic",
+    "query": "¿Dónde está helpers.ts?",
+    "cqp": "FIND filename OF file helpers.ts",
+    "primary": ["src/utils/helpers.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-tiny-02",
+    "category": "tiny-repo",
+    "repo": "t1-basic",
+    "query": "¿Dónde se define retryWithFallback?",
+    "cqp": "FIND definitions OF symbol retryWithFallback",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-tiny-03",
+    "category": "tiny-repo",
+    "repo": "t1-basic",
+    "query": "¿Dónde se usa DEFAULT_TIMEOUT_MS?",
+    "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-tiny-04",
+    "category": "tiny-repo",
+    "repo": "t1-basic",
+    "query": "¿Dónde se define ProviderRouter?",
+    "cqp": "FIND definitions OF symbol ProviderRouter",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-regex-01",
+    "category": "trivial-regex",
+    "repo": "t1-basic",
+    "query": "patrón DEFAULT_TIMEOUT_MS",
+    "cqp": "FIND pattern OF symbol DEFAULT_TIMEOUT_MS",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-regex-02",
+    "category": "trivial-regex",
+    "repo": "t1-modular",
+    "query": "patrón register",
+    "cqp": "FIND pattern OF symbol register",
+    "primary": ["app/core/registry.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-regex-03",
+    "category": "trivial-regex",
+    "repo": "t1-basic",
+    "query": "patrón retryWithFallback",
+    "cqp": "FIND pattern OF symbol retryWithFallback",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "fm-regex-04",
+    "category": "trivial-regex",
+    "repo": "t1-modular",
+    "query": "patrón get_provider_config",
+    "cqp": "FIND pattern OF symbol get_provider_config",
+    "primary": ["app/core/config.py"],
+    "related": [],
+    "tests": []
+  }
+]
