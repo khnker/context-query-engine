@@ -48,6 +48,8 @@ function p95(values) {
  * si el record trae scope). Además agrega por `queryClass` plano: estimateCandidates
  * recibe solo (queryClass, scope, stats) y necesita una entrada agregada sin operador
  * para hacer el blend de cardinalidad.
+ * Los registros se ponderan por recencia (decay exponencial, τ=7d): stats viejas
+ * pesan menos → el cost model se adapta a la evolución del repo (change adaptive-optimizer).
  * Retorna Map key → {n, avgCandidates, p95Tokens, avgLatencyMs, successRate, avgEstCandidates}.
  */
 export function load() {
@@ -60,10 +62,31 @@ export function load() {
   const ensure = (key) => {
     let e = map.get(key);
     if (!e) {
-      e = { n: 0, avgCandidates: 0, p95Tokens: 0, avgLatencyMs: 0, successRate: 0, avgEstCandidates: 0, _tokens: [], _success: 0 };
+      e = { n: 0, avgCandidates: 0, p95Tokens: 0, avgLatencyMs: 0, successRate: 0, avgEstCandidates: 0, _tokens: [], _w: 0, _wCand: 0, _wLat: 0, _wEst: 0, _wSuccess: 0 };
       map.set(key, e);
     }
     return e;
+  };
+
+  const now = Date.now();
+  const DECAY_DAYS = 7;
+  const weightFor = (o) => {
+    const ts = Date.parse(o?.ts ?? '');
+    if (!Number.isFinite(ts)) return 1;
+    const days = (now - ts) / 86400000;
+    // registros de la misma sesión (< 1h) no decaen: peso 1 exacto (evita drift de ms)
+    if (days <= 1 / 24) return 1;
+    return Math.exp(-days / DECAY_DAYS);
+  };
+  const accumulate = (e, o, cand, tokens, latency, estCand) => {
+    const w = weightFor(o);
+    e.n += 1;
+    e._w += w;
+    e._wCand += cand * w;
+    e._wLat += latency * w;
+    e._wEst += estCand * w;
+    e._tokens.push(tokens);
+    if (cand > 0) e._wSuccess += w;
   };
 
   for (const l of lines) {
@@ -78,34 +101,25 @@ export function load() {
     const tokens = Number(actual.tokens) || 0;
     const latency = Number(actual.latencyMs) || 0;
     const estCand = Number(estimated.candidates) || 0;
-    for (const key of [`${operator}|${queryClass}`, queryClass]) {
-      const e = ensure(key);
-      e.n += 1;
-      e.avgCandidates += cand;
-      e.avgLatencyMs += latency;
-      e.avgEstCandidates += estCand;
-      e._tokens.push(tokens);
-      if (cand > 0) e._success += 1;
-    }
+    accumulate(ensure(`${operator}|${queryClass}`), o, cand, tokens, latency, estCand);
+    accumulate(ensure(queryClass), o, cand, tokens, latency, estCand);
     if (scope) {
-      const e = ensure(`${operator}|${queryClass}|${scope}`);
-      e.n += 1;
-      e.avgCandidates += cand;
-      e.avgLatencyMs += latency;
-      e.avgEstCandidates += estCand;
-      e._tokens.push(tokens);
-      if (cand > 0) e._success += 1;
+      accumulate(ensure(`${operator}|${queryClass}|${scope}`), o, cand, tokens, latency, estCand);
     }
   }
 
   for (const e of map.values()) {
-    e.avgCandidates = e.n ? e.avgCandidates / e.n : 0;
-    e.avgLatencyMs = e.n ? e.avgLatencyMs / e.n : 0;
-    e.avgEstCandidates = e.n ? e.avgEstCandidates / e.n : 0;
+    e.avgCandidates = e._w ? e._wCand / e._w : 0;
+    e.avgLatencyMs = e._w ? e._wLat / e._w : 0;
+    e.avgEstCandidates = e._w ? e._wEst / e._w : 0;
     e.p95Tokens = p95(e._tokens);
-    e.successRate = e.n ? e._success / e.n : 0;
+    e.successRate = e._w ? e._wSuccess / e._w : 0;
     delete e._tokens;
-    delete e._success;
+    delete e._w;
+    delete e._wCand;
+    delete e._wLat;
+    delete e._wEst;
+    delete e._wSuccess;
   }
   return map;
 }
