@@ -1,0 +1,465 @@
+{
+  "date": "2026-08-15",
+  "tasks": 30,
+  "median_tokens": 6738,
+  "explosion_k": 5,
+  "categories": {
+    "high-frequency-symbol": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 6930.666666666667,
+      "latency_ms_mean": 147.66666666666666,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-hf-01",
+          "correct": true,
+          "tokens": 13815,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-hf-02",
+          "correct": true,
+          "tokens": 6738,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-hf-03",
+          "correct": true,
+          "tokens": 239,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "ambiguous-identifier": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 16883.666666666668,
+      "latency_ms_mean": 533,
+      "regret_mean": 0,
+      "token_explosions": 1,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-am-04",
+          "correct": true,
+          "tokens": 41698,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-am-05",
+          "correct": true,
+          "tokens": 8874,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-am-06",
+          "correct": true,
+          "tokens": 79,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "huge-fanout": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 7116.333333333333,
+      "latency_ms_mean": 289.3333333333333,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-fo-07",
+          "correct": true,
+          "tokens": 8502,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-fo-08",
+          "correct": true,
+          "tokens": 12773,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-fo-09",
+          "correct": true,
+          "tokens": 74,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "zero-results": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 0,
+      "latency_ms_mean": 101.33333333333333,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-zr-10",
+          "correct": true,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-zr-11",
+          "correct": true,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-zr-12",
+          "correct": true,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "deep-dependency-chain": {
+      "n": 3,
+      "correctness": 0.6666666666666666,
+      "tokens_mean": 3541,
+      "latency_ms_mean": 148.66666666666666,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-dc-13",
+          "correct": false,
+          "tokens": 2624,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-dc-14",
+          "correct": true,
+          "tokens": 7980,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-dc-15",
+          "correct": true,
+          "tokens": 19,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "duplicate-implementations": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 1994.6666666666667,
+      "latency_ms_mean": 113.66666666666667,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-du-16",
+          "correct": true,
+          "tokens": 5725,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-du-17",
+          "correct": true,
+          "tokens": 20,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-du-18",
+          "correct": true,
+          "tokens": 239,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "generated-code": {
+      "n": 3,
+      "correctness": 0.6666666666666666,
+      "tokens_mean": 16.666666666666668,
+      "latency_ms_mean": 81.66666666666667,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-gc-19",
+          "correct": true,
+          "tokens": 40,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-gc-20",
+          "correct": false,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-gc-21",
+          "correct": true,
+          "tokens": 10,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "vendor-code": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 4257.666666666667,
+      "latency_ms_mean": 107.66666666666667,
+      "regret_mean": 0,
+      "token_explosions": 0,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-vd-22",
+          "correct": true,
+          "tokens": 12773,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-vd-23",
+          "correct": true,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-vd-24",
+          "correct": true,
+          "tokens": 0,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "monorepo": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 15836,
+      "latency_ms_mean": 210,
+      "regret_mean": 0,
+      "token_explosions": 1,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-mo-25",
+          "correct": true,
+          "tokens": 10,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-mo-26",
+          "correct": true,
+          "tokens": 47458,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-mo-27",
+          "correct": true,
+          "tokens": 40,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    },
+    "polyglot": {
+      "n": 3,
+      "correctness": 1,
+      "tokens_mean": 27813.666666666668,
+      "latency_ms_mean": 4728.333333333333,
+      "regret_mean": 0,
+      "token_explosions": 1,
+      "false_confidence": 0,
+      "errors": 0,
+      "details": [
+        {
+          "id": "adv-po-28",
+          "correct": true,
+          "tokens": 47458,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-po-29",
+          "correct": true,
+          "tokens": 23874,
+          "plan": "A",
+          "confidence": null,
+          "error": null
+        },
+        {
+          "id": "adv-po-30",
+          "correct": true,
+          "tokens": 12109,
+          "plan": "B",
+          "confidence": null,
+          "error": null
+        }
+      ]
+    }
+  },
+  "verdict": {
+    "pass": false,
+    "details": "high-frequency-symbol: 1.000 (expl 0) | ambiguous-identifier: 1.000 (expl 1) | huge-fanout: 1.000 (expl 0) | zero-results: 1.000 (expl 0) | deep-dependency-chain: 0.667 (expl 0) | duplicate-implementations: 1.000 (expl 0) | generated-code: 0.667 (expl 0) | vendor-code: 1.000 (expl 0) | monorepo: 1.000 (expl 1) | polyglot: 1.000 (expl 1)",
+    "zero_match_explosions": 0
+  },
+  "matrix": [
+    {
+      "category": "high-frequency-symbol",
+      "correctness": 1,
+      "tokens": 6931,
+      "latency": 148,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "ambiguous-identifier",
+      "correctness": 1,
+      "tokens": 16884,
+      "latency": 533,
+      "regret": 0,
+      "explosions": 1,
+      "false_confidence": 0
+    },
+    {
+      "category": "huge-fanout",
+      "correctness": 1,
+      "tokens": 7116,
+      "latency": 289,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "zero-results",
+      "correctness": 1,
+      "tokens": 0,
+      "latency": 101,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "deep-dependency-chain",
+      "correctness": 0.6666666666666666,
+      "tokens": 3541,
+      "latency": 149,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "duplicate-implementations",
+      "correctness": 1,
+      "tokens": 1995,
+      "latency": 114,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "generated-code",
+      "correctness": 0.6666666666666666,
+      "tokens": 17,
+      "latency": 82,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "vendor-code",
+      "correctness": 1,
+      "tokens": 4258,
+      "latency": 108,
+      "regret": 0,
+      "explosions": 0,
+      "false_confidence": 0
+    },
+    {
+      "category": "monorepo",
+      "correctness": 1,
+      "tokens": 15836,
+      "latency": 210,
+      "regret": 0,
+      "explosions": 1,
+      "false_confidence": 0
+    },
+    {
+      "category": "polyglot",
+      "correctness": 1,
+      "tokens": 27814,
+      "latency": 4728,
+      "regret": 0,
+      "explosions": 1,
+      "false_confidence": 0
+    }
+  ]
+}
