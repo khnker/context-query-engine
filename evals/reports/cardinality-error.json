@@ -1,0 +1,64 @@
+{
+  "tasks": 32,
+  "records": 42,
+  "per_operator": [
+    {
+      "operator": "follow",
+      "predicate_class": "references",
+      "samples": 5,
+      "mape_candidates": 1,
+      "mape_tokens": 0.9966666666666667,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "include",
+      "predicate_class": "implementation",
+      "samples": 4,
+      "mape_candidates": 0.6977272727272728,
+      "mape_tokens": 0.995,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "rg-files",
+      "predicate_class": "filename",
+      "samples": 2,
+      "mape_candidates": 0.5833333333333333,
+      "mape_tokens": 0.99,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "search-code",
+      "predicate_class": "references",
+      "samples": 6,
+      "mape_candidates": 0.5299145299145299,
+      "mape_tokens": 0.5766666666666667,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "search-code",
+      "predicate_class": "implementation",
+      "samples": 15,
+      "mape_candidates": 0.5015362415362415,
+      "mape_tokens": 0.5589999999999999,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "search-code",
+      "predicate_class": "definitions",
+      "samples": 9,
+      "mape_candidates": 0.4975783475783475,
+      "mape_tokens": 0.5733333333333334,
+      "reopt_opportunities": 0
+    },
+    {
+      "operator": "git-log",
+      "predicate_class": "implementation",
+      "samples": 1,
+      "mape_candidates": 0.1,
+      "mape_tokens": 0.9933333333333333,
+      "reopt_opportunities": 0
+    }
+  ],
+  "total_reopt_opportunities": 0,
+  "scope": "t1"
+}
