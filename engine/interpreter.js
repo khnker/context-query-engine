@@ -10,7 +10,41 @@
  *   - sin match                            → default implementation, 0.3
  */
 
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+
+// 11.7 — clase de intención (ML) → query_type del interpreter (fallback regex intacto)
+const CLASS_TO_TYPE = {
+  LEXICAL: 'definitions',
+  SYMBOL: 'definitions',
+  STRUCTURAL: 'implementation',
+  REFERENCE: 'references',
+  DEPENDENCY: 'references',
+  SEMANTIC: 'concept',
+  CONFIGURATION: 'pattern',
+  TEST: 'pattern',
+  GIT: 'implementation',
+  COMPOSITE: 'concept',
+};
+
+// 11.7 — clasificador local opcional (CF_MODEL_CMD sirviendo 'classify-query').
+// Mismo contrato que engine/local-model.js: <bin> classify-query '<json>'. Si
+// confidence >= umbral → query_type del modelo; si no/falla → regex heurístico.
+function mlQueryType(text) {
+  const cmd = process.env.CF_MODEL_CMD;
+  if (!cmd) return null;
+  const [bin, ...args] = cmd.split(/\s+/);
+  try {
+    const out = execFileSync(bin, [...args, 'classify-query', JSON.stringify({ query: text })], {
+      encoding: 'utf8', timeout: 2000, stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    const r = JSON.parse(out);
+    if (r?.label && r.confidence >= 0.6 && CLASS_TO_TYPE[r.label]) {
+      return { query_type: CLASS_TO_TYPE[r.label], confidence: r.confidence, matched: [`ml:${r.label}`], ml: true };
+    }
+  } catch { /* modelo ausente/roto → heurístico */ }
+  return null;
+}
 
 const FAMILIES = [
   {
@@ -102,6 +136,10 @@ export function interpret(text) {
   if (src === '') {
     return { query_type: 'implementation', confidence: 0.3, matched: [] };
   }
+
+  // 11.7 — si hay clasificador local y confía (≥0.6), gana; si no, regex heurístico
+  const ml = mlQueryType(src);
+  if (ml) return ml;
 
   const hits = [];
   for (const fam of FAMILIES) {

@@ -62,3 +62,30 @@ test('2.2 sin match → default implementation 0.3', () => {
     matched: [],
   });
 });
+
+test('11.7 clasificador local: CF_MODEL_CMD con confianza >= 0.6 → query_type del modelo', () => {
+  const prev = process.env.CF_MODEL_CMD;
+  process.env.CF_MODEL_CMD = 'node evals/ml/classify.mjs';
+  try {
+    const r = interpret('Who calls retryWithBackoff?');
+    assert.equal(r.ml, true, 'modelo ganó');
+    assert.equal(r.query_type, 'references', 'REFERENCE → references');
+    assert.ok(r.confidence >= 0.6, `confianza ${r.confidence}`);
+  } finally {
+    if (prev !== undefined) process.env.CF_MODEL_CMD = prev;
+    else delete process.env.CF_MODEL_CMD;
+  }
+});
+
+test('11.7 sin CF_MODEL_CMD → regex heurístico (ml ausente)', () => {
+  const prev = process.env.CF_MODEL_CMD;
+  delete process.env.CF_MODEL_CMD;
+  try {
+    const r = interpret('dónde está definido foo');
+    assert.equal(r.ml, undefined);
+    assert.equal(r.query_type, 'definitions');
+  } finally {
+    if (prev !== undefined) process.env.CF_MODEL_CMD = prev;
+    else delete process.env.CF_MODEL_CMD;
+  }
+});
