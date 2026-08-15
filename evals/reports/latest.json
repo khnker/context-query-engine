@@ -4,66 +4,66 @@
     "modes": [
       {
         "mode": "A",
-        "count": 5,
-        "avg_tokens": 292.8,
-        "avg_latency_ms": 43.8,
+        "count": 40,
+        "avg_tokens": 139199.275,
+        "avg_latency_ms": 1765.2,
         "avg_tool_calls": 2,
         "success_rate": 1,
-        "avg_precision": 0.9,
+        "avg_precision": 0.6630120575000001,
         "avg_recall": 1,
-        "avg_efficiency": 0.9,
+        "avg_efficiency": 0.6630120575000001,
         "avg_compression": 1,
-        "avg_wrong_tokens": 49.4,
+        "avg_wrong_tokens": 134745.525,
         "avg_dup_tokens": 0,
-        "avg_density": 0.9,
+        "avg_density": 0.6629374999999998,
         "avg_regret": 0
       },
       {
         "mode": "B",
-        "count": 5,
-        "avg_tokens": 10.2,
-        "avg_latency_ms": 69.8,
-        "avg_tool_calls": 1,
-        "success_rate": 0.8,
-        "avg_precision": 0.8,
-        "avg_recall": 0.8,
-        "avg_efficiency": 0.8,
-        "avg_compression": 31.6509,
-        "avg_wrong_tokens": 3,
+        "count": 40,
+        "avg_tokens": 94.775,
+        "avg_latency_ms": 107,
+        "avg_tool_calls": 1.1,
+        "success_rate": 0.925,
+        "avg_precision": 0.5967229675000001,
+        "avg_recall": 0.925,
+        "avg_efficiency": 0.5967229675000001,
+        "avg_compression": 636.8838324999999,
+        "avg_wrong_tokens": 80.25,
         "avg_dup_tokens": 0,
-        "avg_density": 0.7,
+        "avg_density": 0.5864950000000001,
         "avg_regret": 0
       },
       {
         "mode": "C",
-        "count": 5,
-        "avg_tokens": 59,
-        "avg_latency_ms": 122,
-        "avg_tool_calls": 1,
+        "count": 40,
+        "avg_tokens": 763.7,
+        "avg_latency_ms": 379.025,
+        "avg_tool_calls": 1.325,
         "success_rate": 1,
-        "avg_precision": 0.8,
+        "avg_precision": 0.5890309575,
         "avg_recall": 1,
-        "avg_efficiency": 0.8,
-        "avg_compression": 4.459884,
-        "avg_wrong_tokens": 17.2,
-        "avg_dup_tokens": 31.2,
-        "avg_density": 0.80074,
-        "avg_regret": 0.12158
+        "avg_efficiency": 0.5890309575,
+        "avg_compression": 104.0543148,
+        "avg_wrong_tokens": 662.65,
+        "avg_dup_tokens": 266.85,
+        "avg_density": 0.5881425,
+        "avg_regret": 0.6655
       },
       {
         "mode": "D",
-        "count": 5,
-        "avg_tokens": 70,
-        "avg_latency_ms": 130.2,
+        "count": 40,
+        "avg_tokens": 614.075,
+        "avg_latency_ms": 1396.25,
         "avg_tool_calls": 1,
-        "success_rate": 0.8,
-        "avg_precision": 0.8,
-        "avg_recall": 0.8,
-        "avg_efficiency": 0.8,
-        "avg_compression": 5.1659500000000005,
-        "avg_wrong_tokens": 19.8,
+        "success_rate": 0.875,
+        "avg_precision": 0.5717229675000002,
+        "avg_recall": 0.875,
+        "avg_efficiency": 0.5717229675000002,
+        "avg_compression": 128.55051895000003,
+        "avg_wrong_tokens": 517.9,
         "avg_dup_tokens": 0,
-        "avg_density": 0.7,
+        "avg_density": 0.5592049999999998,
         "avg_regret": 0
       }
     ]
@@ -71,19 +71,19 @@
   "ranking": [
     {
       "mode": "A",
-      "avg_density": 0.9
+      "avg_density": 0.6629374999999998
     },
     {
       "mode": "C",
-      "avg_density": 0.80074
-    },
-    {
-      "mode": "D",
-      "avg_density": 0.7
+      "avg_density": 0.5881425
     },
     {
       "mode": "B",
-      "avg_density": 0.7
+      "avg_density": 0.5864950000000001
+    },
+    {
+      "mode": "D",
+      "avg_density": 0.5592049999999998
     }
   ],
   "regression": {

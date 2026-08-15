@@ -71,7 +71,7 @@ function parseNdjson(out) {
   return out.split('\n').filter(Boolean).map((l) => {
     try {
       const o = JSON.parse(l);
-      if (!o || typeof o !== 'object') return null;
+      if (!o || typeof o !== 'object' || typeof o.path !== 'string') return null; // skip línea stats de assemble-context (sin path)
       if (o.token_estimate == null) {
         o.token_estimate = Math.max(8, Math.ceil((o.content ?? o.snippet ?? '').length / 4));
       }
@@ -318,7 +318,8 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   // 12.2 — rerank opcional (tinybert-reranker): si hay modelo local, reordena el
   // pool por relevancia (scores) antes de la fusión; null/fallo → orden heurístico.
-  if (modelAvailable() && pool.length > 1) {
+  // filename = match exacto: el heurístico ya ordena por tiering; el reranker añade ruido → se omite.
+  if (modelAvailable() && pool.length > 1 && logicalPlan.query_type !== 'filename') {
     try {
       const t0 = Date.now();
       const rr = rerankSync(pool, logicalPlan.target?.name ?? rawText);

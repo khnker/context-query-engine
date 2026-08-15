@@ -144,4 +144,4 @@ rl.on('line', (line) => {
   }
 });
 
-rl.on('close', () => process.exit(0));
+// sin handler de 'close': el exit natural espera el flush de stdout (process.exit() descartaría respuestas pendientes)

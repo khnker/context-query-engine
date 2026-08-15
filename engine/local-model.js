@@ -108,7 +108,9 @@ export function rerankSync(results, query = '') {
     return null; // salida corrupta → fallback
   }
   if (!Array.isArray(parsed.scores)) return null;
-  return { scores: sanitizeScores(parsed.scores, results.length), latencyMs: Date.now() - t0 };
+  const scores = sanitizeScores(parsed.scores, results.length);
+  if (scores.length > 1 && Math.max(...scores) - Math.min(...scores) < 0.2) return null; // casi-ties → el modelo no discrimina → orden heurístico
+  return { scores, latencyMs: Date.now() - t0 };
 }
 
 export default { CAPACITIES, available, run, rerank, rerankSync };

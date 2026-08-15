@@ -19,7 +19,11 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 TASKS = json.loads((ROOT / 'evals/datasets/tasks.json').read_text())
-REPO_DIRS = {'t1-basic': ROOT / 'evals/datasets/repos/t1-basic', 't1-modular': ROOT / 'evals/datasets/repos/t1-modular'}
+TASKS_DEV = ROOT / 'evals/datasets/tasks-dev.json'
+if TASKS_DEV.exists():
+    TASKS += json.loads(TASKS_DEV.read_text())
+REPO_DIRS = {'t1-basic': ROOT / 'evals/datasets/repos/t1-basic', 't1-modular': ROOT / 'evals/datasets/repos/t1-modular', 'dev': ROOT.parent}
+SKIP_DIRS = {'node_modules', '.git', 'dist', 'build', 'coverage', '.next', '.angular', '.output', '.venv', 'venv', '__pycache__', 'target', 'vendor', 'data', '.cache', '.worktrees'}
 OUT = ROOT / 'evals/ml/model'
 H = 4096
 LAMBDA = 1.0
@@ -53,7 +57,7 @@ def repo_files(task):
         return []
     out = []
     for p in d.rglob('*'):
-        if p.is_file() and 'node_modules' not in p.parts and '.git' not in p.parts:
+        if p.is_file() and not any(s in p.parts for s in SKIP_DIRS):
             out.append(str(p.relative_to(d)))
     return out
 

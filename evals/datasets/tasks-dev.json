@@ -1,0 +1,224 @@
+[
+  {
+    "id": "dev-01",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "dashboard de monitoreo y control de servicios con PM2",
+    "cqp": "FIND filename OF file \"server.js\" LIMIT 10",
+    "primary": [
+      "dashboard/server.js"
+    ],
+    "related": [
+      "dashboard/public/index.html"
+    ],
+    "tests": [],
+    "symbols": [
+      "SERVICE_META"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-02",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "html del dashboard que muestra el estado de los servicios",
+    "cqp": "FIND filename OF file \"index.html\" LIMIT 10",
+    "primary": [
+      "dashboard/public/index.html"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-03",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "sincroniza el historial de git hacia la memoria persistente",
+    "cqp": "FIND filename OF file \"engram-sync-history.py\" LIMIT 5",
+    "primary": [
+      "scripts/engram-sync-history.py"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "engram"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-04",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "grafo de conocimiento del proyecto polar",
+    "cqp": "FIND filename OF file \"graph.json\" LIMIT 10",
+    "primary": [
+      "polar/graphify-out/graph.json"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "god_nodes"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-05",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "motor de retrieval con cost model aprendido y operadores",
+    "cqp": "FIND filename OF file \"engine.js\" LIMIT 10",
+    "primary": [
+      "contextforge/engine/engine.js"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "runCQP"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-06",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "servidor MCP del motor de contexto",
+    "cqp": "FIND filename OF file \"mcp-server.js\" LIMIT 10",
+    "primary": [
+      "contextforge/engine/mcp-server.js"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "context_query"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-07",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "clasificador de intenciones con modelo local en node",
+    "cqp": "FIND filename OF file \"classify.mjs\" LIMIT 5",
+    "primary": [
+      "contextforge/evals/ml/classify.mjs"
+    ],
+    "related": [
+      "contextforge/evals/ml/train-reranker.py"
+    ],
+    "tests": [],
+    "symbols": [
+      "classify"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-08",
+    "category": "lexical",
+    "repo": "dev",
+    "query": "wrapper bash de ripgrep para b\u00fasqueda de c\u00f3digo",
+    "cqp": "FIND filename OF file \"search-code\" LIMIT 5",
+    "primary": [
+      "contextforge/scripts/search-code"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "rg"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-09",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "frontend del pipeline de scraping de eltarro",
+    "cqp": "FIND filename OF file \"package.json\" LIMIT 50",
+    "primary": [
+      "fe-eltarro/package.json"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "vite"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-10",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "aplicacion web de busqueda de thinkpads",
+    "cqp": "FIND filename OF file \"package.json\" LIMIT 50",
+    "primary": [
+      "thinkpad-hunter/package.json"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-11",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "aplicacion de diseno open source",
+    "cqp": "FIND filename OF file \"package.json\" LIMIT 50",
+    "primary": [
+      "open-design/package.json"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-12",
+    "category": "configuration",
+    "repo": "dev",
+    "query": "configuracion de procesos pm2 del stack",
+    "cqp": "FIND filename OF file \"ecosystem.config.js\" LIMIT 5",
+    "primary": [
+      "ecosystem.config.js"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "pm2"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-13",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "dashboard que monitorea procesos pm2 del stack",
+    "cqp": "FIND implementation OF concept \"pm2 process monitoring\" LIMIT 10",
+    "primary": [
+      "dashboard/server.js"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "pm2"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "dev-14",
+    "category": "semantic",
+    "repo": "dev",
+    "query": "variable con los servicios monitoreados",
+    "cqp": "FIND implementation OF symbol \"SERVICE_META\" LIMIT 10",
+    "primary": [
+      "dashboard/server.js"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "SERVICE_META"
+    ],
+    "max_context_tokens": 8000
+  }
+]

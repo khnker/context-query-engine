@@ -18,6 +18,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const ENGINE = path.join(ROOT, 'engine', 'engine.js');
 const CACHE = path.join(ROOT, 'engine', '.cache.json');
 const TASKS = JSON.parse(fs.readFileSync(path.join(ROOT, 'evals/datasets/tasks.json'), 'utf8'));
+const EXTRA_TASKS = path.join(ROOT, 'evals/datasets/tasks-dev.json');
+if (fs.existsSync(EXTRA_TASKS)) {
+  TASKS.push(...JSON.parse(fs.readFileSync(EXTRA_TASKS, 'utf8')));
+}
 const TEST = fs
   .readFileSync(path.join(ROOT, 'evals/datasets/queries-test.jsonl'), 'utf8')
   .split('\n')
@@ -26,14 +30,14 @@ const TEST = fs
 
 const byId = Object.fromEntries(TASKS.map((t) => [t.id, t]));
 const KS = [5, 10];
-const REPO_DIRS = { 't1-basic': 'evals/datasets/repos/t1-basic', 't1-modular': 'evals/datasets/repos/t1-modular' };
+const REPO_DIRS = { 't1-basic': 'evals/datasets/repos/t1-basic', 't1-modular': 'evals/datasets/repos/t1-modular', dev: '/home/nicolas/dev' };
 
 function runEngine(cqp, repoDir, modelCmd) {
   if (fs.existsSync(CACHE)) fs.rmSync(CACHE);
   const env = { ...process.env, CF_STATS_FILE: path.join(ROOT, 'engine/statistics.ndjson') };
   if (modelCmd) env.CF_MODEL_CMD = modelCmd;
   else delete env.CF_MODEL_CMD;
-  const out = execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  const out = execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
   const parsed = JSON.parse(out);
   return parsed.results ?? [];
 }
@@ -53,7 +57,9 @@ function mrr(ranked, ground) {
   return 0;
 }
 
-const rows = TEST.filter((r) => byId[r.source]);
+const rows = process.env.CF_TASKS === 'dev'
+  ? TASKS.filter((t) => t.repo === 'dev')
+  : TEST.filter((r) => byId[r.source]);
 if (rows.length === 0) {
   console.error('sin tasks reales en el split de test');
   process.exit(1);
@@ -64,8 +70,8 @@ const report = { k: KS, model: modelCmd ?? '(ninguno — comparación heurístic
 const agg = { heuristic: { r5: [], r10: [], mrr: [] }, rerank: { r5: [], r10: [], mrr: [] } };
 
 for (const r of rows) {
-  const task = byId[r.source];
-  const repoDir = path.join(ROOT, REPO_DIRS[task.repo] ?? task.repo);
+  const task = r.repo ? r : byId[r.source];
+  const repoDir = path.resolve(ROOT, REPO_DIRS[task.repo] ?? task.repo);
   if (!fs.existsSync(repoDir)) continue;
   const ground = [...(task.primary ?? []), ...(task.related ?? []), ...(task.tests ?? [])];
   const rankedH = [...new Set(runEngine(task.cqp, repoDir, null).map((x) => x.path))];
@@ -88,6 +94,7 @@ for (const r of rows) {
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
 report.summary = {
   tasks: report.rows.length,
+  model: modelCmd ?? null,
   heuristic: { recall5: mean(agg.heuristic.r5), recall10: mean(agg.heuristic.r10), mrr: mean(agg.heuristic.mrr) },
   rerank: { recall5: mean(agg.rerank.r5), recall10: mean(agg.rerank.r10), mrr: mean(agg.rerank.mrr) },
 };
