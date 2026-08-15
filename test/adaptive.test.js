@@ -31,11 +31,21 @@ test('AQP: off por defecto — sin campo reoptimized', () => {
   assert.equal(r.stats.reoptimized, undefined, 'sin CF_REOPT no debe re-optimizar');
 });
 
-test('AQP: under-return (est >> actual 0) salta ops pesadas con CF_REOPT=1', () => {
+test('AQP v2: under-return elimina SOLO la op léxica redundante, follow corre', () => {
   const r = runEngine(QUERY, { CF_REOPT: '1' });
-  assert.match(String(r.stats.reoptimized ?? ''), /under-return-skip/, `debe marcar reoptimized (got ${JSON.stringify(r.stats)})`);
-  assert.equal(r.stats.early_terminated, true, 'terminación temprana coherente');
-  assert.equal(r.stats.tool_calls, 1, 'solo ejecutó el primer op');
+  assert.match(String(r.stats.reoptimized ?? ''), /lexical-skip/, `debe marcar reoptimized (got ${JSON.stringify(r.stats)})`);
+  assert.equal(r.stats.early_terminated, false, 'sin terminación temprana (plan continúa)');
+  assert.equal(r.stats.tool_calls, 2, 'search-semantic + follow (search-code redundante saltada)');
+});
+
+test('AQP v2: git-log NUNCA se salta (regresión git-01 — GT preservado)', () => {
+  // git-01 real: concept "recent changes" → D33 agrega git-log al plan C
+  const r = runEngine('FIND implementation OF concept "recent changes" LIMIT 10', { CF_REOPT: '1', FORCE_PLAN: 'C' });
+  assert.match(String(r.stats.reoptimized ?? ''), /lexical-skip/, 'skip marcado (search-code redundante)');
+  assert.equal(r.stats.tool_calls, 2, 'search-semantic + git-log (search-code saltada)');
+  assert.equal(r.stats.early_terminated, false, 'sin early_terminated');
+  const paths = r.results.map((x) => x.path ?? '');
+  assert.ok(paths.includes('src/services/fallback.ts'), `GT de git-01 preservado (got ${paths.join(',')})`);
 });
 
 test('AQP: guards — query filename (plan A) no crashea con CF_REOPT=1', () => {

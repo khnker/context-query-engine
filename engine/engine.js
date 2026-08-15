@@ -268,10 +268,14 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   }
   const selected = phys.plans.find((p) => p.id === phys.selected) ?? phys.plans[0];
   const pool = [];
+  // AQP v2 — ops léxicas marcadas como saltadas (sin mutar el array en iteración:
+  // for..of sobre array mutado desincroniza el iterator y re-ejecuta ops)
+  const skippedOps = new Set();
 
   // 13.1 — ejecución ordenada con early termination
   for (const op of selected.ops) {
     if (op.tool === 'assemble-context') continue;
+    if (skippedOps.has(op.tool)) continue;
     stats.tool_calls += 1;
     const t0 = Date.now();
     const results = execOp(op, logicalPlan, pool);
@@ -297,26 +301,25 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       results: results.length, relevant: relevant.length,
       satisfied: relevant.length > 0, cache_hit: false,
     }, phys.pred_class);
-    // AQP v1 (adaptive-query-processing, flag-gated): re-optimizar el plan restante
+    // AQP v2 (adaptive-query-processing, flag-gated): re-optimizar el plan restante
     // a partir del resultado OBSERVADO. Off por defecto (CF_REOPT=1 lo activa).
+    // Invariante v2: SOLO ops léxicas (search-code/structure/semantic) son candidatas
+    // a skip; git-log/follow/include NUNCA se saltan (git-log = única fuente de
+    // queries git; follow/include = D14 semántico). Sin early_terminated: el plan
+    // continúa, solo se descartan re-búsquedas redundantes del mismo término.
     if (process.env.CF_REOPT === '1' && !stats.early_terminated) {
       const estC = op.est_candidates ?? 0;
       const actC = results.length;
       const dev = estC > 0 ? Math.abs(estC - actC) / Math.max(estC, 1) : 0;
-      const pendingOps = selected.ops.slice(selected.ops.indexOf(op) + 1).filter((o) => o.tool !== 'assemble-context');
       const reoptTh = Number(process.env.CF_REOPT_THRESHOLD ?? 0.5);
-      if (dev > reoptTh && pendingOps.length) {
-        if (actC > estC && relevant.length > 0 && pendingOps.some((o) => o.tool === 'follow' || o.tool === 'include')) {
-          // over-return: el op ya sobre-entrego → los dependientes (FOLLOW/INCLUDE) son innecesarios
-          stats.early_terminated = true;
-          stats.reoptimized = `over-return-skip (est ${estC} vs actual ${actC})`;
-          break;
-        }
-        if (actC === 0 && estC > 0 && pendingOps.some((o) => ['search-semantic', 'git-log', 'follow'].includes(o.tool))) {
-          // under-return: 0 evidencia → las ops pesadas siguientes no aportaran
-          stats.early_terminated = true;
-          stats.reoptimized = `under-return-skip (est ${estC} vs actual 0)`;
-          break;
+      const lexical = (o) => ['search-code', 'search-structure', 'search-semantic'].includes(o.tool);
+      const under = actC === 0 && estC > 0;
+      const over = actC > estC && relevant.length > 0;
+      if (dev > reoptTh && (under || over)) {
+        const redundant = selected.ops.slice(selected.ops.indexOf(op) + 1).filter((o) => o.tool !== 'assemble-context' && lexical(o));
+        if (redundant.length) {
+          for (const o of redundant) skippedOps.add(o.tool);
+          stats.reoptimized = `lexical-skip (est ${estC} vs actual ${actC})`;
         }
       }
     }

@@ -1,0 +1,21 @@
+{
+  "change": "adaptive-query-processing",
+  "version": "v2",
+  "date": "2026-08-15",
+  "verdict": "ADOPTED (flag-gated CF_REOPT=1, off default)",
+  "v1_reject_reason": "under-return-skip mató git-log en git-01 (correctness 0.969 vs 1.0)",
+  "v2_rule": "skip SOLO ops léxicas redundantes (search-code/structure/semantic) pendientes tras un op con dev>thr (under o over); git-log/follow/include NUNCA se saltan; sin early_terminated; implementado con Set de ops saltadas (fix: mutar array durante for..of desincronizaba el iterator y re-ejecutaba ops)",
+  "ablation": {
+    "bench": "T1 complete (32 queries, runs 3, warmup 1)",
+    "correctness": 1.0,
+    "baseline_correctness": 1.0,
+    "tokens_mean": 56.0,
+    "baseline_tokens_mean": 56.0,
+    "latency_mean_ms": 251.4,
+    "baseline_latency_mean_ms": 269.0,
+    "plan_accuracy_learned": 0.875,
+    "regret": 0.0,
+    "git01": "GT src/services/fallback.ts preservado (git-log ejecutado, tool_calls 3->2)"
+  },
+  "artefact": "evals/results/T1-20260815T113913"
+}
