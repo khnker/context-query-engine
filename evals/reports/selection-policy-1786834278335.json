@@ -1,0 +1,1407 @@
+{
+  "date": "2026-08-15",
+  "tasks": 32,
+  "policies": {
+    "cost_only": {
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "recall5": 0.833,
+      "mrr": 0.939,
+      "exactness": 0.956,
+      "regret": 0.166,
+      "plan_dist": {
+        "A": 17,
+        "B": 15
+      }
+    },
+    "quality_only": {
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "recall5": 0.833,
+      "mrr": 0.939,
+      "exactness": 0.956,
+      "regret": 0.166,
+      "plan_dist": {
+        "A": 19,
+        "B": 13
+      }
+    },
+    "oracle_tokens": {
+      "avg_tokens": 97.5,
+      "avg_gt_hits": 4.031,
+      "recall5": 0.813,
+      "mrr": 0.907,
+      "exactness": 0.925,
+      "regret": 0,
+      "plan_dist": {
+        "A": 21,
+        "B": 11
+      }
+    },
+    "oracle_quality": {
+      "avg_tokens": 220.8,
+      "avg_gt_hits": 5.375,
+      "recall5": 1.021,
+      "mrr": 0.939,
+      "exactness": 0.956,
+      "regret": 2.9106,
+      "plan_dist": {
+        "C": 19,
+        "B": 9,
+        "A": 4
+      }
+    }
+  },
+  "diagnosis": {
+    "quality_dominates_cost": true,
+    "nobody_beats_cost": false,
+    "oracle_tokens_not_emulable_by_quality": true,
+    "conclusion": "selection-policy + señal post-hoc"
+  },
+  "perTask": [
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 200,
+          "latency_ms": 124,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 500,
+          "latency_ms": 110,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 549,
+          "est_tokens": 1000,
+          "latency_ms": 353,
+          "gt_hits": 13,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 17
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 200,
+          "latency_ms": 110,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1000,
+          "latency_ms": 284,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 79,
+          "est_tokens": 200,
+          "latency_ms": 109,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 79,
+          "est_tokens": 500,
+          "latency_ms": 116,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 264,
+          "est_tokens": 1000,
+          "latency_ms": 291,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 11
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 11,
+          "est_tokens": 200,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 11,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 281,
+          "est_tokens": 1000,
+          "latency_ms": 315,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 86,
+          "est_tokens": 200,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        },
+        "B": {
+          "tokens": 86,
+          "est_tokens": 500,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        },
+        "C": {
+          "tokens": 181,
+          "est_tokens": 1000,
+          "latency_ms": 274,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 9
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 200,
+          "latency_ms": 111,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 111,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1000,
+          "latency_ms": 295,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1.5,
+          "mrr": 1,
+          "n_results": 10
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 310,
+          "est_tokens": 800,
+          "latency_ms": 312,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.2,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 247,
+          "est_tokens": 250,
+          "latency_ms": 111,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 13
+        },
+        "C": {
+          "tokens": 247,
+          "est_tokens": 1000,
+          "latency_ms": 109,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 13
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 19,
+          "est_tokens": 200,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 19,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "C": {
+          "tokens": 209,
+          "est_tokens": 1000,
+          "latency_ms": 288,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "str-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 170,
+          "est_tokens": 800,
+          "latency_ms": 291,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 67,
+          "est_tokens": 250,
+          "latency_ms": 112,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        },
+        "C": {
+          "tokens": 67,
+          "est_tokens": 1000,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "str-05",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 127,
+          "est_tokens": 200,
+          "latency_ms": 110,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 127,
+          "est_tokens": 500,
+          "latency_ms": 114,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 372,
+          "est_tokens": 1000,
+          "latency_ms": 275,
+          "gt_hits": 10,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 16
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "sem-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 220,
+          "est_tokens": 800,
+          "latency_ms": 266,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.5,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 250,
+          "latency_ms": 114,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 239,
+          "est_tokens": 1000,
+          "latency_ms": 114,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "A",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "sem-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 315,
+          "est_tokens": 800,
+          "latency_ms": 354,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.2,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 121,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 121,
+          "est_tokens": 1000,
+          "latency_ms": 113,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 170,
+          "est_tokens": 800,
+          "latency_ms": 294,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 67,
+          "est_tokens": 250,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        },
+        "C": {
+          "tokens": 67,
+          "est_tokens": 1000,
+          "latency_ms": 111,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "sem-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 120,
+          "est_tokens": 800,
+          "latency_ms": 276,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 120,
+          "est_tokens": 250,
+          "latency_ms": 315,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "C": {
+          "tokens": 120,
+          "est_tokens": 1000,
+          "latency_ms": 289,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "A"
+      }
+    },
+    {
+      "id": "sem-05",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 180,
+          "est_tokens": 800,
+          "latency_ms": 250,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.3333333333333333,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 90,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 90,
+          "est_tokens": 1000,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 7
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "dep-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 500,
+          "latency_ms": 133,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 800,
+          "latency_ms": 139,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 549,
+          "est_tokens": 1300,
+          "latency_ms": 351,
+          "gt_hits": 13,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 17
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "dep-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 135,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 800,
+          "latency_ms": 139,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1300,
+          "latency_ms": 310,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1.3333333333333333,
+          "mrr": 1,
+          "n_results": 10
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "dep-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 79,
+          "est_tokens": 500,
+          "latency_ms": 126,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 79,
+          "est_tokens": 800,
+          "latency_ms": 136,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 239,
+          "est_tokens": 1300,
+          "latency_ms": 311,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 1.3333333333333333,
+          "mrr": 1,
+          "n_results": 10
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "dep-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 11,
+          "est_tokens": 500,
+          "latency_ms": 120,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 11,
+          "est_tokens": 800,
+          "latency_ms": 123,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 281,
+          "est_tokens": 1300,
+          "latency_ms": 328,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 134,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 800,
+          "latency_ms": 130,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1300,
+          "latency_ms": 306,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "cfg-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 280,
+          "est_tokens": 800,
+          "latency_ms": 291,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.25,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 61,
+          "est_tokens": 250,
+          "latency_ms": 111,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "C": {
+          "tokens": 61,
+          "est_tokens": 1000,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 0.5,
+          "n_results": 3
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "cfg-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 200,
+          "latency_ms": 111,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 109,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1000,
+          "latency_ms": 408,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "cfg-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 100,
+          "latency_ms": 124,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 300,
+          "latency_ms": 96,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": null,
+          "latency_ms": 94,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "A"
+      }
+    },
+    {
+      "id": "cfg-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 140,
+          "est_tokens": 800,
+          "latency_ms": 276,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 39,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 39,
+          "est_tokens": 1000,
+          "latency_ms": 115,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "cfg-05",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 335,
+          "est_tokens": 800,
+          "latency_ms": 331,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.5,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 264,
+          "est_tokens": 250,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 15
+        },
+        "C": {
+          "tokens": 264,
+          "est_tokens": 1000,
+          "latency_ms": 122,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 15
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "B"
+      }
+    },
+    {
+      "id": "tst-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 40,
+          "est_tokens": 1000,
+          "latency_ms": 301,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.5,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 249,
+          "est_tokens": 450,
+          "latency_ms": 141,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 13
+        },
+        "C": {
+          "tokens": 289,
+          "est_tokens": 1200,
+          "latency_ms": 301,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 15
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "tst-02",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 105,
+          "est_tokens": 1000,
+          "latency_ms": 273,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.3333333333333333,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 96,
+          "est_tokens": 450,
+          "latency_ms": 139,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 191,
+          "est_tokens": 1200,
+          "latency_ms": 303,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 10
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 90,
+          "est_tokens": 1000,
+          "latency_ms": 278,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 50,
+          "est_tokens": 450,
+          "latency_ms": 131,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.3333333333333333,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 140,
+          "est_tokens": 1200,
+          "latency_ms": 312,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.3333333333333333,
+          "n_results": 5
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "plans": {
+        "A": {
+          "tokens": 260,
+          "est_tokens": 1000,
+          "latency_ms": 294,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.25,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 127,
+          "est_tokens": 450,
+          "latency_ms": 149,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 387,
+          "est_tokens": 1200,
+          "latency_ms": 315,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 17
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "B",
+        "oracle_tokens": "B",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "tst-05",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 100,
+          "latency_ms": 119,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 300,
+          "latency_ms": 134,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": null,
+          "latency_ms": 97,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "A"
+      }
+    },
+    {
+      "id": "adv-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 200,
+          "latency_ms": 121,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 116,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1000,
+          "latency_ms": 347,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1.5,
+          "mrr": 1,
+          "n_results": 10
+        }
+      },
+      "policy": {
+        "cost_only": "A",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "C"
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "plans": {
+        "A": {
+          "tokens": 45,
+          "est_tokens": 1100,
+          "latency_ms": 223,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        },
+        "B": {
+          "tokens": 45,
+          "est_tokens": 550,
+          "latency_ms": 115,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        },
+        "C": {
+          "tokens": 45,
+          "est_tokens": 1300,
+          "latency_ms": 225,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        }
+      },
+      "policy": {
+        "cost_only": "B",
+        "quality_only": "A",
+        "oracle_tokens": "A",
+        "oracle_quality": "A"
+      }
+    }
+  ]
+}
