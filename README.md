@@ -86,6 +86,13 @@ Token/time savings vs naive full-tree grep:
 | dev-13 `pm2` (broad concept) | 33.5M tokens (134 MB) | **1.76M tokens**, 0.66 s cold | **~19×** fewer tokens |
 | dev-14 `SERVICE_META` (precise symbol) | 4,056 tokens | **104 tokens**, rerank 83 ms | **~39×** fewer tokens |
 
+Time (cold, measured 2026-08-15 over `/home/nicolas/dev`):
+
+| Query | Naive (grep match + read all files) | Engine cold | Engine warm (cache 5 min) |
+|-------|--------------------------------------|-------------|---------------------------|
+| dev-13 broad `pm2` (134 MB / 33.5M tok) | ~1.9 s | **0.66 s** | ~0 s |
+| dev-14 `SERVICE_META` (16 KB / 4k tok) | ~0.9 s | **0.50 s** | ~0 s |
+
 Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is faster cold; the engine pays off on broad-concept queries over large trees (ranking + budget + cache included).
 
 ---
