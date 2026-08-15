@@ -132,12 +132,17 @@ export function confidence(n) {
 }
 
 // Blend: con datos → avgCandidates*c + DEFAULT*(1-c); sin datos → DEFAULT.
-export function estimateCandidates(queryClass, scope, stats = new Map()) {
+// Si se pasa operator, prefiere la clave `operator|queryClass` (cardinalidad por
+// operador, change cardinality-estimation) y cae a `queryClass` si no hay datos.
+export function estimateCandidates(queryClass, scope, stats = new Map(), operator) {
   const d = DEFAULTS[queryClass] ?? 15;
-  const entry = stats.get(queryClass);
-  if (entry && entry.n > 0) {
-    const c = confidence(entry.n);
-    return Math.round(entry.avgCandidates * c + d * (1 - c));
+  const keys = operator ? [`${operator}|${queryClass}`, queryClass] : [queryClass];
+  for (const k of keys) {
+    const entry = stats.get(k);
+    if (entry && entry.n > 0) {
+      const c = confidence(entry.n);
+      return Math.round(entry.avgCandidates * c + d * (1 - c));
+    }
   }
   return d;
 }

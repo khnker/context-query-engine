@@ -250,7 +250,7 @@ export function optimize(logicalPlan = {}) {
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
       const ops = p.ops.map((op) => {
-        const m = makeOp(op.tool, op.args ?? [name], statsEstimate(queryType, logicalPlan.scope ?? '', stats));
+        const m = makeOp(op.tool, op.args ?? [name], statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool));
         if (op.relations) m.relations = op.relations;
         if (op.inclusions) m.inclusions = op.inclusions;
         return m;

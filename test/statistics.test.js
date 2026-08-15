@@ -54,3 +54,17 @@ test('4.2 estimateCandidates con stats vacías → defaults', () => {
   assert.equal(st.estimateCandidates('symbol'), st.DEFAULTS.symbol);
   assert.equal(st.estimateCandidates('repo_map'), st.DEFAULTS.repo_map);
 });
+
+test('4.2 estimateCandidates por operador: prefiere operator|queryClass, cae a queryClass, cae a default', () => {
+  const stats = new Map([
+    ['search-code|symbol', { n: 50, avgCandidates: 9 }],
+    ['symbol', { n: 50, avgCandidates: 20 }],
+  ]);
+  const c = st.confidence(50);
+  const expOp = Math.round(9 * c + st.DEFAULTS.symbol * (1 - c));
+  const expQc = Math.round(20 * c + st.DEFAULTS.symbol * (1 - c));
+  assert.equal(st.estimateCandidates('symbol', undefined, stats, 'search-code'), expOp, 'usa clave operator|queryClass');
+  assert.equal(st.estimateCandidates('symbol', undefined, stats, 'follow'), expQc, 'cae a queryClass si operador sin datos');
+  assert.equal(st.estimateCandidates('symbol', undefined, stats), expQc, 'sin operador → queryClass');
+  assert.equal(st.estimateCandidates('pattern', undefined, stats, 'search-code'), st.DEFAULTS.pattern, 'default sin datos');
+});
