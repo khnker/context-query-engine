@@ -55,6 +55,21 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 - **ML pipeline (TinyBERT-style)**: 1,000 labeled queries dataset (10 classes, EN+ES) + 70/15/15 split, numpy out-of-band trainer (`evals/ml/train-classifier.py`), node inference (`evals/ml/classify.mjs`, ~6 ms), swappable artifact
 - ML gate (11.8): intent classification — regex 0.347 → **ML effective 0.94** (fired 135/150, acc 1.0, fallback 15)
 
+**ML evidence — gate PASS (full report: `evals/ml/GATE-ML.md`)**
+
+Measured over real executions (T1 harness 40 tasks / test split 150 queries), no regression:
+
+| Component | Before | With local model | Decision |
+|-----------|--------|------------------|----------|
+| Intent classification | regex 0.347 | **0.94** (fired 135/150, acc 1.0) | ✅ adopted |
+| Spanish queries (es_acc) | ~0.17 | **1.0** (48 test rows) | ✅ adopted |
+| Cardinality MAPE | 1.418 (heuristic avg) | **0.498** (ridge, P95 5.43→2.02) | ✅ adopted |
+| Optimizer regret (C vs oracle) | 0.6886 | **0.6655** (−3.4%) | ✅ adopted |
+| Correctness / tokens (C) | 100% / 764 | 100% / 764 (identical) | ✅ no regression |
+| Reranker (stub, MRR) | sanity Δ0.000 | Δ+0.038 (pipeline live) | ⏳ model pending |
+
+All ML paths are null-safe (`CF_MODEL_CMD` absent/failure → deterministic heuristic, verified Δ0 without model).
+
 ---
 
 

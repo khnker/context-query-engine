@@ -55,6 +55,21 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 - **Pipeline ML (TinyBERT-style)**: dataset 1,000 queries etiquetadas (10 clases, EN+ES) + split 70/15/15, entrenador numpy out-of-band (`evals/ml/train-classifier.py`), inferencia node (`evals/ml/classify.mjs`, ~6 ms), artifact swappable
 - Gate ML (11.8): clasificación de intención — regex 0.347 → **ML efectivo 0.94** (fired 135/150, acc 1.0, fallback 15)
 
+**Evidencia ML — gate PASS (reporte completo: `evals/ml/GATE-ML.md`)**
+
+Medido sobre ejecuciones reales (harness T1 40 tasks / test split 150 queries), sin regresión:
+
+| Componente | Antes | Con modelo local | Decisión |
+|-----------|-------|------------------|----------|
+| Clasificación de intención | regex 0.347 | **0.94** (fired 135/150, acc 1.0) | ✅ adoptado |
+| Queries en español (es_acc) | ~0.17 | **1.0** (48 rows test) | ✅ adoptado |
+| Cardinalidad MAPE | 1.418 (avg heurístico) | **0.498** (ridge, P95 5.43→2.02) | ✅ adoptado |
+| Regret del optimizer (C vs oracle) | 0.6886 | **0.6655** (−3.4%) | ✅ adoptado |
+| Correctitud / tokens (C) | 100% / 764 | 100% / 764 (idéntico) | ✅ sin regresión |
+| Reranker (stub, MRR) | sanity Δ0.000 | Δ+0.038 (pipeline vivo) | ⏳ pendiente modelo |
+
+Todos los paths ML son null-safe (`CF_MODEL_CMD` ausente/fallo → heurístico determinista, verificado Δ0 sin modelo).
+
 ---
 
 
