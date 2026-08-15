@@ -32,6 +32,7 @@ const COST_TABLE = {
   'follow':           { tokens: 300, latency_ms: 25,  tool_calls: 1, relevance: 0.6  },
   'include':          { tokens: 200, latency_ms: 20,  tool_calls: 1, relevance: 0.4  },
   'git-log':          { tokens: 300, latency_ms: 150, tool_calls: 1, relevance: 0.6  },
+  'bm25':             { tokens: 120, latency_ms: 60,  tool_calls: 1, relevance: 0.45 },
 };
 
 // D13 — cardinalidad default por clase de predicado (sin stats)

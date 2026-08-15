@@ -475,6 +475,26 @@ The benchmark does not assume that lower token usage is better by itself; result
 | ML improves decisions | Oracle | heuristic | regret |
 | Reranker helps | E2E | deterministic | MRR + recall + density |
 
+## CQE vs hybrid retrieval
+
+CQE se evalúa como optimizer *por encima* del algoritmo de retrieval subyacente: los mismos planes de ops corren sobre rg (baseline), sobre un op BM25 propio en node (`engine/bm25.js`, stdlib, sin deps) y sobre la fusión de ambos (`CF_RETRIEVAL=hybrid`). El modo dense (embeddings) queda marcado como `requires-dep` — el proyecto es stdlib solo.
+
+```bash
+TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-hybrid.js   # matriz → evals/reports/hybrid-<TS>.json
+```
+
+Matriz T1 (32 tasks, 1 run):
+
+| config | correctness | recall@5 | MRR | tokens (mean) |
+|--------|-------------|----------|-----|---------------|
+| BM25 puro | 0.844 | 0.667 | 0.732 | 135 |
+| CQE+hybrid | **1.000** | **0.870** | 0.939 | 239 |
+| CQE+hybrid+rerank | 1.000 | 0.703 | **1.000** | 133 |
+| CQE (baseline) | 1.000 | 0.833 | 0.939 | 105 |
+| CQE+rerank | 1.000 | 0.630 | 0.984 | 57 |
+
+Veredicto: **hybrid no degrada correctness** (1.000 = 1.000 en T1 y T2) y **mejora recall@5 en T1** (+3.7pp, 0.870 vs 0.833) — BM25 rescata hits que rg pierde. Costo: 2.3× tokens por los snippets BM25; la fusión compite en score_final de `assemble-context`. BM25 puro pierde correctness (0.844): no reemplaza a CQE, solo aporta como op de fusión. En dev (monorepo), BM25 puro falla (cap de 1000 archivos del índice) — el optimizer + rg siguen siendo necesarios. El op `bm25` queda incorporado al plan físico (COST_TABLE + `CF_RETRIEVAL`).
+
 ## Repository structure
 
 ```text

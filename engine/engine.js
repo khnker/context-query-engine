@@ -21,6 +21,7 @@ import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
 import { record } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
+import { score as bm25Score } from './bm25.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
@@ -149,7 +150,26 @@ function execOp(op, plan, pool = []) {
       return r.out.split('\n').filter(Boolean)
         .filter((p) => !/node_modules/.test(p))
         .filter((p) => p.toLowerCase().includes(q))
-        .map((p) => ({ source: 'rg-files', path: p, match_type: 'filename', score: 0.8, token_estimate: 10 }));
+        .map((p) => ({ source: 'rg-files', path: p, line_start: 1, line_end: 1, match_type: 'filename', score: 0.8, token_estimate: 10 }));
+    }
+    case 'bm25': {
+      // hybrid-retrieval-comparison — BM25 propio (engine/bm25.js, stdlib).
+      // Paths relativos al repo (cwd); snippet = primeras líneas del archivo.
+      const hits = bm25Score(process.cwd(), name, plan.limit ?? 8);
+      return hits.map(({ path: p, score: sc }) => {
+        let content = '';
+        try {
+          content = fs.readFileSync(path.resolve(process.cwd(), p), 'utf8');
+        } catch {
+          content = '';
+        }
+        const snippet = content.slice(0, 200); // acotado: snippets grandes comen el budget de fuse
+        return {
+          source: 'bm25', path: p, line_start: 1, line_end: Math.min(20, content.split('\n').length),
+          content: snippet, match_type: 'semantic', score: sc,
+          token_estimate: Math.max(8, Math.ceil(snippet.length / 4)),
+        };
+      });
     }
     case 'assemble-context':
       return []; // op de fusión — se resuelve en fuse()
@@ -201,9 +221,9 @@ function execOp(op, plan, pool = []) {
         for (const p of res.out.split('\n').filter(Boolean)) {
           const base = path.basename(p);
           if (inclusions.includes('tests') && /test|spec/i.test(base) && !/node_modules/.test(p)) {
-            out.push({ source: 'include', path: p, match_type: 'test', score: 0.5, token_estimate: 10 });
+            out.push({ source: 'include', path: p, line_start: 1, line_end: 1, match_type: 'test', score: 0.5, token_estimate: 10 });
           } else if (inclusions.includes('config') && /(^config|\.env|\.ya?ml$|\.toml$|\.json$)/i.test(base)) {
-            out.push({ source: 'include', path: p, match_type: 'config', score: 0.4, token_estimate: 10 });
+            out.push({ source: 'include', path: p, line_start: 1, line_end: 1, match_type: 'config', score: 0.4, token_estimate: 10 });
           }
         }
       }
@@ -268,12 +288,15 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   }
   const selected = phys.plans.find((p) => p.id === phys.selected) ?? phys.plans[0];
   const pool = [];
+  // hybrid-retrieval-comparison — CF_RETRIEVAL=bm25 → solo BM25; hybrid → plan + BM25 fusionado
+  const retrieval = process.env.CF_RETRIEVAL ?? '';
   // AQP v2 — ops léxicas marcadas como saltadas (sin mutar el array en iteración:
   // for..of sobre array mutado desincroniza el iterator y re-ejecuta ops)
   const skippedOps = new Set();
 
   // 13.1 — ejecución ordenada con early termination
   for (const op of selected.ops) {
+    if (retrieval === 'bm25') break; // bm25 puro: no ejecutar ops del plan
     if (op.tool === 'assemble-context') continue;
     if (skippedOps.has(op.tool)) continue;
     stats.tool_calls += 1;
@@ -335,7 +358,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   }
 
   // semantic-escalation — concept con 0 resultados → search-semantic (policy nivel 4)
-  if (logicalPlan.target?.kind === 'concept' && pool.length === 0) {
+  if (retrieval !== 'bm25' && logicalPlan.target?.kind === 'concept' && pool.length === 0) {
     const concept = String(logicalPlan.target.name ?? '').trim();
     if (concept) {
       stats.tool_calls += 1;
@@ -352,6 +375,16 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         }, phys.pred_class);
       } catch { /* probe ausente o roto — sin crash */ }
     }
+  }
+
+  // hybrid-retrieval-comparison — CF_RETRIEVAL: bm25 puro | híbrido (bm25 + plan)
+  if (retrieval === 'bm25' || retrieval === 'hybrid') {
+    const t0 = Date.now();
+    const bmRows = execOp({ tool: 'bm25', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
+    const seen = new Set(pool.map((r) => r.path));
+    for (const r of bmRows) if (!seen.has(r.path)) pool.push(r);
+    stats.bm25_rows = bmRows.length;
+    stats.bm25_latency_ms = Date.now() - t0;
   }
 
   // 12.2 — rerank opcional (tinybert-reranker): si hay modelo local, reordena el

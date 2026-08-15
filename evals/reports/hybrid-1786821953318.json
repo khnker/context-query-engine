@@ -1,0 +1,172 @@
+{
+  "date": "2026-08-15",
+  "tasks": 4,
+  "configs": {
+    "bm25": {
+      "label": "BM25 puro",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "avg_gt_hits": 0,
+      "tokens": {
+        "mean": 437.5,
+        "median": 500,
+        "p95": 500
+      },
+      "latency_ms": {
+        "mean": 820.25,
+        "median": 826,
+        "p95": 837
+      },
+      "plans": [
+        "A"
+      ]
+    },
+    "hybrid": {
+      "label": "CQE+hybrid (BM25+plan)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 975,
+        "median": 530,
+        "p95": 2600
+      },
+      "latency_ms": {
+        "mean": 1024,
+        "median": 1023,
+        "p95": 1040
+      },
+      "plans": [
+        "A"
+      ]
+    },
+    "hybrid_rerank": {
+      "label": "CQE+hybrid+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 975,
+        "median": 530,
+        "p95": 2600
+      },
+      "latency_ms": {
+        "mean": 1092.75,
+        "median": 1097,
+        "p95": 1108
+      },
+      "plans": [
+        "A"
+      ]
+    },
+    "cqe": {
+      "label": "CQE (baseline)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 537.5,
+        "median": 30,
+        "p95": 2100
+      },
+      "latency_ms": {
+        "mean": 292.75,
+        "median": 288,
+        "p95": 312
+      },
+      "plans": [
+        "A"
+      ]
+    },
+    "cqe_rerank": {
+      "label": "CQE+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 537.5,
+        "median": 30,
+        "p95": 2100
+      },
+      "latency_ms": {
+        "mean": 359,
+        "median": 364,
+        "p95": 371
+      },
+      "plans": [
+        "A"
+      ]
+    }
+  },
+  "cqe_baseline": "cqe",
+  "requires_dep": {
+    "dense": "requires-dep: sin librería de embeddings instalada (stdlib solo) — config documentada, no corrida"
+  },
+  "verdict": {
+    "hybrid_correctness_gte_cqe": true,
+    "details": "hybrid 0.750 vs cqe 0.750",
+    "dense": "requires-dep: sin librería de embeddings instalada (stdlib solo) — config documentada, no corrida"
+  },
+  "matrix": [
+    {
+      "config": "bm25",
+      "label": "BM25 puro",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "tokens_mean": 437.5,
+      "latency_mean": 820.25
+    },
+    {
+      "config": "hybrid",
+      "label": "CQE+hybrid (BM25+plan)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 975,
+      "latency_mean": 1024
+    },
+    {
+      "config": "hybrid_rerank",
+      "label": "CQE+hybrid+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 975,
+      "latency_mean": 1092.75
+    },
+    {
+      "config": "cqe",
+      "label": "CQE (baseline)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 537.5,
+      "latency_mean": 292.75
+    },
+    {
+      "config": "cqe_rerank",
+      "label": "CQE+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 537.5,
+      "latency_mean": 359
+    }
+  ]
+}

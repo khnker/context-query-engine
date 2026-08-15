@@ -1,0 +1,177 @@
+{
+  "date": "2026-08-15",
+  "tasks": 8,
+  "configs": {
+    "bm25": {
+      "label": "BM25 puro",
+      "correctness": 0.875,
+      "recall5": 0.5625,
+      "recall10": 0.5625,
+      "mrr": 0.6979166666666666,
+      "avg_gt_hits": 1.5,
+      "tokens": {
+        "mean": 110.25,
+        "median": 123,
+        "p95": 173
+      },
+      "latency_ms": {
+        "mean": 72.875,
+        "median": 75,
+        "p95": 81
+      },
+      "plans": [
+        "A",
+        "B"
+      ]
+    },
+    "hybrid": {
+      "label": "CQE+hybrid (BM25+plan)",
+      "correctness": 1,
+      "recall5": 0.7916666666666666,
+      "recall10": 0.7916666666666666,
+      "mrr": 0.8166666666666667,
+      "avg_gt_hits": 1.875,
+      "tokens": {
+        "mean": 198.75,
+        "median": 223,
+        "p95": 366
+      },
+      "latency_ms": {
+        "mean": 109.25,
+        "median": 108,
+        "p95": 132
+      },
+      "plans": [
+        "A",
+        "B"
+      ]
+    },
+    "hybrid_rerank": {
+      "label": "CQE+hybrid+rerank",
+      "correctness": 1,
+      "recall5": 0.6874999999999999,
+      "recall10": 0.6874999999999999,
+      "mrr": 1,
+      "avg_gt_hits": 1.625,
+      "tokens": {
+        "mean": 102.5,
+        "median": 98,
+        "p95": 252
+      },
+      "latency_ms": {
+        "mean": 263.375,
+        "median": 267,
+        "p95": 310
+      },
+      "plans": [
+        "A",
+        "B"
+      ]
+    },
+    "cqe": {
+      "label": "CQE (baseline)",
+      "correctness": 1,
+      "recall5": 0.7916666666666666,
+      "recall10": 0.7916666666666666,
+      "mrr": 0.8166666666666667,
+      "avg_gt_hits": 1.875,
+      "tokens": {
+        "mean": 88.5,
+        "median": 74,
+        "p95": 247
+      },
+      "latency_ms": {
+        "mean": 105.5,
+        "median": 103,
+        "p95": 123
+      },
+      "plans": [
+        "A",
+        "B"
+      ]
+    },
+    "cqe_rerank": {
+      "label": "CQE+rerank",
+      "correctness": 1,
+      "recall5": 0.6458333333333333,
+      "recall10": 0.6458333333333333,
+      "mrr": 1,
+      "avg_gt_hits": 1.5,
+      "tokens": {
+        "mean": 50.75,
+        "median": 48,
+        "p95": 152
+      },
+      "latency_ms": {
+        "mean": 262.625,
+        "median": 285,
+        "p95": 300
+      },
+      "plans": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "cqe_baseline": "cqe",
+  "requires_dep": {
+    "dense": "requires-dep: sin librería de embeddings instalada (stdlib solo) — config documentada, no corrida"
+  },
+  "verdict": {
+    "hybrid_correctness_gte_cqe": true,
+    "details": "hybrid 1.000 vs cqe 1.000",
+    "dense": "requires-dep: sin librería de embeddings instalada (stdlib solo) — config documentada, no corrida"
+  },
+  "matrix": [
+    {
+      "config": "bm25",
+      "label": "BM25 puro",
+      "correctness": 0.875,
+      "recall5": 0.5625,
+      "recall10": 0.5625,
+      "mrr": 0.6979166666666666,
+      "tokens_mean": 110.25,
+      "latency_mean": 72.875
+    },
+    {
+      "config": "hybrid",
+      "label": "CQE+hybrid (BM25+plan)",
+      "correctness": 1,
+      "recall5": 0.7916666666666666,
+      "recall10": 0.7916666666666666,
+      "mrr": 0.8166666666666667,
+      "tokens_mean": 198.75,
+      "latency_mean": 109.25
+    },
+    {
+      "config": "hybrid_rerank",
+      "label": "CQE+hybrid+rerank",
+      "correctness": 1,
+      "recall5": 0.6874999999999999,
+      "recall10": 0.6874999999999999,
+      "mrr": 1,
+      "tokens_mean": 102.5,
+      "latency_mean": 263.375
+    },
+    {
+      "config": "cqe",
+      "label": "CQE (baseline)",
+      "correctness": 1,
+      "recall5": 0.7916666666666666,
+      "recall10": 0.7916666666666666,
+      "mrr": 0.8166666666666667,
+      "tokens_mean": 88.5,
+      "latency_mean": 105.5
+    },
+    {
+      "config": "cqe_rerank",
+      "label": "CQE+rerank",
+      "correctness": 1,
+      "recall5": 0.6458333333333333,
+      "recall10": 0.6458333333333333,
+      "mrr": 1,
+      "tokens_mean": 50.75,
+      "latency_mean": 262.625
+    }
+  ]
+}
