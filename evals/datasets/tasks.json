@@ -1,734 +1,914 @@
 [
- {
-  "id": "lex-01",
-  "category": "lexical",
-  "repo": "t1-basic",
-  "query": "Where is retryWithFallback defined?",
-  "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/utils/helpers.ts"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "lex-02",
-  "category": "lexical",
-  "repo": "t1-basic",
-  "query": "Where is DEFAULT_TIMEOUT_MS used?",
-  "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/config.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "DEFAULT_TIMEOUT_MS"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "lex-03",
-  "category": "lexical",
-  "repo": "t1-modular",
-  "query": "Where is register defined?",
-  "cqp": "FIND definitions OF symbol register LIMIT 10",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [
-   "app/handlers/http.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "register"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "lex-04",
-  "category": "lexical",
-  "repo": "t1-modular",
-  "query": "Where is get_provider_config defined?",
-  "cqp": "FIND definitions OF symbol get_provider_config LIMIT 10",
-  "primary": [
-   "app/core/config.py"
-  ],
-  "related": [],
-  "tests": [],
-  "symbols": [
-   "get_provider_config"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "lex-05",
-  "category": "lexical",
-  "repo": "t1-basic",
-  "query": "Where is the route method defined?",
-  "cqp": "FIND definitions OF symbol route LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "route"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "str-01",
-  "category": "structural",
-  "repo": "t1-basic",
-  "query": "Where is class ProviderRouter defined?",
-  "cqp": "FIND definitions OF symbol ProviderRouter LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/utils/decorators.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "ProviderRouter"
-  ],
-  "expected_operations": [
-   "search-code",
-   "search-structure"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "str-02",
-  "category": "structural",
-  "repo": "t1-basic",
-  "query": "Where is the try/catch fallback logic?",
-  "cqp": "FIND implementation OF concept \"try catch fallback\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-structure",
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "str-03",
-  "category": "structural",
-  "repo": "t1-modular",
-  "query": "Where is class HttpHandler defined?",
-  "cqp": "FIND definitions OF symbol HttpHandler LIMIT 10",
-  "primary": [
-   "app/handlers/http.py"
-  ],
-  "related": [],
-  "tests": [],
-  "symbols": [
-   "HttpHandler"
-  ],
-  "expected_operations": [
-   "search-code",
-   "search-structure"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "str-04",
-  "category": "structural",
-  "repo": "t1-modular",
-  "query": "Where is the handler registry implemented?",
-  "cqp": "FIND implementation OF concept \"handler registry\" LIMIT 10",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [
-   "app/handlers/http.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "HANDLERS",
-   "register"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "str-05",
-  "category": "structural",
-  "repo": "t1-modular",
-  "query": "Where is get with default handler defined?",
-  "cqp": "FIND definitions OF symbol get LIMIT 10",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [
-   "app/handlers/file.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "get"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "sem-01",
-  "category": "semantic",
-  "repo": "t1-basic",
-  "query": "How does retry between providers work?",
-  "cqp": "FIND implementation OF concept \"retry between providers\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "config/providers.json"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-code",
-   "search-semantic"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "sem-02",
-  "category": "semantic",
-  "repo": "t1-basic",
-  "query": "What happens when the primary provider fails?",
-  "cqp": "FIND implementation OF concept \"provider failure fallback\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "sem-03",
-  "category": "semantic",
-  "repo": "t1-modular",
-  "query": "How are handlers registered?",
-  "cqp": "FIND implementation OF concept \"handler registration\" LIMIT 10",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [
-   "app/handlers/http.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "register"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "sem-04",
-  "category": "semantic",
-  "repo": "t1-modular",
-  "query": "What does the configuration loading do?",
-  "cqp": "FIND implementation OF concept \"configuration loading\" LIMIT 10",
-  "primary": [
-   "app/core/config.py"
-  ],
-  "related": [
-   "app/config/settings.yaml"
-  ],
-  "tests": [],
-  "symbols": [
-   "get_provider_config"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "sem-05",
-  "category": "semantic",
-  "repo": "t1-basic",
-  "query": "How are models routed to providers?",
-  "cqp": "FIND implementation OF concept \"model routing\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "ProviderRouter",
-   "route"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "dep-01",
-  "category": "dependency",
-  "repo": "t1-basic",
-  "query": "Who calls retryWithFallback?",
-  "cqp": "FIND references OF symbol retryWithFallback AND FOLLOW references LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/utils/helpers.ts"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-code",
-   "follow"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "dep-02",
-  "category": "dependency",
-  "repo": "t1-basic",
-  "query": "Who uses ProviderRouter.route?",
-  "cqp": "FIND references OF symbol ProviderRouter AND FOLLOW references LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/utils/decorators.ts"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "ProviderRouter"
-  ],
-  "expected_operations": [
-   "search-code",
-   "follow"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "dep-03",
-  "category": "dependency",
-  "repo": "t1-modular",
-  "query": "Who imports register?",
-  "cqp": "FIND references OF symbol register AND FOLLOW references LIMIT 10",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [
-   "app/handlers/http.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "register"
-  ],
-  "expected_operations": [
-   "search-code",
-   "follow"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "dep-04",
-  "category": "dependency",
-  "repo": "t1-modular",
-  "query": "Who imports app.core.config?",
-  "cqp": "FIND references OF symbol get_provider_config AND FOLLOW references LIMIT 10",
-  "primary": [
-   "app/core/config.py"
-  ],
-  "related": [],
-  "tests": [],
-  "symbols": [
-   "get_provider_config"
-  ],
-  "expected_operations": [
-   "search-code",
-   "follow"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "dep-05",
-  "category": "dependency",
-  "repo": "t1-basic",
-  "query": "What depends on DEFAULT_TIMEOUT_MS?",
-  "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS AND FOLLOW references LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/config.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "DEFAULT_TIMEOUT_MS"
-  ],
-  "expected_operations": [
-   "search-code",
-   "follow"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "cfg-01",
-  "category": "configuration",
-  "repo": "t1-basic",
-  "query": "Where is providers.json read?",
-  "cqp": "FIND implementation OF concept \"providers json config\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "config/providers.json"
-  ],
-  "tests": [],
-  "symbols": [
-   "loadProviders"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "cfg-02",
-  "category": "configuration",
-  "repo": "t1-basic",
-  "query": "Where is the timeout value defined?",
-  "cqp": "FIND definitions OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/config.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "DEFAULT_TIMEOUT_MS"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "cfg-03",
-  "category": "configuration",
-  "repo": "t1-modular",
-  "query": "Where is settings.yaml?",
-  "cqp": "FIND filename OF file settings.yaml LIMIT 10",
-  "primary": [
-   "app/config/settings.yaml"
-  ],
-  "related": [
-   "app/core/config.py"
-  ],
-  "tests": [],
-  "symbols": [],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "cfg-04",
-  "category": "configuration",
-  "repo": "t1-modular",
-  "query": "How is provider config read?",
-  "cqp": "FIND implementation OF concept \"provider config\" LIMIT 10",
-  "primary": [
-   "app/core/config.py"
-  ],
-  "related": [
-   "app/config/settings.yaml"
-  ],
-  "tests": [],
-  "symbols": [
-   "get_provider_config"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "cfg-05",
-  "category": "configuration",
-  "repo": "t1-basic",
-  "query": "Where is the fallback provider configured?",
-  "cqp": "FIND implementation OF concept \"fallback configuration\" LIMIT 10",
-  "primary": [
-   "config/providers.json"
-  ],
-  "related": [
-   "src/services/fallback.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "fallback"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "tst-01",
-  "category": "tests",
-  "repo": "t1-basic",
-  "query": "Which tests cover retryWithFallback?",
-  "cqp": "FIND implementation OF concept \"retry tests\" AND INCLUDE tests LIMIT 10",
-  "primary": [
-   "tests/fallback.test.ts"
-  ],
-  "related": [
-   "src/services/fallback.ts"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "retryWithFallback"
-  ],
-  "expected_operations": [
-   "search-code",
-   "include"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "tst-02",
-  "category": "tests",
-  "repo": "t1-basic",
-  "query": "Which test covers route?",
-  "cqp": "FIND implementation OF concept \"route test\" AND INCLUDE tests LIMIT 10",
-  "primary": [
-   "tests/fallback.test.ts"
-  ],
-  "related": [
-   "src/services/fallback.ts"
-  ],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [
-   "route"
-  ],
-  "expected_operations": [
-   "search-code",
-   "include"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "tst-03",
-  "category": "tests",
-  "repo": "t1-modular",
-  "query": "Which tests cover the registry?",
-  "cqp": "FIND implementation OF concept \"registry tests\" AND INCLUDE tests LIMIT 10",
-  "primary": [
-   "tests/test_registry.py"
-  ],
-  "related": [
-   "app/core/registry.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "register",
-   "get"
-  ],
-  "expected_operations": [
-   "search-code",
-   "include"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "tst-04",
-  "category": "tests",
-  "repo": "t1-modular",
-  "query": "Which test covers get fallback?",
-  "cqp": "FIND implementation OF concept \"get fallback test\" AND INCLUDE tests LIMIT 10",
-  "primary": [
-   "tests/test_registry.py"
-  ],
-  "related": [
-   "app/core/registry.py"
-  ],
-  "tests": [
-   "tests/test_registry.py"
-  ],
-  "symbols": [
-   "get"
-  ],
-  "expected_operations": [
-   "search-code",
-   "include"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "tst-05",
-  "category": "tests",
-  "repo": "t1-basic",
-  "query": "Where is fallback.test.ts?",
-  "cqp": "FIND filename OF file fallback.test.ts LIMIT 10",
-  "primary": [
-   "tests/fallback.test.ts"
-  ],
-  "related": [],
-  "tests": [
-   "tests/fallback.test.ts"
-  ],
-  "symbols": [],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- },
- {
-  "id": "adv-01",
-  "category": "adversarial",
-  "repo": "t1-basic",
-  "query": "Where is ProviderRouter implemented?",
-  "cqp": "FIND definitions OF symbol ProviderRouter LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [
-   "src/utils/decorators.ts"
-  ],
-  "tests": [],
-  "symbols": [
-   "ProviderRouter"
-  ],
-  "expected_operations": [
-   "search-code"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": true
- },
- {
-  "id": "git-01",
-  "category": "git",
-  "repo": "t1-basic",
-  "query": "What changed in src/services/fallback.ts?",
-  "cqp": "FIND implementation OF concept \"recent changes\" LIMIT 10",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": [],
-  "symbols": [],
-  "expected_operations": [
-   "git"
-  ],
-  "max_context_tokens": 8000,
-  "adversarial": false
- }
+  {
+    "id": "lex-01",
+    "category": "lexical",
+    "repo": "t1-basic",
+    "query": "Where is retryWithFallback defined?",
+    "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/utils/helpers.ts"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "lex-02",
+    "category": "lexical",
+    "repo": "t1-basic",
+    "query": "Where is DEFAULT_TIMEOUT_MS used?",
+    "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/config.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "DEFAULT_TIMEOUT_MS"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "lex-03",
+    "category": "lexical",
+    "repo": "t1-modular",
+    "query": "Where is register defined?",
+    "cqp": "FIND definitions OF symbol register LIMIT 10",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [
+      "app/handlers/http.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "register"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "lex-04",
+    "category": "lexical",
+    "repo": "t1-modular",
+    "query": "Where is get_provider_config defined?",
+    "cqp": "FIND definitions OF symbol get_provider_config LIMIT 10",
+    "primary": [
+      "app/core/config.py"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "get_provider_config"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "lex-05",
+    "category": "lexical",
+    "repo": "t1-basic",
+    "query": "Where is the route method defined?",
+    "cqp": "FIND definitions OF symbol route LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "route"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "str-01",
+    "category": "structural",
+    "repo": "t1-basic",
+    "query": "Where is class ProviderRouter defined?",
+    "cqp": "FIND definitions OF symbol ProviderRouter LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/utils/decorators.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "ProviderRouter"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-structure"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "str-02",
+    "category": "structural",
+    "repo": "t1-basic",
+    "query": "Where is the try/catch fallback logic?",
+    "cqp": "FIND implementation OF concept \"try catch fallback\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-structure",
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "str-03",
+    "category": "structural",
+    "repo": "t1-modular",
+    "query": "Where is class HttpHandler defined?",
+    "cqp": "FIND definitions OF symbol HttpHandler LIMIT 10",
+    "primary": [
+      "app/handlers/http.py"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "HttpHandler"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-structure"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "str-04",
+    "category": "structural",
+    "repo": "t1-modular",
+    "query": "Where is the handler registry implemented?",
+    "cqp": "FIND implementation OF concept \"handler registry\" LIMIT 10",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [
+      "app/handlers/http.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "HANDLERS",
+      "register"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "str-05",
+    "category": "structural",
+    "repo": "t1-modular",
+    "query": "Where is get with default handler defined?",
+    "cqp": "FIND definitions OF symbol get LIMIT 10",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [
+      "app/handlers/file.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "get"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "sem-01",
+    "category": "semantic",
+    "repo": "t1-basic",
+    "query": "How does retry between providers work?",
+    "cqp": "FIND implementation OF concept \"retry between providers\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "config/providers.json"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-semantic"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "sem-02",
+    "category": "semantic",
+    "repo": "t1-basic",
+    "query": "What happens when the primary provider fails?",
+    "cqp": "FIND implementation OF concept \"provider failure fallback\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "sem-03",
+    "category": "semantic",
+    "repo": "t1-modular",
+    "query": "How are handlers registered?",
+    "cqp": "FIND implementation OF concept \"handler registration\" LIMIT 10",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [
+      "app/handlers/http.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "register"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "sem-04",
+    "category": "semantic",
+    "repo": "t1-modular",
+    "query": "What does the configuration loading do?",
+    "cqp": "FIND implementation OF concept \"configuration loading\" LIMIT 10",
+    "primary": [
+      "app/core/config.py"
+    ],
+    "related": [
+      "app/config/settings.yaml"
+    ],
+    "tests": [],
+    "symbols": [
+      "get_provider_config"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "sem-05",
+    "category": "semantic",
+    "repo": "t1-basic",
+    "query": "How are models routed to providers?",
+    "cqp": "FIND implementation OF concept \"model routing\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "ProviderRouter",
+      "route"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "dep-01",
+    "category": "dependency",
+    "repo": "t1-basic",
+    "query": "Who calls retryWithFallback?",
+    "cqp": "FIND references OF symbol retryWithFallback AND FOLLOW references LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/utils/helpers.ts"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "dep-02",
+    "category": "dependency",
+    "repo": "t1-basic",
+    "query": "Who uses ProviderRouter.route?",
+    "cqp": "FIND references OF symbol ProviderRouter AND FOLLOW references LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/utils/decorators.ts"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "ProviderRouter"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "dep-03",
+    "category": "dependency",
+    "repo": "t1-modular",
+    "query": "Who imports register?",
+    "cqp": "FIND references OF symbol register AND FOLLOW references LIMIT 10",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [
+      "app/handlers/http.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "register"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "dep-04",
+    "category": "dependency",
+    "repo": "t1-modular",
+    "query": "Who imports app.core.config?",
+    "cqp": "FIND references OF symbol get_provider_config AND FOLLOW references LIMIT 10",
+    "primary": [
+      "app/core/config.py"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "get_provider_config"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "dep-05",
+    "category": "dependency",
+    "repo": "t1-basic",
+    "query": "What depends on DEFAULT_TIMEOUT_MS?",
+    "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS AND FOLLOW references LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/config.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "DEFAULT_TIMEOUT_MS"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "cfg-01",
+    "category": "configuration",
+    "repo": "t1-basic",
+    "query": "Where is providers.json read?",
+    "cqp": "FIND implementation OF concept \"providers json config\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "config/providers.json"
+    ],
+    "tests": [],
+    "symbols": [
+      "loadProviders"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "cfg-02",
+    "category": "configuration",
+    "repo": "t1-basic",
+    "query": "Where is the timeout value defined?",
+    "cqp": "FIND definitions OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/config.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "DEFAULT_TIMEOUT_MS"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "cfg-03",
+    "category": "configuration",
+    "repo": "t1-modular",
+    "query": "Where is settings.yaml?",
+    "cqp": "FIND filename OF file settings.yaml LIMIT 10",
+    "primary": [
+      "app/config/settings.yaml"
+    ],
+    "related": [
+      "app/core/config.py"
+    ],
+    "tests": [],
+    "symbols": [],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "cfg-04",
+    "category": "configuration",
+    "repo": "t1-modular",
+    "query": "How is provider config read?",
+    "cqp": "FIND implementation OF concept \"provider config\" LIMIT 10",
+    "primary": [
+      "app/core/config.py"
+    ],
+    "related": [
+      "app/config/settings.yaml"
+    ],
+    "tests": [],
+    "symbols": [
+      "get_provider_config"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "cfg-05",
+    "category": "configuration",
+    "repo": "t1-basic",
+    "query": "Where is the fallback provider configured?",
+    "cqp": "FIND implementation OF concept \"fallback configuration\" LIMIT 10",
+    "primary": [
+      "config/providers.json"
+    ],
+    "related": [
+      "src/services/fallback.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "fallback"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "tst-01",
+    "category": "tests",
+    "repo": "t1-basic",
+    "query": "Which tests cover retryWithFallback?",
+    "cqp": "FIND implementation OF concept \"retry tests\" AND INCLUDE tests LIMIT 10",
+    "primary": [
+      "tests/fallback.test.ts"
+    ],
+    "related": [
+      "src/services/fallback.ts"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "retryWithFallback"
+    ],
+    "expected_operations": [
+      "search-code",
+      "include"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "tst-02",
+    "category": "tests",
+    "repo": "t1-basic",
+    "query": "Which test covers route?",
+    "cqp": "FIND implementation OF concept \"route test\" AND INCLUDE tests LIMIT 10",
+    "primary": [
+      "tests/fallback.test.ts"
+    ],
+    "related": [
+      "src/services/fallback.ts"
+    ],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [
+      "route"
+    ],
+    "expected_operations": [
+      "search-code",
+      "include"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "tst-03",
+    "category": "tests",
+    "repo": "t1-modular",
+    "query": "Which tests cover the registry?",
+    "cqp": "FIND implementation OF concept \"registry tests\" AND INCLUDE tests LIMIT 10",
+    "primary": [
+      "tests/test_registry.py"
+    ],
+    "related": [
+      "app/core/registry.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "register",
+      "get"
+    ],
+    "expected_operations": [
+      "search-code",
+      "include"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "tst-04",
+    "category": "tests",
+    "repo": "t1-modular",
+    "query": "Which test covers get fallback?",
+    "cqp": "FIND implementation OF concept \"get fallback test\" AND INCLUDE tests LIMIT 10",
+    "primary": [
+      "tests/test_registry.py"
+    ],
+    "related": [
+      "app/core/registry.py"
+    ],
+    "tests": [
+      "tests/test_registry.py"
+    ],
+    "symbols": [
+      "get"
+    ],
+    "expected_operations": [
+      "search-code",
+      "include"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "tst-05",
+    "category": "tests",
+    "repo": "t1-basic",
+    "query": "Where is fallback.test.ts?",
+    "cqp": "FIND filename OF file fallback.test.ts LIMIT 10",
+    "primary": [
+      "tests/fallback.test.ts"
+    ],
+    "related": [],
+    "tests": [
+      "tests/fallback.test.ts"
+    ],
+    "symbols": [],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "adv-01",
+    "category": "adversarial",
+    "repo": "t1-basic",
+    "query": "Where is ProviderRouter implemented?",
+    "cqp": "FIND definitions OF symbol ProviderRouter LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [
+      "src/utils/decorators.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "ProviderRouter"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": true
+  },
+  {
+    "id": "git-01",
+    "category": "git",
+    "repo": "t1-basic",
+    "query": "What changed in src/services/fallback.ts?",
+    "cqp": "FIND implementation OF concept \"recent changes\" LIMIT 10",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [],
+    "expected_operations": [
+      "git"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-01",
+    "category": "structural",
+    "repo": "polar",
+    "query": "\u00bfD\u00f3nde est\u00e1 definida la entidad que modela los tipos de cilindros de gas?",
+    "cqp": "FIND definitions OF symbol \"CylinderType\" LIMIT 5",
+    "primary": [
+      "api-polar/src/database/entities/cylinder-type.entity.ts"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "CylinderType"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-structure"
+    ],
+    "max_context_tokens": 1500,
+    "adversarial": false
+  },
+  {
+    "id": "t2-02",
+    "category": "dependency",
+    "repo": "polar",
+    "query": "\u00bfQu\u00e9 servicio recalcula precios en cascada y qui\u00e9n lo usa?",
+    "cqp": "FIND implementation OF symbol \"PricesCascadeService\" AND FOLLOW callers LIMIT 5",
+    "primary": [
+      "api-polar/src/modules/venta-comercio/services/prices-cascade.service.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/venta-comercio/controllers/prices.controller.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "PricesCascadeService"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 3000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-03",
+    "category": "tests",
+    "repo": "polar",
+    "query": "\u00bfQu\u00e9 spec cubre el servicio de autenticaci\u00f3n?",
+    "cqp": "FIND filename OF file \"auth.service.spec\" LIMIT 5",
+    "primary": [
+      "api-polar/src/modules/auth/auth.service.spec.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/auth/auth.service.ts"
+    ],
+    "tests": [
+      "api-polar/src/modules/auth/auth.service.spec.ts"
+    ],
+    "symbols": [
+      "AuthService"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 4000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-04",
+    "category": "lexical",
+    "repo": "polar",
+    "query": "\u00bfD\u00f3nde est\u00e1 el servicio que declara ventas de comercio?",
+    "cqp": "FIND definitions OF symbol \"DeclararVentaService\" LIMIT 5",
+    "primary": [
+      "api-polar/src/modules/declarar-venta/declarar-venta.service.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/declarar-venta/declarar-venta.controller.ts",
+      "api-polar/src/modules/declarar-venta/declarar-venta.module.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "DeclararVentaService"
+    ],
+    "expected_operations": [
+      "search-code"
+    ],
+    "max_context_tokens": 3000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-05",
+    "category": "semantic",
+    "repo": "polar",
+    "query": "\u00bfC\u00f3mo funciona la autenticaci\u00f3n por JWT y qu\u00e9 guard protege las rutas?",
+    "cqp": "FIND implementation OF concept \"jwt auth guard\" LIMIT 10",
+    "primary": [
+      "api-polar/src/modules/auth/guards/jwt-auth.guard.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/auth/auth.controller.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "JwtAuthGuard"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-semantic"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-06",
+    "category": "dependency",
+    "repo": "polar",
+    "query": "\u00bfQu\u00e9 servicio procesa ventas de comercio y qu\u00e9 controlador lo expone?",
+    "cqp": "FIND implementation OF symbol \"VentaComercioService\" AND FOLLOW callers LIMIT 10",
+    "primary": [
+      "api-polar/src/modules/venta-comercio/services/venta-comercio.service.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/venta-comercio/controllers/prices.controller.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "VentaComercioService"
+    ],
+    "expected_operations": [
+      "search-code",
+      "follow"
+    ],
+    "max_context_tokens": 3000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-07",
+    "category": "semantic",
+    "repo": "polar",
+    "query": "\u00bfD\u00f3nde se implementa la declaraci\u00f3n de venta ante el SII?",
+    "cqp": "FIND implementation OF concept \"declaracion ante sii\" LIMIT 10",
+    "primary": [
+      "api-polar/src/modules/declarar-venta/declarar-venta.service.ts"
+    ],
+    "related": [
+      "api-polar/src/modules/declarar-venta/declarar-venta.controller.ts"
+    ],
+    "tests": [],
+    "symbols": [
+      "DeclararVentaService"
+    ],
+    "expected_operations": [
+      "search-code",
+      "search-semantic"
+    ],
+    "max_context_tokens": 8000,
+    "adversarial": false
+  },
+  {
+    "id": "t2-08",
+    "category": "git",
+    "repo": "polar",
+    "query": "\u00bfQu\u00e9 archivos del dashboard cambiaron recientemente?",
+    "cqp": "FIND implementation OF concept \"recent changes in dashboard\" LIMIT 5",
+    "primary": [
+      "api-polar/src/modules/dashboard/dashboard.service.ts"
+    ],
+    "related": [],
+    "tests": [],
+    "symbols": [
+      "DashboardService"
+    ],
+    "expected_operations": [
+      "git-log"
+    ],
+    "max_context_tokens": 2000,
+    "adversarial": false
+  }
 ]

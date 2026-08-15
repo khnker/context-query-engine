@@ -392,6 +392,27 @@ Lectura:
 
 El benchmark es reproducible: `evals/run-benchmark` + `evals/analyze` (10 tareas, 4 targets de aceptación).
 
+### Harness T2 — repo real (`polar`, 2,129 archivos)
+
+8 tareas con ground truth verificado sobre `/home/nicolas/dev/polar` (categorías: structural, dependency, tests, lexical, semantic, git), 4 modos:
+
+| Modo | Correctitud | Tokens | Latencia | Tool calls | Precision | Compresión | Densidad |
+|------|-------------|--------|----------|-----------|-----------|-----------|----------|
+| A — baseline raw (`grep`/`cat`) | 8/8 | 694,581 | 12,098 ms | 2.0 | 0.186 | 1.0× | 0.1856 |
+| B — `rg`/`fd` directo | 8/8 | 409 | 283 ms | 1.1 | 0.167 | 3,092× | 0.1679 |
+| C — contextforge | 8/8 | 3,403 | 232 ms | 1.25 | 0.187 | 501× | **0.1875** |
+| D — oracle (ground truth) | 8/8 | 2,512 | 7,867 ms | 1.0 | 0.167 | 630× | 0.1668 |
+
+Lectura:
+
+- **contextforge (C) mantiene la correctitud 8/8** sobre el repo real y corta el contexto **204× vs baseline A** (3,403 vs 694,581 tokens) con **98% menos latencia** (232 ms vs 12 s).
+- C tiene la **mayor densidad** de los 4 modos (0.1875): más información útil por token.
+- Precision ~0.19 en **todos** los modos (incluso el oracle): en el repo real, cualquier recuperación trae ruido de backups/sql/coverage/specs — la señal útil de ground truth es pequeña frente al volumen de archivos. C no introduce ruido extra: su precision supera a A, B y D.
+- B (rg/fd plano) es más barato en tokens porque devuelve poco contexto, pero con peor precision (0.167) y densidad (0.168) — minimiza coste, no maximiza información útil por token.
+- Correctitud de FOLLOW validada: la gramática CQP acepta `references|callers|callees|imports|dependents` (no `calls`).
+
+Datos: `evals/reports/t2-polar-20260814.ndjson` (32 rows, reproducible con `evals/run-eval.sh --tier t2`).
+
 ---
 
 ## Roadmap

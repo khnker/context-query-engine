@@ -47,7 +47,9 @@ while [ $i -lt "$total" ]; do
   tid=$(printf '%s' "$task_json" | jq -r '.id')
   repo=$(printf '%s' "$task_json" | jq -r '.repo')
   rdir="$ROOT/evals/datasets/repos/$repo"
-  [ -d "$rdir" ] || rdir=$(jq -r --arg id "$repo" '.tiers[][] | select(.id==$id) | .path' "$REPOS_YAML")
+  if [ ! -d "$rdir" ]; then
+    rdir=$(grep -A2 -- "- id: $repo\$" "$REPOS_YAML" | grep "path:" | head -1 | awk '{print $2}')
+  fi
   [ -d "$rdir" ] || rdir="."
 
   # modo A (baseline) primero — compression lo necesita
