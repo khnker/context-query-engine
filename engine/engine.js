@@ -410,6 +410,24 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   const results = fuse(pool, effectiveBudget(logicalPlan));
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
+
+  // abstain-no-answer — CF_ABSTAIN=1: si no hay evidence relevante (exact/filename/
+  // structural), no devolver resultados débiles → {abstained:true, reason}.
+  // Señal de confianza: conteo de matches con match_type relevante post-fusión.
+  if (process.env.CF_ABSTAIN === '1') {
+    const relevantMatches = results.filter((r) => RELEVANT.has(r.match_type)).length;
+    const selectedPlan = phys.plans.find((p) => p.id === phys.selected);
+    const hasGitOp = selectedPlan?.ops.some((o) => o.tool === 'git-log') ?? false;
+    const gitEvidence = hasGitOp && results.length > 0; // git-log: filas 'git' son evidencia legítima
+    if (relevantMatches === 0 && !gitEvidence) {
+      return {
+        plan: phys, results: [], cached: false, abstained: true,
+        reason: `no-answer: 0 relevant matches (${results.length} weak results descartados)`,
+        stats: { ...stats, abstained: true, tokens_used: 0 },
+      };
+    }
+  }
+
   cache.set(key, { results, ts: Date.now() });
   persistCache();
   return { plan: phys, results, stats, cached: false };

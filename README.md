@@ -531,6 +531,26 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-downstream.js   # → evals/reports/dow
 
 Veredicto del umbral estricto (CQE ≥ crudo en success Y menos tokens): **FAIL** — CQE no reduce tokens totales (+43%). El matiz importa: la prima de tokens viene de las 2 tareas donde el agente crudo NO TIENE respuesta (rg devuelve 0 líneas, 0 tokens, 0 success) — CQE las resuelve (615/268 tokens). Por tarea resuelta el costo es comparable (349 vs 325). Hallazgo: la hipótesis "menos contexto ≠ mejor" se confirma al revés — la utilidad (task success) gana con mejor selección aun con más contexto; CQE aporta +25pp de task success sin responder peor en ninguna tarea. El costo de latencia (102 ms vs 6 ms) es el precio del optimizer; en flujos batch reales domina el ahorro de turnos fallidos.
 
+## ABSTAIN / No-Answer
+
+Ante queries sin respuesta en el repo, el engine puede **abstener** en vez de devolver resultados débiles: con `CF_ABSTAIN=1`, si la fusión no produce matches relevantes (exact/filename/structural; git-log cuenta como evidencia para planes git), el resultado es `{abstained:true, reason}` con 0 tokens.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-abstain.js   # → evals/reports/abstain-<TS>.json
+```
+
+Dataset: 24 queries no-gold (13 símbolos/archivos fabricados + 11 conceptos ausentes, GT vacío) + 32 gold de T1. Métricas:
+
+| métrica | valor |
+|---------|-------|
+| abstention precision | 0.941 |
+| coverage no-gold (abstiene cuando debe) | 0.667 |
+| coverage gold (NO abstiene con respuesta real) | 0.969 |
+| FP retrieval (no-gold respondido) | 8 |
+| FN retrieval (gold abstuvo) | 1 |
+
+Veredicto umbral 6.5 (precision ≥ 0.7 ∧ coverage_gold ≥ 0.8): **PASS**. Los 8 FP son queries semánticas no-gold cuyo ruido weak (match_type semantic, 0 hits reales) supera el umbral; los 2.7k-7.8k tokens muestran escalación semántica sobre consultas inexistentes. FN restante: sem-04 (concept gold con evidencia solo-semántica). Tuning posible: umbral de score en evidencia semántica (hoy binario por match_type).
+
 ## Repository structure
 
 ```text
