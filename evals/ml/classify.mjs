@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const MODEL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/classifier.json');
+const MODEL = process.env.CF_MODEL_FILE ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/classifier.json');
 
 const CLASSES = ['LEXICAL', 'STRUCTURAL', 'SYMBOL', 'REFERENCE', 'SEMANTIC',
   'DEPENDENCY', 'CONFIGURATION', 'TEST', 'GIT', 'COMPOSITE'];
@@ -54,15 +54,44 @@ export function classify(text) {
   const model = JSON.parse(fs.readFileSync(MODEL, 'utf8'));
   const H = model.H;
   const x = featurize(text, H);
-  const W = model.W; // H × C
-  const logits = CLASSES.map((_, c) => {
-    let acc = 0;
-    for (let i = 0; i < H; i++) acc += x[i] * W[i][c];
-    return acc;
-  });
-  const scores = softmax(logits);
-  const idx = scores.indexOf(Math.max(...scores));
-  return { label: CLASSES[idx], scores, confidence: scores[idx] };
+  
+  if (model.type === 'mlp') {
+    const H_hid = model.H_hid;
+    const W1 = model.W1;
+    const b1 = model.b1;
+    const W2 = model.W2;
+    const b2 = model.b2;
+    // hidden Z1 = x @ W1 + b1
+    const z1 = new Float64Array(H_hid);
+    for (let j = 0; j < H_hid; j++) {
+      let acc = b1[j];
+      for (let i = 0; i < H; i++) {
+        acc += x[i] * W1[i][j];
+      }
+      z1[j] = Math.max(0, acc); // ReLU
+    }
+    // output Z2 = z1 @ W2 + b2
+    const logits = CLASSES.map((_, c) => {
+      let acc = b2[c];
+      for (let j = 0; j < H_hid; j++) {
+        acc += z1[j] * W2[j][c];
+      }
+      return acc;
+    });
+    const scores = softmax(logits);
+    const idx = scores.indexOf(Math.max(...scores));
+    return { label: CLASSES[idx], scores, confidence: scores[idx] };
+  } else {
+    const W = model.W; // H × C
+    const logits = CLASSES.map((_, c) => {
+      let acc = 0;
+      for (let i = 0; i < H; i++) acc += x[i] * W[i][c];
+      return acc;
+    });
+    const scores = softmax(logits);
+    const idx = scores.indexOf(Math.max(...scores));
+    return { label: CLASSES[idx], scores, confidence: scores[idx] };
+  }
 }
 
 const RERANKER = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/reranker-model.json');
@@ -92,8 +121,8 @@ function rerankerScores(query, paths) {
   return paths.map((p) => score(query, p));
 }
 
-// 13.5 — estimate-cardinality: ridge (evals/ml/model/cardinality-model.json)
-const CARD_MODEL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/cardinality-model.json');
+// 13.5 — estimate-cardinality: ridge (evals/ml/model/cardinality-model.json; CF_CARD_MODEL para modelos alternos/OOD)
+const CARD_MODEL = process.env.CF_CARD_MODEL ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/cardinality-model.json');
 
 export function estimateCardinality(payload = {}) {
   if (!fs.existsSync(CARD_MODEL)) return null;
@@ -119,7 +148,7 @@ if (isMain) {
   const t0 = Date.now();
   if (task === 'classify-query' && payload.query) {
     const r = classify(String(payload.query));
-    process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0 }) + '\n');
+    process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0, rssBytes: process.memoryUsage().rss }) + '\n');
   } else if (task === 'estimate-cardinality') {
     const r = estimateCardinality(payload);
     if (r) process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0 }) + '\n');

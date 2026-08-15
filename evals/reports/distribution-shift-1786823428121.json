@@ -1,0 +1,125 @@
+{
+  "date": "2026-08-15",
+  "split": "train=t1-basic(TS) / val=t1-modular(Python) / test=dev(unseen) — polar: sin repo dir, omitido",
+  "groups": {
+    "train": {
+      "repo": "t1-basic",
+      "lang": "TypeScript",
+      "label": "train (t1-basic, TS)",
+      "rows": 25,
+      "langs": "ts:5 json:3 md:1"
+    },
+    "val": {
+      "repo": "t1-modular",
+      "lang": "Python",
+      "label": "val (t1-modular, Python)",
+      "rows": 17,
+      "langs": "py:8 md:1 yaml:1 toml:1"
+    },
+    "test": {
+      "repo": "dev",
+      "lang": "TS-heavy/mixed",
+      "label": "test (dev workspace)",
+      "rows": 6,
+      "langs": "ts:8762 md:4536 html:3164 json:3068"
+    }
+  },
+  "model": {
+    "type": "ridge-cardinality",
+    "operators": [
+      "follow",
+      "git-log",
+      "include",
+      "rg-files",
+      "search-code"
+    ],
+    "query_classes": [
+      "definitions",
+      "filename",
+      "implementation",
+      "references"
+    ],
+    "train_rows": 25
+  },
+  "mape_in_vs_out": {
+    "in": {
+      "rows": 25,
+      "ml": {
+        "n": 25,
+        "mape": 0.2585049788058631,
+        "p50": 0.12252000609587954,
+        "p95": 0.618186981126484
+      },
+      "heuristic_baseline": {
+        "n": 25,
+        "mape": 0.2907002442002442,
+        "p50": 0.19047619047619055,
+        "p95": 0.8
+      }
+    },
+    "out_val": {
+      "rows": 17,
+      "ml": {
+        "n": 17,
+        "mape": 0.92050146605716,
+        "p50": 0.4409866020539209,
+        "p95": 5.472747924505936
+      },
+      "heuristic_baseline": {
+        "n": 17,
+        "mape": 1.1599906629318395,
+        "p50": 0.4,
+        "p95": 6.2
+      }
+    },
+    "out_test": {
+      "rows": 6,
+      "ml": {
+        "n": 6,
+        "mape": 2.3727747825936114,
+        "p50": 3.0019583643516006,
+        "p95": 3.918736797075539
+      },
+      "heuristic_baseline": {
+        "n": 6,
+        "mape": 0.27698788836229593,
+        "p50": 0,
+        "p95": 0.995260663507109
+      }
+    }
+  },
+  "language_hypothesis": {
+    "train_lang": "ts:5 json:3 md:1",
+    "val_lang": "py:8 md:1 yaml:1 toml:1",
+    "mape_train_ts": 0.2585049788058631,
+    "mape_val_python": 0.92050146605716,
+    "degradation": 3.5608655210794042,
+    "note": "entrenado solo en TypeScript; val = repos Python (t1-modular)"
+  },
+  "regret_ood": {
+    "val": {
+      "tasks": 13,
+      "skipped": 0,
+      "regret_heuristic": 0,
+      "regret_ood": -0.19281294804069646,
+      "plan_acc_heuristic": 0.9230769230769231,
+      "plan_acc_ood": 0.9230769230769231
+    },
+    "test": {
+      "tasks": 6,
+      "skipped": 0,
+      "regret_heuristic": 0,
+      "regret_ood": 0,
+      "plan_acc_heuristic": 1,
+      "plan_acc_ood": 1
+    }
+  },
+  "verdict": {
+    "mape_out_le_2x_in": false,
+    "mape_in": 0.2585049788058631,
+    "mape_out": 2.3727747825936114,
+    "ratio": 9.178835910837764,
+    "threshold": 2
+  },
+  "ood_model_artifact": "evals/reports/ood-cardinality-model.json"
+}
