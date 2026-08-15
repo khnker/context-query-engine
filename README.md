@@ -55,7 +55,7 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 **Implemented**
 
 - CQP (declarative query language) + parser
-- Heuristic intent interpreter (no ML)
+- Heuristic intent interpreter **+ optional local ML classifier** (confidence gate ≥ 0.6, regex fallback intact)
 - Candidate physical plans A/B/C per query type
 - Statistics store per `(operator, predicate_class)`: avg candidates, p95 tokens, latency, success rate (≥3 records)
 - Cardinality estimation per predicate class, refined with post-execution actuals
@@ -66,6 +66,13 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 - Fusion: cross-tool dedup, multi-factor ranking, token budget, tiered ordering
 - Intra-session cache (5 min TTL, persisted between processes)
 - MCP server (stdio, zero dependencies)
+- Repository statistics snapshot (`repo-stats.js`): files, bytes, estimated tokens, extensions, git recency
+- Adaptive: exponential decay (τ=7d) in the statistics store — cost model adapts to repo evolution
+- Per-operator cardinality: `estimateCandidates(operator|queryClass → queryClass → default)` wired into the optimizer
+- Local model interface (`local-model.js`): `available()/run()/rerank()/rerankSync()`, `CF_MODEL_CMD`, 2s timeout, failure → null
+- Optional reranker (engine.js hook before fuse; null → heuristic ranking) + `recall@k` harness
+- **ML pipeline (TinyBERT-style)**: 1,000 labeled queries dataset (10 classes, EN+ES) + 70/15/15 split, numpy out-of-band trainer (`evals/ml/train-classifier.py`), node inference (`evals/ml/classify.mjs`, ~6 ms), swappable artifact
+- ML gate (11.8): intent classification — regex 0.347 → **ML effective 0.94** (fired 135/150, acc 1.0, fallback 15)
 
 ---
 
@@ -206,7 +213,7 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 
 ## Testing
 
-Run the full suite:
+Run the full suite (34 unit tests + smoke + e2e):
 
 ```bash
 npm test
@@ -394,18 +401,29 @@ The benchmark is reproducible: `evals/run-benchmark` + `evals/analyze` (10 tasks
 
 ## Roadmap
 
-To move from heuristic router to full query optimizer (in value order):
+Executed as **13 OpenSpec phases** (see `openspec/changes/roadmap-orchestrator/`):
 
-1. **Statistics store** — aggregate `telemetry.ndjson` per `(operator, predicate class)`: `avg_candidates`, `p95_tokens`, `latency_ms`, `success_rate`.
-2. **Cardinality estimation** — estimate candidates **before** running each op and refine with the real post-execution count (PostgreSQL `autoanalyze` analogy). Today costs are per-tool constants.
-3. **`FOLLOW` / `INCLUDE` operators** — execute the `relations` and `inclusions` that CQP already parses (references, tests).
-4. **Plan rewriting** — commute/reorder ops when the estimate justifies it.
-5. **Separate Cost / Quality** — `utility = Quality(plan) / Cost(plan)`, with relevance/coverage/confidence outside the cost formula.
+| # | Phase | Status |
+|---|-------|--------|
+| 01 | Evaluation framework (`npm run eval`) | ✅ |
+| 02 | Query IR (CQP parser → AST) | ✅ |
+| 03 | Physical operators | ✅ |
+| 04 | Repository statistics (`repo-stats.js`) | ✅ |
+| 05 | Cardinality estimation (per operator) | ✅ |
+| 06 | Cost-based plan selection (utility=quality/cost) | ✅ |
+| 07 | Oracle benchmark (optimizer regret) | ✅ |
+| 08 | Context quality / budget (assemble-context) | ✅ |
+| 09 | Adaptive optimizer (τ=7d decay) | ✅ |
+| 10 | Local model interface | ✅ |
+| 11 | TinyBERT query classifier (local, linear; ML gate PASS) | ✅ |
+| 12 | Reranker (contract + engine hook + recall@k) | ✅ (12.1/12.2/12.4) |
+| 13 | Learned cost model (spec complete) | 📄 spec |
+| 14 | Deterministic gate (validate + test + eval PASS) | ✅ |
+| 15 | Global ML gate (real TinyBERT distilled) | ⏳ |
 
-Not on the roadmap: an ML intent classifier (the heuristic interpreter + statistics are enough) and a giant MCP (the surface stays small).
+Documented debt: micro-transformer with a buggy hand-written v/proj backprop (11.9, active artifact = linear); real TinyBERT distillation needs torch/GPU (11.10, artifact swap under the same contract); fuse does not consume reranker scores yet (12.5).
 
 ---
-
 ## Repository structure
 
 ```text

@@ -55,7 +55,7 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 **Implementado**
 
 - CQP (lenguaje de consultas declarativo) + parser
-- Interpreter heurístico de intención (sin ML)
+- Interpreter heurístico de intención **+ clasificador local opcional (ML)** (gate confianza ≥ 0.6, fallback regex intacto)
 - Planes físicos candidatos A/B/C por tipo de query
 - Statistics store por `(operador, clase de predicado)`: avg candidates, p95 tokens, latencia, success rate (≥3 registros)
 - Estimación de cardinalidad por clase de predicado, refinada con los valores reales post-ejecución
@@ -66,6 +66,13 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 - Fusión: dedup cross-tool, ranking multi-factor, presupuesto de tokens, orden por tiers
 - Cache intra-sesión (TTL 5 min, persistido entre procesos)
 - MCP server (stdio, sin dependencias)
+- Snapshot de estadísticas del repo (`repo-stats.js`): files, bytes, tokens estimados, extensiones, recencia git
+- Adaptive: decay exponencial (τ=7d) en el statistics store — el cost model se adapta a la evolución del repo
+- Cardinalidad por operador: `estimateCandidates(operator|queryClass → queryClass → default)` cableado en el optimizer
+- Interfaz de modelo local (`local-model.js`): `available()/run()/rerank()/rerankSync()`, `CF_MODEL_CMD`, timeout 2s, fallo → null
+- Reranker opcional (hook en engine.js antes de fuse; null → ranking heurístico) + harness `recall@k`
+- **Pipeline ML (TinyBERT-style)**: dataset 1,000 queries etiquetadas (10 clases, EN+ES) + split 70/15/15, entrenador numpy out-of-band (`evals/ml/train-classifier.py`), inferencia node (`evals/ml/classify.mjs`, ~6 ms), artifact swappable
+- Gate ML (11.8): clasificación de intención — regex 0.347 → **ML efectivo 0.94** (fired 135/150, acc 1.0, fallback 15)
 
 ---
 
@@ -211,7 +218,7 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 Ejecutar la suite completa:
 
 ```bash
-npm test
+npm test   # 34 unit tests + smoke + e2e
 ```
 
 Cobertura (alineada con el change OpenSpec `test-suite`):
@@ -417,18 +424,29 @@ Datos: `evals/reports/t2-polar-20260814.ndjson` (32 rows, reproducible con `eval
 
 ## Roadmap
 
-Para pasar de router heurístico a query optimizer completo (en orden de valor):
+Ejecutado como **13 fases OpenSpec** (ver `openspec/changes/roadmap-orchestrator/`):
 
-1. **Statistics store** — agregar `telemetry.ndjson` por `(operador, clase de predicado)`: `avg_candidates`, `p95_tokens`, `latency_ms`, `success_rate`.
-2. **Cardinality estimation** — estimar candidatos **antes** de ejecutar cada op y refinar con el conteo real post-ejecución (analogía `autoanalyze` de PostgreSQL). Hoy los costos son constantes por herramienta.
-3. **Operadores `FOLLOW` / `INCLUDE`** — ejecutar `relations` y `inclusions` que CQP ya parsea (referencias, tests).
-4. **Plan rewriting** — conmutar/reordenar ops cuando el estimado lo justifique.
-5. **Cost / Quality separados** — `utility = Quality(plan) / Cost(plan)`, con relevance/coverage/confidence fuera de la fórmula de costo.
+| # | Fase | Estado |
+|---|------|--------|
+| 01 | Evaluation framework (`npm run eval`) | ✅ |
+| 02 | Query IR (parser CQP → AST) | ✅ |
+| 03 | Physical operators | ✅ |
+| 04 | Repository statistics (`repo-stats.js`) | ✅ |
+| 05 | Cardinality estimation (por operador) | ✅ |
+| 06 | Cost-based plan selection (utility=quality/cost) | ✅ |
+| 07 | Oracle benchmark (optimizer regret) | ✅ |
+| 08 | Context quality / budget (assemble-context) | ✅ |
+| 09 | Adaptive optimizer (decay τ=7d) | ✅ |
+| 10 | Local model interface | ✅ |
+| 11 | TinyBERT query classifier (local, linear; gate ML PASS) | ✅ |
+| 12 | Reranker (contrato + hook + recall@k) | ✅ (12.1/12.2/12.4) |
+| 13 | Cost model aprendido (spec completo) | 📄 spec |
+| 14 | Gate determinista (validate + test + eval PASS) | ✅ |
+| 15 | Gate ML global (TinyBERT distilled real) | ⏳ |
 
-No está en el roadmap: clasificador ML de intención (el interpreter heurístico + estadísticas son suficientes) y un MCP gigante (la superficie se mantiene pequeña).
+Deuda documentada: micro-transformer con backprop manual con bug en v/proj (11.9, artefacto activo = lineal); TinyBERT distilled real requiere torch/GPU (11.10, swap del artifact con el mismo contrato); fuse aún no consume scores del reranker (12.5).
 
 ---
-
 ## Estructura del repo
 
 ```text
