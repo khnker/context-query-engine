@@ -53,6 +53,26 @@ export async function run(task, payload = {}) {
   });
 }
 
+/**
+ * rerank(results, query) — contrato del task 'rerank' (fase 12).
+ * Envía los results al modelo y devuelve {scores[], latencyMs} alineado a results
+ * (0..1 por result, rellena con 0 si el modelo devuelve menos). null ⇒ sin modelo
+ * o salida inválida → el caller mantiene el orden heurístico.
+ */
+export async function rerank(results, query = '') {
+  if (!Array.isArray(results) || results.length === 0) return { scores: [], latencyMs: 0 };
+  const out = await run('rerank', {
+    query,
+    results: results.map((r) => (r?.content ?? r?.snippet ?? r?.path ?? '').slice(0, 400)),
+  });
+  if (!out || !Array.isArray(out.scores)) return null;
+  const scores = results.map((_, i) => {
+    const s = Number(out.scores[i]);
+    return Number.isFinite(s) ? Math.min(1, Math.max(0, s)) : 0;
+  });
+  return { scores, latencyMs: out.latencyMs ?? 0 };
+}
+
 export default { CAPACITIES, available, run };
 
 // --- CLI (diagnóstico) ---
