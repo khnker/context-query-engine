@@ -28,7 +28,7 @@ case "$OUT" in
 esac
 
 # ids de repos del tier (parse simple de yaml)
-repo_ids=$(grep -A20 "^  $TIER:" "$REPOS_YAML" | grep -- "- id:" | awk '{print $3}' | grep -v '^$' | tr '\n' ' ')
+repo_ids=$(awk '/^  '"$TIER"':/{f=1;next} f && /^  [a-z0-9]+:/{f=0} f' "$REPOS_YAML" | grep -- "- id:" | awk '{print $3}' | grep -v '^$' | tr '\n' ' ')
 [ -z "$repo_ids" ] && repo_ids="t1-basic t1-modular"
 [ -z "$repo_ids" ] && { echo "tier $TIER sin repos" >&2; exit 1; }
 
