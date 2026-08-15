@@ -66,9 +66,27 @@ Measured over real executions (T1 harness 40 tasks / test split 150 queries), no
 | Cardinality MAPE | 1.418 (heuristic avg) | **0.498** (ridge, P95 5.43→2.02) | ✅ adopted |
 | Optimizer regret (C vs oracle) | 0.6886 | **0.6655** (−3.4%) | ✅ adopted |
 | Correctness / tokens (C) | 100% / 764 | 100% / 764 (identical) | ✅ no regression |
-| Reranker (stub, MRR) | sanity Δ0.000 | Δ+0.038 (pipeline live) | ⏳ model pending |
+| Reranker (real model, MRR) | sanity Δ0.000 | Δ0.000 end-to-end, pair-level MRR 0.909 | ✅ adopted (neutral, no regression) |
 
 All ML paths are null-safe (`CF_MODEL_CMD` absent/failure → deterministic heuristic, verified Δ0 without model).
+
+**Real-world evidence — heavy tree (2026-08-15, `/home/nicolas/dev`, ~24 GB / 164,063 files)**
+
+Full report: [`EVIDENCIA-DEV-TREE.md`](EVIDENCIA-DEV-TREE.md) (14 tasks with real ground truth, `evals/reports/dev-tree-20260815.json`).
+
+| Metric | Heuristic | Reranker |
+|--------|-----------|----------|
+| recall@5 / recall@10 | 0.857 / 0.929 | 0.786 / 0.857 (Δ = fs noise on `filename` queries; neutral on concept/symbol) |
+| MRR | 0.637 | 0.520 |
+
+Token/time savings vs naive full-tree grep:
+
+| Case | Naive (grep raw) | Engine | Savings |
+|------|------------------|--------|---------|
+| dev-13 `pm2` (broad concept) | 33.5M tokens (134 MB) | **1.76M tokens**, 0.66 s cold | **~19×** fewer tokens |
+| dev-14 `SERVICE_META` (precise symbol) | 4,056 tokens | **104 tokens**, rerank 83 ms | **~39×** fewer tokens |
+
+Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is faster cold; the engine pays off on broad-concept queries over large trees (ranking + budget + cache included).
 
 ---
 
