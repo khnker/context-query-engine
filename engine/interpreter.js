@@ -117,16 +117,19 @@ const FAMILIES = [
 
 const STOP_WORDS = new Set(['de', 'el', 'la', 'lo', 'los', 'las', 'del', 'un', 'una', 'que', 'y', 'a', 'en', 'se', 'con', 'para']);
 
-// Extraer nombre de símbolo/concepto: string entre comillas → camelCase/PascalCase → tras "de/el/la".
+// Extraer nombre de símbolo/concepto: string entre comillas → camelCase/PascalCase → snake/kebab/dotted (archivos) → tras "de/el/la".
 function extractName(text) {
   const q = /"([^"]+)"/.exec(text);
   if (q) return q[1];
   const cc = /\b([a-z]+[A-Z][A-Za-z0-9]*)\b|\b([A-Z][a-z]+[A-Z][A-Za-z0-9]*)\b/.exec(text);
   if (cc) return cc[1] || cc[2];
-  const after = /\b(?:de|el|la|lo)\s+([a-zA-ZáéíóúñÁÉÍÓÚÑ][a-zA-ZáéíóúñÁÉÍÓÚÑ0-9]*(?:\s+[a-zA-ZáéíóúñÁÉÍÓÚÑ0-9]+){0,2})/.exec(text);
+  const ident = /\b([a-zA-Z0-9]+[._-][a-zA-Z0-9._-]+)\b/.exec(text);
+  if (ident) return ident[1];
+  const after = /\b(?:de|el|la|lo|en|para)\s+([a-zA-ZáéíóúñÁÉÍÓÚÑ0-9]+(?:\s+[a-zA-ZáéíóúñÁÉÍÓÚÑ0-9]+){0,2})/.exec(text);
   if (after) {
-    const name = after[1].trim();
-    if (!STOP_WORDS.has(name.toLowerCase())) return name;
+    const words = after[1].split(/\s+/)
+      .filter((w) => !STOP_WORDS.has(w.toLowerCase()) && !/^(carpeta|archivo|archivos|código|codigo|función|funcion|clase|file|files|folder|dir|directorio|ruta|path)$/i.test(w));
+    if (words.length) return words.join(' ');
   }
   return null;
 }

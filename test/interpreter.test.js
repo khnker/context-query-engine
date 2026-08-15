@@ -40,6 +40,22 @@ test('2.1 familia concept → confidence 0.6', () => {
   assert.equal(r.confidence, 0.6);
 });
 
+test('extractName: snake_case en frase natural (bug MCP args)', () => {
+  assert.equal(interpret('buscar spotify_wizard en la carpeta').name, 'spotify_wizard');
+});
+
+test('extractName: archivo dotted → filename', () => {
+  const r = interpret('dónde está el archivo server.js');
+  assert.equal(r.query_type, 'filename');
+  assert.equal(r.name, 'server.js');
+});
+
+test('extractName: "la carpeta" genérico → null (fallback a token significativo)', () => {
+  const r = interpret('buscar interpret en la carpeta');
+  assert.notEqual(r.name, 'la carpeta');
+  assert.notEqual(r.name, 'carpeta');
+});
+
 test('2.1 2+ keywords de la misma familia → 0.95', () => {
   const r = interpret('define y declara foo');
   assert.equal(r.query_type, 'definitions');

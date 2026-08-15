@@ -258,6 +258,14 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     return { plan: phys, results: cached.results, stats, cached: true };
   }
 
+  const forcePlan = process.env.FORCE_PLAN;
+  if (forcePlan) {
+    const fp = phys.plans.find((p) => p.id === forcePlan);
+    if (fp) {
+      phys.selected = fp.id;
+      phys.reason = `FORCE_PLAN=${forcePlan}`;
+    }
+  }
   const selected = phys.plans.find((p) => p.id === phys.selected) ?? phys.plans[0];
   const pool = [];
 
@@ -357,7 +365,13 @@ export function runIntent(intentText, opts = {}) {
   const src = String(intentText ?? '').trim();
   const interp = interpret(src);
   const q = /"([^"]+)"/.exec(src);
-  const name = interp.name ?? (q ? q[1] : src.slice(0, 60));
+  const GENERIC = /^(buscar|find|dónde|donde|está|esta|is|the|file|archivo|carpeta|código|codigo|funcion|función|qué|que|como|cómo|hace|se|usa|usar|usos|referencias|definiciones|symbol|concept)$/i;
+  const fallbackName = () => {
+    const sw = new Set(['de', 'el', 'la', 'lo', 'los', 'las', 'del', 'un', 'una', 'que', 'y', 'a', 'en', 'se', 'con', 'para']);
+    const toks = src.split(/\s+/).filter((t) => !sw.has(t.toLowerCase()) && !GENERIC.test(t));
+    return toks[toks.length - 1] || src.slice(0, 60);
+  };
+  const name = interp.name ?? (q ? q[1] : fallbackName());
   const logicalPlan = {
     query_type: interp.query_type,
     target: { kind: 'symbol', name },
