@@ -1,0 +1,33 @@
+{
+  "date": "2026-08-15",
+  "tasks": 150,
+  "models": {
+    "ridge": {
+      "test_acc": 0.9866666666666667,
+      "p95_latency_ms": 10,
+      "mean_rss_mb": 52,
+      "max_rss_mb": 53,
+      "artifact_bytes": 398095,
+      "latency_lt_50ms": true
+    },
+    "mlp": {
+      "test_acc": 0.9533333333333334,
+      "p95_latency_ms": 49,
+      "mean_rss_mb": 62,
+      "max_rss_mb": 63,
+      "artifact_bytes": 5707486,
+      "latency_lt_50ms": true
+    }
+  },
+  "reference": {
+    "cardinality_mape": null,
+    "reranker": 1,
+    "reranker_mrr": 0.9090909090909091,
+    "ridge_test_acc_reported": 0.987
+  },
+  "verdict": {
+    "chosen_model": "ridge",
+    "details": "mlp test_acc 0.953 vs ridge 0.987 | mlp p95 49.0ms vs ridge 10.0ms",
+    "threshold_passed": true
+  }
+}
