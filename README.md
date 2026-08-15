@@ -426,15 +426,20 @@ npm test
 
 Coverage (aligned with the `test-suite` OpenSpec change):
 
-- **Unit** — `node --test` over `engine/` (parser, optimizer, statistics).
+- **Unit** — `node --test` over `engine/` (parser, optimizer, statistics, local-model).
 - **Smoke** — bash scripts: `npm run check-tools` plus one end-to-end run of the worked query.
 - **End-to-end** — `node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'`, asserting each pipeline stage emits the expected NDJSON.
 
-Until the `test-suite` change lands, run the unit suite directly:
+**Verification (2026-08-15)** — all green:
 
-```bash
-node --test engine/
+```text
+npm test                    34/34 pass  (unit + smoke + e2e)
+openspec validate           18/18 pass
+npm run bench               PASS (61.3% compression, guards)
+ML gate (evals/ml/GATE-ML.md)  15/15 PASS — no regression on polar (T1/T2)
+mcp-test.sh                 RC=0 (init → tools/list → tools/call)
 ```
+
 
 ---
 
