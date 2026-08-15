@@ -1,6 +1,6 @@
 {
   "name": "context-query-engine",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "Context query language, optimizer y motor de retrieval para agentes LLM",
   "type": "module",

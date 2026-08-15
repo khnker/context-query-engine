@@ -70,3 +70,12 @@ CF_MODEL_CMD="node evals/ml/classify.mjs" node evals/scripts/eval-intent-ml.js  
 CF_MODEL_CMD="node evals/ml/classify.mjs" node evals/scripts/eval-recall.js       # 12.4
 python3 evals/ml/train-cardinality.py                                              # 13.3-13.4
 ```
+
+## Anexo: re-medición T2 (repo real) tras el tramo completo
+
+Run fresco de `evals/run-eval.sh --tier t2` (polar) vs baseline original (pre-roadmap):
+- Correctitud: 8/8 en los 4 modos (idéntico)
+- Tokens: idénticos en los 4 modos (A 5,556,644; C 27,221)
+- Latencia promedio mejoró: A 12,098→3,563 ms; C 232→178 ms; D 7,867→6,146 ms
+
+→ El tramo ML completo (cost model aprendido, stats adaptativas, reranker, clasificador) NO degrada el repo real: misma correctitud y tokens, latencia menor.
