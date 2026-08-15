@@ -1,0 +1,13 @@
+{
+  "experiment": "aqp-v1",
+  "date": "2026-08-15",
+  "benchmark": "T1",
+  "scope": "t1 (32 tasks)",
+  "config": { "CF_REOPT": "1", "CF_REOPT_THRESHOLD": "0.5", "rules": ["over-return-skip (follow/include pendientes)", "under-return-skip (est>0, actual 0, pendientes semantic/git/follow)"] },
+  "baseline": { "correctness": 1.0, "tokens_mean": 56.0, "latency_mean_ms": 269.4, "regret": 0.0, "plan_acc": 0.875 },
+  "aqp_v1": { "correctness": 0.969, "tokens_mean": 55.9, "latency_mean_ms": 244.3, "regret": 0.0, "plan_acc": 0.875, "failed_tasks": ["git-01"] },
+  "delta": { "correctness": -0.031, "tokens": -0.1, "latency_ms": -25.1 },
+  "verdict": "REJECT",
+  "root_cause": "under-return-skip mató git-log en git-01: el GT del tipo de query git vive en git-log, que es la op pesada saltada (0 tokens, 0 results). El skip no debe aplicar a ops que son la fuente del GT del query_type (git-log/follow/include).",
+  "refined_hypothesis": "under-return-skip SOLO cuando la op con 0 es search-code/search-semantic (léxico) Y quedan ops léxicas redundantes del mismo tipo; NUNCA saltar git-log/follow/include. over-return-skip se mantiene (follow/include pendientes + relevant>0)."
+}

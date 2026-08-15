@@ -297,6 +297,29 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       results: results.length, relevant: relevant.length,
       satisfied: relevant.length > 0, cache_hit: false,
     }, phys.pred_class);
+    // AQP v1 (adaptive-query-processing, flag-gated): re-optimizar el plan restante
+    // a partir del resultado OBSERVADO. Off por defecto (CF_REOPT=1 lo activa).
+    if (process.env.CF_REOPT === '1' && !stats.early_terminated) {
+      const estC = op.est_candidates ?? 0;
+      const actC = results.length;
+      const dev = estC > 0 ? Math.abs(estC - actC) / Math.max(estC, 1) : 0;
+      const pendingOps = selected.ops.slice(selected.ops.indexOf(op) + 1).filter((o) => o.tool !== 'assemble-context');
+      const reoptTh = Number(process.env.CF_REOPT_THRESHOLD ?? 0.5);
+      if (dev > reoptTh && pendingOps.length) {
+        if (actC > estC && relevant.length > 0 && pendingOps.some((o) => o.tool === 'follow' || o.tool === 'include')) {
+          // over-return: el op ya sobre-entrego → los dependientes (FOLLOW/INCLUDE) son innecesarios
+          stats.early_terminated = true;
+          stats.reoptimized = `over-return-skip (est ${estC} vs actual ${actC})`;
+          break;
+        }
+        if (actC === 0 && estC > 0 && pendingOps.some((o) => ['search-semantic', 'git-log', 'follow'].includes(o.tool))) {
+          // under-return: 0 evidencia → las ops pesadas siguientes no aportaran
+          stats.early_terminated = true;
+          stats.reoptimized = `under-return-skip (est ${estC} vs actual 0)`;
+          break;
+        }
+      }
+    }
     if (relevant.length > 0) {
       // D14 — early termination solo si no quedan ops dependientes (FOLLOW/INCLUDE)
       const pending = selected.ops.slice(selected.ops.indexOf(op) + 1)
