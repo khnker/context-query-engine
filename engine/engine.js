@@ -326,7 +326,10 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         const scored = pool.map((r, i) => ({ r, s: rr.scores[i] ?? 0 }));
         scored.sort((a, b) => b.s - a.s);
         pool.length = 0;
-        pool.push(...scored.map((x) => x.r));
+        for (const { r, s } of scored) {
+          r.score = s; // 12.5 — fuse consume .score (peso 0.3 en score_final + dedup max)
+          pool.push(r);
+        }
         stats.reranked = true;
         stats.rerank_latency_ms = rr.latencyMs ?? Date.now() - t0;
       }

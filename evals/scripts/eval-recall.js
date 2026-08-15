@@ -44,6 +44,15 @@ function recallAtK(ranked, ground, k) {
   return ground.length ? hits / Math.min(k, ground.length) : 1;
 }
 
+function mrr(ranked, ground) {
+  for (let i = 0; i < ranked.length; i++) {
+    if (ground.some((g) => ranked[i] === g || ranked[i].endsWith('/' + g) || g.endsWith('/' + ranked[i]))) {
+      return 1 / (i + 1);
+    }
+  }
+  return 0;
+}
+
 const rows = TEST.filter((r) => byId[r.source]);
 if (rows.length === 0) {
   console.error('sin tasks reales en el split de test');
@@ -52,7 +61,7 @@ if (rows.length === 0) {
 const modelCmd = process.env.CF_MODEL_CMD ?? null;
 
 const report = { k: KS, model: modelCmd ?? '(ninguno — comparación heurístico vs heurístico)', rows: [] };
-const agg = { heuristic: { r5: [], r10: [] }, rerank: { r5: [], r10: [] } };
+const agg = { heuristic: { r5: [], r10: [], mrr: [] }, rerank: { r5: [], r10: [], mrr: [] } };
 
 for (const r of rows) {
   const task = byId[r.source];
@@ -65,30 +74,32 @@ for (const r of rows) {
   const h10 = recallAtK(rankedH, ground, 10);
   const r5 = recallAtK(rankedR, ground, 5);
   const r10 = recallAtK(rankedR, ground, 10);
+  const mrrH = mrr(rankedH, ground);
+  const mrrR = mrr(rankedR, ground);
   agg.heuristic.r5.push(h5);
   agg.heuristic.r10.push(h10);
+  agg.heuristic.mrr.push(mrrH);
   agg.rerank.r5.push(r5);
   agg.rerank.r10.push(r10);
-  report.rows.push({ task: task.id, n_ground: ground.length, heuristic: { r5: h5, r10: h10 }, rerank: { r5: r5, r10: r10 } });
+  agg.rerank.mrr.push(mrrR);
+  report.rows.push({ task: task.id, n_ground: ground.length, heuristic: { r5: h5, r10: h10, mrr: mrrH }, rerank: { r5: r5, r10: r10, mrr: mrrR } });
 }
 
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0);
 report.summary = {
   tasks: report.rows.length,
-  heuristic: { recall5: mean(agg.heuristic.r5), recall10: mean(agg.heuristic.r10) },
-  rerank: { recall5: mean(agg.rerank.r5), recall10: mean(agg.rerank.r10) },
+  heuristic: { recall5: mean(agg.heuristic.r5), recall10: mean(agg.heuristic.r10), mrr: mean(agg.heuristic.mrr) },
+  rerank: { recall5: mean(agg.rerank.r5), recall10: mean(agg.rerank.r10), mrr: mean(agg.rerank.mrr) },
 };
 report.summary.delta5 = report.summary.rerank.recall5 - report.summary.heuristic.recall5;
 report.summary.delta10 = report.summary.rerank.recall10 - report.summary.heuristic.recall10;
+report.summary.deltaMrr = report.summary.rerank.mrr - report.summary.heuristic.mrr;
 
 if (process.argv.includes('--json')) {
   process.stdout.write(JSON.stringify(report, null, 2) + '\n');
 } else {
+  const f = (x) => x.toFixed(3);
   console.log(`tasks: ${report.summary.tasks} | k=5,10 | modelo: ${report.summary.model}`);
-  console.log('  heurístico   r@5 %.3f  r@10 %.3f'.replace('%.3f', report.summary.heuristic.recall5.toFixed(3)).replace('%.3f', report.summary.heuristic.recall10.toFixed(3)));
-  console.log('  reranker     r@5 %.3f  r@10 %.3f  (Δ5 %.3f, Δ10 %.3f)'
-    .replace('%.3f', report.summary.rerank.recall5.toFixed(3))
-    .replace('%.3f', report.summary.rerank.recall10.toFixed(3))
-    .replace('%.3f', report.summary.delta5.toFixed(3))
-    .replace('%.3f', report.summary.delta10.toFixed(3)));
+  console.log(`  heurístico   r@5 ${f(report.summary.heuristic.recall5)}  r@10 ${f(report.summary.heuristic.recall10)}  mrr ${f(report.summary.heuristic.mrr)}`);
+  console.log(`  reranker     r@5 ${f(report.summary.rerank.recall5)}  r@10 ${f(report.summary.rerank.recall10)}  mrr ${f(report.summary.rerank.mrr)}  (Δ5 ${f(report.summary.delta5)}, Δ10 ${f(report.summary.delta10)}, Δmrr ${f(report.summary.deltaMrr)})`);
 }
