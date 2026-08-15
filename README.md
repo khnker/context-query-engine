@@ -639,7 +639,7 @@ Medición (`evals/scripts/eval-indexing.js`, tasks 3.1-3.5 del change `indexing-
 
 ## Derived tasks (roadmap v1.6)
 
-- **Índice BM25 incremental persistente**: hoy reindexa full por proceso (T_incremental == T_index); aplica si T_index > 1s en repos grandes (indexing-cost-breakeven).
+- **Índice BM25 incremental persistente**: ✅ DONE (bm25-incremental-index) — índice persistido a `engine/.bm25-index.json` con validación por mtime; reuse entre procesos polar 335→180ms / dev 714→317ms (~2.1-2.2×, umbral 0.6×). Resta: incremental por archivo (hoy touch 1 archivo → rebuild full, 973-1828ms). Ver `evals/reports/index-persist-<TS>.json`.
 - **Señal de incertidumbre por variante de plan**: varianza de est_candidates o success rate por plan id; sin esto la EU degenera a ranking por costo (expected-utility-cost REJECT).
 - **Cost model OOD**: retrain por repo o regularización/feature engineering antes de confiar el cardinality ML fuera de distribución (distribution-shift FAIL).
 - **Mitigaciones adversarial**: M1 fallback estructural para concept (deep-dependency-chain), M2 --no-ignore opt-in (generated-code), M3 enforcement de budget / cap fan-out (token explosion) (adversarial-workloads).

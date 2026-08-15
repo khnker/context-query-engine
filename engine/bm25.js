@@ -3,10 +3,15 @@
  * engine/bm25.js — BM25 propio en node (stdlib SOLO, zero deps).
  * Op de retrieval para hybrid-retrieval-comparison: index por directorio
  * (lazy, cache en módulo), scorer Okapi BM25 k1=1.5 b=0.75.
+ * Persistencia cross-proceso (bm25-incremental-index): índice serializado a
+ * engine/.bm25-index.json con validación por mtime+size de cada archivo; si nada
+ * cambió, el siguiente proceso reusa sin reconstruir. CF_BM25_INDEX_FILE override,
+ * CF_BM25_NO_PERSIST=1 deshabilita (baseline eval).
  * Emite paths RELATIVOS al dir indexado (mismo shape que rg/parseGrep).
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const K1 = 1.5;
 const B = 0.75;
@@ -15,6 +20,8 @@ const SKIP_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.pdf', '.woff', '.wo
 // límites de indexación (repos enormes tipo dev=/home/nicolas/dev → OOM sin cap)
 const MAX_FILES = 1000;
 const MAX_FILE_BYTES = 256 * 1024;
+const INDEX_FILE = () => process.env.CF_BM25_INDEX_FILE || path.join(path.dirname(fileURLToPath(import.meta.url)), '.bm25-index.json');
+const NO_PERSIST = process.env.CF_BM25_NO_PERSIST === '1';
 
 function tokenize(text) {
   return String(text).toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 2 && !STOP.has(t));
@@ -44,12 +51,7 @@ function walkFiles(dir, out = []) {
   return out;
 }
 
-const indexCache = new Map(); // dir → { n, avgdl, df, docLen, tf }
-
-function getIndex(dir) {
-  const key = path.resolve(dir);
-  if (indexCache.has(key)) return indexCache.get(key);
-  const files = walkFiles(key);
+function buildIndex(key, files) {
   const df = new Map();      // term → doc count
   const docLen = new Map();  // file → token count
   const tf = new Map();      // file → Map(term → count)
@@ -71,7 +73,66 @@ function getIndex(dir) {
     for (const t of counts.keys()) df.set(t, (df.get(t) ?? 0) + 1);
   }
   const n = docLen.size;
-  const index = { files, dir: key, n, avgdl: n ? totalLen / n : 0, df, docLen, tf };
+  return { files, dir: key, n, avgdl: n ? totalLen / n : 0, df, docLen, tf };
+}
+
+function persistIndex(key, index) {
+  if (NO_PERSIST) return;
+  try {
+    const file = INDEX_FILE();
+    const prev = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
+    const files = index.files.map((p) => {
+      const st = fs.statSync(p);
+      return { p, m: st.mtimeMs, s: st.size };
+    });
+    prev[key] = {
+      files, n: index.n, avgdl: index.avgdl,
+      df: Object.fromEntries(index.df),
+      docLen: Object.fromEntries(index.docLen),
+      tf: Object.fromEntries([...index.tf].map(([f, m2]) => [f, Object.fromEntries(m2)])),
+    };
+    fs.writeFileSync(file, JSON.stringify(prev));
+  } catch { /* best-effort */ }
+}
+
+// Reusa el índice persistido si el set de archivos y sus mtime+size coinciden.
+function loadPersisted(key) {
+  if (NO_PERSIST) return null;
+  try {
+    const raw = JSON.parse(fs.readFileSync(INDEX_FILE(), 'utf8'));
+    const ent = raw[key];
+    if (!ent || !Array.isArray(ent.files)) return null;
+    const files = walkFiles(key);
+    const set = new Set(files);
+    if (ent.files.length !== set.size) return null;
+    for (const { p, m, s } of ent.files) {
+      if (!set.has(p)) return null;
+      let st;
+      try { st = fs.statSync(p); } catch { return null; }
+      if (st.mtimeMs !== m || st.size !== s) return null;
+    }
+    return {
+      files: ent.files.map((x) => x.p), dir: key, n: ent.n, avgdl: ent.avgdl,
+      df: new Map(Object.entries(ent.df)),
+      docLen: new Map(Object.entries(ent.docLen)),
+      tf: new Map(Object.entries(ent.tf).map(([f, m2]) => [f, new Map(Object.entries(m2))])),
+      from_persist: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
+const indexCache = new Map(); // dir → { n, avgdl, df, docLen, tf, from_persist? }
+
+function getIndex(dir) {
+  const key = path.resolve(dir);
+  if (indexCache.has(key)) return indexCache.get(key);
+  let index = loadPersisted(key);
+  if (!index) {
+    index = buildIndex(key, walkFiles(key));
+    persistIndex(key, index);
+  }
   indexCache.set(key, index);
   return index;
 }
@@ -105,3 +166,6 @@ export function score(dir, queryWords, topK = 8) {
   const max = top.length ? top[0].score : 0;
   return top.map((r) => ({ path: path.relative(index.dir, r.path), score: max ? r.score / max : 0 }));
 }
+
+// para evals: expone si el index vino de persistencia
+export const indexStats = { get fromPersist() { return false; } };
