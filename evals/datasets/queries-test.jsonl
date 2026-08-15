@@ -1,0 +1,150 @@
+{"text":"Find the definition of JwtAuthGuard.","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is applyDiscount defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is VentaComercioService defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está definido JwtAuthGuard?","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is loadConfig defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is cacheGet defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is logError defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"Find the definition of readFileAsync.","label":"LEXICAL","source":"synthetic"}
+{"text":"Find the definition of RendicionSinCargaService.","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is AuthService defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is register defined?","label":"LEXICAL","source":"lex-03"}
+{"text":"Find the definition of parseConfig.","label":"LEXICAL","source":"synthetic"}
+{"text":"Where is renderTable defined?","label":"LEXICAL","source":"synthetic"}
+{"text":"¿Dónde está definido DefaultEntitiesService?","label":"LEXICAL","source":"synthetic"}
+{"text":"Find the definition of checkout.","label":"LEXICAL","source":"synthetic"}
+{"text":"Which classes implement DefaultEntitiesService?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Where is class HttpHandler defined?","label":"STRUCTURAL","source":"str-03"}
+{"text":"Which classes implement fetchProducts?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement DashboardService?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement AppDataSource?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Show the class hierarchy of InvoiceStorageService.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement CylinderType?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"What interfaces extend logError?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement loadConfig?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Where is the try/catch fallback logic?","label":"STRUCTURAL","source":"str-02"}
+{"text":"What interfaces extend ConciliacionMinoristaService?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"What interfaces extend JwtAuthGuard?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement DeclararVentaService?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Which classes implement logError?","label":"STRUCTURAL","source":"synthetic"}
+{"text":"Show the class hierarchy of AuthService.","label":"STRUCTURAL","source":"synthetic"}
+{"text":"How does parseResponse work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does ConciliacionMinoristaService work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does checkout work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does readFileAsync work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Why was serialize introduced?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Explain the logic behind InvoiceStorageService.","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does InvoiceStorageService work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does detectLanguage work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Why was deserialize introduced?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does VentaLocalService work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How are handlers registered?","label":"SEMANTIC","source":"sem-03"}
+{"text":"Explain the logic behind AuthService.","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does JwtAuthGuard work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"How does FacturacionLocalService work?","label":"SEMANTIC","source":"synthetic"}
+{"text":"Why was handleRequest introduced?","label":"SEMANTIC","source":"synthetic"}
+{"text":"What does parseConfig import?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Which modules use DashboardService?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Who depends on loadConfig?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"What does connect import?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Who depends on CylinderType?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Which modules use AuthService?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"What depends on DEFAULT_TIMEOUT_MS?","label":"DEPENDENCY","source":"dep-05"}
+{"text":"Which modules use AppDataSource?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Which modules use SalesService?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Who depends on DeclararVentaService?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Which modules use ModelRouter?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"What does cacheSet import?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"What does AuthService import?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"Who depends on detectLanguage?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"What does cacheGet import?","label":"DEPENDENCY","source":"synthetic"}
+{"text":"How is parseConfig configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is calculateTotal configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is shutdown configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where is the cacheSet configuration?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is DeclararVentaService configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is readFileAsync configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is cacheSet configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is fallback configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is normalize configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where is the logError configuration?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where is the shutdown configuration?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is JwtAuthGuard configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where is the PricesCascadeService configuration?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where is the AuthService configuration?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"How is CylinderType configured?","label":"CONFIGURATION","source":"synthetic"}
+{"text":"Where are the specs for DeclararVentaService?","label":"TEST","source":"synthetic"}
+{"text":"Which tests cover fallback?","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for validateToken?","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for InvoiceStorageService?","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for normalize?","label":"TEST","source":"synthetic"}
+{"text":"Which tests cover the registry?","label":"TEST","source":"tst-03"}
+{"text":"Which test covers get fallback?","label":"TEST","source":"tst-04"}
+{"text":"Where are the specs for detectLanguage?","label":"TEST","source":"synthetic"}
+{"text":"Show the test file for DeclararVentaService.","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for applyDiscount?","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for deserialize?","label":"TEST","source":"synthetic"}
+{"text":"Show the test file for SalesService.","label":"TEST","source":"synthetic"}
+{"text":"Show the test file for DefaultEntitiesService.","label":"TEST","source":"synthetic"}
+{"text":"Show the test file for parseConfig.","label":"TEST","source":"synthetic"}
+{"text":"Where are the specs for handleRequest?","label":"TEST","source":"synthetic"}
+{"text":"Show applyDiscount with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show sendInvoice with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Find FacturacionLocalService and its callers.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Find SalesService and its callers.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show fallback with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show JwtAuthGuard with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Find logError and its callers.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show InvoiceStorageService with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show ModelRouter with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Explain FacturacionLocalService and who uses it.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Find deserialize and its callers.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show handleRequest with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show readFileAsync with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Explain CylinderType and who uses it.","label":"COMPOSITE","source":"synthetic"}
+{"text":"Show AppDataSource with related tests.","label":"COMPOSITE","source":"synthetic"}
+{"text":"What changed recently in RendicionSinCargaService?","label":"GIT","source":"synthetic"}
+{"text":"What changed recently in parseResponse?","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching DefaultEntitiesService.","label":"GIT","source":"synthetic"}
+{"text":"What changed recently in validateToken?","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching VentaComercioService.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching serialize.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching InvoiceStorageService.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching retryWithBackoff.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching deserialize.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching FacturacionLocalService.","label":"GIT","source":"synthetic"}
+{"text":"What changed recently in applyDiscount?","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching DashboardService.","label":"GIT","source":"synthetic"}
+{"text":"Show the recent commits touching shutdown.","label":"GIT","source":"synthetic"}
+{"text":"What changed recently in checkout?","label":"GIT","source":"synthetic"}
+{"text":"What changed recently in PricesCascadeService?","label":"GIT","source":"synthetic"}
+{"text":"Find symbol parseConfig.","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of parseConfig?","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol calculateTotal.","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol InvoiceStorageService.","label":"SYMBOL","source":"synthetic"}
+{"text":"Locate DeclararVentaService declaration.","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol DeclararVentaService.","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of parseResponse?","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol normalize.","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol VentaLocalService.","label":"SYMBOL","source":"synthetic"}
+{"text":"Find symbol DefaultEntitiesService.","label":"SYMBOL","source":"synthetic"}
+{"text":"Locate PricesCascadeService declaration.","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of detectLanguage?","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of ConciliacionMinoristaService?","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of validateToken?","label":"SYMBOL","source":"synthetic"}
+{"text":"Where is the definition of DeclararVentaService?","label":"SYMBOL","source":"synthetic"}
+{"text":"Find all references to DefaultEntitiesService.","label":"REFERENCE","source":"synthetic"}
+{"text":"Find all references to ModelRouter.","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is shutdown referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Who calls logError?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is sendInvoice referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Find all references to SalesService.","label":"REFERENCE","source":"synthetic"}
+{"text":"Who calls JwtAuthGuard?","label":"REFERENCE","source":"synthetic"}
+{"text":"Find all references to DeclararVentaService.","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is cacheSet referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is applyDiscount referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is fallback referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is calculateTotal referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is fetchProducts referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Where is FacturacionLocalService referenced?","label":"REFERENCE","source":"synthetic"}
+{"text":"Who calls PricesCascadeService?","label":"REFERENCE","source":"synthetic"}
