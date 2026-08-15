@@ -1,0 +1,12 @@
+{
+  "pairs": {
+    "pos": 83,
+    "neg": 215,
+    "train": 254,
+    "test": 44
+  },
+  "queries_test": 8,
+  "recall_at5": 1.0,
+  "mrr": 0.9375,
+  "model": "ridge hashed-ngram relevance (reranker 12.5b)"
+}

@@ -65,6 +65,33 @@ export function classify(text) {
   return { label: CLASSES[idx], scores, confidence: scores[idx] };
 }
 
+const RERANKER = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/reranker-model.json');
+
+function rerankerScores(query, paths) {
+  // misma featureización que train-reranker.py: char n-grams (2-4) de 'query|path' hasheados
+  let model;
+  try {
+    model = JSON.parse(fs.readFileSync(RERANKER, 'utf8'));
+  } catch {
+    return null; // sin modelo → null → fallback heurístico
+  }
+  const H = model.H;
+  const W = model.W;
+  const score = (q, p) => {
+    const t = '#' + q.toLowerCase() + '#' + '|' + '#' + p.toLowerCase() + '#';
+    const x = new Float64Array(H);
+    for (let n = 2; n <= 4; n++) {
+      for (let i = 0; i <= t.length - n; i++) {
+        x[djb2(Buffer.from(t.slice(i, i + n))) % H] = 1;
+      }
+    }
+    let acc = 0;
+    for (let i = 0; i < H; i++) acc += x[i] * W[i];
+    return 1 / (1 + Math.exp(-Math.min(30, Math.max(-30, acc)))); // sigmoid
+  };
+  return paths.map((p) => score(query, p));
+}
+
 // 13.5 — estimate-cardinality: ridge (evals/ml/model/cardinality-model.json)
 const CARD_MODEL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/cardinality-model.json');
 
@@ -96,6 +123,11 @@ if (isMain) {
   } else if (task === 'estimate-cardinality') {
     const r = estimateCardinality(payload);
     if (r) process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0 }) + '\n');
+  } else if (task === 'rerank' && payload.query && Array.isArray(payload.results)) {
+    const scores = rerankerScores(String(payload.query), payload.results.map(String));
+    if (scores) {
+      process.stdout.write(JSON.stringify({ scores, latencyMs: Date.now() - t0 }) + '\n');
+    }
   }
   // otros tasks → sin salida → local-model devuelve null → fallback heurístico
 }

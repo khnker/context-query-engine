@@ -63,7 +63,7 @@ function sanitizeScores(raw, n) {
 function rerankPayload(results, query) {
   return {
     query,
-    results: results.map((r) => (r?.content ?? r?.snippet ?? r?.path ?? '').slice(0, 400)),
+    results: results.map((r) => (r?.path ?? r?.content ?? r?.snippet ?? '').slice(0, 400)),
   };
 }
 
