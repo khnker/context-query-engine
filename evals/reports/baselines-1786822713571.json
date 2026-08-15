@@ -1,0 +1,181 @@
+{
+  "date": "2026-08-15",
+  "tasks": 4,
+  "configs": {
+    "raw_rg": {
+      "label": "Agente crudo (rg -n, top10)",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "avg_gt_hits": 0,
+      "tokens": {
+        "mean": 4178670.5,
+        "median": 4197089,
+        "p95": 4198280
+      },
+      "latency_ms": {
+        "mean": 87,
+        "median": 94,
+        "p95": 110
+      }
+    },
+    "raw_files": {
+      "label": "Agente crudo (rg --files)",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "avg_gt_hits": 0,
+      "tokens": {
+        "mean": 115.75,
+        "median": 133,
+        "p95": 141
+      },
+      "latency_ms": {
+        "mean": 20.5,
+        "median": 23,
+        "p95": 23
+      }
+    },
+    "repomap": {
+      "label": "RepoMap textual (file tree)",
+      "correctness": 0.5,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0.008516931864545083,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 8819,
+        "median": 9566,
+        "p95": 10362
+      },
+      "latency_ms": {
+        "mean": 49.5,
+        "median": 52,
+        "p95": 57
+      }
+    },
+    "bm25": {
+      "label": "BM25 puro",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "avg_gt_hits": 0,
+      "tokens": {
+        "mean": 437.5,
+        "median": 500,
+        "p95": 500
+      },
+      "latency_ms": {
+        "mean": 840.75,
+        "median": 829,
+        "p95": 895
+      }
+    },
+    "cqe": {
+      "label": "CQE (baseline)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 537.5,
+        "median": 30,
+        "p95": 2100
+      },
+      "latency_ms": {
+        "mean": 305,
+        "median": 298,
+        "p95": 329
+      }
+    },
+    "cqe_rerank": {
+      "label": "CQE+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "avg_gt_hits": 0.75,
+      "tokens": {
+        "mean": 537.5,
+        "median": 30,
+        "p95": 2100
+      },
+      "latency_ms": {
+        "mean": 374.25,
+        "median": 381,
+        "p95": 386
+      }
+    }
+  },
+  "verdict": {
+    "cqe_wins_or_ties": true,
+    "losses": "ninguna — CQE gana o empata en correctness",
+    "details": "cqe 0.750; mejor baseline: CQE+rerank 0.750"
+  },
+  "matrix": [
+    {
+      "baseline": "raw_rg",
+      "label": "Agente crudo (rg -n, top10)",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "tokens_mean": 4178670.5,
+      "latency_mean": 87
+    },
+    {
+      "baseline": "raw_files",
+      "label": "Agente crudo (rg --files)",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "tokens_mean": 115.75,
+      "latency_mean": 20.5
+    },
+    {
+      "baseline": "repomap",
+      "label": "RepoMap textual (file tree)",
+      "correctness": 0.5,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0.008516931864545083,
+      "tokens_mean": 8819,
+      "latency_mean": 49.5
+    },
+    {
+      "baseline": "bm25",
+      "label": "BM25 puro",
+      "correctness": 0,
+      "recall5": 0,
+      "recall10": 0,
+      "mrr": 0,
+      "tokens_mean": 437.5,
+      "latency_mean": 840.75
+    },
+    {
+      "baseline": "cqe",
+      "label": "CQE (baseline)",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 537.5,
+      "latency_mean": 305
+    },
+    {
+      "baseline": "cqe_rerank",
+      "label": "CQE+rerank",
+      "correctness": 0.75,
+      "recall5": 0.625,
+      "recall10": 0.625,
+      "mrr": 0.625,
+      "tokens_mean": 537.5,
+      "latency_mean": 374.25
+    }
+  ]
+}

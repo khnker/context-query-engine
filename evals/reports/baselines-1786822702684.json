@@ -1,0 +1,181 @@
+{
+  "date": "2026-08-15",
+  "tasks": 32,
+  "configs": {
+    "raw_rg": {
+      "label": "Agente crudo (rg -n, top10)",
+      "correctness": 0.875,
+      "recall5": 0.6093749999999999,
+      "recall10": 0.7083333333333334,
+      "mrr": 0.6372767857142857,
+      "avg_gt_hits": 1.65625,
+      "tokens": {
+        "mean": 281.34375,
+        "median": 273,
+        "p95": 607
+      },
+      "latency_ms": {
+        "mean": 0.03125,
+        "median": 0,
+        "p95": 0
+      }
+    },
+    "raw_files": {
+      "label": "Agente crudo (rg --files)",
+      "correctness": 0.59375,
+      "recall5": 0.40625000000000006,
+      "recall10": 0.40625000000000006,
+      "mrr": 0.45312500000000006,
+      "avg_gt_hits": 1.03125,
+      "tokens": {
+        "mean": 12.6875,
+        "median": 12,
+        "p95": 33
+      },
+      "latency_ms": {
+        "mean": 0.03125,
+        "median": 0,
+        "p95": 0
+      }
+    },
+    "repomap": {
+      "label": "RepoMap textual (file tree)",
+      "correctness": 1,
+      "recall5": 0.6979166666666667,
+      "recall10": 0.9322916666666667,
+      "mrr": 0.8100198412698412,
+      "avg_gt_hits": 2.28125,
+      "tokens": {
+        "mean": 51.6875,
+        "median": 46,
+        "p95": 60
+      },
+      "latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      }
+    },
+    "bm25": {
+      "label": "BM25 puro",
+      "correctness": 0.84375,
+      "recall5": 0.6666666666666667,
+      "recall10": 0.6822916666666667,
+      "mrr": 0.7317708333333333,
+      "avg_gt_hits": 1.65625,
+      "tokens": {
+        "mean": 134.8125,
+        "median": 150,
+        "p95": 253
+      },
+      "latency_ms": {
+        "mean": 78.25,
+        "median": 77,
+        "p95": 98
+      }
+    },
+    "cqe": {
+      "label": "CQE (baseline)",
+      "correctness": 1,
+      "recall5": 0.8333333333333334,
+      "recall10": 0.8333333333333334,
+      "mrr": 0.9385416666666666,
+      "avg_gt_hits": 2,
+      "tokens": {
+        "mean": 104.59375,
+        "median": 86,
+        "p95": 249
+      },
+      "latency_ms": {
+        "mean": 111.375,
+        "median": 98,
+        "p95": 151
+      }
+    },
+    "cqe_rerank": {
+      "label": "CQE+rerank",
+      "correctness": 1,
+      "recall5": 0.6302083333333334,
+      "recall10": 0.6302083333333334,
+      "mrr": 0.984375,
+      "avg_gt_hits": 1.5,
+      "tokens": {
+        "mean": 56.59375,
+        "median": 57,
+        "p95": 152
+      },
+      "latency_ms": {
+        "mean": 254.96875,
+        "median": 246,
+        "p95": 315
+      }
+    }
+  },
+  "verdict": {
+    "cqe_wins_or_ties": true,
+    "losses": "ninguna — CQE gana o empata en correctness",
+    "details": "cqe 1.000; mejor baseline: RepoMap textual (file tree) 1.000"
+  },
+  "matrix": [
+    {
+      "baseline": "raw_rg",
+      "label": "Agente crudo (rg -n, top10)",
+      "correctness": 0.875,
+      "recall5": 0.6093749999999999,
+      "recall10": 0.7083333333333334,
+      "mrr": 0.6372767857142857,
+      "tokens_mean": 281.34375,
+      "latency_mean": 0.03125
+    },
+    {
+      "baseline": "raw_files",
+      "label": "Agente crudo (rg --files)",
+      "correctness": 0.59375,
+      "recall5": 0.40625000000000006,
+      "recall10": 0.40625000000000006,
+      "mrr": 0.45312500000000006,
+      "tokens_mean": 12.6875,
+      "latency_mean": 0.03125
+    },
+    {
+      "baseline": "repomap",
+      "label": "RepoMap textual (file tree)",
+      "correctness": 1,
+      "recall5": 0.6979166666666667,
+      "recall10": 0.9322916666666667,
+      "mrr": 0.8100198412698412,
+      "tokens_mean": 51.6875,
+      "latency_mean": 0
+    },
+    {
+      "baseline": "bm25",
+      "label": "BM25 puro",
+      "correctness": 0.84375,
+      "recall5": 0.6666666666666667,
+      "recall10": 0.6822916666666667,
+      "mrr": 0.7317708333333333,
+      "tokens_mean": 134.8125,
+      "latency_mean": 78.25
+    },
+    {
+      "baseline": "cqe",
+      "label": "CQE (baseline)",
+      "correctness": 1,
+      "recall5": 0.8333333333333334,
+      "recall10": 0.8333333333333334,
+      "mrr": 0.9385416666666666,
+      "tokens_mean": 104.59375,
+      "latency_mean": 111.375
+    },
+    {
+      "baseline": "cqe_rerank",
+      "label": "CQE+rerank",
+      "correctness": 1,
+      "recall5": 0.6302083333333334,
+      "recall10": 0.6302083333333334,
+      "mrr": 0.984375,
+      "tokens_mean": 56.59375,
+      "latency_mean": 254.96875
+    }
+  ]
+}
