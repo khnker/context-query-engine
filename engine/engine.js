@@ -25,6 +25,9 @@ import { available as modelAvailable, rerankSync } from './local-model.js';
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
 const CACHE_FILE = path.join(ENGINE_DIR, '.cache.json');
+// override de presupuesto por env (eval-quality por niveles de budget; si no, usa el plan)
+const CF_BUDGET = Number(process.env.CF_BUDGET) || 0;
+const effectiveBudget = (lp) => (CF_BUDGET > 0 ? CF_BUDGET : lp.budget ?? 8000);
 const CACHE_TTL = 5 * 60 * 1000; // 13.4 — TTL 5 min
 const RELEVANT = new Set(['exact', 'filename', 'structural']); // 13.1 — match types que satisfacen
 
@@ -239,7 +242,7 @@ function fuse(pool, budget) {
 // --- pipeline principal ---
 function runPlan(logicalPlan, rawText, opts = {}) {
   const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0 };
-  const key = `${rawText}|${logicalPlan.budget ?? 8000}`;
+  const key = `${rawText}|${effectiveBudget(logicalPlan)}`;
   const phys = optimize(logicalPlan);
 
   // 13.4 — cache hit → skip ejecución completa
@@ -337,7 +340,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     } catch { /* fallback heurístico */ }
   }
 
-  const results = fuse(pool, logicalPlan.budget ?? 8000);
+  const results = fuse(pool, effectiveBudget(logicalPlan));
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
   cache.set(key, { results, ts: Date.now() });
   persistCache();

@@ -38,7 +38,7 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 - CQP (declarative query language) + parser
 - Heuristic intent interpreter **+ optional local ML classifier** (confidence gate ≥ 0.6, regex fallback intact)
 - Candidate physical plans A/B/C per query type
-- Statistics store per `(operator, predicate_class)`: avg candidates, p95 tokens, latency, success rate (≥3 records)
+- Statistics store per `(operator, predicate_class)`: avg candidates, p50/p95 tokens, variance, latency, success rate (≥3 records, confidence 0.3/0.6/0.9)
 - Cardinality estimation per predicate class, refined with post-execution actuals
 - Cost/Quality split: `utility = quality / cost` (CostModel `CF_COST_*`, QualityModel `CF_QUALITY_*`)
 - Plan rewriting: cheap/high-selectivity operators first (dependency-safe)
@@ -54,6 +54,8 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 - Optional reranker (engine.js hook before fuse; null → heuristic ranking) + `recall@k` harness
 - **ML pipeline (TinyBERT-style)**: 1,000 labeled queries dataset (10 classes, EN+ES) + 70/15/15 split, numpy out-of-band trainer (`evals/ml/train-classifier.py`), node inference (`evals/ml/classify.mjs`, ~6 ms), swappable artifact
 - ML gate (11.8): intent classification — regex 0.347 → **ML effective 0.94** (fired 135/150, acc 1.0, fallback 15)
+-- Budget override por env `CF_BUDGET` (2k/8k/20k/30k) - eval por nivel de presupuesto sin tocar el plan
+-- Context quality harness (`evals/scripts/eval-quality.js`): total/useful/wrong tokens, density, precision/recall por budget -> `evals/reports/quality-budget.json`
 
 **ML evidence — gate PASS (full report: `evals/ml/GATE-ML.md`)**
 
@@ -68,6 +70,16 @@ Measured over real executions (T1 harness 40 tasks / test split 150 queries), no
 | Correctness / tokens (C) | 100% / 764 | 100% / 764 (identical) | ✅ no regression |
 | Reranker (real model, MRR) | sanity Δ0.000 | Δ0.000 end-to-end, pair-level MRR 0.909 | ✅ adopted (neutral, no regression) |
 
+**Context quality by budget (real tree /home/nicolas/dev, 24GB, 14 tasks GT, 2026-08-15)**
+
+| Budget | total tok | median/task | >budget | density | p@file | r@file |
+|--------|-----------|-------------|---------|---------|--------|--------|
+| 2k | 1,865,292 | 204 | 6/14 | 0.261 | 0.277 | 0.857 |
+| 8k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
+| 20k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
+| 30k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
+
+Hallazgo: budget es SOFT-cap por diseño (assemble-context siempre conserva el primer item de cada path) - matches amplios lo exceden (dev-13 pm2: 1.76M tok, 131 items). Medianas tiny (204 tok) porque las queries puntuales entregan poco. Reporte: `evals/reports/quality-budget.json`.
 All ML paths are null-safe (`CF_MODEL_CMD` absent/failure → deterministic heuristic, verified Δ0 without model).
 
 **Real-world evidence — heavy tree (2026-08-15, `/home/nicolas/dev`, ~24 GB / 164,063 files)**

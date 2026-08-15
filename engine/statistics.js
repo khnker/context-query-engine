@@ -113,6 +113,11 @@ export function load() {
     e.avgLatencyMs = e._w ? e._wLat / e._w : 0;
     e.avgEstCandidates = e._w ? e._wEst / e._w : 0;
     e.p95Tokens = p95(e._tokens);
+    // p50 (mediana) y varianza de tokens reales — distingue "sé" de "creo" (review 06)
+    const sorted = [...e._tokens].sort((a, b) => a - b);
+    e.p50Tokens = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 0;
+    const mu = e._tokens.length ? e._tokens.reduce((a, b) => a + b, 0) / e._tokens.length : 0;
+    e.varianceTokens = e._tokens.length ? e._tokens.reduce((a, b) => a + (b - mu) ** 2, 0) / e._tokens.length : 0;
     e.successRate = e._w ? e._wSuccess / e._w : 0;
     delete e._tokens;
     delete e._w;
@@ -165,7 +170,9 @@ if (isMain) {
           out[k] = {
             n: v.n,
             avgCandidates: v.avgCandidates,
+            p50Tokens: v.p50Tokens,
             p95Tokens: v.p95Tokens,
+            varianceTokens: v.varianceTokens,
             avgLatencyMs: v.avgLatencyMs,
             successRate: v.successRate,
             avgEstCandidates: v.avgEstCandidates,

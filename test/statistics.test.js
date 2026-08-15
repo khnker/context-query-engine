@@ -31,6 +31,8 @@ test('4.1 record append + load agrega (avgCandidates, p95Tokens, avgLatencyMs, s
   assert.equal(e.n, 2);
   assert.equal(e.avgCandidates, 2.5);
   assert.equal(e.p95Tokens, 200);
+  assert.equal(e.p50Tokens, 200, 'mediana de [100,200]');
+  assert.equal(e.varianceTokens, 2500, 'varianza de [100,200]');
   assert.equal(e.avgLatencyMs, 20);
   assert.equal(e.successRate, 0.5);
   assert.equal(e.avgEstCandidates, 3);
