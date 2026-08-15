@@ -149,8 +149,9 @@ function main() {
     },
   };
   fs.writeFileSync(path.join(ROOT, 'evals/reports/optimizer-eval.json'), JSON.stringify({ report, records }, null, 2));
+  fs.writeFileSync(path.join(ROOT, `evals/reports/planner-isolation-${Date.now()}.json`), JSON.stringify({ report, records }, null, 2));
   console.log(JSON.stringify(report, null, 2));
-  console.log('\nrecords:', records.length, '→ evals/reports/optimizer-eval.json');
+  console.log('\nrecords:', records.length, '→ evals/reports/optimizer-eval.json + planner-isolation-<TS>.json');
 }
 
 main();

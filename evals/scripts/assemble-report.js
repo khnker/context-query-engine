@@ -146,6 +146,18 @@ if (opt && rec.length) {
 } else {
   report += '--- Optimizer (oracle vs selected) ---\nSKIP — sin records (queries sin GT o benchmark sin optimizer)\n\n';
 }
+const piPath = path.join(OUT, 'planner-isolation.json');
+if (fs.existsSync(piPath)) {
+  const pi = JSON.parse(fs.readFileSync(piPath, 'utf8')).report ?? {};
+  const planners = ['first_match', 'heuristic', 'learned', 'oracle'];
+  report += '--- Planner isolation (same retrieval ops, different planners) ---\n';
+  report += `plan accuracy: ${planners.map((p) => `${p} ${f3(pi.plan_accuracy?.[p])}`).join(' | ')}\n`;
+  report += `regret: ${planners.map((p) => `${p} ${f3(pi.regret?.[p])}`).join(' | ')}\n`;
+  report += `avg tokens: ${planners.map((p) => `${p} ${f1(pi.avg_tokens?.[p])}`).join(' | ')}\n`;
+  report += `gt_recall: ${planners.filter((p) => p !== 'oracle').map((p) => `${p} ${f3(pi.gt_recall?.[p])}`).join(' | ')}\n\n`;
+} else {
+  report += '--- Planner isolation ---\nSKIP — sin planner-isolation.json (correr eval-optimizer.js primero)\n\n';
+}
 report += '--- Statistical tests (paired bootstrap, 95% CI) ---\n';
 report += `token delta (heur - rerank): ${f1(statTests.token_delta.mean)} CI [${statTests.token_delta.ci95 ? statTests.token_delta.ci95.map(f1).join(', ') : 'n/a'}]\n`;
 report += `latency delta (heur - rerank): ${f1(statTests.latency_delta.mean)} ms CI [${statTests.latency_delta.ci95 ? statTests.latency_delta.ci95.map(f1).join(', ') : 'n/a'}]\n\n`;

@@ -79,6 +79,10 @@ if [[ "$RUN_OPT" -eq 1 ]]; then
   [[ -f "$ROOT/evals/reports/optimizer-eval.json" ]] && cp "$ROOT/evals/reports/optimizer-eval.json" "$OUT/optimizer-eval.json" || echo "== optimizer: sin output (¿queries con GT?)"
 fi
 
+# 5.5 planner-isolation (mismo report de eval-optimizer, artefacto dedicado)
+PI=$(ls -t "$ROOT"/evals/reports/planner-isolation-*.json 2>/dev/null | head -1)
+[[ -n "$PI" ]] && cp "$PI" "$OUT/planner-isolation.json" || echo "== planner-isolation: sin artefacto (correr eval-optimizer.js primero)"
+
 # 6. ensamblar artefacto + veredicto (PASS/FAIL por thresholds del manifest)
 node "$ROOT/evals/scripts/assemble-report.js" "$OUT" "$MANIFEST"; RC=$?
 echo "== artefacto: $OUT"
