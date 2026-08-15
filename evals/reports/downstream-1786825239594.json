@@ -1,0 +1,245 @@
+{
+  "date": "2026-08-15",
+  "tasks": 8,
+  "agent": "deterministic retrieval-agent (no LLM — stdlib SOLO): retrieve→inspect(600ch×3)→think→refine→verify",
+  "suite": [
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "goal": "Where is retryWithFallback defined?",
+      "gt": [
+        "src/services/fallback.ts",
+        "src/utils/helpers.ts"
+      ]
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "goal": "Where is DEFAULT_TIMEOUT_MS used?",
+      "gt": [
+        "src/services/fallback.ts",
+        "src/config.ts"
+      ]
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "goal": "Where is register defined?",
+      "gt": [
+        "app/core/registry.py",
+        "app/handlers/http.py"
+      ]
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "goal": "Where is get_provider_config defined?",
+      "gt": [
+        "app/core/config.py"
+      ]
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "goal": "Where is the route method defined?",
+      "gt": [
+        "src/services/fallback.ts"
+      ]
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "goal": "Where is class ProviderRouter defined?",
+      "gt": [
+        "src/services/fallback.ts",
+        "src/utils/decorators.ts"
+      ]
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "goal": "Where is the try/catch fallback logic?",
+      "gt": [
+        "src/services/fallback.ts"
+      ]
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "goal": "Where is class HttpHandler defined?",
+      "gt": [
+        "app/handlers/http.py"
+      ]
+    }
+  ],
+  "summary": {
+    "raw": {
+      "task_success": 0.75,
+      "mean_tokens": 244.25,
+      "mean_tool_calls": 2.875,
+      "mean_tts_ms": 6.375,
+      "success_per_token": 0.0030706243602865915,
+      "success_per_second": 117.6470588235294
+    },
+    "cqe": {
+      "task_success": 1,
+      "mean_tokens": 348.625,
+      "mean_tool_calls": 3.375,
+      "mean_tts_ms": 101.5,
+      "success_per_token": 0.0028684116170670493,
+      "success_per_second": 9.852216748768473
+    }
+  },
+  "verdict": {
+    "cqe_success_gte_raw": true,
+    "cqe_less_tokens": false,
+    "pass": false,
+    "hypothesis": "menos contexto ≠ mejor — CQE reduce tokens SIN degradar task success"
+  },
+  "rows": [
+    {
+      "task": "lex-01",
+      "mode": "raw",
+      "success": false,
+      "tokens": 0,
+      "tool_calls": 2,
+      "tts_ms": 11,
+      "rounds": 2
+    },
+    {
+      "task": "lex-01",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 615,
+      "tool_calls": 4,
+      "tts_ms": 114,
+      "rounds": 1
+    },
+    {
+      "task": "lex-02",
+      "mode": "raw",
+      "success": false,
+      "tokens": 0,
+      "tool_calls": 2,
+      "tts_ms": 9,
+      "rounds": 2
+    },
+    {
+      "task": "lex-02",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 268,
+      "tool_calls": 3,
+      "tts_ms": 99,
+      "rounds": 1
+    },
+    {
+      "task": "lex-03",
+      "mode": "raw",
+      "success": true,
+      "tokens": 339,
+      "tool_calls": 4,
+      "tts_ms": 6,
+      "rounds": 1
+    },
+    {
+      "task": "lex-03",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 298,
+      "tool_calls": 4,
+      "tts_ms": 99,
+      "rounds": 1
+    },
+    {
+      "task": "lex-04",
+      "mode": "raw",
+      "success": true,
+      "tokens": 131,
+      "tool_calls": 2,
+      "tts_ms": 4,
+      "rounds": 1
+    },
+    {
+      "task": "lex-04",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 125,
+      "tool_calls": 2,
+      "tts_ms": 95,
+      "rounds": 1
+    },
+    {
+      "task": "lex-05",
+      "mode": "raw",
+      "success": true,
+      "tokens": 461,
+      "tool_calls": 4,
+      "tts_ms": 5,
+      "rounds": 1
+    },
+    {
+      "task": "lex-05",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 426,
+      "tool_calls": 4,
+      "tts_ms": 101,
+      "rounds": 1
+    },
+    {
+      "task": "str-01",
+      "mode": "raw",
+      "success": true,
+      "tokens": 266,
+      "tool_calls": 3,
+      "tts_ms": 6,
+      "rounds": 1
+    },
+    {
+      "task": "str-01",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 362,
+      "tool_calls": 4,
+      "tts_ms": 104,
+      "rounds": 1
+    },
+    {
+      "task": "str-02",
+      "mode": "raw",
+      "success": true,
+      "tokens": 693,
+      "tool_calls": 4,
+      "tts_ms": 5,
+      "rounds": 1
+    },
+    {
+      "task": "str-02",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 623,
+      "tool_calls": 4,
+      "tts_ms": 101,
+      "rounds": 1
+    },
+    {
+      "task": "str-03",
+      "mode": "raw",
+      "success": true,
+      "tokens": 64,
+      "tool_calls": 2,
+      "tts_ms": 5,
+      "rounds": 1
+    },
+    {
+      "task": "str-03",
+      "mode": "cqe",
+      "success": true,
+      "tokens": 72,
+      "tool_calls": 2,
+      "tts_ms": 99,
+      "rounds": 1
+    }
+  ]
+}
