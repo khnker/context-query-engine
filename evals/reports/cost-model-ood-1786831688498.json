@@ -1,0 +1,38 @@
+{
+  "date": "2026-08-15",
+  "rows": {
+    "train": 42,
+    "test": 6
+  },
+  "reference": {
+    "previous_ood_mape": 0.2373,
+    "note": "train solo TS (distribution-shift)"
+  },
+  "baseline": {
+    "mape": 0.27698788836229593,
+    "p50": 0,
+    "p95": 0.995260663507109
+  },
+  "results": [
+    {
+      "lambda": 1,
+      "mape_in": 0.4590742131441612,
+      "mape_out": 2.0354796418443,
+      "p50_out": 2.522168552664638,
+      "p95_out": 3.2656723424515803
+    },
+    {
+      "lambda": 10,
+      "mape_in": 0.4399762042732356,
+      "mape_out": 1.9492709797711012,
+      "p50_out": 2.39038232588781,
+      "p95_out": 3.1148806518061187
+    }
+  ],
+  "verdict": {
+    "adopt": false,
+    "chosen_lambda": null,
+    "threshold": "ML-OOD MAPE < heuristic baseline MAPE en test",
+    "model_file": null
+  }
+}
