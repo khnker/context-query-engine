@@ -2,27 +2,7 @@
 
 **Motor de retrieval y gestión de contexto para agentes LLM.** Convierte la búsqueda de contexto en una consulta optimizable: interpreta lo que el agente necesita, planifica cómo obtenerlo y devuelve solo el contexto útil dentro de un presupuesto de tokens.
 
-## Tabla de contenidos
 
-- [¿Qué es?](#qué-es)
-- [Estado actual](#estado-actual)
-- [Arquitectura](#arquitectura)
-- [Componentes](#componentes)
-- [Cómo funciona](#cómo-funciona)
-- [Pipeline: ejemplo ejecutado](#pipeline-ejemplo-ejecutado)
-- [Glosario](#glosario)
-- [Testing](#testing)
-- [Instalación ampliada](#instalación-ampliada)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Benchmark: ahorro de contexto](#benchmark-ahorro-de-contexto)
-- [Roadmap](#roadmap)
-- [Estructura del repo](#estructura-del-repo)
-- [Licencia](#licencia)
-
-> Read this in [English](README.md)
-
----
 
 ## ¿Qué es?
 
@@ -47,6 +27,7 @@ context-query-engine resuelve esto aplicando la analogía de un optimizador de c
 El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine decide qué herramienta usar, con qué scope, cuánto contexto devolver y cuándo detenerse.
 
 ---
+
 
 ## Estado actual
 
@@ -75,6 +56,7 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 - Gate ML (11.8): clasificación de intención — regex 0.347 → **ML efectivo 0.94** (fired 135/150, acc 1.0, fallback 15)
 
 ---
+
 
 ## Arquitectura
 
@@ -124,6 +106,7 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 
 ---
 
+
 ## Componentes
 
 | Módulo | Descripción |
@@ -135,6 +118,7 @@ El agente dice **qué** necesita, no **cómo** buscarlo. context-query-engine de
 | `openspec/` | **Especificación spec-driven** (governance, solo-local, git-ignored). |
 
 ---
+
 
 ## Cómo funciona
 
@@ -159,6 +143,7 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 Presupuestos: `BUDGET` mapea a los niveles 2000 / 8000 / 20000 / 30000 (valores intermedios hacia abajo: `5000 → 2000`).
 
 ---
+
 
 ## Pipeline: ejemplo ejecutado
 
@@ -194,46 +179,39 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 
 ---
 
-## Glosario
 
-> Glosario (Glossary) de términos del engine, explicados en español.
+## Instalación
 
-| Término | Significado |
-|---|---|
-| **CQ** | Context Query — lo que el agente necesita, como lenguaje natural o texto de intención (p. ej. `--intent '¿dónde se define parseConfig?'`). |
-| **CQP** | Context Query Plan — el lenguaje de consultas declarativo que ejecuta el motor (`FIND ... AND ... LIMIT ...`), parseado por `cqp.js`. |
-| **AST** | Abstract Syntax Tree — la representación estructurada interna que produce el parser; frontera entre el texto de la query y el planner. |
-| **Logical plan** | Descripción independiente de herramientas de qué recuperar: target, relations, inclusions, limit/budget. |
-| **Physical retrieval plan** | La secuencia concreta y ordenada de operadores que se ejecutará (`search-code`, `search-structure`, `search-semantic`, `project-map`, `extract-context`). Candidatos A/B/C por tipo de query. |
-| **Cost model** | `cost = w1·tokens + w2·latency + w3·tool_calls` con pesos `CF_COST_1..3`; la selección de plan usa `utility = quality / cost`. |
-| **Confidence** | Qué tan seguro está el interpreter heurístico de la clasificación `query_type` de una query. |
-| **Statistics** | Agregados por `(operador, clase de predicado)` — avg candidates, p95 tokens, latencia, success rate — calculados con ≥3 registros, almacenados en `engine/statistics.ndjson`. |
-| **Information density** | `useful_context_tokens / total_context_tokens` — la métrica que optimiza el motor. |
-| **Wrong-context** | Contexto recuperado que no coincide con lo que el agente realmente necesita; el modo de fallo que la fusión (dedup, ranking, presupuesto) minimiza. |
+**Requisitos** (Fedora):
+
+```bash
+sudo dnf install ripgrep fd-find jq yq fzf tokei
+```
+
+- `rg` (búsqueda de texto), `fd` (nombres), `ast-grep`/`sg` (estructural), `jq` (JSON), `tokei` (métricas LOC, opcional)
+- **Probe** (opcional, retrieval semántico): `npm install -g @probelabs/probe`
+- **Node.js ≥ 18** (el engine no usa dependencias npm)
+
+**Clonar e instalar la skill** en tu agente (OpenCode, Claude, etc.):
+
+```bash
+git clone https://github.com/khnker/context-query-engine.git
+cd context-query-engine
+
+# Instalar la skill de retrieval (symlink al directorio de skills de tu agente):
+ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
+```
+
+**Verificar el toolchain**:
+
+```bash
+scripts/check-tools   # exit 0 si rg/fd/jq están presentes; las opcionales no bloquean
+```
+
+Detalles de instalación por distro y fallbacks sin sudo en `agent-context-engineering/references/toolchain-install.md`.
 
 ---
 
-## Testing
-
-Ejecutar la suite completa:
-
-```bash
-npm test   # 34 unit tests + smoke + e2e
-```
-
-Cobertura (alineada con el change OpenSpec `test-suite`):
-
-- **Unit** — `node --test` sobre `engine/` (parser, optimizer, statistics).
-- **Smoke** — scripts bash: `npm run check-tools` más una ejecución end-to-end de la query del ejemplo.
-- **End-to-end** — `node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'`, verificando que cada etapa del pipeline emite el NDJSON esperado.
-
-Hasta que el change `test-suite` esté implementado, ejecutar la suite unitaria directamente:
-
-```bash
-node --test engine/
-```
-
----
 
 ## Instalación ampliada
 
@@ -304,37 +282,6 @@ Verifica herramientas core (`rg`, `fd`, `jq`) y opcionales (`yq`, `sg`, `tokei`,
 
 ---
 
-## Instalación
-
-**Requisitos** (Fedora):
-
-```bash
-sudo dnf install ripgrep fd-find jq yq fzf tokei
-```
-
-- `rg` (búsqueda de texto), `fd` (nombres), `ast-grep`/`sg` (estructural), `jq` (JSON), `tokei` (métricas LOC, opcional)
-- **Probe** (opcional, retrieval semántico): `npm install -g @probelabs/probe`
-- **Node.js ≥ 18** (el engine no usa dependencias npm)
-
-**Clonar e instalar la skill** en tu agente (OpenCode, Claude, etc.):
-
-```bash
-git clone https://github.com/khnker/context-query-engine.git
-cd context-query-engine
-
-# Instalar la skill de retrieval (symlink al directorio de skills de tu agente):
-ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
-```
-
-**Verificar el toolchain**:
-
-```bash
-scripts/check-tools   # exit 0 si rg/fd/jq están presentes; las opcionales no bloquean
-```
-
-Detalles de instalación por distro y fallbacks sin sudo en `agent-context-engineering/references/toolchain-install.md`.
-
----
 
 ## Uso
 
@@ -375,78 +322,76 @@ Superficie MCP mínima a propósito:
 
 ---
 
+
 ## Benchmark: ahorro de contexto
 
-Medición real sobre `/home/nicolas/dev/polar` (2,129 archivos, 50k+ LOC), **skill vs baseline naive** (`grep` / `cat` / `find` — lo que hace un agente sin política):
+Métricas duras de tokens y latencia medidas sobre ejecuciones reales (no estimadas). Todo reproducible.
 
-| Tarea | Skill tokens | Baseline tokens | % ahorro | correct S/B |
-|-------|-------------|-----------------|----------|-------------|
-| identifier | 344 | 2,740 | 87.4% | ✅ / ✅ |
-| filename | 305 | 2,792 | 89.1% | ✅ / ✅ |
-| pattern | 256 | 2,691 | 90.5% | ✅ / ✅ |
-| symbol | 305 | 2,792 | 89.1% | ✅ / ✅ |
-| concept | 1,057 | 4,000 | 73.6% | ✅ / ✅ |
-| repo_map | 199 | 4,698,530 | 99.996% | ✅ / ✅ |
-| **Σ** | **2,466** | **4,711,545** | **99.95%** | **6/6** |
+### Test de regresión de métricas (hard)
 
-Lectura:
+`npm run bench` mide tiempo y tokens reales de contextforge (C) vs baseline raw-fs (A) sobre el repo sintético, con guardas: la suite **falla** si C gasta más tokens que A o supera los umbrales.
 
-- **~82–90%** de ahorro en queries de código; **~99.9%** en mapeo de repo (el baseline `find` plano devuelve el árbol completo de archivos).
-- Excluyendo repo_map: **82.6%** de ahorro global de tokens.
-- Llamadas a herramientas: **13 vs 12** (empate) → la ganancia es de **contexto**, no de número de comandos.
-- Correctitud: **6/6** en ambas vías — el ahorro no degrada el resultado.
-- Comportamiento del engine: `cache_hits: 1` en segunda corrida, `early_terminated: true` cuando la primera op del plan satisface.
+| Query | A tokens | C tokens | A lat | C lat |
+|-------|----------|----------|-------|-------|
+| lex-01 | 655 | 239 | 43 ms | 144 ms |
+| dep-01 | 655 | 239 | 67 ms | 295 ms |
+| sem-01 | 655 | 239 | 57 ms | 216 ms |
+| tst-01 | 504 | 239 | 47 ms | 251 ms |
+| **Σ** | **2,469** | **956** | — | — |
 
-El benchmark es reproducible: `evals/run-benchmark` + `evals/analyze` (10 tareas, 4 targets de aceptación).
+→ **61.3% menos tokens**, wall 1.4 s, 4/4 queries correctas en ambas vías.
 
-### Harness T2 — repo real (`polar`, 2,129 archivos)
+### Harness T1 — 32 tasks sintéticas, 4 modos
 
-8 tareas con ground truth verificado sobre `/home/nicolas/dev/polar` (categorías: structural, dependency, tests, lexical, semantic, git), 4 modos:
+| Modo | Correctitud | Tokens | Latencia | Compresión vs A |
+|------|-------------|--------|----------|-----------------|
+| A — baseline raw (`grep`/`cat`) | 100% | 139,199 | 978 ms | 1.0× |
+| B — `rg`/`fd` | 92.5% | 95 | 108 ms | 637× |
+| **C — contextforge** | **100%** | **764** | **199 ms** | **104×** |
+| D — oracle | 87.5% | 611 | 1,506 ms | 129× |
 
-| Modo | Correctitud | Tokens | Latencia | Tool calls | Precision | Compresión | Densidad |
-|------|-------------|--------|----------|-----------|-----------|-----------|----------|
-| A — baseline raw (`grep`/`cat`) | 8/8 | 694,581 | 12,098 ms | 2.0 | 0.186 | 1.0× | 0.1856 |
-| B — `rg`/`fd` directo | 8/8 | 409 | 283 ms | 1.1 | 0.167 | 3,092× | 0.1679 |
-| C — contextforge | 8/8 | 3,403 | 232 ms | 1.25 | 0.187 | 501× | **0.1875** |
-| D — oracle (ground truth) | 8/8 | 2,512 | 7,867 ms | 1.0 | 0.167 | 630× | 0.1668 |
+### Repo real T2 — `polar` (2,129 archivos, 50k+ LOC)
 
-Lectura:
+| Modo | Correctitud | Tokens | Latencia | Densidad |
+|------|-------------|--------|----------|----------|
+| A — baseline | 8/8 | 694,581 | 12,098 ms | 0.1856 |
+| B — `rg`/`fd` | 8/8 | 409 | 283 ms | 0.1679 |
+| **C — contextforge** | **8/8** | **3,403** | **232 ms** | **0.1875** |
+| D — oracle | 8/8 | 2,512 | 7,867 ms | 0.1668 |
 
-- **contextforge (C) mantiene la correctitud 8/8** sobre el repo real y corta el contexto **204× vs baseline A** (3,403 vs 694,581 tokens) con **98% menos latencia** (232 ms vs 12 s).
-- C tiene la **mayor densidad** de los 4 modos (0.1875): más información útil por token.
-- Precision ~0.19 en **todos** los modos (incluso el oracle): en el repo real, cualquier recuperación trae ruido de backups/sql/coverage/specs — la señal útil de ground truth es pequeña frente al volumen de archivos. C no introduce ruido extra: su precision supera a A, B y D.
-- B (rg/fd plano) es más barato en tokens porque devuelve poco contexto, pero con peor precision (0.167) y densidad (0.168) — minimiza coste, no maximiza información útil por token.
-- Correctitud de FOLLOW validada: la gramática CQP acepta `references|callers|callees|imports|dependents` (no `calls`).
+C corta **204× vs baseline** en el repo real con 98% menos latencia, manteniendo correctitud y la mayor densidad (información útil por token).
 
-Datos: `evals/reports/t2-polar-20260814.ndjson` (32 rows, reproducible con `evals/run-eval.sh --tier t2`).
+Reproducible: `npm run eval` (harness completo) y `npm run bench` (métricas duras con guardas).
+
+---
+## Testing
+
+Ejecutar la suite completa:
+
+```bash
+npm test   # 34 unit tests + smoke + e2e
+```
+
+Cobertura (alineada con el change OpenSpec `test-suite`):
+
+- **Unit** — `node --test` sobre `engine/` (parser, optimizer, statistics).
+- **Smoke** — scripts bash: `npm run check-tools` más una ejecución end-to-end de la query del ejemplo.
+- **End-to-end** — `node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'`, verificando que cada etapa del pipeline emite el NDJSON esperado.
+
+Hasta que el change `test-suite` esté implementado, ejecutar la suite unitaria directamente:
+
+```bash
+node --test engine/
+```
 
 ---
 
-## Roadmap
 
-Ejecutado como **13 fases OpenSpec** (ver `openspec/changes/roadmap-orchestrator/`):
+```bash
+npm test    # 34 unit tests + smoke + e2e
+npm run bench  # métricas duras: tokens y latencia reales (C vs A) con guardas de regresión
+```
 
-| # | Fase | Estado |
-|---|------|--------|
-| 01 | Evaluation framework (`npm run eval`) | ✅ |
-| 02 | Query IR (parser CQP → AST) | ✅ |
-| 03 | Physical operators | ✅ |
-| 04 | Repository statistics (`repo-stats.js`) | ✅ |
-| 05 | Cardinality estimation (por operador) | ✅ |
-| 06 | Cost-based plan selection (utility=quality/cost) | ✅ |
-| 07 | Oracle benchmark (optimizer regret) | ✅ |
-| 08 | Context quality / budget (assemble-context) | ✅ |
-| 09 | Adaptive optimizer (decay τ=7d) | ✅ |
-| 10 | Local model interface | ✅ |
-| 11 | TinyBERT query classifier (local, linear; gate ML PASS) | ✅ |
-| 12 | Reranker (contrato + hook + recall@k) | ✅ (12.1/12.2/12.4) |
-| 13 | Cost model aprendido (spec completo) | 📄 spec |
-| 14 | Gate determinista (validate + test + eval PASS) | ✅ |
-| 15 | Gate ML global (TinyBERT distilled real) | ⏳ |
-
-Deuda documentada: micro-transformer con backprop manual con bug en v/proj (11.9, artefacto activo = lineal); TinyBERT distilled real requiere torch/GPU (11.10, swap del artifact con el mismo contrato); fuse aún no consume scores del reranker (12.5).
-
----
 ## Estructura del repo
 
 ```text
@@ -470,9 +415,26 @@ context-query-engine/
 
 ---
 
-## Licencia
 
-[MIT](LICENSE)
+## Glosario
+
+> Glosario (Glossary) de términos del engine, explicados en español.
+
+| Término | Significado |
+|---|---|
+| **CQ** | Context Query — lo que el agente necesita, como lenguaje natural o texto de intención (p. ej. `--intent '¿dónde se define parseConfig?'`). |
+| **CQP** | Context Query Plan — el lenguaje de consultas declarativo que ejecuta el motor (`FIND ... AND ... LIMIT ...`), parseado por `cqp.js`. |
+| **AST** | Abstract Syntax Tree — la representación estructurada interna que produce el parser; frontera entre el texto de la query y el planner. |
+| **Logical plan** | Descripción independiente de herramientas de qué recuperar: target, relations, inclusions, limit/budget. |
+| **Physical retrieval plan** | La secuencia concreta y ordenada de operadores que se ejecutará (`search-code`, `search-structure`, `search-semantic`, `project-map`, `extract-context`). Candidatos A/B/C por tipo de query. |
+| **Cost model** | `cost = w1·tokens + w2·latency + w3·tool_calls` con pesos `CF_COST_1..3`; la selección de plan usa `utility = quality / cost`. |
+| **Confidence** | Qué tan seguro está el interpreter heurístico de la clasificación `query_type` de una query. |
+| **Statistics** | Agregados por `(operador, clase de predicado)` — avg candidates, p95 tokens, latencia, success rate — calculados con ≥3 registros, almacenados en `engine/statistics.ndjson`. |
+| **Information density** | `useful_context_tokens / total_context_tokens` — la métrica que optimiza el motor. |
+| **Wrong-context** | Contexto recuperado que no coincide con lo que el agente realmente necesita; el modo de fallo que la fusión (dedup, ranking, presupuesto) minimiza. |
+
+---
+
 
 ## Naming: CQ / CIR / CQP
 
@@ -487,17 +449,8 @@ Physical Retrieval Plan     → salida del optimizer (ops ordenadas)
 
 `CIR` queda documentado como concepto, no como capa de código separada (YAGNI: el parser emite el plan lógico directamente).
 
-## Testing
 
-Suite automatizada (tasks test-suite):
+## Licencia
 
-```bash
-npm test
-```
+[MIT](LICENSE)
 
-Cubre:
-- Unit (node:test, stdlib): parser CQP (test/cqp.test.js), interpreter (test/interpreter.test.js), optimizer (test/optimizer.test.js), statistics (test/statistics.test.js).
-- Smoke bash (test/smoke.sh): sintaxis de los 9 scripts, check-tools, pipeline search-code → assemble-context, retrieval-metrics record/report.
-- E2E (engine/test-e2e.sh): runCQP real sobre el repo; verifica plan.selected, results, cache_hits en 2ª corrida, early_terminated/tokens_used.
-
-Exit no-cero ante cualquier fallo (CI-ready).
