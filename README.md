@@ -1,6 +1,6 @@
 # context-query-engine
 
-**Retrieval and context management engine for LLM agents.** Turns context search into an optimizable query: it interprets what the agent needs, plans how to obtain it, and returns only useful context within a token budget.
+**A query optimizer for agent context.** Turns agent context retrieval into a declarative, cost-aware query execution problem: it interprets what the agent needs, plans how to obtain it (like a database optimizer plans SQL), and materializes only useful context within a token budget.
 
 
 
@@ -381,7 +381,7 @@ Métricas duras de tokens y latencia medidas sobre ejecuciones reales (no estima
 
 ### Test de regresión de métricas (hard)
 
-`npm run bench` mide tiempo y tokens reales de contextforge (C) vs baseline raw-fs (A) sobre el repo sintético, con guardas: la suite **falla** si C gasta más tokens que A o supera los umbrales.
+`npm run bench` mide tiempo y tokens reales de context-query-engine (C) vs baseline raw-fs (A) sobre el repo sintético, con guardas: la suite **falla** si C gasta más tokens que A o supera los umbrales.
 
 | Query | A tokens | C tokens | A lat | C lat |
 |-------|----------|----------|-------|-------|
@@ -399,7 +399,7 @@ Métricas duras de tokens y latencia medidas sobre ejecuciones reales (no estima
 |------|-------------|--------|----------|-----------------|
 | A — baseline raw (`grep`/`cat`) | 100% | 139,199 | 978 ms | 1.0× |
 | B — `rg`/`fd` | 92.5% | 95 | 108 ms | 637× |
-| **C — contextforge** | **100%** | **764** | **199 ms** | **104×** |
+| **C — context-query-engine** | **100%** | **764** | **199 ms** | **104×** |
 | D — oracle | 87.5% | 611 | 1,506 ms | 129× |
 
 ### Repo real T2 — `polar` (2,129 archivos, 50k+ LOC)
@@ -408,7 +408,7 @@ Métricas duras de tokens y latencia medidas sobre ejecuciones reales (no estima
 |------|-------------|--------|----------|----------|
 | A — baseline | 8/8 | 694,581 | 12,098 ms | 0.1856 |
 | B — `rg`/`fd` | 8/8 | 409 | 283 ms | 0.1679 |
-| **C — contextforge** | **8/8** | **3,403** | **232 ms** | **0.1875** |
+| **C — context-query-engine** | **8/8** | **3,403** | **232 ms** | **0.1875** |
 | D — oracle | 8/8 | 2,512 | 7,867 ms | 0.1668 |
 
 C corta **204× vs baseline** en el repo real con 98% menos latencia, manteniendo correctitud y la mayor densidad (información útil por token).
@@ -478,7 +478,7 @@ context-query-engine/
 | Term | Meaning |
 |---|---|
 | **CQ** | Context Query — what the agent needs, as natural language or intent text (e.g. `--intent 'where is parseConfig defined?'`). |
-| **CQP** | Context Query Plan — the declarative query language the engine executes (`FIND ... AND ... LIMIT ...`), parsed by `cqp.js`. |
+| **CQP** | Context Query Plan — the structured logical representation the parser produces from a CQ (`FIND ... AND ... LIMIT ...`), consumed by the optimizer. |
 | **AST** | Abstract Syntax Tree — the internal structured representation produced by the parser; boundary between query text and the planner. |
 | **Logical plan** | Tool-agnostic description of what to retrieve: target, relations, inclusions, limit/budget. |
 | **Physical retrieval plan** | The concrete ordered sequence of operators that will run (`search-code`, `search-structure`, `search-semantic`, `project-map`, `extract-context`). Candidates A/B/C per query type. |
@@ -491,18 +491,17 @@ context-query-engine/
 ---
 
 
-## Naming: CQ / CIR / CQP
+## Naming: CQ / CQP
 
-context-query-engine's query language is called **CQP (Context Query Plan)** — deliberately not "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
+The engine distinguishes two levels, like SQL vs its plan:
 
 ```
-Context Query (CQ)          → the agent's request text
-Context Intermediate Rep.   → parsed representation (concept; folded into CQP today)
-Context Query Plan (CQP)    → logical plan produced by parseCQP
+Context Query (CQ)          → the agent's request text (declarative, `FIND ... AND ... LIMIT ...`)
+Context Query Plan (CQP)    → structured logical representation produced by parseCQP
 Physical Retrieval Plan     → optimizer output (ordered ops)
 ```
 
-`CIR` is documented as a concept but not implemented as a separate layer (YAGNI: the parser emits the logical plan directly).
+The query language is deliberately not called "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
 
 
 ## License
