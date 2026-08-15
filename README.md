@@ -552,6 +552,37 @@ Dataset: 24 queries no-gold (13 símbolos/archivos fabricados + 11 conceptos aus
 Veredicto umbral 6.5 (precision ≥ 0.7 ∧ coverage_gold ≥ 0.8): **PASS**. Los 8 FP son queries semánticas no-gold cuyo ruido weak (match_type semantic, 0 hits reales) supera el umbral; los 2.7k-7.8k tokens muestran escalación semántica sobre consultas inexistentes. FN restante: sem-04 (concept gold con evidencia solo-semántica). Tuning posible: umbral de score en evidencia semántica (hoy binario por match_type).
 
 
+
+## Distribution shift (OOD) — FAIL
+
+El cost model ML (cardinality, ridge) se evalúa fuera de su distribución de entrenamiento: train en t1-basic (TypeScript) → val t1-modular (Python) → test dev (workspace real). Se entrena ridge en node (mismo pipeline que classify.mjs) y se compara MAPE ML vs baseline heurístico por op|queryClass.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-distribution-shift.js   # → evals/reports/distribution-shift-<TS>.json
+```
+
+| split | MAPE ML |
+|-------|---------|
+| train (t1-basic, n=25) | 25.9% |
+| val (t1-modular, n=17) | 92% (3.6×, shift TS→Python) |
+| test (dev, n=6) | 237.3% |
+
+Veredicto: **FAIL** — ratio OOD/train 9.18× (umbral 2×). El baseline heurístico generaliza mejor fuera de distribución (test 28% vs ML 237%). **El fallback heurístico queda como default**; el modelo solo se confía en distribución. Tarea derivada: retrain por repo o regularización/feature engineering antes de usar el cost model OOD. Artefacto: evals/reports/ood-cardinality-model.json.
+
+## Adversarial workloads — FAIL parcial (8/10 categorías)
+
+30 queries adversas (10 categorías × 3) sobre polar + fixtures: símbolos de alta frecuencia, identificadores ambiguos, fan-out masivo, zero-results, cadenas de dependencia profundas, implementaciones duplicadas, código generado, vendor-code (anti-leak), monorepo, polyglot.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-adversarial.js   # → evals/reports/adversarial-<TS>.json
+```
+
+- PASS (8/10, correctness 1.0): high-frequency, ambiguous, huge-fanout, zero-results (abstain limpio), duplicates, vendor anti-leak, monorepo, polyglot.
+- **FAIL con evidencia**: deep-dependency-chain 0.667 (plan concept falla en "dependency injection") y generated-code 0.667 (dist gitignored → invisible a rg).
+- Regret 0 en todo; 0 false-confidence (concept falla con confidence < 0.9).
+
+Mitigaciones pendientes (M1-M3): M1 planes concept con fallback estructural/filename (deep-chain); M2 opción --no-ignore opt-in (generated-code, límite de gitignore documentado — no es bug); M3 enforcement estricto de budget o cap top-K fan-out (token explosion en path-clusters) + candidato CF_REOPT lexical-skip para latencia polyglot (4.7s).
+
 ## Expected Utility Cost Model (REJECT)
 
 El optimizer puede seleccionar por utilidad esperada (`CF_UTILITY=1`): EU = P(correct|plan)·value − tokens·Wt − latency·Wl − (1−P)·failure_penalty·Wf, con P(correct) derivada de la varianza del cardinality estimator (varianceTokens). Ablación sobre T1 (32 tasks) vs selección actual (cost/quality): **no mejora** — correctness 1.000 = 1.000, pero regret 0.1633 = 0.1633 (0% reducción, umbral 10%).
@@ -604,6 +635,14 @@ Medición (`evals/scripts/eval-indexing.js`, tasks 3.1-3.5 del change `indexing-
 - t1-*: N=0 — CQE warm (~80ms de overhead node+engine) es más caro por query que rg (~6ms); en repos chicos conviene rg directo (CQE agrega latencia sin ahorro de setup, que es trivial).
 - polar/dev: N<1.3 — el index build (~0.4-0.9s) se paga con la primera query (rg tarda 0.7-0.8s por query). Alternativa BM25-only cold (reindexa por proceso cada query): N≈1 — CQE evita re-indexar, quiebre inmediato.
 - T_incremental == T_index: la impl actual reindexa full por proceso; tarea derivada = índice incremental persistente si T_index > 1s en repos grandes.
+
+
+## Derived tasks (roadmap v1.6)
+
+- **Índice BM25 incremental persistente**: hoy reindexa full por proceso (T_incremental == T_index); aplica si T_index > 1s en repos grandes (indexing-cost-breakeven).
+- **Señal de incertidumbre por variante de plan**: varianza de est_candidates o success rate por plan id; sin esto la EU degenera a ranking por costo (expected-utility-cost REJECT).
+- **Cost model OOD**: retrain por repo o regularización/feature engineering antes de confiar el cardinality ML fuera de distribución (distribution-shift FAIL).
+- **Mitigaciones adversarial**: M1 fallback estructural para concept (deep-dependency-chain), M2 --no-ignore opt-in (generated-code), M3 enforcement de budget / cap fan-out (token explosion) (adversarial-workloads).
 
 ## Repository structure
 
