@@ -171,7 +171,10 @@ for (const r of runOrder) {
           ...(b.id === 'bm25' ? { CF_RETRIEVAL: 'bm25' } : {}),
           ...(b.id === 'cqe_rerank' ? { CF_MODEL_CMD: modelCmd } : {}),
         };
-        const parsed = JSON.parse(execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }));
+        let parsed = null;
+        try {
+          parsed = JSON.parse(execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024, timeout: 60000 }));
+        } catch (e) { parsed = { error: String(e.message ?? e).slice(0, 100) }; }
         ranked = [...new Set((parsed.results ?? []).map((x) => x.path))];
         tokens = parsed.stats?.tokens_used ?? 0;
         break;

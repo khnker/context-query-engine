@@ -99,7 +99,7 @@ function runCqe(cqp, repoDir) {
   const t0 = Date.now();
   let parsed = null;
   try {
-    const out = execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
+    const out = execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024, timeout: 60000 });
     // stdout del CLI = 1 JSON final {plan, results, stats}; tolerar líneas stray (telemetría)
     for (const l of out.split('\n').reverse()) {
       if (!l) continue;

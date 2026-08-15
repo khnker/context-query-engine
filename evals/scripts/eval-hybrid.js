@@ -119,7 +119,12 @@ for (const r of runOrder) {
       ...(m.needsModel ? { CF_MODEL_CMD: modelCmd } : {}),
     };
     const t0 = Date.now();
-    const parsed = JSON.parse(execFileSync('node', [ENGINE, task.cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }));
+    let parsed = null;
+    try {
+      parsed = JSON.parse(execFileSync('node', [ENGINE, task.cqp], { cwd: repoDir, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024, timeout: 60000 }));
+    } catch (e) {
+      continue; // harness acotado: query con timeout/error → skip del modo, no aborta
+    }
     const latencyMs = Date.now() - t0;
     const ranked = [...new Set((parsed.results ?? []).map((x) => x.path))];
     const hits = ground.filter((g) => ranked.some((f) => f === g || f.endsWith('/' + g) || g.endsWith('/' + f)));

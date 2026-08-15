@@ -55,7 +55,10 @@ function rawRetrieve(repoDir, words) {
 function cqeRetrieve(repoDir, cqp) {
   if (fs.existsSync(CACHE)) fs.rmSync(CACHE);
   const t0 = Date.now();
-  const parsed = JSON.parse(execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env: { ...process.env, CF_STATS_FILE: path.join(ROOT, 'engine/statistics.ndjson') }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }));
+  let parsed = null;
+  try {
+    parsed = JSON.parse(execFileSync('node', [ENGINE, cqp], { cwd: repoDir, env: { ...process.env, CF_STATS_FILE: path.join(ROOT, 'engine/statistics.ndjson') }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024, timeout: 60000 }));
+  } catch (e) { parsed = { error: String(e.message ?? e).slice(0, 100) }; }
   const ranked = [...new Set((parsed.results ?? []).map((x) => x.path))].slice(0, 10);
   return { ranked, tokens: parsed.stats?.tokens_used ?? 0, toolCalls: parsed.stats?.tool_calls ?? 1, latencyMs: Date.now() - t0 };
 }

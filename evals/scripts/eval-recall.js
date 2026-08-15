@@ -99,7 +99,16 @@ for (const r of runOrder) {
     for (const mc of modes) {
       if (fs.existsSync(CACHE)) fs.rmSync(CACHE);
       const t0 = Date.now();
-      const parsed = JSON.parse(execFileSync('node', [ENGINE, task.cqp], { cwd: repoDir, env: { ...process.env, CF_STATS_FILE: path.join(ROOT, 'engine/statistics.ndjson'), ...(mc ? { CF_MODEL_CMD: mc } : {}) }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }));
+      let parsed = null;
+      try {
+        parsed = JSON.parse(execFileSync('node', [ENGINE, task.cqp], { cwd: repoDir, env: { ...process.env, CF_STATS_FILE: path.join(ROOT, 'engine/statistics.ndjson'), ...(mc ? { CF_MODEL_CMD: mc } : {}) }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024, timeout: 60000 }));
+      } catch (e) {
+        // harness acotado: timeout/error por query → fila de error, no aborta el benchmark
+        const errRow = { query_id: task.id, query: task.query ?? task.cqp, mode: mc ? 'rerank' : 'heuristic', run: isWarmup ? `warmup-${run}` : run - WARMUP, tokens: 0, latency_ms: Date.now() - t0, correct: false, gt_hits: 0, n_ground: ground.length, recall5: 0, recall10: 0, mrr: 0, selected_plan: null, error: String(e.message ?? e).slice(0, 100) };
+        if (!isWarmup) report.rows.push({ ...errRow, task: task.id });
+        if (rawStream) rawStream.write(JSON.stringify(errRow) + '\n');
+        continue;
+      }
       const latencyMs = Date.now() - t0;
       const ranked = [...new Set((parsed.results ?? []).map((x) => x.path))];
       const hits = ground.filter((g) => ranked.some((f) => f === g || f.endsWith('/' + g) || g.endsWith('/' + f)));
