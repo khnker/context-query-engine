@@ -15,6 +15,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { load, confidence, estimateCandidates as statsEstimate } from './statistics.js';
 
@@ -236,6 +237,28 @@ function reorderBySuccess(ops, stats, queryType) {
   return next;
 }
 
+// 13.6 — cost model aprendido opcional: CF_MODEL_CMD sirve 'estimate-cardinality'
+// (evals/ml/classify.mjs). Con memo por (tool|queryClass|scope|est) para no
+// spawnear por cada variante de plan. Fallo/ausencia → null → heurístico.
+const cardCache = new Map();
+function modelEstimate(tool, queryClass, scope, heur) {
+  const cmd = process.env.CF_MODEL_CMD;
+  if (!cmd) return null;
+  const key = `${tool}|${queryClass}|${scope}|${heur}`;
+  if (cardCache.has(key)) return cardCache.get(key);
+  const [bin, ...args] = cmd.split(/\s+/);
+  let out = null;
+  try {
+    const raw = execFileSync(bin, [...args, 'estimate-cardinality', JSON.stringify({
+      operator: tool, queryClass, scope, est_candidates: heur,
+    })], { encoding: 'utf8', timeout: 2000, stdio: ['ignore', 'pipe', 'ignore'] });
+    const r = JSON.parse(raw);
+    if (r && Number.isFinite(r.candidates) && r.candidates >= 0) out = Math.round(r.candidates);
+  } catch { /* modelo ausente/roto → heurístico */ }
+  cardCache.set(key, out);
+  return out;
+}
+
 export function optimize(logicalPlan = {}) {
   const queryType = logicalPlan.query_type ?? 'implementation';
   const target = logicalPlan.target ?? {};
@@ -250,7 +273,9 @@ export function optimize(logicalPlan = {}) {
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
       const ops = p.ops.map((op) => {
-        const m = makeOp(op.tool, op.args ?? [name], statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool));
+        const heur = statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool);
+        const mEst = modelEstimate(op.tool, queryType, logicalPlan.scope ?? '', heur);
+        const m = makeOp(op.tool, op.args ?? [name], mEst ?? heur);
         if (op.relations) m.relations = op.relations;
         if (op.inclusions) m.inclusions = op.inclusions;
         return m;

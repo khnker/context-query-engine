@@ -87,6 +87,9 @@ def main():
         'verdict': 'ML ADOPTED' if m_ml['mape'] < m_bl['mape'] else 'HEURISTIC KEEPS',
     }
     (MODEL / 'cardinality-report.json').write_text(json.dumps(report, indent=2))
+    # 13.5 — artifact para inferencia node (evals/ml/classify.mjs sirve estimate-cardinality)
+    artifact = {'type': 'ridge-cardinality', 'W': W.tolist(), 'op_idx': op_idx, 'qc_idx': qc_idx}
+    (MODEL / 'cardinality-model.json').write_text(json.dumps(artifact))
     print(json.dumps(report, indent=2))
 
 

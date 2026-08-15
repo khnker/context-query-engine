@@ -65,6 +65,24 @@ export function classify(text) {
   return { label: CLASSES[idx], scores, confidence: scores[idx] };
 }
 
+// 13.5 — estimate-cardinality: ridge (evals/ml/model/cardinality-model.json)
+const CARD_MODEL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'model/cardinality-model.json');
+
+export function estimateCardinality(payload = {}) {
+  if (!fs.existsSync(CARD_MODEL)) return null;
+  const m = JSON.parse(fs.readFileSync(CARD_MODEL, 'utf8'));
+  const f = new Array(m.W.length).fill(0.0);
+  const op = m.op_idx[payload.operator];
+  const qc = m.qc_idx[payload.queryClass];
+  if (op !== undefined) f[op] = 1.0;
+  if (qc !== undefined) f[Object.keys(m.op_idx).length + qc] = 1.0;
+  const est = Number(payload.est_candidates) || 0;
+  f[f.length - 1] = Math.log1p(Math.max(0, est));
+  let acc = 0;
+  for (let i = 0; i < m.W.length; i++) acc += f[i] * m.W[i];
+  return { candidates: Math.max(0, Math.round(Math.expm1(Math.min(acc, 20)))), model: 'ridge-cardinality' };
+}
+
 // --- CLI ---
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isMain) {
@@ -75,6 +93,9 @@ if (isMain) {
   if (task === 'classify-query' && payload.query) {
     const r = classify(String(payload.query));
     process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0 }) + '\n');
+  } else if (task === 'estimate-cardinality') {
+    const r = estimateCardinality(payload);
+    if (r) process.stdout.write(JSON.stringify({ ...r, latencyMs: Date.now() - t0 }) + '\n');
   }
   // otros tasks → sin salida → local-model devuelve null → fallback heurístico
 }
