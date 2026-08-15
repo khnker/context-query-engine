@@ -1,0 +1,40 @@
+{"text": "Where is retryWithFallback defined?", "label": "LEXICAL", "source": "lex-01"}
+{"text": "Where is DEFAULT_TIMEOUT_MS used?", "label": "LEXICAL", "source": "lex-02"}
+{"text": "Where is register defined?", "label": "LEXICAL", "source": "lex-03"}
+{"text": "Where is get_provider_config defined?", "label": "LEXICAL", "source": "lex-04"}
+{"text": "Where is the route method defined?", "label": "LEXICAL", "source": "lex-05"}
+{"text": "Where is class ProviderRouter defined?", "label": "STRUCTURAL", "source": "str-01"}
+{"text": "Where is the try/catch fallback logic?", "label": "STRUCTURAL", "source": "str-02"}
+{"text": "Where is class HttpHandler defined?", "label": "STRUCTURAL", "source": "str-03"}
+{"text": "Where is the handler registry implemented?", "label": "STRUCTURAL", "source": "str-04"}
+{"text": "Where is get with default handler defined?", "label": "STRUCTURAL", "source": "str-05"}
+{"text": "How does retry between providers work?", "label": "SEMANTIC", "source": "sem-01"}
+{"text": "What happens when the primary provider fails?", "label": "SEMANTIC", "source": "sem-02"}
+{"text": "How are handlers registered?", "label": "SEMANTIC", "source": "sem-03"}
+{"text": "What does the configuration loading do?", "label": "SEMANTIC", "source": "sem-04"}
+{"text": "How are models routed to providers?", "label": "SEMANTIC", "source": "sem-05"}
+{"text": "Who calls retryWithFallback?", "label": "DEPENDENCY", "source": "dep-01"}
+{"text": "Who uses ProviderRouter.route?", "label": "DEPENDENCY", "source": "dep-02"}
+{"text": "Who imports register?", "label": "DEPENDENCY", "source": "dep-03"}
+{"text": "Who imports app.core.config?", "label": "DEPENDENCY", "source": "dep-04"}
+{"text": "What depends on DEFAULT_TIMEOUT_MS?", "label": "DEPENDENCY", "source": "dep-05"}
+{"text": "Where is providers.json read?", "label": "CONFIGURATION", "source": "cfg-01"}
+{"text": "Where is the timeout value defined?", "label": "CONFIGURATION", "source": "cfg-02"}
+{"text": "Where is settings.yaml?", "label": "CONFIGURATION", "source": "cfg-03"}
+{"text": "How is provider config read?", "label": "CONFIGURATION", "source": "cfg-04"}
+{"text": "Where is the fallback provider configured?", "label": "CONFIGURATION", "source": "cfg-05"}
+{"text": "Which tests cover retryWithFallback?", "label": "TEST", "source": "tst-01"}
+{"text": "Which test covers route?", "label": "TEST", "source": "tst-02"}
+{"text": "Which tests cover the registry?", "label": "TEST", "source": "tst-03"}
+{"text": "Which test covers get fallback?", "label": "TEST", "source": "tst-04"}
+{"text": "Where is fallback.test.ts?", "label": "TEST", "source": "tst-05"}
+{"text": "Where is ProviderRouter implemented?", "label": "COMPOSITE", "source": "adv-01"}
+{"text": "What changed in src/services/fallback.ts?", "label": "GIT", "source": "git-01"}
+{"text": "¿Dónde está definida la entidad que modela los tipos de cilindros de gas?", "label": "STRUCTURAL", "source": "t2-01"}
+{"text": "¿Qué servicio recalcula precios en cascada y quién lo usa?", "label": "DEPENDENCY", "source": "t2-02"}
+{"text": "¿Qué spec cubre el servicio de autenticación?", "label": "TEST", "source": "t2-03"}
+{"text": "¿Dónde está el servicio que declara ventas de comercio?", "label": "LEXICAL", "source": "t2-04"}
+{"text": "¿Cómo funciona la autenticación por JWT y qué guard protege las rutas?", "label": "SEMANTIC", "source": "t2-05"}
+{"text": "¿Qué servicio procesa ventas de comercio y qué controlador lo expone?", "label": "DEPENDENCY", "source": "t2-06"}
+{"text": "¿Dónde se implementa la declaración de venta ante el SII?", "label": "SEMANTIC", "source": "t2-07"}
+{"text": "¿Qué archivos del dashboard cambiaron recientemente?", "label": "GIT", "source": "t2-08"}
