@@ -49,4 +49,4 @@ if [ ${#EXCLUDES[@]} -eq 0 ]; then
   EXCLUDES=("${DEFAULT_EXCLUDES[@]}")
 fi
 
-rg $CASE $LIST "${EXCLUDES[@]}" -n -- "$PATTERN" "$DIR"
+rg $CASE $LIST ${CF_SEARCH_NO_IGNORE:+--no-ignore} "${EXCLUDES[@]}" -n -- "$PATTERN" "$DIR"

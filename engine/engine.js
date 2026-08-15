@@ -145,7 +145,9 @@ function execOp(op, plan, pool = []) {
       return parseNdjson(r.out);
     }
     case 'rg-files': {
-      const r = runScript('rg', ['--files', '.']);
+      const gargs = ['--files', '.'];
+      if (process.env.CF_SEARCH_NO_IGNORE === '1') gargs.unshift('--no-ignore'); // M2 opt-in generated-code
+      const r = runScript('rg', gargs);
       const q = name.toLowerCase();
       return r.out.split('\n').filter(Boolean)
         .filter((p) => !/node_modules/.test(p))
@@ -358,23 +360,45 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     }
   }
 
-  // semantic-escalation — concept con 0 resultados → search-semantic (policy nivel 4)
+  // M1 (adversarial-mitigations) — escalación concept con 0 resultados:
+  // evidencia exacta primero (filename por palabra + estructural), semántica al final
   if (retrieval !== 'bm25' && logicalPlan.target?.kind === 'concept' && pool.length === 0) {
     const concept = String(logicalPlan.target.name ?? '').trim();
     if (concept) {
-      stats.tool_calls += 1;
-      const t0 = Date.now();
-      try {
-        const semantic = execOp({ tool: 'search-semantic', args: [concept] }, logicalPlan, []);
-        const latencyMs = Date.now() - t0;
-        pool.push(...semantic);
-        stats.escalated_semantic = true;
-        recordExecution(logicalPlan.query_type, 'search-semantic', {
-          tokens: 800, latency_ms: latencyMs, results: semantic.length,
-          relevant: semantic.filter((r) => RELEVANT.has(r.match_type)).length,
-          satisfied: semantic.length > 0, cache_hit: false,
-        }, phys.pred_class);
-      } catch { /* probe ausente o roto — sin crash */ }
+      // 1) filename por palabra: 'http handlers' → rg-files 'http' matchea http.py
+      const words = String(concept).toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length >= 3).slice(0, 4);
+      for (const w of words) {
+        const rows = execOp({ tool: 'rg-files', args: [w] }, logicalPlan, []);
+        if (rows.length) {
+          pool.push(...rows);
+          stats.escalated_filename = w;
+          break;
+        }
+      }
+      // 2) estructural (sg): DI containers, decorators, etc.
+      if (pool.length === 0) {
+        const rows = execOp({ tool: 'search-structure', args: [concept] }, logicalPlan, []);
+        if (rows.length) {
+          pool.push(...rows);
+          stats.escalated_structural = true;
+        }
+      }
+      // 3) semántica como último recurso (probe ausente → degrada sin crash)
+      if (pool.length === 0) {
+        stats.tool_calls += 1;
+        const t0 = Date.now();
+        try {
+          const semantic = execOp({ tool: 'search-semantic', args: [concept] }, logicalPlan, []);
+          const latencyMs = Date.now() - t0;
+          pool.push(...semantic);
+          stats.escalated_semantic = true;
+          recordExecution(logicalPlan.query_type, 'search-semantic', {
+            tokens: 800, latency_ms: latencyMs, results: semantic.length,
+            relevant: semantic.filter((r) => RELEVANT.has(r.match_type)).length,
+            satisfied: semantic.length > 0, cache_hit: false,
+          }, phys.pred_class);
+        } catch { /* probe ausente o roto — sin crash */ }
+      }
     }
   }
 

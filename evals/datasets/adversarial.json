@@ -1,358 +1,358 @@
 [
- {
-  "id": "adv-hf-01",
-  "category": "high-frequency-symbol",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol logger LIMIT 10",
-  "query": "Where is the main logger defined?",
-  "primary": [
-   "api-polar/src/main.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-hf-02",
-  "category": "high-frequency-symbol",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol environment LIMIT 10",
-  "query": "Where is the environment config defined?",
-  "primary": [
-   "fe-polar/src/environments/environment.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-hf-03",
-  "category": "high-frequency-symbol",
-  "repo": "t1-basic",
-  "cqp": "FIND references OF symbol retryWithFallback LIMIT 10",
-  "query": "Where is retryWithFallback used?",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-am-04",
-  "category": "ambiguous-identifier",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol config LIMIT 10",
-  "query": "Where is the app config defined?",
-  "primary": [
-   "api-polar/src/app.module.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-am-05",
-  "category": "ambiguous-identifier",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol database LIMIT 10",
-  "query": "Where is the database module defined?",
-  "primary": [
-   "api-polar/src/database/data-source.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-am-06",
-  "category": "ambiguous-identifier",
-  "repo": "t1-modular",
-  "cqp": "FIND definitions OF symbol register LIMIT 10",
-  "query": "Where is register defined?",
-  "primary": [
-   "app/core/registry.py"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-fo-07",
-  "category": "huge-fanout",
-  "repo": "polar",
-  "cqp": "FIND references OF symbol Controller LIMIT 10",
-  "query": "Which controllers exist?",
-  "primary": [
-   "api-polar/src/modules/auth/auth.controller.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-fo-08",
-  "category": "huge-fanout",
-  "repo": "polar",
-  "cqp": "FIND references OF symbol Injectable LIMIT 10",
-  "query": "Where is Injectable used?",
-  "primary": [
-   "api-polar/src/modules/auth/auth.service.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-fo-09",
-  "category": "huge-fanout",
-  "repo": "t1-basic",
-  "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
-  "query": "Where is DEFAULT_TIMEOUT_MS referenced?",
-  "primary": [
-   "src/config.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-zr-10",
-  "category": "zero-results",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol zxq9PlutoniumWidget LIMIT 10",
-  "query": "Find a nonexistent widget",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-zr-11",
-  "category": "zero-results",
-  "repo": "polar",
-  "cqp": "FIND references OF symbol def_not_a_thing_42 LIMIT 10",
-  "query": "Find references to a made-up symbol",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-zr-12",
-  "category": "zero-results",
-  "repo": "t1-basic",
-  "cqp": "FIND definitions OF symbol QuantumTeleportationEngine LIMIT 10",
-  "query": "Find a fictional engine class",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-dc-13",
-  "category": "deep-dependency-chain",
-  "repo": "polar",
-  "cqp": "FIND implementation OF concept \"dependency injection\" LIMIT 10",
-  "query": "How is dependency injection wired?",
-  "primary": [
-   "api-polar/src/app.module.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-dc-14",
-  "category": "deep-dependency-chain",
-  "repo": "polar",
-  "cqp": "FIND implementation OF concept \"jwt authentication\" LIMIT 10",
-  "query": "How is JWT auth implemented?",
-  "primary": [
-   "api-polar/src/modules/auth/auth.module.ts",
-   "api-polar/src/modules/auth/auth.controller.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-dc-15",
-  "category": "deep-dependency-chain",
-  "repo": "t1-modular",
-  "cqp": "FIND implementation OF concept \"http handlers\" LIMIT 10",
-  "query": "Where are the HTTP handlers?",
-  "primary": [
-   "app/handlers/http.py",
-   "app/handlers/file.py"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-du-16",
-  "category": "duplicate-implementations",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol Invoice LIMIT 10",
-  "query": "Where is Invoice modeled?",
-  "primary": [
-   "api-polar/src/modules/invoice-storage/invoice-storage.service.ts",
-   "fe-polar/src/app/core/services/invoice-storage.service.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-du-17",
-  "category": "duplicate-implementations",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"main.ts\" LIMIT 10",
-  "query": "Find main.ts across packages",
-  "primary": [
-   "api-polar/src/main.ts",
-   "fe-polar/src/main.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-du-18",
-  "category": "duplicate-implementations",
-  "repo": "t1-basic",
-  "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
-  "query": "Where is retryWithFallback defined?",
-  "primary": [
-   "src/services/fallback.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-gc-19",
-  "category": "generated-code",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"package-lock.json\" LIMIT 5",
-  "query": "Find the lock files",
-  "primary": [
-   "api-polar/package-lock.json"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-gc-20",
-  "category": "generated-code",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"main.js\" LIMIT 5",
-  "query": "Find the built Angular bundle",
-  "primary": [
-   "fe-polar/dist/polar-frontend/browser/main.js"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-gc-21",
-  "category": "generated-code",
-  "repo": "t1-basic",
-  "cqp": "FIND filename OF file \"package.json\" LIMIT 5",
-  "query": "Find package.json",
-  "primary": [
-   "package.json"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-vd-22",
-  "category": "vendor-code",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol Injectable LIMIT 10",
-  "query": "Find Injectable in vendor code",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-vd-23",
-  "category": "vendor-code",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"lodash.js\" LIMIT 5",
-  "query": "Find lodash in node_modules",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-vd-24",
-  "category": "vendor-code",
-  "repo": "t1-basic",
-  "cqp": "FIND definitions OF symbol express LIMIT 10",
-  "query": "Find express framework code",
-  "primary": [],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-mo-25",
-  "category": "monorepo",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"app.module.ts\" LIMIT 5",
-  "query": "Find the NestJS root module",
-  "primary": [
-   "api-polar/src/app.module.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-mo-26",
-  "category": "monorepo",
-  "repo": "polar",
-  "cqp": "FIND references OF concept \"factura\" LIMIT 10",
-  "query": "Where is invoice processing referenced?",
-  "primary": [
-   "ts-facturacion-comercio/src/api.ts",
-   "facturar.py"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-mo-27",
-  "category": "monorepo",
-  "repo": "polar",
-  "cqp": "FIND filename OF file \"package.json\" LIMIT 10",
-  "query": "Find package.json across the monorepo",
-  "primary": [
-   "api-polar/package.json",
-   "fe-polar/package.json"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-po-28",
-  "category": "polyglot",
-  "repo": "polar",
-  "cqp": "FIND implementation OF concept \"factura electronica\" LIMIT 10",
-  "query": "How is electronic invoicing implemented?",
-  "primary": [
-   "facturar.py",
-   "ts-facturacion-comercio/src/api.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-po-29",
-  "category": "polyglot",
-  "repo": "polar",
-  "cqp": "FIND definitions OF symbol main LIMIT 10",
-  "query": "Where are the entry points (TS + Python)?",
-  "primary": [
-   "ts-facturacion-comercio/src/analizar-ocr.ts"
-  ],
-  "related": [],
-  "tests": []
- },
- {
-  "id": "adv-po-30",
-  "category": "polyglot",
-  "repo": "polar",
-  "cqp": "FIND implementation OF concept \"invoice emission\" LIMIT 10",
-  "query": "How is invoice emission done across languages?",
-  "primary": [
-   "facturar.py",
-   "ts-facturacion-comercio/src/analizar-ocr.ts"
-  ],
-  "related": [],
-  "tests": []
- }
+  {
+    "id": "adv-hf-01",
+    "category": "high-frequency-symbol",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol logger LIMIT 10",
+    "query": "Where is the main logger defined?",
+    "primary": [
+      "api-polar/src/main.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-hf-02",
+    "category": "high-frequency-symbol",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol environment LIMIT 10",
+    "query": "Where is the environment config defined?",
+    "primary": [
+      "fe-polar/src/environments/environment.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-hf-03",
+    "category": "high-frequency-symbol",
+    "repo": "t1-basic",
+    "cqp": "FIND references OF symbol retryWithFallback LIMIT 10",
+    "query": "Where is retryWithFallback used?",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-am-04",
+    "category": "ambiguous-identifier",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol config LIMIT 10",
+    "query": "Where is the app config defined?",
+    "primary": [
+      "api-polar/src/app.module.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-am-05",
+    "category": "ambiguous-identifier",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol database LIMIT 10",
+    "query": "Where is the database module defined?",
+    "primary": [
+      "api-polar/src/database/data-source.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-am-06",
+    "category": "ambiguous-identifier",
+    "repo": "t1-modular",
+    "cqp": "FIND definitions OF symbol register LIMIT 10",
+    "query": "Where is register defined?",
+    "primary": [
+      "app/core/registry.py"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-fo-07",
+    "category": "huge-fanout",
+    "repo": "polar",
+    "cqp": "FIND references OF symbol Controller LIMIT 10",
+    "query": "Which controllers exist?",
+    "primary": [
+      "api-polar/src/modules/auth/auth.controller.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-fo-08",
+    "category": "huge-fanout",
+    "repo": "polar",
+    "cqp": "FIND references OF symbol Injectable LIMIT 10",
+    "query": "Where is Injectable used?",
+    "primary": [
+      "api-polar/src/modules/auth/auth.service.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-fo-09",
+    "category": "huge-fanout",
+    "repo": "t1-basic",
+    "cqp": "FIND references OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+    "query": "Where is DEFAULT_TIMEOUT_MS referenced?",
+    "primary": [
+      "src/config.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-zr-10",
+    "category": "zero-results",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol zxq9PlutoniumWidget LIMIT 10",
+    "query": "Find a nonexistent widget",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-zr-11",
+    "category": "zero-results",
+    "repo": "polar",
+    "cqp": "FIND references OF symbol def_not_a_thing_42 LIMIT 10",
+    "query": "Find references to a made-up symbol",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-zr-12",
+    "category": "zero-results",
+    "repo": "t1-basic",
+    "cqp": "FIND definitions OF symbol QuantumTeleportationEngine LIMIT 10",
+    "query": "Find a fictional engine class",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-dc-13",
+    "category": "deep-dependency-chain",
+    "repo": "polar",
+    "cqp": "FIND implementation OF concept \"dependency injection\" LIMIT 10",
+    "query": "How is dependency injection wired?",
+    "primary": [
+      "api-polar/src/app.module.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-dc-14",
+    "category": "deep-dependency-chain",
+    "repo": "polar",
+    "cqp": "FIND implementation OF concept \"jwt authentication\" LIMIT 10",
+    "query": "How is JWT auth implemented?",
+    "primary": [
+      "api-polar/src/modules/auth/auth.module.ts",
+      "api-polar/src/modules/auth/auth.controller.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-dc-15",
+    "category": "deep-dependency-chain",
+    "repo": "t1-modular",
+    "cqp": "FIND implementation OF concept \"http handlers\" LIMIT 10",
+    "query": "Where are the HTTP handlers?",
+    "primary": [
+      "app/handlers/http.py",
+      "app/handlers/file.py"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-du-16",
+    "category": "duplicate-implementations",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol Invoice LIMIT 10",
+    "query": "Where is Invoice modeled?",
+    "primary": [
+      "api-polar/src/modules/invoice-storage/invoice-storage.service.ts",
+      "fe-polar/src/app/core/services/invoice-storage.service.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-du-17",
+    "category": "duplicate-implementations",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"main.ts\" LIMIT 10",
+    "query": "Find main.ts across packages",
+    "primary": [
+      "api-polar/src/main.ts",
+      "fe-polar/src/main.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-du-18",
+    "category": "duplicate-implementations",
+    "repo": "t1-basic",
+    "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
+    "query": "Where is retryWithFallback defined?",
+    "primary": [
+      "src/services/fallback.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-gc-19",
+    "category": "generated-code",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"package-lock.json\" LIMIT 5",
+    "query": "Find the lock files",
+    "primary": [
+      "api-polar/package-lock.json"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-gc-20",
+    "category": "generated-code",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"main.js\" LIMIT 5",
+    "query": "Find the built Angular bundle",
+    "primary": [
+      "api-polar/dist/main.js"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-gc-21",
+    "category": "generated-code",
+    "repo": "t1-basic",
+    "cqp": "FIND filename OF file \"package.json\" LIMIT 5",
+    "query": "Find package.json",
+    "primary": [
+      "package.json"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-vd-22",
+    "category": "vendor-code",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol Injectable LIMIT 10",
+    "query": "Find Injectable in vendor code",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-vd-23",
+    "category": "vendor-code",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"lodash.js\" LIMIT 5",
+    "query": "Find lodash in node_modules",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-vd-24",
+    "category": "vendor-code",
+    "repo": "t1-basic",
+    "cqp": "FIND definitions OF symbol express LIMIT 10",
+    "query": "Find express framework code",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-mo-25",
+    "category": "monorepo",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"app.module.ts\" LIMIT 5",
+    "query": "Find the NestJS root module",
+    "primary": [
+      "api-polar/src/app.module.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-mo-26",
+    "category": "monorepo",
+    "repo": "polar",
+    "cqp": "FIND references OF concept \"factura\" LIMIT 10",
+    "query": "Where is invoice processing referenced?",
+    "primary": [
+      "ts-facturacion-comercio/src/api.ts",
+      "facturar.py"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-mo-27",
+    "category": "monorepo",
+    "repo": "polar",
+    "cqp": "FIND filename OF file \"package.json\" LIMIT 10",
+    "query": "Find package.json across the monorepo",
+    "primary": [
+      "api-polar/package.json",
+      "fe-polar/package.json"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-po-28",
+    "category": "polyglot",
+    "repo": "polar",
+    "cqp": "FIND implementation OF concept \"factura electronica\" LIMIT 10",
+    "query": "How is electronic invoicing implemented?",
+    "primary": [
+      "facturar.py",
+      "ts-facturacion-comercio/src/api.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-po-29",
+    "category": "polyglot",
+    "repo": "polar",
+    "cqp": "FIND definitions OF symbol main LIMIT 10",
+    "query": "Where are the entry points (TS + Python)?",
+    "primary": [
+      "ts-facturacion-comercio/src/analizar-ocr.ts"
+    ],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "adv-po-30",
+    "category": "polyglot",
+    "repo": "polar",
+    "cqp": "FIND implementation OF concept \"invoice emission\" LIMIT 10",
+    "query": "How is invoice emission done across languages?",
+    "primary": [
+      "facturar.py",
+      "ts-facturacion-comercio/src/analizar-ocr.ts"
+    ],
+    "related": [],
+    "tests": []
+  }
 ]

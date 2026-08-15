@@ -31,11 +31,25 @@ trap 'rm -f "$TMP_IN" "$TMP_OUT"' EXIT
 
 { printf '%s\n' "$first_line"; cat; } > "$TMP_IN"
 
-if ! jq -s -c --argjson BUDGET "$BUDGET" '
+# M2 (adversarial-mitigations): CF_INCLUDE_GENERATED=1 relaja bad_path (dist/build visibles
+# para generated-code opt-in; por defecto siguen excluidos — política de contexto limpio)
+BAD_PATH_LIST='["node_modules",".git","dist","build","coverage","vendor"]'
+if [ "${CF_INCLUDE_GENERATED:-}" = "1" ]; then
+  BAD_PATH_LIST='["node_modules",".git","coverage","vendor"]'
+fi
+
+# M3 (adversarial-mitigations): CF_STRICT_BUDGET=1 → budget duro (sin la cláusula
+# path-cluster que permitía exceder; opt-in, default preserva el comportamiento)
+STRICT_FLAG=false
+if [ "${CF_STRICT_BUDGET:-}" = "1" ]; then
+  STRICT_FLAG=true
+fi
+
+if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" '
   # ---- normalize ----
   def bad_path:
     all((.path | split("/"))[]; . as $s |
-      (["node_modules",".git","dist","build","coverage","vendor"] | index($s) | not));
+      ($BADPATH | index($s) | not));
   def exactness:
     if .match_type == "exact" then 1
     elif .match_type == "filename" then 0.8
@@ -82,7 +96,7 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" '
   # ---- budget: consume en orden de rank hasta BUDGET; siempre el mejor de cada cluster ----
   | . as $ranked
   | reduce $ranked[] as $c ({ kept: [], used: 0 };
-      if (.used + $c.token_estimate <= $BUDGET) or (([.kept[].path] | index($c.path)) == null) then
+      if (.used + $c.token_estimate <= $BUDGET) or (($STRICT | not) and (([.kept[].path] | index($c.path)) == null)) then
         .kept += [$c] | .used += ($c.token_estimate)
       else . end)
   | . as $res
