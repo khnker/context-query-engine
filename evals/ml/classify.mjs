@@ -25,9 +25,12 @@ function djb2(buf) {
 }
 
 function ngrams(text) {
+  // char n-grams rango 2-4 (DEBE coincidir con el trainer python, evals/ml/train-classifier.py)
   const t = '#' + text.toLowerCase() + '#';
   const out = new Set();
-  for (let i = 0; i < t.length - 2; i++) out.add(t.slice(i, i + 3));
+  for (let n = 2; n <= 4; n++) {
+    for (let i = 0; i <= t.length - n; i++) out.add(t.slice(i, i + n));
+  }
   return out;
 }
 

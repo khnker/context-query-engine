@@ -41,50 +41,79 @@ const TEMPLATES = {
     'Where is {s} defined?', 'Find the definition of {s}.', '¿Dónde está definido {s}?',
     'Locate the constant {s}.', 'Where is MAX_RETRIES set?', 'Find the enum {s}.',
     'Where is the literal {c} used?', 'Search for the string "{c}".',
-  ],
+      '¿Dónde está definido {s}?',
+    '¿Dónde se define {s}?',
+    'Busca la definición de {s}.',
+],
   STRUCTURAL: [
     'Which classes implement {s}?', 'What interfaces extend {s}?',
     'Show the class hierarchy of {s}.', 'Which files declare {s}?',
     'Find classes related to {c}.', 'What is the structure of module {f}?',
     'Show the components of {f}.', 'Which entity defines {s}?',
-  ],
+      '¿Qué clases implementan {s}?',
+    '¿Qué interfaces extienden {s}?',
+    '¿Qué archivos declaran {s}?',
+],
   SEMANTIC: [
     'How does {c} work?', 'Why was {c} introduced?', 'Explain the logic behind {c}.',
     'What is the purpose of {s}?', 'How is {c} implemented?',
     'Which code handles {c}?', 'Describe the behavior of {s}.',
-  ],
+      '¿Cómo funciona {c}?',
+    '¿Por qué se introdujo {c}?',
+    '¿Qué código maneja {c}?',
+],
   DEPENDENCY: [
     'Who depends on {s}?', 'What does {s} import?', 'Which modules use {s}?',
     'List the callers of {u}.', 'What are the dependencies of {f}?',
     'Which services depend on {s}?', 'How does {s} relate to {f}?',
-  ],
+      '¿Quién usa {s}?',
+    '¿Qué módulos dependen de {s}?',
+],
   CONFIGURATION: [
     'Where is the {f} configuration?', 'How is {f} configured?',
     'Which file sets up {f}?', 'Where are the env vars for {f}?',
     'How is the connection to {f} configured?', 'Show the settings for {c}.',
-  ],
+      '¿Dónde está la configuración de {f}?',
+    '¿Cómo se configura {f}?',
+    '¿Dónde están las env vars de {f}?',
+],
   TEST: [
     'Which tests cover {s}?', 'Where are the specs for {f}?',
     'Show the test file for {s}.', 'Which spec tests {c}?',
     'Where is {s} tested?', 'Find the e2e tests for {f}.',
-  ],
+      '¿Qué tests cubren {s}?',
+    '¿Dónde está el spec de {f}?',
+    '¿Qué spec prueba {c}?',
+],
   GIT: [
     'What changed recently in {f}?', 'Show the recent commits touching {s}.',
     'Who modified {s} last?', 'Which files changed in the last release?',
     'Show the history of {s}.', 'What was the last change to {f}?',
-  ],
+      '¿Qué cambió recientemente en {f}?',
+    '¿Quién modificó {s} la última vez?',
+    '¿Qué archivos cambiaron en la última release?',
+],
   SYMBOL: [
     'Where is the definition of {s}?', 'Find symbol {s}.', 'Locate {s} declaration.',
     'Which file contains {s}?', 'Show the source of {s}.', 'Find the symbol {s}.',
-  ],
+      '¿Dónde está la definición de {s}?',
+    'Encuentra el símbolo {s}.',
+    '¿Qué archivo contiene {s}?',
+],
   REFERENCE: [
     'Who calls {u}?', 'Where is {s} referenced?', 'Find all references to {s}.',
     'Which code uses {u}?', 'List the callers of {s}.', 'Where is {s} used?',
-  ],
+      '¿Quién llama a {u}?',
+    '¿Dónde se referencia {s}?',
+    '¿Dónde se usa {s}?',
+],
   COMPOSITE: [
     'Find {s} and its callers.', 'Show {s} with related tests.', 'Explain {c} and who uses it.',
     'Find the definition of {s} and its references.', 'Trace {c} from config to usage.',
-  ],
+      'Encuentra {s} y sus llamadores.',
+    'Explica {c} y quién lo usa.',
+    'Traza {c} desde la config hasta el uso.',
+],
 };
 
 const CLASSES = Object.keys(TEMPLATES);
@@ -104,23 +133,25 @@ function gen() {
   const seed = [];
   const banks = [SYMBOLS, CONCEPTS, FILES];
   for (const cls of CLASSES) {
+    // recorrer TODAS las plantillas en round-robin (las últimas del array —p.ej. ES—
+    // también se generan; antes el CAP se llenaba con las primeras y las ES quedaban fuera)
+    const combos = [];
+    for (const tpl of TEMPLATES[cls]) for (const bank of banks) combos.push([tpl, bank]);
     let n = counts[cls];
-    outer:
-    for (const bank of banks) {
-      for (const tpl of TEMPLATES[cls]) {
-        for (const tok of bank) {
-          if (n >= CAP) break outer;
-          const text = tpl
-            .replace(/\{s\}/g, tok)
-            .replace(/\{c\}/g, tok)
-            .replace(/\{f\}/g, tok)
-            .replace(/\{u\}/g, tokens(tok));
-          if (!rows.some((r) => r.text === text) && !seed.some((r) => r.text === text)) {
-            seed.push({ text, label: cls, source: 'synthetic' });
-            n += 1;
-          }
-        }
+    let i = 0;
+    while (n < CAP && i < combos.length * CAP * 2) {
+      const [tpl, bank] = combos[i % combos.length];
+      const tok = bank[Math.floor(i / combos.length) % bank.length];
+      const text = tpl
+        .replace(/\{s\}/g, tok)
+        .replace(/\{c\}/g, tok)
+        .replace(/\{f\}/g, tok)
+        .replace(/\{u\}/g, tokens(tok));
+      if (!rows.some((r) => r.text === text) && !seed.some((r) => r.text === text)) {
+        seed.push({ text, label: cls, source: 'synthetic' });
+        n += 1;
       }
+      i += 1;
     }
   }
   return { rows, seed };

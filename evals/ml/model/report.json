@@ -5,19 +5,21 @@
   "train": 700,
   "val": 150,
   "test": 150,
-  "val_acc": 0.98,
-  "test_acc": 0.987,
+  "val_acc": 0.973,
+  "test_acc": 0.98,
   "test_acc_per_class": {
     "LEXICAL": 1.0,
-    "STRUCTURAL": 0.867,
-    "SYMBOL": 1.0,
+    "STRUCTURAL": 0.933,
+    "SYMBOL": 0.933,
     "REFERENCE": 1.0,
     "SEMANTIC": 1.0,
-    "DEPENDENCY": 1.0,
+    "DEPENDENCY": 0.933,
     "CONFIGURATION": 1.0,
     "TEST": 1.0,
     "GIT": 1.0,
     "COMPOSITE": 1.0
   },
+  "es_acc": 1.0,
+  "es_count": 33,
   "artifact": "/home/nicolas/dev/contextforge/evals/ml/model/classifier.json"
 }

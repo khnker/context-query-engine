@@ -56,10 +56,13 @@ def djb2(b):
 
 
 def ngrams(text):
+    # char n-grams rango 2-4 con límites de palabra '#...#': más señal para texto
+    # corto mixto EN/ES (scikit char_wb practice). DEBE coincidir con classify.mjs.
     t = '#' + text.lower() + '#'
     out = set()
-    for i in range(len(t) - 2):
-        out.add(t[i:i + 3].encode())
+    for n in (2, 3, 4):
+        for i in range(len(t) - n + 1):
+            out.add(t[i:i + n].encode())
     return out
 
 
@@ -104,6 +107,8 @@ def main():
         'val_acc': round(evaluate(W, val), 3),
         'test_acc': round(evaluate(W, test), 3),
         'test_acc_per_class': per_class_acc(W, test),
+        'es_acc': round(evaluate(W, [r for r in test if any(c in r['text'] for c in '¿áéíóúñÁÉÍÓÚÑ')]), 3),
+        'es_count': sum(1 for r in test if any(c in r['text'] for c in '¿áéíóúñÁÉÍÓÚÑ')),
         'artifact': str(OUT_DIR / 'classifier.json'),
     }
     (OUT_DIR / 'report.json').write_text(json.dumps(report, indent=2))
