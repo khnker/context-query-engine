@@ -901,6 +901,17 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-structural.js   # → evals/reports/str
 
 Hallazgo de diseño: la evidencia del *concept* (docs con match léxico) no es evidencia de la *implementación* estructural — el gate correcto es "mayoría docs + 0 filas estructurales", no "pool vacío". Costo: +15 filas/ancla solo en el caso miss (raro); sin regresión en ninguna categoría.
 
+
+## Evidence Packet Standard — SÍ SIRVE (representación)
+
+Cada resultado de retrieval es un **packet tipado** `{evidence_id, subject{file,symbol,lines}, claim, evidence_type, certainty, source, provenance{operator,parser,index_version}, cost{tokens,latency_ms}}` (engine/evidence.js, aditivo sobre el contrato flat de fuse). La **certainty es tipo epistémico** (determinista tier0 = 1.0, estimación semantic = 0.6), ortogonal al score de ranking — el reranker interpreta evidencia, nunca la sobrescribe (el bug 0.0034 es estructuralmente imposible; el filtro de fuse opera sobre score, no sobre certainty).
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-evidence-packets.js   # → evals/reports/evidence-packets-<TS>.json
+```
+
+Paridad T1: correctness 1.000 = 1.000 (aditivo), 214 packets con schema completa, tier0 certainty 1.0 ✓. Habilita selección por certeza/provenance en selector.js.
+
 ## Glossary
 
 | Term | Meaning |

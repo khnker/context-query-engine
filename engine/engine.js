@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { toPacket } from './evidence.js';
 import { structuralRefine } from './structural-refine.js';
 import { repoFingerprint, walkFiles } from './index-layer/manifest.js';
 import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
@@ -647,6 +648,11 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     }
     stats.adaptive = { flood, actions };
   }
+
+  // evidence-packet-standard — todo row del pool es un packet tipado (aditivo,
+  // no rompe el contrato flat de assemble-context; certainty = tipo epistémico).
+  const packetOpts = { operator: phys.selected ?? null, target: logicalPlan.target };
+  for (let i = 0; i < pool.length; i++) pool[i] = toPacket(pool[i], i, packetOpts);
 
   let results = fuse(pool, effectiveBudget(logicalPlan));
 
