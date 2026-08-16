@@ -6,3 +6,5 @@ dist/
 engine/.cache.json
 openspec/
 evals/results/
+.cqe/
+engine/.bm25-index.json
