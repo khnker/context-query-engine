@@ -94,7 +94,7 @@ loadCache(); // tras definir helpers (TDZ: useFp/repoFp son const)
 // --- helpers de ejecución de scripts (stdlib, execFileSync) ---
 function runScript(script, args, input) {
   try {
-    const out = execFileSync(script, args, { encoding: 'utf8', input, maxBuffer: 16 * 1024 * 1024 });
+    const out = execFileSync(script, args, { encoding: 'utf8', input, maxBuffer: 16 * 1024 * 1024, timeout: 10000 });
     return { out };
   } catch (e) {
     // exit != 0 puede traer stdout válido (ej. rg sin matches → exit 1); si no, cero resultados
@@ -317,6 +317,25 @@ function execOp(op, plan, pool = []) {
   }
 }
 
+// B8 — upsert por path: la evidencia adquirida con mayor certeza REEMPLAZA la
+// fila existente (fix de A3: el dedupe por path anulaba el flood-boost).
+function upsertRows(pool, rows) {
+  const idx = new Map();
+  for (let i = 0; i < pool.length; i++) idx.set(String(pool[i].path), i);
+  for (const row of rows) {
+    const j = idx.get(String(row.path));
+    if (j === undefined) {
+      idx.set(String(row.path), pool.length);
+      pool.push(row);
+    } else {
+      const cur = pool[j];
+      const newC = row.certainty ?? row.score ?? 0;
+      const curC = cur.certainty ?? cur.score ?? 0;
+      if (newC > curC) pool[j] = row;
+    }
+  }
+}
+
 // 13.2 — fusión: NDJSON de todas las ops → assemble-context (dedup + ranking + budget + tiers)
 function fuse(pool, budget) {
   if (pool.length === 0) return [];
@@ -402,11 +421,15 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   // for..of sobre array mutado desincroniza el iterator y re-ejecuta ops)
   const skippedOps = new Set();
 
-  // 13.1 — ejecución ordenada con early termination
-  for (const op of opsToRun) {
+  // 13.1 — ejecución ordenada con early termination. B8: loop index-based sobre
+  // remainingOps (mutación segura para replan mid-execution).
+  const remainingOps = [...opsToRun];
+  let opIdx = 0;
+  while (opIdx < remainingOps.length) {
+    const op = remainingOps[opIdx];
     if (retrieval === 'bm25') break; // bm25 puro: no ejecutar ops del plan
-    if (op.tool === 'assemble-context') continue;
-    if (skippedOps.has(op.tool)) continue;
+    if (op.tool === 'assemble-context') { opIdx += 1; continue; }
+    if (skippedOps.has(op.tool)) { opIdx += 1; continue; }
     stats.tool_calls += 1;
     const t0 = Date.now();
     const effOp = INDEX_MAP && INDEX_MAP[op.tool] ? { ...op, tool: INDEX_MAP[op.tool] } : op;
@@ -439,7 +462,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     // a skip; git-log/follow/include NUNCA se saltan (git-log = única fuente de
     // queries git; follow/include = D14 semántico). Sin early_terminated: el plan
     // continúa, solo se descartan re-búsquedas redundantes del mismo término.
-    if (process.env.CF_REOPT === '1' && !stats.early_terminated) {
+    if (process.env.CF_REOPT === '1' && process.env.CF_ADAPTIVE_EXEC !== '1' && !stats.early_terminated) {
       const estC = op.est_candidates ?? 0;
       const actC = results.length;
       const dev = estC > 0 ? Math.abs(estC - actC) / Math.max(estC, 1) : 0;
@@ -464,6 +487,24 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         break;
       }
     }
+
+    // B8 adaptive-query-execution — replan mid-execution: reordenar el resto por
+    // VoI con stats ACTUALIZADAS (post-observación); pruned → skippedOps.
+    if (process.env.CF_ADAPTIVE_EXEC === '1' && !stats.early_terminated && opIdx < remainingOps.length - 1) {
+      try {
+        const rest = remainingOps.slice(opIdx + 1).filter((o) => o.tool !== 'assemble-context' && !skippedOps.has(o.tool));
+        const asm = remainingOps.slice(opIdx + 1).filter((o) => o.tool === 'assemble-context');
+        const voi = orderByVoI(rest, logicalPlan.query_type, loadStats(), voiConfig());
+        for (const p of voi.pruned) skippedOps.add(p.tool);
+        const oldOrder = rest.map((o) => o.tool).join(',');
+        const newOrder = voi.ordered.map((o) => o.tool).join(',');
+        if (oldOrder !== newOrder && voi.ordered.length) {
+          remainingOps.splice(opIdx + 1, remainingOps.length - opIdx - 1, ...voi.ordered, ...asm);
+          stats.replanned = `voi-reorder [${oldOrder}] -> [${newOrder}]`;
+        }
+      } catch { /* fallback: mantener orden */ }
+    }
+    opIdx += 1;
   }
 
   // M1 (adversarial-mitigations) — escalación concept con 0 resultados:
@@ -663,7 +704,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       // correcta es boost de prioridad de evidencia adquirida en fuse (tarea derivada).
       try {
         const sym = execOp({ tool: 'symbol-lookup', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
-        for (const r of sym) if (!seenPath(r.path)) pool.push(r);
+        upsertRows(pool, sym);
         actions.push('symbol-lookup');
       } catch { /* best-effort */ }
     }
@@ -671,14 +712,14 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       if (!pool.some((r) => r.source === 'bm25')) {
         try {
           const bm = execOp({ tool: 'bm25', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
-          for (const r of bm) if (!seenPath(r.path)) pool.push(r);
+          upsertRows(pool, bm);
           actions.push('bm25');
         } catch { /* best-effort */ }
       }
       if (logicalPlan.target?.kind === 'symbol' || logicalPlan.target?.kind === 'function') {
         try {
           const de = execOp({ tool: 'dependency-expand', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
-          for (const r of de) if (!seenPath(r.path)) pool.push(r);
+          upsertRows(pool, de);
           actions.push('dependency-expand');
         } catch { /* best-effort */ }
       }

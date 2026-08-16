@@ -1068,6 +1068,25 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-voi.js   # → evals/reports/voi-<TS>.j
 
 T1 (32): parity exacta — correctness 1.000 = 1.000, tokens 105 = 105, pruned 0 (todas las ops tienen VoI positiva; la poda se activa con successRate bajo + op cara, p.ej. search-semantic 800tok). Confirma el patrón: con señal estática por op el mecanismo no discrimina en T1; el valor real está en P_new por query (puente a adaptive-query-execution B8).
 
+## B8 adaptive-query-execution — SÍ SIRVE (mecanismo, parity)
+
+Replan mid-execution (CF_ADAPTIVE_EXEC=1): tras cada op ejecutada, reordena el resto
+por VoI con stats actualizadas (post-observación). Incluye:
+- **UPSERT por path en adquisición** (fix A3): la evidencia adquirida con mayor
+  certeza REEMPLAZA la fila flood existente (en vez de descartarse por dedupe).
+- **Loop index-based** (mutación segura) + replan por VoI (pruned → skippedOps).
+- AQP v2 (CF_REOPT) desactivado cuando CF_ADAPTIVE_EXEC=1 (evita conflicto).
+
+```bash
+CF_ADAPTIVE_EXEC=1 node engine/engine.js 'FIND ...'
+```
+
+**Resultado T1 (32):** parity 1.0/1.0, gt 4.4/4.4, tokens 105/105, replanned 0.
+**Resultado ADV (30):** parity 0.700/0.700, gt 3.2/3.2, tokens 3137/3137, replanned 0.
+No replans disparados en fixtures (P_new uniforme) — el valor real es per-query
+(cardinalidad/agreement), puente a B12/B13. Sin regresión.
+
+
 ## Glossary
 
 | Term | Meaning |
