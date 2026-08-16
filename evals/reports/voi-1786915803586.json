@@ -1,0 +1,706 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "base": {
+    "tasks": 32,
+    "correctness": 1,
+    "gt_hits": 4.4375,
+    "tokens": 104.90625,
+    "latency_ms": 198.1875,
+    "pruned_total": 0
+  },
+  "voi": {
+    "tasks": 32,
+    "correctness": 1,
+    "gt_hits": 4.4375,
+    "tokens": 104.90625,
+    "latency_ms": 197.40625,
+    "pruned_total": 0
+  },
+  "verdict": {
+    "pass": true,
+    "correctness": {
+      "base": 1,
+      "voi": 1
+    },
+    "tokens": {
+      "base": 104.90625,
+      "voi": 104.90625
+    },
+    "details": "pruned_total 0 (ops: ninguna)"
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "base": {
+        "gt_hits": 11,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 180,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 11,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 169,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "lex-02",
+      "base": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 166,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 189,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "lex-03",
+      "base": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 79,
+        "latency_ms": 180,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 79,
+        "latency_ms": 171,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "lex-04",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 11,
+        "latency_ms": 181,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 11,
+        "latency_ms": 172,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "lex-05",
+      "base": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 86,
+        "latency_ms": 177,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 86,
+        "latency_ms": 178,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "str-01",
+      "base": {
+        "gt_hits": 3,
+        "n_ground": 2,
+        "tokens": 111,
+        "latency_ms": 178,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 3,
+        "n_ground": 2,
+        "tokens": 111,
+        "latency_ms": 167,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "str-02",
+      "base": {
+        "gt_hits": 8,
+        "n_ground": 2,
+        "tokens": 247,
+        "latency_ms": 175,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 8,
+        "n_ground": 2,
+        "tokens": 247,
+        "latency_ms": 179,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "str-03",
+      "base": {
+        "gt_hits": 2,
+        "n_ground": 1,
+        "tokens": 19,
+        "latency_ms": 231,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 2,
+        "n_ground": 1,
+        "tokens": 19,
+        "latency_ms": 201,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "str-04",
+      "base": {
+        "gt_hits": 2,
+        "n_ground": 3,
+        "tokens": 67,
+        "latency_ms": 184,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 2,
+        "n_ground": 3,
+        "tokens": 67,
+        "latency_ms": 169,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "str-05",
+      "base": {
+        "gt_hits": 8,
+        "n_ground": 3,
+        "tokens": 127,
+        "latency_ms": 176,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 8,
+        "n_ground": 3,
+        "tokens": 127,
+        "latency_ms": 165,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "sem-01",
+      "base": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 165,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 158,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "sem-02",
+      "base": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 121,
+        "latency_ms": 168,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 121,
+        "latency_ms": 171,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "sem-03",
+      "base": {
+        "gt_hits": 2,
+        "n_ground": 3,
+        "tokens": 67,
+        "latency_ms": 159,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 2,
+        "n_ground": 3,
+        "tokens": 67,
+        "latency_ms": 160,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "sem-04",
+      "base": {
+        "gt_hits": 2,
+        "n_ground": 2,
+        "tokens": 120,
+        "latency_ms": 362,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 2,
+        "n_ground": 2,
+        "tokens": 120,
+        "latency_ms": 370,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "sem-05",
+      "base": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 90,
+        "latency_ms": 202,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 90,
+        "latency_ms": 189,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "dep-01",
+      "base": {
+        "gt_hits": 11,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 205,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 11,
+        "n_ground": 3,
+        "tokens": 239,
+        "latency_ms": 191,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "dep-02",
+      "base": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 111,
+        "latency_ms": 183,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 111,
+        "latency_ms": 185,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "dep-03",
+      "base": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 79,
+        "latency_ms": 240,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 7,
+        "n_ground": 3,
+        "tokens": 79,
+        "latency_ms": 184,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "dep-04",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 11,
+        "latency_ms": 164,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 11,
+        "latency_ms": 171,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "dep-05",
+      "base": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 184,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 174,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "cfg-01",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 71,
+        "latency_ms": 300,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 71,
+        "latency_ms": 308,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "cfg-02",
+      "base": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 185,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 74,
+        "latency_ms": 167,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "cfg-03",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 10,
+        "latency_ms": 165,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 10,
+        "latency_ms": 153,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "cfg-04",
+      "base": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 39,
+        "latency_ms": 203,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 4,
+        "n_ground": 2,
+        "tokens": 39,
+        "latency_ms": 287,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "cfg-05",
+      "base": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 264,
+        "latency_ms": 232,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 5,
+        "n_ground": 2,
+        "tokens": 264,
+        "latency_ms": 222,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "tst-01",
+      "base": {
+        "gt_hits": 8,
+        "n_ground": 3,
+        "tokens": 249,
+        "latency_ms": 233,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 8,
+        "n_ground": 3,
+        "tokens": 249,
+        "latency_ms": 250,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "tst-02",
+      "base": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 96,
+        "latency_ms": 224,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 96,
+        "latency_ms": 274,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "tst-03",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 3,
+        "tokens": 50,
+        "latency_ms": 210,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 3,
+        "tokens": 50,
+        "latency_ms": 203,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "tst-04",
+      "base": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 127,
+        "latency_ms": 220,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 6,
+        "n_ground": 3,
+        "tokens": 127,
+        "latency_ms": 207,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "tst-05",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 10,
+        "latency_ms": 154,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 2,
+        "tokens": 10,
+        "latency_ms": 162,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "adv-01",
+      "base": {
+        "gt_hits": 3,
+        "n_ground": 2,
+        "tokens": 111,
+        "latency_ms": 178,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 3,
+        "n_ground": 2,
+        "tokens": 111,
+        "latency_ms": 183,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    },
+    {
+      "id": "git-01",
+      "base": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 45,
+        "latency_ms": 178,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      },
+      "voi": {
+        "gt_hits": 1,
+        "n_ground": 1,
+        "tokens": 45,
+        "latency_ms": 188,
+        "correct": true,
+        "pruned": 0,
+        "voi_by_op": null
+      }
+    }
+  ]
+}

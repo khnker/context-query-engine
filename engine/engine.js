@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { orderByVoI, voiConfig } from './voi.js';
 import { compile as irCompile, irStats } from './ir.js';
 import * as claimMod from './claim.js';
 import * as receiptMod from './receipt.js';
@@ -379,6 +380,15 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     }
   }
   const selected = phys.plans.find((p) => p.id === phys.selected) ?? phys.plans[0];
+  // information-acquisition-voi — CF_VOI=1: ordenar por VoI y podar ops sin valor esperado
+  let opsToRun = selected.ops;
+  if (process.env.CF_VOI === '1') {
+    try {
+      const voi = orderByVoI(selected.ops, logicalPlan.query_type, loadStats(), voiConfig());
+      opsToRun = voi.ordered;
+      stats.voi = { pruned: voi.pruned, voi_by_op: voi.voi_by_op };
+    } catch { /* fallback: orden del plan */ }
+  }
   const pool = [];
   // hybrid-retrieval-comparison — CF_RETRIEVAL=bm25 → solo BM25; hybrid → plan + BM25 fusionado
   const retrieval = process.env.CF_RETRIEVAL ?? '';
@@ -393,7 +403,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   const skippedOps = new Set();
 
   // 13.1 — ejecución ordenada con early termination
-  for (const op of selected.ops) {
+  for (const op of opsToRun) {
     if (retrieval === 'bm25') break; // bm25 puro: no ejecutar ops del plan
     if (op.tool === 'assemble-context') continue;
     if (skippedOps.has(op.tool)) continue;
