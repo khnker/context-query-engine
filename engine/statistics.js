@@ -30,9 +30,12 @@ export const DEFAULTS = {
 };
 
 // obs = { operator, queryClass, scope, estimated:{candidates,tokens,latencyMs}, actual:{candidates,tokens,latencyMs} }
+let _fp = null;
+export function setFingerprint(fp) { _fp = fp; }
+
 export function record(obs) {
   fs.mkdirSync(path.dirname(STATS_FILE), { recursive: true });
-  const line = { ts: new Date().toISOString(), ...obs };
+  const line = { ts: new Date().toISOString(), ...(_fp ? { repo_fp: _fp } : {}), ...obs };
   fs.appendFileSync(STATS_FILE, JSON.stringify(line) + '\n');
   return line;
 }

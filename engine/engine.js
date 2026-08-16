@@ -20,9 +20,10 @@ import { parseCQP } from './cqp.js';
 import { decompose } from './decompose.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
-import { record } from './statistics.js';
+import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { repoFingerprint } from './index-layer/manifest.js';
 import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
 import { select as selectorSelect } from './selector.js';
 
@@ -57,8 +58,9 @@ export function clearCache() {
 function loadCache() {
   try {
     const raw = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
+    const fp = useFp() ? repoFp(process.cwd()) : null;
     for (const [k, v] of Object.entries(raw)) {
-      if (Date.now() - v.ts < CACHE_TTL) cache.set(k, v);
+      if (Date.now() - v.ts < CACHE_TTL && (!v.fp || v.fp === fp)) cache.set(k, v);
     }
   } catch { /* sin cache previa */ }
 }
@@ -70,7 +72,17 @@ function persistCache() {
   } catch { /* best-effort */ }
 }
 
-loadCache();
+// repo-fingerprint-consistency — fingerprint del repo (provenance de cache/stats).
+// Barato: walk+stat sin contenido. Activo si CF_FINGERPRINT=1 o existe catálogo.
+const fpMemo = new Map();
+const useFp = () => process.env.CF_FINGERPRINT === '1' || fs.existsSync(path.join(process.cwd(), '.cqe', 'catalog.db'));
+const repoFp = (dir) => {
+  const key = path.resolve(dir);
+  if (!fpMemo.has(key)) fpMemo.set(key, repoFingerprint(key));
+  return fpMemo.get(key);
+};
+
+loadCache(); // tras definir helpers (TDZ: useFp/repoFp son const)
 
 // --- helpers de ejecución de scripts (stdlib, execFileSync) ---
 function runScript(script, args, input) {
@@ -311,6 +323,8 @@ function beliefFromPool(pool) {
 // --- pipeline principal ---
 function runPlan(logicalPlan, rawText, opts = {}) {
   const planT0 = Date.now();
+  const fp = useFp() ? repoFp(process.cwd()) : null;
+  setFingerprint(fp);
   const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0 };
   const key = `${rawText}|${effectiveBudget(logicalPlan)}`;
   const phys = optimize(logicalPlan);
@@ -663,7 +677,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     }
   }
 
-  cache.set(key, { results, ts: Date.now() });
+  cache.set(key, { results, ts: Date.now(), fp });
   persistCache();
   return { plan: phys, results, stats, cached: false };
 }

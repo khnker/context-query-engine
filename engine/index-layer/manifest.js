@@ -42,6 +42,23 @@ export function sha256Of(p) {
   return crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 }
 
+/**
+ * repoFingerprint(repoDir) — máxima transversal: fingerprint barato del repo
+ * (sha256 de "path|size|mtimeMs" ordenado; walk+stat, sin leer contenido).
+ * Cualquier artefacto derivado de archivos (cache engine, BM25 persistido,
+ * statistics, modelos) declara este fingerprint como provenance.
+ */
+export function repoFingerprint(repoDir) {
+  const lines = [];
+  for (const p of walkFiles(repoDir)) {
+    const rec = statFile(p, repoDir);
+    if (!rec) continue;
+    lines.push(`${rec.path}|${rec.size}|${rec.mtimeMs}`);
+  }
+  lines.sort();
+  return crypto.createHash('sha256').update(lines.join('\n')).digest('hex');
+}
+
 export function scanManifest(repoDir, storeFiles) {
   const before = new Map(storeFiles.map((f) => [f.path, f]));
   const now = new Map();

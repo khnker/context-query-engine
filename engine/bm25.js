@@ -11,6 +11,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const K1 = 1.5;
@@ -86,6 +87,7 @@ function persistIndex(key, index) {
       return { p, m: st.mtimeMs, s: st.size };
     });
     prev[key] = {
+      fp: localFp(key),
       files, n: index.n, avgdl: index.avgdl,
       df: Object.fromEntries(index.df),
       docLen: Object.fromEntries(index.docLen),
@@ -95,13 +97,28 @@ function persistIndex(key, index) {
   } catch { /* best-effort */ }
 }
 
-// Reusa el índice persistido si el set de archivos y sus mtime+size coinciden.
+// Fingerprint local (walk acotado del índice): provenance del estado del repo.
+function localFp(key) {
+  const lines = [];
+  for (const p of walkFiles(key)) {
+    try {
+      const st = fs.statSync(p);
+      lines.push(`${p}|${st.size}|${st.mtimeMs}`);
+    } catch { /* skip */ }
+  }
+  lines.sort();
+  return crypto.createHash('sha256').update(lines.join('\n')).digest('hex');
+}
+
+// Reusa el índice persistido si el set de archivos y sus mtime+size coinciden
+// Y el fingerprint del repo no cambió (invalida aunque mtime se mantenga).
 function loadPersisted(key) {
   if (NO_PERSIST) return null;
   try {
     const raw = JSON.parse(fs.readFileSync(INDEX_FILE(), 'utf8'));
     const ent = raw[key];
     if (!ent || !Array.isArray(ent.files)) return null;
+    if (ent.fp && ent.fp !== localFp(key)) return null; // repo cambió → rebuild
     const files = walkFiles(key);
     const set = new Set(files);
     if (ent.files.length !== set.size) return null;
