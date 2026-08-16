@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { compile as irCompile, irStats } from './ir.js';
 import * as claimMod from './claim.js';
 import * as receiptMod from './receipt.js';
 import { rrfFuse } from './rrf.js';
@@ -847,7 +848,25 @@ export function runCQP(cqpText, opts = {}) {
   }
   const logicalPlan = parseCQP(cqpText); // lanza Error si input inválido
   if (trivialGate(logicalPlan)) return runBypass(logicalPlan, cqpText);
-  return runPlan(logicalPlan, cqpText, opts);
+  const res = runPlan(logicalPlan, cqpText, opts);
+  attachIr(res, logicalPlan);
+  return res;
+}
+
+// context-compilation-ir (B6) — CF_IR=1: adjunta el plan físico IR compilado
+// (lowering lógico→físico con access paths y costos) al resultado, sin cambiar
+// la ejecución (parity; la selección de implementación por costo es el puente).
+function attachIr(res, logicalPlan) {
+  if (process.env.CF_IR !== '1' || !res || !res.plan) return;
+  try {
+    const irPlan = irCompile(logicalPlan, {
+      hasCatalog: useFp(),
+      relations: logicalPlan.relations ?? [],
+      inclusions: logicalPlan.inclusions ?? [],
+    });
+    res.plan.ir = irPlan;
+    res.plan.ir_stats = irStats(irPlan);
+  } catch { /* best-effort */ }
 }
 
 export function runIntent(intentText, opts = {}) {
@@ -878,7 +897,9 @@ export function runIntent(intentText, opts = {}) {
     }
   }
   if (trivialGate(logicalPlan)) return runBypass(logicalPlan, src);
-  return runPlan(logicalPlan, src, opts);
+  const res = runPlan(logicalPlan, src, opts);
+  attachIr(res, logicalPlan);
+  return res;
 }
 
 // --- CLI ---
