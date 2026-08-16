@@ -316,7 +316,8 @@ function execOp(op, plan, pool = []) {
 function fuse(pool, budget) {
   if (pool.length === 0) return [];
   const input = pool.map((r) => JSON.stringify(r)).join('\n') + '\n';
-  const r = runScript(path.join(SCRIPTS, 'assemble-context'), [String(budget)], input);
+  const fb = process.env.CF_FLOOD_BOOST ?? '0';
+  const r = runScript(path.join(SCRIPTS, 'assemble-context'), [String(budget), fb], input);
   if (r.out) return parseNdjson(r.out);
   return pool; // fallback: pool crudo sin tiers
 }

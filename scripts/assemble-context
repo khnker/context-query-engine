@@ -18,6 +18,10 @@ BUDGET="${1:-8000}"
 case "$BUDGET" in
   ''|*[!0-9]*) BUDGET=8000 ;;
 esac
+FB="${2:-0}"   # fuse-flood-boost (A3): bonus score_final para evidencia adquirida
+case "$FB" in
+  ''|*[!0-9.]*) FB=0 ;;
+esac
 
 # stdin vacio -> exit 1
 if ! IFS= read -r first_line; then

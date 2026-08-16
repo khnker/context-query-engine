@@ -1,0 +1,1172 @@
+{
+  "date": "2026-08-16",
+  "tasks": 62,
+  "report": {
+    "baseline": {
+      "correctness": 0.855,
+      "avg_gt": 3.823,
+      "avg_tokens": 1572
+    },
+    "boost": {
+      "correctness": 0.855,
+      "avg_gt": 3.839,
+      "avg_tokens": 1572
+    },
+    "adaptive": {
+      "correctness": 0.855,
+      "avg_gt": 3.823,
+      "avg_tokens": 1591
+    },
+    "adaptive_boost": {
+      "correctness": 0.855,
+      "avg_gt": 3.839,
+      "avg_tokens": 1591
+    }
+  },
+  "verdict": {
+    "pass": false,
+    "po30": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 8000
+      }
+    },
+    "t1_correctness": {
+      "baseline": 1,
+      "boost": 1,
+      "adaptive": 1,
+      "adaptive_boost": 1
+    },
+    "note": "objetivo: adaptive+boost rescata adv-po-30 (flood rg sobre main) sin regresion T1"
+  },
+  "per_task": {
+    "adv-hf-01": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 5616
+      },
+      "boost": {
+        "gt": 7,
+        "tokens": 5616
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 5620
+      },
+      "adaptive_boost": {
+        "gt": 7,
+        "tokens": 5620
+      }
+    },
+    "adv-hf-02": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 6738
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 6738
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 6888
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 6888
+      }
+    },
+    "adv-hf-03": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 239
+      }
+    },
+    "adv-am-04": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 7999
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 7999
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 7999
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 7999
+      }
+    },
+    "adv-am-05": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 7992
+      },
+      "boost": {
+        "gt": 7,
+        "tokens": 7992
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 7992
+      },
+      "adaptive_boost": {
+        "gt": 7,
+        "tokens": 7992
+      }
+    },
+    "adv-am-06": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 79
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 79
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 79
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 79
+      }
+    },
+    "adv-fo-07": {
+      "baseline": {
+        "gt": 3,
+        "tokens": 7989
+      },
+      "boost": {
+        "gt": 3,
+        "tokens": 7989
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 7992
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 7992
+      }
+    },
+    "adv-fo-08": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 4297
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 4297
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 4397
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 4397
+      }
+    },
+    "adv-fo-09": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 74
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 74
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 74
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 74
+      }
+    },
+    "adv-zr-10": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-zr-11": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-zr-12": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-dc-13": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 2774
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 2774
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 3224
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 3224
+      }
+    },
+    "adv-dc-14": {
+      "baseline": {
+        "gt": 8,
+        "tokens": 7980
+      },
+      "boost": {
+        "gt": 8,
+        "tokens": 7980
+      },
+      "adaptive": {
+        "gt": 8,
+        "tokens": 7980
+      },
+      "adaptive_boost": {
+        "gt": 8,
+        "tokens": 7980
+      }
+    },
+    "adv-dc-15": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 19
+      }
+    },
+    "adv-du-16": {
+      "baseline": {
+        "gt": 8,
+        "tokens": 5684
+      },
+      "boost": {
+        "gt": 8,
+        "tokens": 5684
+      },
+      "adaptive": {
+        "gt": 8,
+        "tokens": 5966
+      },
+      "adaptive_boost": {
+        "gt": 8,
+        "tokens": 5966
+      }
+    },
+    "adv-du-17": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 20
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 20
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 20
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 20
+      }
+    },
+    "adv-du-18": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 239
+      }
+    },
+    "adv-gc-19": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 40
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 40
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 40
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 40
+      }
+    },
+    "adv-gc-20": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-gc-21": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 10
+      }
+    },
+    "adv-vd-22": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 4297
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 4297
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 4397
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 4397
+      }
+    },
+    "adv-vd-23": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-vd-24": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 0
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 0
+      }
+    },
+    "adv-mo-25": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 10
+      }
+    },
+    "adv-mo-26": {
+      "baseline": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "boost": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "adaptive": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "adaptive_boost": {
+        "gt": 21,
+        "tokens": 7992
+      }
+    },
+    "adv-mo-27": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 40
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 40
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 40
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 40
+      }
+    },
+    "adv-po-28": {
+      "baseline": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "boost": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "adaptive": {
+        "gt": 21,
+        "tokens": 7992
+      },
+      "adaptive_boost": {
+        "gt": 21,
+        "tokens": 7992
+      }
+    },
+    "adv-po-29": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 7987
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 7987
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 7991
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 7991
+      }
+    },
+    "adv-po-30": {
+      "baseline": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "boost": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "adaptive": {
+        "gt": 0,
+        "tokens": 8000
+      },
+      "adaptive_boost": {
+        "gt": 0,
+        "tokens": 8000
+      }
+    },
+    "lex-01": {
+      "baseline": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "adaptive": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 11,
+        "tokens": 239
+      }
+    },
+    "lex-02": {
+      "baseline": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "boost": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive_boost": {
+        "gt": 4,
+        "tokens": 74
+      }
+    },
+    "lex-03": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "boost": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "adaptive_boost": {
+        "gt": 7,
+        "tokens": 79
+      }
+    },
+    "lex-04": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 11
+      }
+    },
+    "lex-05": {
+      "baseline": {
+        "gt": 5,
+        "tokens": 86
+      },
+      "boost": {
+        "gt": 5,
+        "tokens": 86
+      },
+      "adaptive": {
+        "gt": 5,
+        "tokens": 86
+      },
+      "adaptive_boost": {
+        "gt": 5,
+        "tokens": 86
+      }
+    },
+    "str-01": {
+      "baseline": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "boost": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "adaptive": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "adaptive_boost": {
+        "gt": 3,
+        "tokens": 111
+      }
+    },
+    "str-02": {
+      "baseline": {
+        "gt": 8,
+        "tokens": 247
+      },
+      "boost": {
+        "gt": 8,
+        "tokens": 247
+      },
+      "adaptive": {
+        "gt": 8,
+        "tokens": 247
+      },
+      "adaptive_boost": {
+        "gt": 8,
+        "tokens": 247
+      }
+    },
+    "str-03": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 19
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 19
+      }
+    },
+    "str-04": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 67
+      }
+    },
+    "str-05": {
+      "baseline": {
+        "gt": 8,
+        "tokens": 127
+      },
+      "boost": {
+        "gt": 8,
+        "tokens": 127
+      },
+      "adaptive": {
+        "gt": 8,
+        "tokens": 127
+      },
+      "adaptive_boost": {
+        "gt": 8,
+        "tokens": 127
+      }
+    },
+    "sem-01": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 7,
+        "tokens": 239
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 7,
+        "tokens": 239
+      }
+    },
+    "sem-02": {
+      "baseline": {
+        "gt": 5,
+        "tokens": 121
+      },
+      "boost": {
+        "gt": 5,
+        "tokens": 121
+      },
+      "adaptive": {
+        "gt": 5,
+        "tokens": 121
+      },
+      "adaptive_boost": {
+        "gt": 5,
+        "tokens": 121
+      }
+    },
+    "sem-03": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 67
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 67
+      }
+    },
+    "sem-04": {
+      "baseline": {
+        "gt": 2,
+        "tokens": 120
+      },
+      "boost": {
+        "gt": 2,
+        "tokens": 120
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 120
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 120
+      }
+    },
+    "sem-05": {
+      "baseline": {
+        "gt": 5,
+        "tokens": 90
+      },
+      "boost": {
+        "gt": 5,
+        "tokens": 90
+      },
+      "adaptive": {
+        "gt": 5,
+        "tokens": 90
+      },
+      "adaptive_boost": {
+        "gt": 5,
+        "tokens": 90
+      }
+    },
+    "dep-01": {
+      "baseline": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "adaptive": {
+        "gt": 11,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 11,
+        "tokens": 239
+      }
+    },
+    "dep-02": {
+      "baseline": {
+        "gt": 6,
+        "tokens": 111
+      },
+      "boost": {
+        "gt": 6,
+        "tokens": 111
+      },
+      "adaptive": {
+        "gt": 6,
+        "tokens": 111
+      },
+      "adaptive_boost": {
+        "gt": 6,
+        "tokens": 111
+      }
+    },
+    "dep-03": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "boost": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 79
+      },
+      "adaptive_boost": {
+        "gt": 7,
+        "tokens": 79
+      }
+    },
+    "dep-04": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 11
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 11
+      }
+    },
+    "dep-05": {
+      "baseline": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "boost": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive_boost": {
+        "gt": 4,
+        "tokens": 74
+      }
+    },
+    "cfg-01": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 71
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 71
+      },
+      "adaptive": {
+        "gt": 2,
+        "tokens": 161
+      },
+      "adaptive_boost": {
+        "gt": 2,
+        "tokens": 161
+      }
+    },
+    "cfg-02": {
+      "baseline": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "boost": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive": {
+        "gt": 4,
+        "tokens": 74
+      },
+      "adaptive_boost": {
+        "gt": 4,
+        "tokens": 74
+      }
+    },
+    "cfg-03": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 10
+      }
+    },
+    "cfg-04": {
+      "baseline": {
+        "gt": 4,
+        "tokens": 39
+      },
+      "boost": {
+        "gt": 4,
+        "tokens": 39
+      },
+      "adaptive": {
+        "gt": 4,
+        "tokens": 39
+      },
+      "adaptive_boost": {
+        "gt": 4,
+        "tokens": 39
+      }
+    },
+    "cfg-05": {
+      "baseline": {
+        "gt": 5,
+        "tokens": 264
+      },
+      "boost": {
+        "gt": 5,
+        "tokens": 264
+      },
+      "adaptive": {
+        "gt": 5,
+        "tokens": 264
+      },
+      "adaptive_boost": {
+        "gt": 5,
+        "tokens": 264
+      }
+    },
+    "tst-01": {
+      "baseline": {
+        "gt": 7,
+        "tokens": 239
+      },
+      "boost": {
+        "gt": 8,
+        "tokens": 249
+      },
+      "adaptive": {
+        "gt": 7,
+        "tokens": 239
+      },
+      "adaptive_boost": {
+        "gt": 8,
+        "tokens": 249
+      }
+    },
+    "tst-02": {
+      "baseline": {
+        "gt": 6,
+        "tokens": 96
+      },
+      "boost": {
+        "gt": 6,
+        "tokens": 96
+      },
+      "adaptive": {
+        "gt": 6,
+        "tokens": 96
+      },
+      "adaptive_boost": {
+        "gt": 6,
+        "tokens": 96
+      }
+    },
+    "tst-03": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 50
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 50
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 50
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 50
+      }
+    },
+    "tst-04": {
+      "baseline": {
+        "gt": 6,
+        "tokens": 127
+      },
+      "boost": {
+        "gt": 6,
+        "tokens": 127
+      },
+      "adaptive": {
+        "gt": 6,
+        "tokens": 127
+      },
+      "adaptive_boost": {
+        "gt": 6,
+        "tokens": 127
+      }
+    },
+    "tst-05": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 10
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 10
+      }
+    },
+    "adv-01": {
+      "baseline": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "boost": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "adaptive": {
+        "gt": 3,
+        "tokens": 111
+      },
+      "adaptive_boost": {
+        "gt": 3,
+        "tokens": 111
+      }
+    },
+    "git-01": {
+      "baseline": {
+        "gt": 1,
+        "tokens": 45
+      },
+      "boost": {
+        "gt": 1,
+        "tokens": 45
+      },
+      "adaptive": {
+        "gt": 1,
+        "tokens": 45
+      },
+      "adaptive_boost": {
+        "gt": 1,
+        "tokens": 45
+      }
+    }
+  }
+}
