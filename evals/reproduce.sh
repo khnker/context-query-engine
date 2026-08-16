@@ -53,7 +53,7 @@ MODEL_CMD=""
 evalrecall() {
   local extra=() lflag=()
   [[ -n "$MODEL_CMD" ]] && extra=(CF_MODEL_CMD="$MODEL_CMD")
-  [[ -n "$CF_REOPT" ]] && extra+=(CF_REOPT="$CF_REOPT")
+  [[ -n "${CF_REOPT:-}" ]] && extra+=(CF_REOPT="$CF_REOPT")
   [[ -n "$LIMIT" ]] && lflag=(--limit "$LIMIT")
   env CF_RUNS="$RUNS" CF_WARMUP="$WARMUP" CF_SEED=42 CF_RAW_OUT="$OUT/raw-runs.ndjson" \
     CF_TASKS="$CF_TASKS" "${extra[@]}" \

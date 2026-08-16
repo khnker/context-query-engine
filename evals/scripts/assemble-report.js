@@ -162,6 +162,16 @@ report += '--- Statistical tests (paired bootstrap, 95% CI) ---\n';
 report += `token delta (heur - rerank): ${f1(statTests.token_delta.mean)} CI [${statTests.token_delta.ci95 ? statTests.token_delta.ci95.map(f1).join(', ') : 'n/a'}]\n`;
 report += `latency delta (heur - rerank): ${f1(statTests.latency_delta.mean)} ms CI [${statTests.latency_delta.ci95 ? statTests.latency_delta.ci95.map(f1).join(', ') : 'n/a'}]\n\n`;
 
+// B5 — task-information density: utilidad por token, no solo budget
+const ib = {};
+for (const m of Object.keys(metrics)) {
+  const mm = metrics[m];
+  const d = mm.correctness / Math.max(1, mm.tokens.mean);
+  ib[m] = +d.toFixed(6);
+  report += `--- Task-information density (${m}) ---\n`;
+  report += `${ib[m]} correct/token (${pct(mm.correctness)} / ${f1(mm.tokens.mean)} tok)\n\n`;
+}
+
 const th = MANIFEST.thresholds ?? {};
 const failures = [];
 const cmp = (name, ok, msg) => {
@@ -193,7 +203,7 @@ if (th.token_reduction_min != null && metrics.heuristic && metrics.rerank) {
 report += `\n${hr}\n${failures.length ? 'FAIL' : 'PASS'}\n${hr}\n`;
 
 fs.writeFileSync(path.join(OUT, 'raw-results.jsonl'), rawResults.map((r) => JSON.stringify(r)).join('\n') + '\n');
-fs.writeFileSync(path.join(OUT, 'metrics.json'), JSON.stringify({ manifest: MANIFEST.id, metrics, optimizer: opt?.report ?? null, statistical: statTests }, null, 2) + '\n');
+fs.writeFileSync(path.join(OUT, 'metrics.json'), JSON.stringify({ manifest: MANIFEST.id, metrics, optimizer: opt?.report ?? null, statistical: statTests, task_info_density: ib }, null, 2) + '\n');
 fs.writeFileSync(path.join(OUT, 'statistical-tests.json'), JSON.stringify(statTests, null, 2) + '\n');
 fs.writeFileSync(path.join(OUT, 'report.md'), report);
 process.stdout.write(report);

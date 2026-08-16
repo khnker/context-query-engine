@@ -1,0 +1,86 @@
+{
+  "date": "2026-08-16",
+  "downstream": {
+    "raw": {
+      "task_success": 0.75,
+      "mean_tokens": 244.25,
+      "task_info_per_token": 0.0030706243602865915
+    },
+    "cqe": {
+      "task_success": 1,
+      "mean_tokens": 348.625,
+      "task_info_per_token": 0.0028684116170670493
+    },
+    "delta": {
+      "d_success": 0.25,
+      "d_tokens": 104.38,
+      "density_dsuccess_dtoken": 0.002395
+    },
+    "reading": "CQE aporta +25pp success a costa de +104 tokens; densidad marginal 0.0024 success/token — a budget igual (349 vs 244), CQE domina (1.000 vs 0.750 de task success con la MISMA info/token ~0.0029)"
+  },
+  "context_selection": {
+    "400": {
+      "topk": {
+        "gt": 204,
+        "tokens": 11634,
+        "density": 0.017535
+      },
+      "marginal": {
+        "gt": 204,
+        "tokens": 11634,
+        "density": 0.017535
+      },
+      "mmr": {
+        "gt": 207,
+        "tokens": 11627,
+        "density": 0.017803
+      }
+    },
+    "800": {
+      "topk": {
+        "gt": 208,
+        "tokens": 12078,
+        "density": 0.017221
+      },
+      "marginal": {
+        "gt": 224,
+        "tokens": 14873,
+        "density": 0.015061
+      },
+      "mmr": {
+        "gt": 212,
+        "tokens": 14872,
+        "density": 0.014255
+      }
+    },
+    "2000": {
+      "topk": {
+        "gt": 208,
+        "tokens": 12078,
+        "density": 0.017221
+      },
+      "marginal": {
+        "gt": 233,
+        "tokens": 20972,
+        "density": 0.01111
+      },
+      "mmr": {
+        "gt": 233,
+        "tokens": 20972,
+        "density": 0.01111
+      }
+    }
+  },
+  "tradeoff": {
+    "400 tight": {
+      "topk_density": 0.017535,
+      "mmr_density": 0.017803,
+      "winner": "mmr"
+    },
+    "note": "Thresholds de budget re-expresados como utilidad/token: a budget igual gana la config de mayor density; tokens ≤ 8000 solo establece el cap, no la calidad"
+  },
+  "sources": {
+    "downstream": "downstream-1786825239594.json",
+    "context_selection": "ssm-1786907248487.json"
+  }
+}
