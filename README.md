@@ -923,6 +923,21 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-explorer.js   # → evals/reports/explo
 
 next_actions se derivan del belief state: agreement<0.5 → symbol-lookup (eig 0.7); relations sin reference → follow (0.5); inclusions sin test/config → read_span (0.4). El ahorro es el costo que el solver no paga en lectura temprana; los spans (`line_start/line_end` de la evidencia) habilitan el operador físico READ_SPAN del roadmap.
 
+
+## Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte
+
+CF_PAIRWISE=1 integra el modelo pairwise (Lero) en optimizer.js: score por plan = Σ P(plan ≻ otro) con features de las ops (est_tokens/latencia) y features post-hoc (gt_hits/exactness/n_results/recall5/mrr) = 0 pre-ejecución.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-pairwise-runtime.js   # → evals/reports/pairwise-runtime-<TS>.json
+```
+
+| selector | plan_acc | gt_hits | tokens | correctness |
+|----------|----------|---------|--------|-------------|
+| default | 0.906 | 4.406 | 105 | 1.000 |
+| pairwise runtime | 0.906 | 4.406 | 105 | 1.000 |
+
+Paridad exacta — sin regresión, pero el +19.5% gt del paso 08 (offline) NO se reproduce pre-ejecución: la señal vive en los features post-ejecución (gt_hits/exactness/n_results), que son 0 antes de correr. Conclusión: Lero no reemplaza la selección inicial; su valor es ADAPTAR tras observar la primera op → motor de re-selección en adaptive-query-execution (B8). CF_PAIRWISE queda disponible, default intacto.
 ## Glossary
 
 | Term | Meaning |

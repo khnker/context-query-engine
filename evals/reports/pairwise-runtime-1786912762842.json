@@ -1,0 +1,348 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "plan_accuracy": {
+    "default": 0.90625,
+    "pairwise": 0.90625
+  },
+  "avg_gt_hits": {
+    "default": 4.40625,
+    "pairwise": 4.40625
+  },
+  "avg_tokens": {
+    "default": 104.59375,
+    "pairwise": 104.59375,
+    "oracle": 98.375
+  },
+  "correctness": {
+    "default": 1,
+    "pairwise": 1
+  },
+  "verdict": {
+    "pass": true,
+    "delta_gt": 0,
+    "note": "runtime features pre-ejecucion; post-hoc (gt_hits/exactness/n_results/recall5/mrr) = 0"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 11,
+        "pw": 11
+      }
+    },
+    {
+      "id": "lex-02",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 4,
+        "pw": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 7,
+        "pw": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 5,
+        "pw": 5
+      }
+    },
+    {
+      "id": "str-01",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 3,
+        "pw": 3
+      }
+    },
+    {
+      "id": "str-02",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 8,
+        "pw": 8
+      }
+    },
+    {
+      "id": "str-03",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 2,
+        "pw": 2
+      }
+    },
+    {
+      "id": "str-04",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 2,
+        "pw": 2
+      }
+    },
+    {
+      "id": "str-05",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 8,
+        "pw": 8
+      }
+    },
+    {
+      "id": "sem-01",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 7,
+        "pw": 7
+      }
+    },
+    {
+      "id": "sem-02",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 5,
+        "pw": 5
+      }
+    },
+    {
+      "id": "sem-03",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 2,
+        "pw": 2
+      }
+    },
+    {
+      "id": "sem-04",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "A",
+      "gt": {
+        "def": 2,
+        "pw": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 5,
+        "pw": 5
+      }
+    },
+    {
+      "id": "dep-01",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 11,
+        "pw": 11
+      }
+    },
+    {
+      "id": "dep-02",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 6,
+        "pw": 6
+      }
+    },
+    {
+      "id": "dep-03",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 7,
+        "pw": 7
+      }
+    },
+    {
+      "id": "dep-04",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 4,
+        "pw": 4
+      }
+    },
+    {
+      "id": "cfg-01",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "cfg-02",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 4,
+        "pw": 4
+      }
+    },
+    {
+      "id": "cfg-03",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 4,
+        "pw": 4
+      }
+    },
+    {
+      "id": "cfg-05",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 5,
+        "pw": 5
+      }
+    },
+    {
+      "id": "tst-01",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "A",
+      "gt": {
+        "def": 7,
+        "pw": 7
+      }
+    },
+    {
+      "id": "tst-02",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 6,
+        "pw": 6
+      }
+    },
+    {
+      "id": "tst-03",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "tst-04",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "B",
+      "gt": {
+        "def": 6,
+        "pw": 6
+      }
+    },
+    {
+      "id": "tst-05",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "selected_def": "A",
+      "selected_pw": "A",
+      "oracle": "A",
+      "gt": {
+        "def": 3,
+        "pw": 3
+      }
+    },
+    {
+      "id": "git-01",
+      "selected_def": "B",
+      "selected_pw": "B",
+      "oracle": "A",
+      "gt": {
+        "def": 1,
+        "pw": 1
+      }
+    }
+  ]
+}

@@ -303,6 +303,29 @@ function planEU(ops, p, cfg) {
   return p * cfg.value - tokens * cfg.wt - latency * cfg.wl - (1 - p) * cfg.penalty * cfg.wf;
 }
 
+// pairwise-runtime (Lero) — helpers del modelo pairwise
+const QTYPE_ORDER = ['definitions', 'references', 'filename', 'implementation', 'pattern', 'concept'];
+const FEATS = ['tokens', 'est_tokens', 'latency_ms', 'gt_hits', 'exactness', 'n_results', 'recall5', 'mrr'];
+const sig = (z) => 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, z))));
+let PAIR_MODEL = null;
+function loadPairModel() {
+  if (PAIR_MODEL !== null) return PAIR_MODEL;
+  try {
+    const p = path.join(ENGINE_DIR, '..', 'evals', 'ml', 'model', 'pairwise-model.json');
+    PAIR_MODEL = fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null;
+  } catch { PAIR_MODEL = null; }
+  return PAIR_MODEL;
+}
+function pairFeatures(plan, queryType) {
+  const estTokens = plan.ops.reduce((a, o) => a + (o.tokens ?? 0), 0);
+  const estLat = plan.ops.reduce((a, o) => a + (o.latency_ms ?? 0), 0);
+  return {
+    tokens: estTokens, est_tokens: estTokens, latency_ms: estLat,
+    gt_hits: 0, exactness: 0, n_results: 0, recall5: 0, mrr: 0,
+    qtype: queryType,
+  };
+}
+
 export function optimize(logicalPlan = {}) {
   const queryType = logicalPlan.query_type ?? 'implementation';
   const target = logicalPlan.target ?? {};
@@ -315,6 +338,7 @@ export function optimize(logicalPlan = {}) {
   const confidence = logicalPlan.confidence ?? 0.5;
   const euMode = process.env.CF_UTILITY === '1';
   const euCfg = euConfig();
+  const pairModel = process.env.CF_PAIRWISE === '1' ? loadPairModel() : null;
 
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
@@ -355,11 +379,30 @@ export function optimize(logicalPlan = {}) {
       });
     });
 
-  // expected-utility-cost — selección por EU (CF_UTILITY=1) vs cost/quality (default)
-  const selected = euMode
+// expected-utility-cost — selección por EU (CF_UTILITY=1) vs cost/quality (default)
+// pairwise-runtime — CF_PAIRWISE=1: score por plan = Σ P(plan ≻ otro) con el
+// modelo pairwise (Lero). Features post-hoc (gt_hits/exactness/n_results/recall5/mrr)
+// = 0 pre-ejecución (sin señal); est_tokens/latencia desde las ops del plan.
+const selected = pairModel
+  ? (() => {
+      const ids = plans.map((p) => p.id);
+      const score = {};
+      for (const X of plans) {
+        const fx = pairFeatures(X, queryType);
+        score[X.id] = ids.filter((Y) => Y !== X.id).reduce((s, Y) => {
+          const fy = pairFeatures(plans.find((p) => p.id === Y), queryType);
+          const diff = [...QTYPE_ORDER.map((q) => (queryType === q ? 1 : 0)), ...FEATS.map((f) => (fx[f] ?? 0) - (fy[f] ?? 0))];
+          return s + sig(diff.reduce((a, x, i) => a + x * pairModel.W[i], 0));
+        }, 0);
+      }
+      return plans.slice().sort((a, b) => score[b.id] - score[a.id])[0];
+    })()
+  : euMode
     ? plans.reduce((a, b) => (b.eu > a.eu ? b : a))
     : plans.reduce((a, b) => (b.utility > a.utility ? b : a));
-  const reason = euMode
+const reason = pairModel
+  ? `plan ${selected.id}: pairwise (CF_PAIRWISE) para query_type "${queryType}" pred_class "${predClass}"`
+  : euMode
     ? `plan ${selected.id}: EU ${selected.eu.toFixed(1)} (P ${selected.p_correct.toFixed(2)}·${euCfg.value} − ${selected.cost.toFixed(2)}) para query_type "${queryType}" pred_class "${predClass}"`
     : `plan ${selected.id}: utility ${selected.utility.toFixed(3)} ` +
       `(quality ${selected.quality.toFixed(2)} / cost ${selected.cost.toFixed(3)}) ` +
