@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { structuralRefine } from './structural-refine.js';
 import { repoFingerprint, walkFiles } from './index-layer/manifest.js';
 import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
 import { select as selectorSelect } from './selector.js';
@@ -466,6 +467,25 @@ function runPlan(logicalPlan, rawText, opts = {}) {
           }, phys.pred_class);
         } catch { /* probe ausente o roto — sin crash */ }
       }
+    }
+  }
+
+  // semantic-structural-operator (CeQe/dc-13) — post-loop: si el pool de un concept
+  // NO tiene filas estructurales y es MAYORÍA docs (.md/skills/docs), la implementación
+  // estructural no se encontró léxicamente → anclas de framework (@Module, providers:,
+  // app.use...) como evidencia estructural (solo implementación, no docs).
+  if (logicalPlan.target?.kind === 'concept' && pool.length >= 3) {
+    const structuralRows = pool.some((r) => r.match_type === 'structural');
+    const docLike = (r) => /\.(md|markdown|rst|txt)$/i.test(r.path) || /(^|\/)(docs?|skills?|rules?|guides?)(\/|$)/i.test(r.path);
+    const docs = pool.filter(docLike).length;
+    if (!structuralRows && docs / pool.length > 0.5) {
+      try {
+        const ref = structuralRefine(process.cwd(), Number(process.env.CF_STRUCTURAL_TOP ?? 15));
+        if (ref.length) {
+          pool.push(...ref);
+          stats.structural_refined = ref.length;
+        }
+      } catch { /* best-effort */ }
     }
   }
 

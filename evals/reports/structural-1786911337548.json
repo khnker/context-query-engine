@@ -1,0 +1,724 @@
+{
+  "date": "2026-08-16",
+  "categories": {
+    "high-frequency-symbol": {
+      "correctness": 1,
+      "tokens_avg": 4198,
+      "refined_total": 0
+    },
+    "ambiguous-identifier": {
+      "correctness": 0.667,
+      "tokens_avg": 5357,
+      "refined_total": 0
+    },
+    "huge-fanout": {
+      "correctness": 1,
+      "tokens_avg": 4120,
+      "refined_total": 0
+    },
+    "zero-results": {
+      "correctness": 0,
+      "tokens_avg": 0,
+      "refined_total": 0
+    },
+    "deep-dependency-chain": {
+      "correctness": 1,
+      "tokens_avg": 3591,
+      "refined_total": 15
+    },
+    "duplicate-implementations": {
+      "correctness": 1,
+      "tokens_avg": 1981,
+      "refined_total": 0
+    },
+    "generated-code": {
+      "correctness": 0.667,
+      "tokens_avg": 17,
+      "refined_total": 0
+    },
+    "vendor-code": {
+      "correctness": 1,
+      "tokens_avg": 1432,
+      "refined_total": 0
+    },
+    "monorepo": {
+      "correctness": 1,
+      "tokens_avg": 2681,
+      "refined_total": 0
+    },
+    "polyglot": {
+      "correctness": 0.667,
+      "tokens_avg": 7993,
+      "refined_total": 0
+    },
+    "lexical": {
+      "correctness": 1,
+      "tokens_avg": 98,
+      "refined_total": 0
+    },
+    "structural": {
+      "correctness": 1,
+      "tokens_avg": 114,
+      "refined_total": 0
+    },
+    "semantic": {
+      "correctness": 1,
+      "tokens_avg": 127,
+      "refined_total": 0
+    },
+    "dependency": {
+      "correctness": 1,
+      "tokens_avg": 103,
+      "refined_total": 0
+    },
+    "configuration": {
+      "correctness": 1,
+      "tokens_avg": 92,
+      "refined_total": 1
+    },
+    "tests": {
+      "correctness": 1,
+      "tokens_avg": 106,
+      "refined_total": 0
+    },
+    "adversarial": {
+      "correctness": 1,
+      "tokens_avg": 111,
+      "refined_total": 0
+    },
+    "git": {
+      "correctness": 1,
+      "tokens_avg": 45,
+      "refined_total": 0
+    }
+  },
+  "verdict": {
+    "dc_ge_09": true,
+    "t1_no_regression": true,
+    "pass": true,
+    "dc_correctness": 1,
+    "t1_correctness": 1
+  },
+  "rows": [
+    {
+      "id": "adv-hf-01",
+      "group": "high-frequency-symbol",
+      "t1": false,
+      "gt": 7,
+      "leak": false,
+      "tokens": 5616,
+      "refined": 0,
+      "latency": 323
+    },
+    {
+      "id": "adv-hf-02",
+      "group": "high-frequency-symbol",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 6738,
+      "refined": 0,
+      "latency": 253
+    },
+    {
+      "id": "adv-hf-03",
+      "group": "high-frequency-symbol",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "adv-am-04",
+      "group": "ambiguous-identifier",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 7999,
+      "refined": 0,
+      "latency": 471
+    },
+    {
+      "id": "adv-am-05",
+      "group": "ambiguous-identifier",
+      "t1": false,
+      "gt": 7,
+      "leak": false,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 318
+    },
+    {
+      "id": "adv-am-06",
+      "group": "ambiguous-identifier",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 159
+    },
+    {
+      "id": "adv-fo-07",
+      "group": "huge-fanout",
+      "t1": false,
+      "gt": 3,
+      "leak": false,
+      "tokens": 7989,
+      "refined": 0,
+      "latency": 396
+    },
+    {
+      "id": "adv-fo-08",
+      "group": "huge-fanout",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 4297,
+      "refined": 0,
+      "latency": 257
+    },
+    {
+      "id": "adv-fo-09",
+      "group": "huge-fanout",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 148
+    },
+    {
+      "id": "adv-zr-10",
+      "group": "zero-results",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 210
+    },
+    {
+      "id": "adv-zr-11",
+      "group": "zero-results",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 253
+    },
+    {
+      "id": "adv-zr-12",
+      "group": "zero-results",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 147
+    },
+    {
+      "id": "adv-dc-13",
+      "group": "deep-dependency-chain",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 2774,
+      "refined": 15,
+      "latency": 2169
+    },
+    {
+      "id": "adv-dc-14",
+      "group": "deep-dependency-chain",
+      "t1": false,
+      "gt": 8,
+      "leak": false,
+      "tokens": 7980,
+      "refined": 0,
+      "latency": 295
+    },
+    {
+      "id": "adv-dc-15",
+      "group": "deep-dependency-chain",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 19,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "adv-du-16",
+      "group": "duplicate-implementations",
+      "t1": false,
+      "gt": 8,
+      "leak": false,
+      "tokens": 5684,
+      "refined": 0,
+      "latency": 254
+    },
+    {
+      "id": "adv-du-17",
+      "group": "duplicate-implementations",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 20,
+      "refined": 0,
+      "latency": 208
+    },
+    {
+      "id": "adv-du-18",
+      "group": "duplicate-implementations",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 161
+    },
+    {
+      "id": "adv-gc-19",
+      "group": "generated-code",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 40,
+      "refined": 0,
+      "latency": 190
+    },
+    {
+      "id": "adv-gc-20",
+      "group": "generated-code",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 183
+    },
+    {
+      "id": "adv-gc-21",
+      "group": "generated-code",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 131
+    },
+    {
+      "id": "adv-vd-22",
+      "group": "vendor-code",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 4297,
+      "refined": 0,
+      "latency": 311
+    },
+    {
+      "id": "adv-vd-23",
+      "group": "vendor-code",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 244
+    },
+    {
+      "id": "adv-vd-24",
+      "group": "vendor-code",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 162
+    },
+    {
+      "id": "adv-mo-25",
+      "group": "monorepo",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 234
+    },
+    {
+      "id": "adv-mo-26",
+      "group": "monorepo",
+      "t1": false,
+      "gt": 21,
+      "leak": false,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 448
+    },
+    {
+      "id": "adv-mo-27",
+      "group": "monorepo",
+      "t1": false,
+      "gt": 2,
+      "leak": false,
+      "tokens": 40,
+      "refined": 0,
+      "latency": 278
+    },
+    {
+      "id": "adv-po-28",
+      "group": "polyglot",
+      "t1": false,
+      "gt": 21,
+      "leak": false,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 425
+    },
+    {
+      "id": "adv-po-29",
+      "group": "polyglot",
+      "t1": false,
+      "gt": 1,
+      "leak": false,
+      "tokens": 7987,
+      "refined": 0,
+      "latency": 904
+    },
+    {
+      "id": "adv-po-30",
+      "group": "polyglot",
+      "t1": false,
+      "gt": 0,
+      "leak": false,
+      "tokens": 8000,
+      "refined": 0,
+      "latency": 2826
+    },
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "t1": true,
+      "gt": 11,
+      "leak": false,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 202
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "t1": true,
+      "gt": 4,
+      "leak": false,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 191
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "t1": true,
+      "gt": 7,
+      "leak": false,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 185
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 11,
+      "refined": 0,
+      "latency": 195
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "t1": true,
+      "gt": 5,
+      "leak": false,
+      "tokens": 86,
+      "refined": 0,
+      "latency": 194
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "t1": true,
+      "gt": 3,
+      "leak": false,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 185
+    },
+    {
+      "id": "str-02",
+      "group": "structural",
+      "t1": true,
+      "gt": 8,
+      "leak": false,
+      "tokens": 247,
+      "refined": 0,
+      "latency": 184
+    },
+    {
+      "id": "str-03",
+      "group": "structural",
+      "t1": true,
+      "gt": 2,
+      "leak": false,
+      "tokens": 19,
+      "refined": 0,
+      "latency": 174
+    },
+    {
+      "id": "str-04",
+      "group": "structural",
+      "t1": true,
+      "gt": 2,
+      "leak": false,
+      "tokens": 67,
+      "refined": 0,
+      "latency": 185
+    },
+    {
+      "id": "str-05",
+      "group": "structural",
+      "t1": true,
+      "gt": 8,
+      "leak": false,
+      "tokens": 127,
+      "refined": 0,
+      "latency": 186
+    },
+    {
+      "id": "sem-01",
+      "group": "semantic",
+      "t1": true,
+      "gt": 7,
+      "leak": false,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 199
+    },
+    {
+      "id": "sem-02",
+      "group": "semantic",
+      "t1": true,
+      "gt": 5,
+      "leak": false,
+      "tokens": 121,
+      "refined": 0,
+      "latency": 186
+    },
+    {
+      "id": "sem-03",
+      "group": "semantic",
+      "t1": true,
+      "gt": 2,
+      "leak": false,
+      "tokens": 67,
+      "refined": 0,
+      "latency": 191
+    },
+    {
+      "id": "sem-04",
+      "group": "semantic",
+      "t1": true,
+      "gt": 2,
+      "leak": false,
+      "tokens": 120,
+      "refined": 0,
+      "latency": 415
+    },
+    {
+      "id": "sem-05",
+      "group": "semantic",
+      "t1": true,
+      "gt": 5,
+      "leak": false,
+      "tokens": 90,
+      "refined": 0,
+      "latency": 179
+    },
+    {
+      "id": "dep-01",
+      "group": "dependency",
+      "t1": true,
+      "gt": 11,
+      "leak": false,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 205
+    },
+    {
+      "id": "dep-02",
+      "group": "dependency",
+      "t1": true,
+      "gt": 6,
+      "leak": false,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 216
+    },
+    {
+      "id": "dep-03",
+      "group": "dependency",
+      "t1": true,
+      "gt": 7,
+      "leak": false,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 212
+    },
+    {
+      "id": "dep-04",
+      "group": "dependency",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 11,
+      "refined": 0,
+      "latency": 184
+    },
+    {
+      "id": "dep-05",
+      "group": "dependency",
+      "t1": true,
+      "gt": 4,
+      "leak": false,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 193
+    },
+    {
+      "id": "cfg-01",
+      "group": "configuration",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 71,
+      "refined": 1,
+      "latency": 341
+    },
+    {
+      "id": "cfg-02",
+      "group": "configuration",
+      "t1": true,
+      "gt": 4,
+      "leak": false,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 173
+    },
+    {
+      "id": "cfg-03",
+      "group": "configuration",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 192
+    },
+    {
+      "id": "cfg-04",
+      "group": "configuration",
+      "t1": true,
+      "gt": 4,
+      "leak": false,
+      "tokens": 39,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "cfg-05",
+      "group": "configuration",
+      "t1": true,
+      "gt": 5,
+      "leak": false,
+      "tokens": 264,
+      "refined": 0,
+      "latency": 189
+    },
+    {
+      "id": "tst-01",
+      "group": "tests",
+      "t1": true,
+      "gt": 8,
+      "leak": false,
+      "tokens": 249,
+      "refined": 0,
+      "latency": 219
+    },
+    {
+      "id": "tst-02",
+      "group": "tests",
+      "t1": true,
+      "gt": 6,
+      "leak": false,
+      "tokens": 96,
+      "refined": 0,
+      "latency": 215
+    },
+    {
+      "id": "tst-03",
+      "group": "tests",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 50,
+      "refined": 0,
+      "latency": 205
+    },
+    {
+      "id": "tst-04",
+      "group": "tests",
+      "t1": true,
+      "gt": 6,
+      "leak": false,
+      "tokens": 127,
+      "refined": 0,
+      "latency": 183
+    },
+    {
+      "id": "tst-05",
+      "group": "tests",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 139
+    },
+    {
+      "id": "adv-01",
+      "group": "adversarial",
+      "t1": false,
+      "gt": 3,
+      "leak": false,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 157
+    },
+    {
+      "id": "git-01",
+      "group": "git",
+      "t1": true,
+      "gt": 1,
+      "leak": false,
+      "tokens": 45,
+      "refined": 0,
+      "latency": 159
+    }
+  ]
+}
