@@ -33,6 +33,9 @@ const COST_TABLE = {
   'include':          { tokens: 200, latency_ms: 20,  tool_calls: 1, relevance: 0.4  },
   'git-log':          { tokens: 300, latency_ms: 150, tool_calls: 1, relevance: 0.6  },
   'bm25':             { tokens: 120, latency_ms: 60,  tool_calls: 1, relevance: 0.45 },
+  'symbol-lookup':    { tokens: 40,  latency_ms: 2,   tool_calls: 1, relevance: 0.9  },
+  'lexical-index':    { tokens: 60,  latency_ms: 5,   tool_calls: 1, relevance: 0.85 },
+  'dependency-expand':{ tokens: 80,  latency_ms: 4,   tool_calls: 1, relevance: 0.8  },
 };
 
 // D13 — cardinalidad default por clase de predicado (sin stats)

@@ -22,6 +22,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
 import { select as selectorSelect } from './selector.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
@@ -184,6 +185,16 @@ function execOp(op, plan, pool = []) {
         };
       });
     }
+    case 'symbol-lookup': {
+      // context-query-ir — access path sobre catálogo (SQLite): símbolos deterministas
+      return symbolLookup(process.cwd(), name, plan.limit ?? 10);
+    }
+    case 'lexical-index': {
+      return lexicalLookup(process.cwd(), name, plan.limit ?? 10);
+    }
+    case 'dependency-expand': {
+      return dependencyExpand(process.cwd(), name, plan.limit ?? 10);
+    }
     case 'assemble-context':
       return []; // op de fusión — se resuelve en fuse()
     case 'git-log': {
@@ -304,6 +315,12 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   const pool = [];
   // hybrid-retrieval-comparison — CF_RETRIEVAL=bm25 → solo BM25; hybrid → plan + BM25 fusionado
   const retrieval = process.env.CF_RETRIEVAL ?? '';
+  // context-query-ir — CF_INDEX=1: access paths materializados (catálogo SQLite)
+  // en vez de rg sobre filesystem. Construye el índice una vez por repo si falta.
+  const INDEX_MAP = process.env.CF_INDEX === '1' && ['definitions', 'references', 'implementation', 'filename'].includes(logicalPlan.query_type)
+    ? { 'search-code': 'lexical-index', 'rg-files': 'lexical-index', 'search-structure': 'dependency-expand' }
+    : null;
+  if (INDEX_MAP) ensureIndex(process.cwd());
   // AQP v2 — ops léxicas marcadas como saltadas (sin mutar el array en iteración:
   // for..of sobre array mutado desincroniza el iterator y re-ejecuta ops)
   const skippedOps = new Set();
@@ -315,7 +332,8 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     if (skippedOps.has(op.tool)) continue;
     stats.tool_calls += 1;
     const t0 = Date.now();
-    const results = execOp(op, logicalPlan, pool);
+    const effOp = INDEX_MAP && INDEX_MAP[op.tool] ? { ...op, tool: INDEX_MAP[op.tool] } : op;
+    const results = execOp(effOp, logicalPlan, pool);
     const latencyMs = Date.now() - t0;
     // optimizer-statistics: registrar estimated vs actual (best-effort, nunca rompe el pipeline)
     try {

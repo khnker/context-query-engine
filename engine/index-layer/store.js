@@ -97,7 +97,8 @@ export function replaceDeps(db, path, deps) {
 
 export function replaceLex(db, path, content) {
   db.prepare('DELETE FROM lex WHERE path=?').run(path);
-  if (content.trim()) db.prepare('INSERT INTO lex (path, tok) VALUES (?, ?)').run(path, content);
+  // prepend del path: FTS por basename (query filename usa phrase del nombre completo)
+  if (content.trim()) db.prepare('INSERT INTO lex (path, tok) VALUES (?, ?)').run(path, `${path} ${content}`);
 }
 
 export function tableCounts(db) {
