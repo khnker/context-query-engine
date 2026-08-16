@@ -705,6 +705,34 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   cache.set(key, { results, ts: Date.now(), fp });
   persistCache();
+
+  // explorer-solver-separation (FastContext) — CF_EXPLORER=1: el explorador
+  // devuelve REFERENCES (path, line range, reason, certainty) + next_actions
+  // (operador, target, eig), NO dumps de contenido. Modo headless del solver.
+  if (process.env.CF_EXPLORER === '1') {
+    try {
+      const belief = stats.belief ?? null;
+      const name = logicalPlan.target?.name ?? '';
+      const actions = [];
+      if (belief?.agreement != null && belief.agreement < 0.5) actions.push({ operator: 'symbol-lookup', target: name, eig: 0.7 });
+      if (logicalPlan.relations?.length && !results.some((r) => r.match_type === 'reference')) actions.push({ operator: 'follow', target: name, eig: 0.5 });
+      if (logicalPlan.inclusions?.length && !results.some((r) => r.match_type === 'test' || r.match_type === 'config')) actions.push({ operator: 'read_span', target: results[0]?.path ?? name, eig: 0.4 });
+      if (!actions.length && results.length) actions.push({ operator: 'read_span', target: results[0].path, eig: 0.3 });
+      return {
+        plan: phys, results, stats, cached: false,
+        explorer: {
+          evidence: results.map((r) => ({
+            path: r.path,
+            lines: [r.line_start ?? 1, r.line_end ?? 1],
+            reason: `${r.match_type}:${r.source ?? ''}`,
+            certainty: r.certainty ?? 0.6,
+          })),
+          next_actions: actions,
+        },
+      };
+    } catch { /* best-effort — fallback al contrato normal */ }
+  }
+
   return { plan: phys, results, stats, cached: false };
 }
 

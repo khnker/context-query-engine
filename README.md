@@ -912,6 +912,17 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-evidence-packets.js   # → evals/repor
 
 Paridad T1: correctness 1.000 = 1.000 (aditivo), 214 packets con schema completa, tier0 certainty 1.0 ✓. Habilita selección por certeza/provenance en selector.js.
 
+
+## Explorer-Solver Separation (FastContext) — SÍ SIRVE
+
+El explorador (modo headless `CF_EXPLORER=1`) devuelve **evidence references** — `{path, lines:[start,end], reason, certainty}` + `next_actions: [{operator, target, eig}]` — no dumps de contenido. El solver recibe 59% menos tokens (2336 → 1100 media sobre 22 tasks downstream+adversarial) con correctness idéntica (0.955 = 0.955).
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-explorer.js   # → evals/reports/explorer-<TS>.json
+```
+
+next_actions se derivan del belief state: agreement<0.5 → symbol-lookup (eig 0.7); relations sin reference → follow (0.5); inclusions sin test/config → read_span (0.4). El ahorro es el costo que el solver no paga en lectura temprana; los spans (`line_start/line_end` de la evidencia) habilitan el operador físico READ_SPAN del roadmap.
+
 ## Glossary
 
 | Term | Meaning |
