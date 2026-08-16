@@ -755,6 +755,22 @@ Watcher roundtrip 259ms; queries < 50ms. Este es el access layer del planner: lo
 
 `CF_LEARNED_COST=1` reemplaza la COST_TABLE estática por costos medidos (p95 tokens / avg latencia por op|query_class, n>=5) desde la telemetría. Ablación T1: correctness 1.000 = 1.000 pero tokens 105 vs 104 → **REJECT**. Los promedios por op no discriminan variantes A/B/C (mismas ops reordenadas → coin-flip: plan_acc 0.9063→0.4375 sin cambio de tokens); la señal de costo relevante es cardinalidad por query. El valor real de costos aprendidos es para elegir entre FAMILIAS de ops (rg 15ms vs index 2-5ms), donde la COST_TABLE ya captura la diferencia — re-test orientado a access paths (context-query-ir) si se quiere.
 
+
+## Evidence State (REJECT parcial)
+
+Belief state por query (`stats.belief`): sources, agreement_rate (soporte cross-source top-5), coverage_estimate (fracción de evidencia determinista tier0/1 en el pool), n_pool. Correlación Spearman vs gt_hit sobre T1 + adversarial fan-out (47 queries):
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-evidence-state.js   # → evals/reports/evidence-state-<TS>.json
+```
+
+| señal | Spearman |
+|-------|----------|
+| coverage_estimate | **-0.268** (anti-correla) |
+| agreement_rate | +0.155 (débil) |
+
+Hallazgo: coverage alto ≠ confianza — la inundación léxica (rg score 1 uniforme sobre símbolos comunes tipo 'main') llena el pool de tier0 y es justo el caso miss. coverage sirve como señal ANTI (flood-detection), no de suficiencia; agreement es la señal usable para adquirir (coherente con retriever-disagreement). Umbral 1.4 no cumplido → REJECT; señales documentadas para adaptive-plan-selection.
+
 ## Glossary
 
 | Term | Meaning |

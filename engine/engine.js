@@ -285,6 +285,29 @@ function fuse(pool, budget) {
   return pool; // fallback: pool crudo sin tiers
 }
 
+// evidence-state — belief state por query: fuentes, agreement cross-source
+// (soporte top-5 con paths normalizados), coverage de evidencia determinista.
+function beliefFromPool(pool) {
+  const bySource = {};
+  for (const r of pool) {
+    const s = r.source ?? r.match_type ?? 'unknown';
+    (bySource[s] ??= []).push({ p: String(r.path ?? '').replace(/^\.\//, ''), t: r.match_type ?? '', s: r.score ?? 0 });
+  }
+  const keys = Object.keys(bySource).filter((k) => bySource[k].length > 0);
+  const N = 5;
+  const cands = new Map();
+  for (const k of keys) for (const { p } of bySource[k].slice(0, N)) cands.set(p, (cands.get(p) ?? 0) + 1);
+  const agreement = keys.length > 1 && cands.size
+    ? [...cands.values()].reduce((a, c) => a + (c - 1) / (keys.length - 1), 0) / cands.size : null;
+  const tier01 = pool.filter((r) => RELEVANT.has(r.match_type) || r.match_type === 'reference' || r.match_type === 'git').length;
+  return {
+    sources: keys.length,
+    agreement_rate: agreement == null ? null : +agreement.toFixed(4),
+    coverage_estimate: pool.length ? +(tier01 / pool.length).toFixed(4) : 0,
+    n_pool: pool.length,
+  };
+}
+
 // --- pipeline principal ---
 function runPlan(logicalPlan, rawText, opts = {}) {
   const planT0 = Date.now();
@@ -545,6 +568,8 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       fs.appendFileSync(process.env.CF_DISAGREEMENT_FILE, JSON.stringify(snapshot) + '\n');
     } catch { /* best-effort */ }
   }
+
+  stats.belief = beliefFromPool(pool);
 
   let results = fuse(pool, effectiveBudget(logicalPlan));
 
