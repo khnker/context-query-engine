@@ -71,7 +71,7 @@ export function selectMMR(rows, budget = BUDGET) {
   return { selected, used };
 }
 
-export function select(rows, budget = BUDGET, mode = 'marginal') {
+export function select(rows, budget = BUDGET, mode = 'marginal', adaptiveTheta = null) {
   if (mode === 'mmr') return selectMMR(rows, budget);
   const selected = [];
   const selectedTiers = new Set();
@@ -95,8 +95,11 @@ export function select(rows, budget = BUDGET, mode = 'marginal') {
 
   const scored = rows.map((r) => ({ r, gain: marginalGain(r) }));
   scored.sort((a, b) => b.gain - a.gain);
+  const knee = adaptiveTheta != null && scored.length ? scored[0].gain * adaptiveTheta : -Infinity;
 
-  for (const { r } of scored) {
+  for (const { r, gain } of scored) {
+    // adaptive-k: parada por diminishing returns (knee de la curva de marginal gain)
+    if (gain < knee) break;
     const t = r.token_estimate ?? 10;
     if (used + t > budget) continue;
     selected.push(r);
@@ -105,7 +108,7 @@ export function select(rows, budget = BUDGET, mode = 'marginal') {
     selectedDirs.add(path.dirname(r.path ?? '/'));
     selectedScores.push(r.score_final ?? 0.5);
   }
-  return { selected, used };
+  return { selected, used, adaptive_k: adaptiveTheta != null ? selected.length : null };
 }
 
 export function applySelector(inputLines, budget = BUDGET, mode = process.env.CF_SELECTOR ?? 'marginal') {
@@ -115,8 +118,11 @@ export function applySelector(inputLines, budget = BUDGET, mode = process.env.CF
     })
     .filter(Boolean)
     .map((r) => ({ ...r, score_final: r.score_final ?? r.score ?? 0.5, evidence_tier: r.evidence_tier ?? (r.match_type === 'semantic' ? 2 : (r.match_type === 'test' || r.match_type === 'config' ? 3 : 0)) }));
-  const { selected, used } = select(rows, budget, mode);
-  const stats = JSON.stringify({ budget, tokens_used: used, kept: selected.length, selector: mode, dropped: rows.length - selected.length });
+  // B2 adaptive-k: parada por diminishing returns (CF_ADAPTIVE_K=1, θ=CF_ADAPTIVE_K_THETA 0.10)
+  const adaptiveTheta = process.env.CF_ADAPTIVE_K === '1'
+    ? Number(process.env.CF_ADAPTIVE_K_THETA ?? 0.10) : null;
+  const { selected, used, adaptive_k } = select(rows, budget, mode, adaptiveTheta);
+  const stats = JSON.stringify({ budget, tokens_used: used, kept: selected.length, selector: mode, adaptive_k, dropped: rows.length - selected.length });
   const lines = selected.map((r) => JSON.stringify(r));
   return { stats, lines };
 }
