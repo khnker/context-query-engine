@@ -669,7 +669,23 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-quality-policy.js   # → evals/reports
 
 La señal exactness (runtime-observable sin GT) es **plana**: nunca escala el gt (4.438 en todo el sweep) — mismo diagnóstico que cost/quality. Incluso con señal oráculo gt_hits, ningún umbral alcanza el objetivo (≥90% del oráculo @ ≤2.0× tokens): θ=5 da 4.875 (90.7%) pero a 2.26× tokens. La frontera es dura: el +21% de gt_hits del oráculo cuesta 2.1× tokens sin punto medio barato. **Veredicto REJECT** en fixtures sintéticas (plan A ya satisface casi todo); re-testear en repos reales (T2/dev) o exponer tradeoff explícito para queries high-stakes. (*1.021 = anomalía de display del artefacto base.)
 
-## Repository structure
+
+## Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial)
+
+El score no es el lenguaje universal: evidencia determinista (exact/filename/structural = hecho observado) y estimaciones (semantic/reranker = belief) viven en espacios epistémicos distintos. La fusión ahora usa **eligibility por tier** (`evidence_tier <= 1` → siempre elegible; tier2+ → umbral 0.2) y el reranker deja el score crudo del modelo (el floor 0.3 desapareció — su rol lo tomó la eligibilidad). Context selection submodular (`CF_SELECTOR=marginal`, engine/selector.js): greedy por ganancia marginal bajo budget duro; con budget holgado es inerte (sin pérdida), con budget tight (fan-out) la variante MMR supera a top-k (gt +14%, density 0.0063 vs 0.0055).
+
+```bash
+TMPDIR=$PWD/.tmp CF_TASKS=adv CF_SELECTOR_BUDGET=400 node evals/scripts/eval-context-selection.js
+```
+
+| selector | gt_hits | tokens | dirs | density |
+|----------|---------|--------|------|---------|
+| top-k (fuse legacy) | 1.75 | 319 | 17.0 | 0.0055 |
+| MMR (λ=0.7) | **2.00** | 318 | **17.3** | **0.0063** |
+| marginal (07B v1) | 1.75 | 319 | 17.0 | 0.0055 |
+
+Iteración siguiente: calibrar pesos de marginal (diversidad/redundancia) o adoptar CF_SELECTOR=mmr. Ver también: pairwise-plan-preference, adaptive-query-execution (backlog v1.7).
+
 
 ```text
 context-query-engine/

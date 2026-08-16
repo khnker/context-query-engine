@@ -22,6 +22,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { select as selectorSelect } from './selector.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
@@ -445,7 +446,10 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         });
         pool.length = 0;
         for (const { r, s } of scored) {
-          r.score = ANCHORED.has(r.match_type) ? Math.max(r.score ?? 0, 0.5) : Math.max(s, 0.3); // nunca < filtro fuse
+          // 07A evidence model — tier0 determinista SIEMPRE eligible (fuse no filtra por
+          // score); tier2+ semántico conserva el score crudo del modelo (belief, se
+          // umbraliza por eligibility en fuse, no por floor).
+          r.score = ANCHORED.has(r.match_type) ? Math.max(r.score ?? 0, 0.5) : s;
           pool.push(r);
         }
         stats.reranked = true;
@@ -477,7 +481,21 @@ function runPlan(logicalPlan, rawText, opts = {}) {
     });
   } catch { /* telemetría best-effort */ }
 
-  const results = fuse(pool, effectiveBudget(logicalPlan));
+  let results = fuse(pool, effectiveBudget(logicalPlan));
+
+  // 07B context selection submodular — CF_SELECTOR=marginal: greedy por ganancia
+  // marginal (evidencia + relevancia + diversidad − redundancia − costo) bajo
+  // budget duro de tokens (engine/selector.js). Off por defecto (fuse legacy).
+  if (process.env.CF_SELECTOR === 'marginal') {
+    const st0 = Date.now();
+    const sel = selectorSelect(results, effectiveBudget(logicalPlan));
+    stats.selector = 'marginal';
+    stats.selector_kept = sel.selected.length;
+    stats.selector_dropped = results.length - sel.selected.length;
+    stats.selector_latency_ms = Date.now() - st0;
+    results = sel.selected;
+  }
+
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
   stageSnap('post_fuse', results);
 

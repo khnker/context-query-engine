@@ -57,7 +57,17 @@ if [ "${CF_STRICT_BUDGET:-}" = "0" ]; then
   STRICT_FLAG=false
 fi
 
-if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" --argjson SW "$SW" '
+# 07B (context selection submodular): CF_SELECTOR=marginal o CF_SELECTOR_RANKED_ONLY=1 →
+# NO aplicar budget aqui; devolver el ranked completo para que el selector externo
+# (engine/selector.js) elija el subconjunto por ganancia marginal. Cap a top-N
+# candidatos por relevancia (CF_SELECTOR_TOP, default 200) para acotar fan-out.
+NOBUDGET_FLAG=false
+SELECTOR_TOP="${CF_SELECTOR_TOP:-200}"
+if [ "${CF_SELECTOR:-}" = "marginal" ] || [ "${CF_SELECTOR_RANKED_ONLY:-}" = "1" ]; then
+  NOBUDGET_FLAG=true
+fi
+
+if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" --argjson SW "$SW" --argjson NOBUDGET "$NOBUDGET_FLAG" --argjson TOP "$SELECTOR_TOP" '
   # ---- normalize ----
   def bad_path:
     all((.path | split("/"))[]; . as $s |
@@ -76,6 +86,16 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --ar
     elif (.match_type == "config" and (.path | contains("config"))) then 0.5
     else 0.3 end;
   def token_efficiency: 1 - ([.token_estimate, 400] | min) / 400;
+  # 07A evidence model — jerarquía de evidencia (no todos los scores comparten espacio):
+  #   tier0 determinista (exact/filename/structural) — hecho observado, SIEMPRE eligible
+  #   tier1 lexical (reference/git) — evidencia derivada, SIEMPRE eligible
+  #   tier2 semántico (semantic [reranker/bm25]) — belief, sujeto a umbral de score
+  #   tier3 inferido/débil (test/config/otro) — sujeto a umbral
+  def evidence_tier:
+    if (.match_type == "exact" or .match_type == "filename" or .match_type == "structural") then 0
+    elif (.match_type == "reference" or .match_type == "git") then 1
+    elif (.match_type == "semantic") then 2
+    else 3 end;
   def tier:
     if (.match_type == "exact" or .match_type == "filename") then 1
     elif (.match_type == "structural" or .match_type == "reference") then 2
@@ -94,9 +114,11 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --ar
       | .match_type = (.match_type // "semantic")
       | .reason = (.reason // "")
       | .symbol = (.symbol // null)
-      | .language = (.language // null))
-  # ---- filter ----
-  | map(select((.score >= 0.2) and (.token_estimate > 0) and bad_path))
+      | .language = (.language // null)
+      | .evidence_tier = evidence_tier)
+  # ---- filter (07A): la evidencia determinista/lexical no se puede destruir por score;
+  # ----  solo tier2+ (belief) pasa por el umbral de eligibilidad ----
+  | map(select(((evidence_tier <= 1) or (.score >= 0.2)) and (.token_estimate > 0) and bad_path))
   # ---- deduplicate: clave path:line_start:line_end, max score, sources acumuladas ----
   | group_by(.path, .line_start, .line_end)
   | map(. as $g | ($g | max_by(.score)) as $best
@@ -106,20 +128,26 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --ar
   | map(. + { score_final: ((1 - $SW - 0.2 - 0.15) * exactness + $SW * .score
                              + 0.2 * path_relevance + 0.15 * token_efficiency) })
   | sort_by(-.score_final)
-  # ---- budget: consume en orden de rank hasta BUDGET; siempre el mejor de cada cluster ----
+  # ---- budget (07B): con NOBUDGET el selector externo aplica el budget submodular;
+  # ---- si no, greedy legacy por score_final hasta BUDGET (strict por defecto) ----
   | . as $ranked
-  | reduce $ranked[] as $c ({ kept: [], used: 0 };
-      if (.used + $c.token_estimate <= $BUDGET) or (($STRICT | not) and (([.kept[].path] | index($c.path)) == null)) then
-        .kept += [$c] | .used += ($c.token_estimate)
-      else . end)
-  | . as $res
-  | { stats: { budget: $BUDGET,
-               tokens_used: $res.used,
-               kept: ($res.kept | length),
-               dropped: (($ranked | length) - ($res.kept | length)) },
-      items: ($res.kept
-              | map(. + { tier: tier })
-              | sort_by(.tier, -.score_final)) }
+  | if $NOBUDGET then
+      { stats: { budget: $BUDGET, selector_top: $TOP,
+                 tokens_used: ($ranked | .[0:$TOP] | map(.token_estimate) | add),
+                 kept: (($ranked | length) | if . < $TOP then . else $TOP end), dropped: 0 },
+        items: ($ranked | .[0:$TOP]) }
+    else
+      (reduce $ranked[] as $c ({ kept: [], used: 0 };
+        if (.used + $c.token_estimate <= $BUDGET) or (($STRICT | not) and (([.kept[].path] | index($c.path)) == null)) then
+          .kept += [$c] | .used += ($c.token_estimate)
+        else . end)
+      | . as $res
+      | { stats: { budget: $BUDGET, tokens_used: $res.used, kept: ($res.kept | length),
+                   dropped: (($ranked | length) - ($res.kept | length)) },
+          items: ($res.kept
+                  | map(. + { tier: tier })
+                  | sort_by(.tier, -.score_final)) })
+    end
   | (.stats, .items[])
 ' "$TMP_IN" > "$TMP_OUT"; then
   echo "assemble-context: error: jq fallo procesando input" >&2

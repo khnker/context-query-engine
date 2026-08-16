@@ -1,0 +1,165 @@
+{
+  "date": "2026-08-16",
+  "tasks": 4,
+  "budget": 8000,
+  "mmr_lambda": 0.7,
+  "selectors": {
+    "topk": {
+      "r5": 0.5,
+      "r10": 1,
+      "mrr": 0.186275,
+      "gt_hits": 2.5,
+      "tokens": 1413.5,
+      "dirs": 26.75,
+      "density": 0.0017686593562079944
+    },
+    "mmr": {
+      "r5": 0.5,
+      "r10": 1,
+      "mrr": 0.18739999999999998,
+      "gt_hits": 2.5,
+      "tokens": 1413.5,
+      "dirs": 26.75,
+      "density": 0.0017686593562079944
+    },
+    "marginal": {
+      "r5": 0.5,
+      "r10": 1,
+      "mrr": 0.186275,
+      "gt_hits": 2.5,
+      "tokens": 1413.5,
+      "dirs": 26.75,
+      "density": 0.0017686593562079944
+    }
+  },
+  "verdict": {
+    "pass": true,
+    "r5": {
+      "topk": 0.5,
+      "marginal": 0.5
+    },
+    "tokens": {
+      "topk": 1413.5,
+      "marginal": 1413.5
+    },
+    "threshold": "marginal.r5 >= topk.r5 AND marginal.tokens <= 1.05*topk.tokens"
+  },
+  "records": [
+    {
+      "id": "adv-fo-07",
+      "repo": "polar",
+      "candidates": 200,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0625,
+        "gt": 3,
+        "tokens": 1600,
+        "dirs": 37
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0625,
+        "gt": 3,
+        "tokens": 1600,
+        "dirs": 37
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0625,
+        "gt": 3,
+        "tokens": 1600,
+        "dirs": 37
+      }
+    },
+    {
+      "id": "adv-fo-08",
+      "repo": "polar",
+      "candidates": 200,
+      "topk": {
+        "r5": 0,
+        "r10": 2,
+        "mrr": 0.1667,
+        "gt": 2,
+        "tokens": 1600,
+        "dirs": 32
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 2,
+        "mrr": 0.1667,
+        "gt": 2,
+        "tokens": 1600,
+        "dirs": 32
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 2,
+        "mrr": 0.1667,
+        "gt": 2,
+        "tokens": 1600,
+        "dirs": 32
+      }
+    },
+    {
+      "id": "adv-fo-09",
+      "repo": "t1-basic",
+      "candidates": 4,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 0.5,
+        "gt": 2,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 0.5,
+        "gt": 2,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 0.5,
+        "gt": 2,
+        "tokens": 74,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "adv-du-16",
+      "repo": "polar",
+      "candidates": 200,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0159,
+        "gt": 3,
+        "tokens": 2380,
+        "dirs": 36
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0204,
+        "gt": 3,
+        "tokens": 2380,
+        "dirs": 36
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0159,
+        "gt": 3,
+        "tokens": 2380,
+        "dirs": 36
+      }
+    }
+  ]
+}
