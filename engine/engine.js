@@ -616,13 +616,12 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   let results = fuse(pool, effectiveBudget(logicalPlan));
 
-  // 07B context selection submodular — CF_SELECTOR=marginal: greedy por ganancia
-  // marginal (evidencia + relevancia + diversidad − redundancia − costo) bajo
-  // budget duro de tokens (engine/selector.js). Off por defecto (fuse legacy).
-  if (process.env.CF_SELECTOR === 'marginal') {
+  // 07B context selection submodular — CF_SELECTOR=marginal|mmr: selección bajo
+  // budget duro (engine/selector.js). Off por defecto (fuse legacy).
+  if (process.env.CF_SELECTOR === 'marginal' || process.env.CF_SELECTOR === 'mmr') {
     const st0 = Date.now();
-    const sel = selectorSelect(results, effectiveBudget(logicalPlan));
-    stats.selector = 'marginal';
+    const sel = selectorSelect(results, effectiveBudget(logicalPlan), process.env.CF_SELECTOR);
+    stats.selector = process.env.CF_SELECTOR;
     stats.selector_kept = sel.selected.length;
     stats.selector_dropped = results.length - sel.selected.length;
     stats.selector_latency_ms = Date.now() - st0;
