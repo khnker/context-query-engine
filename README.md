@@ -489,11 +489,18 @@ Matriz T1 (32 tasks, 1 run):
 |--------|-------------|----------|-----|---------------|
 | BM25 puro | 0.844 | 0.667 | 0.732 | 135 |
 | CQE+hybrid | **1.000** | **0.870** | 0.939 | 239 |
-| CQE+hybrid+rerank | 1.000 | 0.703 | **1.000** | 133 |
+| CQE+hybrid+rerank | 1.000 | 0.870 | 0.964 | 253 |
 | CQE (baseline) | 1.000 | 0.833 | 0.939 | 105 |
-| CQE+rerank | 1.000 | 0.630 | 0.984 | 57 |
+| CQE+rerank | 1.000 | 0.833 | 0.964 | 105 |
 
 Veredicto: **hybrid no degrada correctness** (1.000 = 1.000 en T1 y T2) y **mejora recall@5 en T1** (+3.7pp, 0.870 vs 0.833) — BM25 rescata hits que rg pierde. Costo: 2.3× tokens por los snippets BM25; la fusión compite en score_final de `assemble-context`. BM25 puro pierde correctness (0.844): no reemplaza a CQE, solo aporta como op de fusión. En dev (monorepo), BM25 puro falla (cap de 1000 archivos del índice) — el optimizer + rg siguen siendo necesarios. El op `bm25` queda incorporado al plan físico (COST_TABLE + `CF_RETRIEVAL`).
+
+Veredicto: **hybrid no degrada correctness** (1.000 = 1.000 en T1 y T2) y **mejora recall@5 en T1** (+3.7pp, 0.870 vs 0.833) — BM25 rescata hits que rg pierde. Costo: 2.3× tokens por los snippets BM25; la fusión compite en score_final de `assemble-context`. BM25 puro pierde correctness (0.844): no reemplaza a CQE, solo aporta como op de fusión. En dev (monorepo), BM25 puro falla (cap de 1000 archivos del índice) — el optimizer + rg siguen siendo necesarios. El op `bm25` queda incorporado al plan físico (COST_TABLE + `CF_RETRIEVAL`).
+
+### Reranker–fuse alignment (fix de recall)
+
+El reranker subía MRR pero BAJABA recall@5 (0.630 vs 0.833). Diagnóstico por etapas (`eval-rerank-stages.js`): candidate recall 1.0 (el GT siempre está en el pool), el reranker MEJORA el pool (0.818→0.833), y la pérdida ocurría en la **fusión**: el modelo puntuaba el GT exacto con ~0.003 (char-ngrams q+p sin vocabulario de código) y el filtro `score >= 0.2` de `assemble-context` lo ELIMINABA. Fix: anclaje de matches exact/filename/structural (conservan score heurístico, siempre arriba) + floor 0.3 al score del modelo (nunca bajo el filtro) + `CF_SCORE_WEIGHT` (peso del score en score_final: 0.3 legacy, 0.5 automático con modelo). Resultado: recall@5 del rerank = heur (0.833, sin sacrificio) con MRR aún mejor (0.964 vs 0.939); hybrid+rerank 0.870 r@5.
+
 
 ## Harder baselines
 
@@ -512,7 +519,7 @@ Matriz T1 (32 tasks):
 | RepoMap textual | 1.000 | 0.698 | 0.810 | 52 |
 | BM25 puro | 0.844 | 0.667 | 0.732 | 135 |
 | **CQE** | **1.000** | **0.833** | **0.939** | 105 |
-| CQE+rerank | 1.000 | 0.630 | 0.984 | 57 |
+| CQE+rerank | 1.000 | 0.833 | 0.964 | 105 |
 
 Veredicto: **CQE gana o empata en correctness** en T1/T2/dev (1.000/1.000/0.750). En dev, el agente crudo colapsa: 0.000 de correctness con **4.17M tokens** de contexto (rg -n sobre monorepo), vs 538 de CQE — el optimizer existe precisamente para eso. Dónde pierde: recall@10 contra RepoMap en T1 (0.833 vs 0.932) — el file tree completo captura archivos que el plan de CQE no toca; a cambio CQE entrega 2× más recall@5 con el mismo 1.000 de correctness. El baseline de agente completo (rg+read con tool calls, task success, time-to-solution) queda delegado al change `downstream-agent-eval`.
 

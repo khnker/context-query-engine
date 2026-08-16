@@ -32,6 +32,16 @@ const effectiveBudget = (lp) => (CF_BUDGET > 0 ? CF_BUDGET : lp.budget ?? 8000);
 const CACHE_TTL = 5 * 60 * 1000; // 13.4 — TTL 5 min
 const RELEVANT = new Set(['exact', 'filename', 'structural']); // 13.1 — match types que satisfacen
 
+// reranker-context-diagnosis — CF_STAGES_FILE: snapshots del pipeline por etapas
+// (pre-rerank / post-rerank / post-fuse) para atribuir pérdidas de recall.
+const STAGES_FILE = process.env.CF_STAGES_FILE ?? '';
+function stageSnap(name, rows) {
+  if (!STAGES_FILE) return;
+  try {
+    fs.appendFileSync(STAGES_FILE, JSON.stringify({ stage: name, rows: rows.map((r) => ({ path: r.path, mt: r.match_type, s: r.score ?? null })) }) + '\n');
+  } catch { /* best-effort */ }
+}
+
 // 13.4 — cache intra-sesión: Map en memoria + persistencia a .cache.json
 // (persistencia permite cache hits entre CLIs consecutivas; mcp-server usa el Map directo)
 const cache = new Map();
@@ -415,16 +425,27 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   // 12.2 — rerank opcional (tinybert-reranker): si hay modelo local, reordena el
   // pool por relevancia (scores) antes de la fusión; null/fallo → orden heurístico.
   // filename = match exacto: el heurístico ya ordena por tiering; el reranker añade ruido → se omite.
+  stageSnap('pre_rerank', pool);
   if (modelAvailable() && pool.length > 1 && logicalPlan.query_type !== 'filename') {
     try {
       const t0 = Date.now();
       const rr = rerankSync(pool, logicalPlan.target?.name ?? rawText);
       if (rr?.scores?.length) {
+        // reranker-fuse-alignment — el modelo reordena SOLO la cola débil; los
+        // matches anclados (exact/filename/structural) conservan evidencia fuerte.
+        // Sin anclaje: el modelo puntúa GT exacto con ~0.003 → fuse (score>=0.2) lo elimina.
+        const ANCHORED = new Set(['exact', 'filename', 'structural']);
         const scored = pool.map((r, i) => ({ r, s: rr.scores[i] ?? 0 }));
-        scored.sort((a, b) => b.s - a.s);
+        scored.sort((a, b) => {
+          const am = ANCHORED.has(a.r.match_type);
+          const bm = ANCHORED.has(b.r.match_type);
+          if (am !== bm) return am ? -1 : 1;        // anclados siempre arriba
+          if (am && bm) return (b.r.score ?? 0) - (a.r.score ?? 0); // entre anclados: heurístico
+          return b.s - a.s;                          // cola débil: score del modelo
+        });
         pool.length = 0;
         for (const { r, s } of scored) {
-          r.score = s; // 12.5 — fuse consume .score (peso 0.3 en score_final + dedup max)
+          r.score = ANCHORED.has(r.match_type) ? Math.max(r.score ?? 0, 0.5) : Math.max(s, 0.3); // nunca < filtro fuse
           pool.push(r);
         }
         stats.reranked = true;
@@ -432,6 +453,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       }
     } catch { /* fallback heurístico */ }
   }
+  stageSnap('post_rerank', pool);
 
   // plan-variant-confidence — telemetría por plan: success = matches relevantes en
   // el pool final (NO candidates>0); skipBlend → no contamina el blend de cardinalidad
@@ -457,6 +479,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   const results = fuse(pool, effectiveBudget(logicalPlan));
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
+  stageSnap('post_fuse', results);
 
   // abstain-no-answer — CF_ABSTAIN=1: si no hay evidence relevante (exact/filename/
   // structural), no devolver resultados débiles → {abstained:true, reason}.

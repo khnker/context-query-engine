@@ -25,6 +25,17 @@ if ! IFS= read -r first_line; then
   exit 1
 fi
 
+# reranker-fuse-alignment — peso del score del modelo en score_final.
+# Con reranker activo (CF_MODEL_CMD) el score aprendido domina (0.5); sin modelo
+# legacy 0.3 (exactness 0.35). Override explícito: CF_SCORE_WEIGHT.
+if [ -n "${CF_SCORE_WEIGHT:-}" ]; then
+  SW="$CF_SCORE_WEIGHT"
+elif [ -n "${CF_MODEL_CMD:-}" ]; then
+  SW="0.5"
+else
+  SW="0.3"
+fi
+
 TMP_IN="$(mktemp)"
 TMP_OUT="$(mktemp)"
 trap 'rm -f "$TMP_IN" "$TMP_OUT"' EXIT
@@ -46,7 +57,7 @@ if [ "${CF_STRICT_BUDGET:-}" = "0" ]; then
   STRICT_FLAG=false
 fi
 
-if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" '
+if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" --argjson SW "$SW" '
   # ---- normalize ----
   def bad_path:
     all((.path | split("/"))[]; . as $s |
@@ -90,8 +101,9 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --ar
   | group_by(.path, .line_start, .line_end)
   | map(. as $g | ($g | max_by(.score)) as $best
         | $best + { score: ($g | map(.score) | max), sources: [ $g[].source ] })
-  # ---- rank: score_final multi-factor ----
-  | map(. + { score_final: (0.35 * exactness + 0.3 * .score
+  # ---- rank: score_final multi-factor (SW = peso del score del modelo; sin
+  # modelo legacy exactness 0.35/score 0.3; con reranker SW=0.5) ----
+  | map(. + { score_final: ((1 - $SW - 0.2 - 0.15) * exactness + $SW * .score
                              + 0.2 * path_relevance + 0.15 * token_efficiency) })
   | sort_by(-.score_final)
   # ---- budget: consume en orden de rank hasta BUDGET; siempre el mejor de cada cluster ----
