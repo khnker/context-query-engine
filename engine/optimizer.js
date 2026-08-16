@@ -322,6 +322,15 @@ export function optimize(logicalPlan = {}) {
         const heur = statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool);
         const mEst = modelEstimate(op.tool, queryType, logicalPlan.scope ?? '', heur);
         const m = makeOp(op.tool, op.args ?? [name], mEst ?? heur);
+        // operator-cost-model — CF_LEARNED_COST=1: costos medidos por (op|query_class)
+        // desde telemetría real (n>=5); fallback COST_TABLE si evidencia insuficiente.
+        if (process.env.CF_LEARNED_COST === '1') {
+          const e = stats.get(`${op.tool}|${queryType}`);
+          if (e && e.n >= 5) {
+            m.tokens = Math.max(1, Math.round(e.p95Tokens || m.tokens));
+            m.latency_ms = Math.max(1, Math.round(e.avgLatencyMs || m.latency_ms));
+          }
+        }
         if (op.relations) m.relations = op.relations;
         if (op.inclusions) m.inclusions = op.inclusions;
         return m;

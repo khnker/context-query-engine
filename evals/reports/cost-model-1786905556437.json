@@ -1,0 +1,652 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "plan_accuracy": {
+    "static": 0.90625,
+    "learned": 0.4375,
+    "oracle": 1
+  },
+  "regret": {
+    "static": 0.15546875,
+    "learned": 0.16328125
+  },
+  "avg_tokens": {
+    "static": 104.28125,
+    "learned": 104.59375,
+    "oracle": 98.0625
+  },
+  "avg_latency_ms": {
+    "static": 146.625,
+    "learned": 146.15625
+  },
+  "gt_recall": {
+    "static": 1,
+    "learned": 1
+  },
+  "selected_plans": {
+    "static": [
+      "A",
+      "B"
+    ],
+    "learned": [
+      "A",
+      "B"
+    ]
+  },
+  "verdict": {
+    "pass": false,
+    "correctness_ok": true,
+    "tokens_ok": false,
+    "threshold": "learned.correctness >= static.correctness AND learned.tokens <= static.tokens"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 239,
+        "learned": 239,
+        "oracle": 239
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 11,
+        "learned": 11
+      }
+    },
+    {
+      "id": "lex-02",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 74,
+        "learned": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 4,
+        "learned": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 79,
+        "learned": 79,
+        "oracle": 79
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 7,
+        "learned": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 11,
+        "learned": 11,
+        "oracle": 11
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 86,
+        "learned": 86,
+        "oracle": 86
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 5,
+        "learned": 5
+      }
+    },
+    {
+      "id": "str-01",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 111,
+        "learned": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 3,
+        "learned": 3
+      }
+    },
+    {
+      "id": "str-02",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 247,
+        "learned": 247,
+        "oracle": 247
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 8,
+        "learned": 8
+      }
+    },
+    {
+      "id": "str-03",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 19,
+        "learned": 19,
+        "oracle": 19
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 2,
+        "learned": 2
+      }
+    },
+    {
+      "id": "str-04",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 67,
+        "learned": 67,
+        "oracle": 67
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 2,
+        "learned": 2
+      }
+    },
+    {
+      "id": "str-05",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 127,
+        "learned": 127,
+        "oracle": 127
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 8,
+        "learned": 8
+      }
+    },
+    {
+      "id": "sem-01",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 239,
+        "learned": 239,
+        "oracle": 239
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 7,
+        "learned": 7
+      }
+    },
+    {
+      "id": "sem-02",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 121,
+        "learned": 121,
+        "oracle": 121
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 5,
+        "learned": 5
+      }
+    },
+    {
+      "id": "sem-03",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 67,
+        "learned": 67,
+        "oracle": 67
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 2,
+        "learned": 2
+      }
+    },
+    {
+      "id": "sem-04",
+      "oracle": "A",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 120,
+        "learned": 120,
+        "oracle": 120
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 2,
+        "learned": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 90,
+        "learned": 90,
+        "oracle": 90
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 5,
+        "learned": 5
+      }
+    },
+    {
+      "id": "dep-01",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 239,
+        "learned": 239,
+        "oracle": 239
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 11,
+        "learned": 11
+      }
+    },
+    {
+      "id": "dep-02",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 111,
+        "learned": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 6,
+        "learned": 6
+      }
+    },
+    {
+      "id": "dep-03",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 79,
+        "learned": 79,
+        "oracle": 79
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 7,
+        "learned": 7
+      }
+    },
+    {
+      "id": "dep-04",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 11,
+        "learned": 11,
+        "oracle": 11
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 74,
+        "learned": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 4,
+        "learned": 4
+      }
+    },
+    {
+      "id": "cfg-01",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 61,
+        "learned": 61,
+        "oracle": 61
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "cfg-02",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 74,
+        "learned": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 4,
+        "learned": 4
+      }
+    },
+    {
+      "id": "cfg-03",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "A",
+      "tokens": {
+        "static": 10,
+        "learned": 10,
+        "oracle": 10
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 39,
+        "learned": 39,
+        "oracle": 39
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 4,
+        "learned": 4
+      }
+    },
+    {
+      "id": "cfg-05",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 264,
+        "learned": 264,
+        "oracle": 264
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 5,
+        "learned": 5
+      }
+    },
+    {
+      "id": "tst-01",
+      "oracle": "A",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 239,
+        "learned": 249,
+        "oracle": 40
+      },
+      "regret": {
+        "static": 4.975,
+        "learned": 5.225
+      },
+      "gt_hits": {
+        "static": 7,
+        "learned": 8
+      }
+    },
+    {
+      "id": "tst-02",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 96,
+        "learned": 96,
+        "oracle": 96
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 6,
+        "learned": 6
+      }
+    },
+    {
+      "id": "tst-03",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 50,
+        "learned": 50,
+        "oracle": 50
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "tst-04",
+      "oracle": "B",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 127,
+        "learned": 127,
+        "oracle": 127
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 6,
+        "learned": 6
+      }
+    },
+    {
+      "id": "tst-05",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "A",
+      "tokens": {
+        "static": 10,
+        "learned": 10,
+        "oracle": 10
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "oracle": "A",
+      "selected_static": "A",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 111,
+        "learned": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 3,
+        "learned": 3
+      }
+    },
+    {
+      "id": "git-01",
+      "oracle": "A",
+      "selected_static": "B",
+      "selected_learned": "B",
+      "tokens": {
+        "static": 45,
+        "learned": 45,
+        "oracle": 45
+      },
+      "regret": {
+        "static": 0,
+        "learned": 0
+      },
+      "gt_hits": {
+        "static": 1,
+        "learned": 1
+      }
+    }
+  ]
+}
