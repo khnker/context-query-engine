@@ -1,0 +1,104 @@
+[
+ {
+  "id": "dec-01",
+  "repo": "t1-basic",
+  "intent": "donde se define y usa retryWithFallback",
+  "primary": [
+   "src/utils/helpers.ts",
+   "src/services/fallback.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-02",
+  "repo": "t1-basic",
+  "intent": "who calls retryWithFallback",
+  "primary": [
+   "src/services/fallback.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-03",
+  "repo": "t1-modular",
+  "intent": "donde se define y usa get_provider_config",
+  "primary": [
+   "app/core/config.py"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-04",
+  "repo": "t1-modular",
+  "intent": "quien llama y usa get_provider_config",
+  "primary": [
+   "app/core/config.py"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-05",
+  "repo": "polar",
+  "intent": "donde se define y usa logger",
+  "primary": [
+   "api-polar/src/main.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-06",
+  "repo": "polar",
+  "intent": "who calls and uses main",
+  "primary": [
+   "ts-facturacion-comercio/src/analizar-ocr.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-07",
+  "repo": "polar",
+  "intent": "donde se define y valida logger",
+  "primary": [
+   "api-polar/src/main.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-08",
+  "repo": "t1-modular",
+  "intent": "donde define y persiste get_provider_config",
+  "primary": [
+   "app/core/config.py"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-09",
+  "repo": "t1-basic",
+  "intent": "donde se define retryWithFallback y quien lo llama",
+  "primary": [
+   "src/utils/helpers.ts",
+   "src/services/fallback.ts"
+  ],
+  "related": [],
+  "tests": []
+ },
+ {
+  "id": "dec-10",
+  "repo": "polar",
+  "intent": "donde se define logger y quien lo usa",
+  "primary": [
+   "api-polar/src/main.ts"
+  ],
+  "related": [],
+  "tests": []
+ }
+]

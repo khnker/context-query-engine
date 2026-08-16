@@ -17,6 +17,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { parseCQP } from './cqp.js';
+import { decompose } from './decompose.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
 import { record } from './statistics.js';
@@ -585,7 +586,36 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   return { plan: phys, results, stats, cached: false };
 }
 
+
+function mergeRuns(runs) {
+  const results = [];
+  const seen = new Set();
+  for (const r of runs) for (const x of r.results ?? []) {
+    const k = `${x.path}:${x.line_start ?? 0}`;
+    if (!seen.has(k)) { seen.add(k); results.push(x); }
+  }
+  return {
+    plan: runs[0].plan,
+    results,
+    stats: {
+      ...runs[0].stats,
+      tokens_used: runs.reduce((a, r) => a + (r.stats?.tokens_used ?? 0), 0),
+      tool_calls: runs.reduce((a, r) => a + (r.stats?.tool_calls ?? 0), 0),
+    },
+    cached: false,
+  };
+}
+
 export function runCQP(cqpText, opts = {}) {
+  // physical-query-decomposition (02): CF_DECOMPOSE=1 → sub-consultas físicas
+  // (symbol/callers/impl) ejecutadas por separado y fusionadas sin LLM.
+  if (process.env.CF_DECOMPOSE === '1' && !opts._nested) {
+    const { facets, sub_queries } = decompose(cqpText);
+    if (sub_queries.length > 1) {
+      const runs = sub_queries.map((q) => runCQP(q, { ...opts, _nested: true }));
+      return { ...mergeRuns(runs), stats: { ...runs[0].stats, tokens_used: mergeRuns(runs).stats.tokens_used, tool_calls: mergeRuns(runs).stats.tool_calls, decomposed: { facets, sub_queries, runs: runs.length } }, plan: runs[0].plan };
+    }
+  }
   const logicalPlan = parseCQP(cqpText); // lanza Error si input inválido
   return runPlan(logicalPlan, cqpText, opts);
 }
@@ -609,6 +639,14 @@ export function runIntent(intentText, opts = {}) {
     confidence: interp.confidence,
     raw: src,
   };
+  if (process.env.CF_DECOMPOSE === '1' && !opts._nested) {
+    const { facets, sub_queries } = decompose(src, name, [logicalPlan.query_type]);
+    if (sub_queries.length > 1) {
+      const runs = [runPlan(logicalPlan, src, opts)]; // original: intent (no CQP)
+      for (const q of sub_queries.slice(1)) runs.push(runCQP(q, { ...opts, _nested: true }));
+      return { ...mergeRuns(runs), stats: { ...mergeRuns(runs).stats, decomposed: { facets, sub_queries, runs: runs.length } } };
+    }
+  }
   return runPlan(logicalPlan, src, opts);
 }
 

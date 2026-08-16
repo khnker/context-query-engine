@@ -1,0 +1,512 @@
+{
+  "date": "2026-08-16",
+  "tasks": 10,
+  "verdict": {
+    "correctness": {
+      "baseline": 0.9,
+      "decomposed": 0.9,
+      "ok": true
+    },
+    "gt_gain_tasks": 0,
+    "gt_loss_tasks": 0,
+    "tokens_delta_mean": 3006,
+    "n_decomposed": 7,
+    "pass": true
+  },
+  "rows": [
+    {
+      "id": "dec-01",
+      "repo": "t1-basic",
+      "baseline": {
+        "id": "dec-01",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 149,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "decomposed": {
+        "id": "dec-01",
+        "repo": "t1-basic",
+        "tokens": 478,
+        "latency_ms": 216,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "definition"
+          ],
+          "sub_queries": [
+            "donde se define y usa retryWithFallback",
+            "FIND implementation OF symbol retryWithFallback LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 4
+      },
+      "gt_delta": 0,
+      "tokens_delta": 239,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "definition"
+        ],
+        "sub_queries": [
+          "donde se define y usa retryWithFallback",
+          "FIND implementation OF symbol retryWithFallback LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-02",
+      "repo": "t1-basic",
+      "baseline": {
+        "id": "dec-02",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 138,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "decomposed": {
+        "id": "dec-02",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 142,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-03",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-03",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 134,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-03",
+        "repo": "t1-modular",
+        "tokens": 22,
+        "latency_ms": 215,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "definition"
+          ],
+          "sub_queries": [
+            "donde se define y usa get_provider_config",
+            "FIND implementation OF symbol get_provider_config LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 11,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "definition"
+        ],
+        "sub_queries": [
+          "donde se define y usa get_provider_config",
+          "FIND implementation OF symbol get_provider_config LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-04",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-04",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 132,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-04",
+        "repo": "t1-modular",
+        "tokens": 22,
+        "latency_ms": 217,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "callers"
+          ],
+          "sub_queries": [
+            "quien llama y usa get_provider_config",
+            "FIND references OF symbol get_provider_config LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 11,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "callers"
+        ],
+        "sub_queries": [
+          "quien llama y usa get_provider_config",
+          "FIND references OF symbol get_provider_config LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-05",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-05",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 222,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "decomposed": {
+        "id": "dec-05",
+        "repo": "polar",
+        "tokens": 11232,
+        "latency_ms": 385,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "definition"
+          ],
+          "sub_queries": [
+            "donde se define y usa logger",
+            "FIND implementation OF symbol logger LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 42
+      },
+      "gt_delta": 0,
+      "tokens_delta": 5616,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "definition"
+        ],
+        "sub_queries": [
+          "donde se define y usa logger",
+          "FIND implementation OF symbol logger LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-06",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-06",
+        "repo": "polar",
+        "tokens": 7987,
+        "latency_ms": 599,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "ts-facturacion-comercio/src/analizar-ocr.ts"
+        ],
+        "decomposed": null,
+        "results": 269
+      },
+      "decomposed": {
+        "id": "dec-06",
+        "repo": "polar",
+        "tokens": 15974,
+        "latency_ms": 1153,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "ts-facturacion-comercio/src/analizar-ocr.ts"
+        ],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "callers"
+          ],
+          "sub_queries": [
+            "who calls and uses main",
+            "FIND implementation OF symbol main LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 269
+      },
+      "gt_delta": 0,
+      "tokens_delta": 7987,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "callers"
+        ],
+        "sub_queries": [
+          "who calls and uses main",
+          "FIND implementation OF symbol main LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-07",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-07",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 202,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "decomposed": {
+        "id": "dec-07",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 197,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-08",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-08",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 137,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-08",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 126,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-09",
+      "repo": "t1-basic",
+      "baseline": {
+        "id": "dec-09",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 130,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "decomposed": {
+        "id": "dec-09",
+        "repo": "t1-basic",
+        "tokens": 478,
+        "latency_ms": 221,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": {
+          "facets": [
+            "callers",
+            "definition"
+          ],
+          "sub_queries": [
+            "donde se define retryWithFallback y quien lo llama",
+            "FIND references OF symbol retryWithFallback LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 4
+      },
+      "gt_delta": 0,
+      "tokens_delta": 239,
+      "decomposed_run": {
+        "facets": [
+          "callers",
+          "definition"
+        ],
+        "sub_queries": [
+          "donde se define retryWithFallback y quien lo llama",
+          "FIND references OF symbol retryWithFallback LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-10",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-10",
+        "repo": "polar",
+        "tokens": 7978,
+        "latency_ms": 215,
+        "gt_hits": 0,
+        "n_ground": 1,
+        "correct": false,
+        "hits": [],
+        "decomposed": null,
+        "results": 142
+      },
+      "decomposed": {
+        "id": "dec-10",
+        "repo": "polar",
+        "tokens": 23934,
+        "latency_ms": 548,
+        "gt_hits": 0,
+        "n_ground": 1,
+        "correct": false,
+        "hits": [],
+        "decomposed": {
+          "facets": [
+            "persistence",
+            "callers",
+            "definition"
+          ],
+          "sub_queries": [
+            "donde se define logger y quien lo usa",
+            "FIND references OF symbol usa LIMIT 8",
+            "FIND implementation OF symbol usa LIMIT 8"
+          ],
+          "runs": 3
+        },
+        "results": 142
+      },
+      "gt_delta": 0,
+      "tokens_delta": 15956,
+      "decomposed_run": {
+        "facets": [
+          "persistence",
+          "callers",
+          "definition"
+        ],
+        "sub_queries": [
+          "donde se define logger y quien lo usa",
+          "FIND references OF symbol usa LIMIT 8",
+          "FIND implementation OF symbol usa LIMIT 8"
+        ],
+        "runs": 3
+      }
+    }
+  ]
+}
