@@ -1,0 +1,855 @@
+{
+  "date": "2026-08-16",
+  "tasks": 44,
+  "verdict": {
+    "pass": true,
+    "coverage": {
+      "base": 0.977,
+      "claims": 0.977,
+      "parity": true
+    },
+    "reduction": 0.586,
+    "tokens": {
+      "base": 53681,
+      "claims": 25040
+    }
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "gt": 11,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 239,
+      "n_claims": null,
+      "latency_ms": 170,
+      "claims": {
+        "id": "lex-01",
+        "gt": 11,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 167
+      },
+      "reduction": 0.7489539748953975
+    },
+    {
+      "id": "lex-02",
+      "gt": 4,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 74,
+      "n_claims": null,
+      "latency_ms": 171,
+      "claims": {
+        "id": "lex-02",
+        "gt": 4,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 159
+      },
+      "reduction": 0.7297297297297297
+    },
+    {
+      "id": "lex-03",
+      "gt": 7,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 79,
+      "n_claims": null,
+      "latency_ms": 163,
+      "claims": {
+        "id": "lex-03",
+        "gt": 7,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 165
+      },
+      "reduction": 0.5569620253164558
+    },
+    {
+      "id": "lex-04",
+      "gt": 1,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 11,
+      "n_claims": null,
+      "latency_ms": 160,
+      "claims": {
+        "id": "lex-04",
+        "gt": 1,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 5,
+        "n_claims": 1,
+        "latency_ms": 158
+      },
+      "reduction": 0.5454545454545454
+    },
+    {
+      "id": "lex-05",
+      "gt": 5,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 86,
+      "n_claims": null,
+      "latency_ms": 157,
+      "claims": {
+        "id": "lex-05",
+        "gt": 5,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 30,
+        "n_claims": 6,
+        "latency_ms": 162
+      },
+      "reduction": 0.6511627906976745
+    },
+    {
+      "id": "str-01",
+      "gt": 3,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 111,
+      "n_claims": null,
+      "latency_ms": 157,
+      "claims": {
+        "id": "str-01",
+        "gt": 3,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 161
+      },
+      "reduction": 0.6846846846846847
+    },
+    {
+      "id": "str-02",
+      "gt": 8,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 247,
+      "n_claims": null,
+      "latency_ms": 159,
+      "claims": {
+        "id": "str-02",
+        "gt": 8,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 65,
+        "n_claims": 13,
+        "latency_ms": 158
+      },
+      "reduction": 0.736842105263158
+    },
+    {
+      "id": "str-03",
+      "gt": 2,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 19,
+      "n_claims": null,
+      "latency_ms": 160,
+      "claims": {
+        "id": "str-03",
+        "gt": 2,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 10,
+        "n_claims": 2,
+        "latency_ms": 160
+      },
+      "reduction": 0.4736842105263158
+    },
+    {
+      "id": "str-04",
+      "gt": 2,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 67,
+      "n_claims": null,
+      "latency_ms": 169,
+      "claims": {
+        "id": "str-04",
+        "gt": 2,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 25,
+        "n_claims": 5,
+        "latency_ms": 162
+      },
+      "reduction": 0.6268656716417911
+    },
+    {
+      "id": "str-05",
+      "gt": 8,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 127,
+      "n_claims": null,
+      "latency_ms": 163,
+      "claims": {
+        "id": "str-05",
+        "gt": 8,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 178
+      },
+      "reduction": 0.5275590551181102
+    },
+    {
+      "id": "sem-01",
+      "gt": 7,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 239,
+      "n_claims": null,
+      "latency_ms": 157,
+      "claims": {
+        "id": "sem-01",
+        "gt": 7,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 165
+      },
+      "reduction": 0.7489539748953975
+    },
+    {
+      "id": "sem-02",
+      "gt": 5,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 121,
+      "n_claims": null,
+      "latency_ms": 157,
+      "claims": {
+        "id": "sem-02",
+        "gt": 5,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 161
+      },
+      "reduction": 0.7107438016528926
+    },
+    {
+      "id": "sem-03",
+      "gt": 2,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 67,
+      "n_claims": null,
+      "latency_ms": 162,
+      "claims": {
+        "id": "sem-03",
+        "gt": 2,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 25,
+        "n_claims": 5,
+        "latency_ms": 163
+      },
+      "reduction": 0.6268656716417911
+    },
+    {
+      "id": "sem-04",
+      "gt": 2,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 120,
+      "n_claims": null,
+      "latency_ms": 399,
+      "claims": {
+        "id": "sem-04",
+        "gt": 2,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 120,
+        "n_claims": 2,
+        "latency_ms": 366
+      },
+      "reduction": 0
+    },
+    {
+      "id": "sem-05",
+      "gt": 5,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 90,
+      "n_claims": null,
+      "latency_ms": 165,
+      "claims": {
+        "id": "sem-05",
+        "gt": 5,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 163
+      },
+      "reduction": 0.6111111111111112
+    },
+    {
+      "id": "dep-01",
+      "gt": 11,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 239,
+      "n_claims": null,
+      "latency_ms": 175,
+      "claims": {
+        "id": "dep-01",
+        "gt": 11,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 178
+      },
+      "reduction": 0.7489539748953975
+    },
+    {
+      "id": "dep-02",
+      "gt": 6,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 111,
+      "n_claims": null,
+      "latency_ms": 183,
+      "claims": {
+        "id": "dep-02",
+        "gt": 6,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 185
+      },
+      "reduction": 0.6846846846846847
+    },
+    {
+      "id": "dep-03",
+      "gt": 7,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 79,
+      "n_claims": null,
+      "latency_ms": 172,
+      "claims": {
+        "id": "dep-03",
+        "gt": 7,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 177
+      },
+      "reduction": 0.5569620253164558
+    },
+    {
+      "id": "dep-04",
+      "gt": 1,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 11,
+      "n_claims": null,
+      "latency_ms": 157,
+      "claims": {
+        "id": "dep-04",
+        "gt": 1,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 5,
+        "n_claims": 1,
+        "latency_ms": 164
+      },
+      "reduction": 0.5454545454545454
+    },
+    {
+      "id": "dep-05",
+      "gt": 4,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 74,
+      "n_claims": null,
+      "latency_ms": 180,
+      "claims": {
+        "id": "dep-05",
+        "gt": 4,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 176
+      },
+      "reduction": 0.7297297297297297
+    },
+    {
+      "id": "cfg-01",
+      "gt": 1,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 71,
+      "n_claims": null,
+      "latency_ms": 339,
+      "claims": {
+        "id": "cfg-01",
+        "gt": 1,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 330
+      },
+      "reduction": 0.7183098591549295
+    },
+    {
+      "id": "cfg-02",
+      "gt": 4,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 74,
+      "n_claims": null,
+      "latency_ms": 186,
+      "claims": {
+        "id": "cfg-02",
+        "gt": 4,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 162
+      },
+      "reduction": 0.7297297297297297
+    },
+    {
+      "id": "cfg-03",
+      "gt": 1,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 10,
+      "n_claims": null,
+      "latency_ms": 139,
+      "claims": {
+        "id": "cfg-03",
+        "gt": 1,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 5,
+        "n_claims": 1,
+        "latency_ms": 141
+      },
+      "reduction": 0.5
+    },
+    {
+      "id": "cfg-04",
+      "gt": 4,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 39,
+      "n_claims": null,
+      "latency_ms": 164,
+      "claims": {
+        "id": "cfg-04",
+        "gt": 4,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 163
+      },
+      "reduction": 0.4871794871794872
+    },
+    {
+      "id": "cfg-05",
+      "gt": 5,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 264,
+      "n_claims": null,
+      "latency_ms": 160,
+      "claims": {
+        "id": "cfg-05",
+        "gt": 5,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 75,
+        "n_claims": 15,
+        "latency_ms": 168
+      },
+      "reduction": 0.7159090909090908
+    },
+    {
+      "id": "tst-01",
+      "gt": 8,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 249,
+      "n_claims": null,
+      "latency_ms": 191,
+      "claims": {
+        "id": "tst-01",
+        "gt": 8,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 65,
+        "n_claims": 13,
+        "latency_ms": 193
+      },
+      "reduction": 0.7389558232931727
+    },
+    {
+      "id": "tst-02",
+      "gt": 6,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 96,
+      "n_claims": null,
+      "latency_ms": 192,
+      "claims": {
+        "id": "tst-02",
+        "gt": 6,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 188
+      },
+      "reduction": 0.6354166666666667
+    },
+    {
+      "id": "tst-03",
+      "gt": 1,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 50,
+      "n_claims": null,
+      "latency_ms": 187,
+      "claims": {
+        "id": "tst-03",
+        "gt": 1,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 183
+      },
+      "reduction": 0.6
+    },
+    {
+      "id": "tst-04",
+      "gt": 6,
+      "n_ground": 3,
+      "span_hit": null,
+      "tokens": 127,
+      "n_claims": null,
+      "latency_ms": 188,
+      "claims": {
+        "id": "tst-04",
+        "gt": 6,
+        "n_ground": 3,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 191
+      },
+      "reduction": 0.5275590551181102
+    },
+    {
+      "id": "tst-05",
+      "gt": 1,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 10,
+      "n_claims": null,
+      "latency_ms": 146,
+      "claims": {
+        "id": "tst-05",
+        "gt": 1,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 5,
+        "n_claims": 1,
+        "latency_ms": 145
+      },
+      "reduction": 0.5
+    },
+    {
+      "id": "adv-01",
+      "gt": 3,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 111,
+      "n_claims": null,
+      "latency_ms": 170,
+      "claims": {
+        "id": "adv-01",
+        "gt": 3,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 35,
+        "n_claims": 7,
+        "latency_ms": 157
+      },
+      "reduction": 0.6846846846846847
+    },
+    {
+      "id": "git-01",
+      "gt": 1,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 45,
+      "n_claims": null,
+      "latency_ms": 167,
+      "claims": {
+        "id": "git-01",
+        "gt": 1,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 45,
+        "n_claims": 9,
+        "latency_ms": 159
+      },
+      "reduction": 0
+    },
+    {
+      "id": "adv-fo-07",
+      "gt": 3,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 7989,
+      "n_claims": null,
+      "latency_ms": 453,
+      "claims": {
+        "id": "adv-fo-07",
+        "gt": 3,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 3645,
+        "n_claims": 729,
+        "latency_ms": 537
+      },
+      "reduction": 0.5437476530229065
+    },
+    {
+      "id": "adv-fo-08",
+      "gt": 2,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 4297,
+      "n_claims": null,
+      "latency_ms": 350,
+      "claims": {
+        "id": "adv-fo-08",
+        "gt": 2,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 2130,
+        "n_claims": 426,
+        "latency_ms": 285
+      },
+      "reduction": 0.5043053292995112
+    },
+    {
+      "id": "adv-fo-09",
+      "gt": 2,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 74,
+      "n_claims": null,
+      "latency_ms": 164,
+      "claims": {
+        "id": "adv-fo-09",
+        "gt": 2,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 162
+      },
+      "reduction": 0.7297297297297297
+    },
+    {
+      "id": "adv-du-16",
+      "gt": 8,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 5684,
+      "n_claims": null,
+      "latency_ms": 269,
+      "claims": {
+        "id": "adv-du-16",
+        "gt": 8,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 1665,
+        "n_claims": 333,
+        "latency_ms": 284
+      },
+      "reduction": 0.7070724841660803
+    },
+    {
+      "id": "adv-du-17",
+      "gt": 2,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 20,
+      "n_claims": null,
+      "latency_ms": 196,
+      "claims": {
+        "id": "adv-du-17",
+        "gt": 2,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 10,
+        "n_claims": 2,
+        "latency_ms": 197
+      },
+      "reduction": 0.5
+    },
+    {
+      "id": "adv-du-18",
+      "gt": 2,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 239,
+      "n_claims": null,
+      "latency_ms": 164,
+      "claims": {
+        "id": "adv-du-18",
+        "gt": 2,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 60,
+        "n_claims": 12,
+        "latency_ms": 156
+      },
+      "reduction": 0.7489539748953975
+    },
+    {
+      "id": "adv-mo-25",
+      "gt": 1,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 10,
+      "n_claims": null,
+      "latency_ms": 192,
+      "claims": {
+        "id": "adv-mo-25",
+        "gt": 1,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 5,
+        "n_claims": 1,
+        "latency_ms": 207
+      },
+      "reduction": 0.5
+    },
+    {
+      "id": "adv-mo-26",
+      "gt": 21,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 7992,
+      "n_claims": null,
+      "latency_ms": 398,
+      "claims": {
+        "id": "adv-mo-26",
+        "gt": 21,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 3485,
+        "n_claims": 697,
+        "latency_ms": 413
+      },
+      "reduction": 0.5639389389389389
+    },
+    {
+      "id": "adv-mo-27",
+      "gt": 2,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 40,
+      "n_claims": null,
+      "latency_ms": 231,
+      "claims": {
+        "id": "adv-mo-27",
+        "gt": 2,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 20,
+        "n_claims": 4,
+        "latency_ms": 212
+      },
+      "reduction": 0.5
+    },
+    {
+      "id": "adv-po-28",
+      "gt": 21,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 7992,
+      "n_claims": null,
+      "latency_ms": 449,
+      "claims": {
+        "id": "adv-po-28",
+        "gt": 21,
+        "n_ground": 2,
+        "span_hit": true,
+        "tokens": 3485,
+        "n_claims": 697,
+        "latency_ms": 402
+      },
+      "reduction": 0.5639389389389389
+    },
+    {
+      "id": "adv-po-29",
+      "gt": 1,
+      "n_ground": 1,
+      "span_hit": null,
+      "tokens": 7987,
+      "n_claims": null,
+      "latency_ms": 825,
+      "claims": {
+        "id": "adv-po-29",
+        "gt": 1,
+        "n_ground": 1,
+        "span_hit": true,
+        "tokens": 4335,
+        "n_claims": 867,
+        "latency_ms": 800
+      },
+      "reduction": 0.4572430199073494
+    },
+    {
+      "id": "adv-po-30",
+      "gt": 0,
+      "n_ground": 2,
+      "span_hit": null,
+      "tokens": 8000,
+      "n_claims": null,
+      "latency_ms": 2953,
+      "claims": {
+        "id": "adv-po-30",
+        "gt": 0,
+        "n_ground": 2,
+        "span_hit": false,
+        "tokens": 5000,
+        "n_claims": 1000,
+        "latency_ms": 2979
+      },
+      "reduction": 0.375
+    }
+  ]
+}

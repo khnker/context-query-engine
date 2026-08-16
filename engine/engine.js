@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import * as claimMod from './claim.js';
 import { rrfFuse } from './rrf.js';
 import { toPacket } from './evidence.js';
 import { structuralRefine } from './structural-refine.js';
@@ -738,6 +739,15 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   cache.set(key, { results, ts: Date.now(), fp });
   persistCache();
+
+  // claim-level-context (B3) — CF_CLAIMS=1: materializar como claims con spans
+  // mínimos (unidad = claim, no archivo); aditivo al pipeline (cache no afectado).
+  if (process.env.CF_CLAIMS === '1') {
+    const { buildClaims, claimStats } = claimMod;
+    const claims = buildClaims(results);
+    stats.claims = claimStats(claims);
+    results = claims;
+  }
 
   // explorer-solver-separation (FastContext) — CF_EXPLORER=1: el explorador
   // devuelve REFERENCES (path, line range, reason, certainty) + next_actions

@@ -995,6 +995,17 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-adaptive-k.js   # → evals/reports/ada
 
 44 tasks (fanout + T1), budgets 2000/8000, θ sweep 0.05-0.20: **PASS — density adaptive 0.011105 = topk 0.011105, parity ✓**. Hallazgo: la curva de marginal gain no tiene rodilla en este corpus (top-k y adaptive-k idénticos en todo el sweep) — el knee solo corta en rankings con cola de baja ganancia (flood de ruido, p.ej. adv-po-30), no representado aquí. Sin regresión; el mecanismo queda disponible.
 
+
+## Claim-Level Context (B3) — SÍ SIRVE
+
+La unidad de contexto es el **claim** (span mínimo con evidencia), no el archivo completo. `CF_CLAIMS=1` materializa los resultados como `{claim_id, subject, text, evidence:[{path, lines}], evidence_type, certainty, source, cost}`.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-claim.js   # → evals/reports/claims-<TS>.json
+```
+
+44 tasks (T1 + fan-out): coverage **0.977 = 0.977** (parity), tokens 53681 → 25040 (**−58.6%**). Habilita evaluación line-level (SWE-Explore-style) y el op físico READ_SPAN para materializar solo lo necesario.
+
 ## Glossary
 
 | Term | Meaning |
