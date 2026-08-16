@@ -697,6 +697,47 @@ context-query-engine/
 ├── engine/                        # engine (Node, stdlib-only)
 │   ├── cqp.js                     # CQP parser → logical plan
 │   ├── interpreter.js             # intent classifier (heuristic)
+
+## Retriever disagreement → active retrieval
+
+Señal de incertidumbre de retrieval sin entrenar modelo: el desacuerdo entre fuentes (lexical/structural/semantic/bm25/git) predice riesgo de GT missing y activa adquisición adicional.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-disagreement.js --adv   # → evals/reports/disagreement-<TS>.json
+```
+
+Instrumento (hook CF_DISAGREEMENT_FILE en engine, pre-fuse): agreement_rate = soporte medio de archivos en la unión de top-5 por fuente (paths normalizados; 1 = convergen, 0 = dispersión). 47 queries (T1 + adversarial fan-out):
+
+| estado | P(gt_miss) |
+|--------|------------|
+| agreement ≥ 0.5 (alta) | **0.000** |
+| agreement < 0.5 (baja) | **0.050** |
+| no-signal (fuente única: concept/zero-results) | 5/6 misses → abstain |
+
+Hipótesis SOSTENIDA: baja concordancia → más riesgo de miss. Caso validado: adv-po-30 ('main', poliglote) — rg inundado (score 1 uniforme), bm25 irrelevante, agreement 0 → requiere índice estructural/símbolos. Regla de trigger: agreement < 0.5 → adquirir fuentes ausentes; fuente única sin candidatos → abstain. Loop de adquisición runtime = change `adaptive-query-execution`. Instrumentación descartada: Jaccard top-10 entre fuentes (disjuntos por construcción) y margen top1-top2 (scores rg uniformes 1.0).
+
+## Repository Index Layer
+
+Capas de acceso a los repositorios materializadas (SQLite+FTS5, node:sqlite, zero deps) bajo `engine/index-layer/`. El índice produce **evidencia tipada**, no search results: `{source, entity, path, span, certainty, index_version, cost{latency_ms, tokens}}` — determinista (symbol/dependency: certainty 1.0) o probabilística (lexical: 0.9).
+
+```bash
+node engine/index-layer/index.js index <repo>         # build incremental (manifiesto sha256)
+node engine/index-layer/index.js query <repo> symbol retryWithFallback
+node engine/index-layer/index.js query <repo> lexical fallback
+node engine/index-layer/index.js freshness <repo>    # snapshot | dirty_scope → use_index | reindex
+```
+
+Componentes: store (SQLite WAL + FTS5, `.cqe/catalog.db`), manifest (diff sha256/mtime/size), extractores de símbolos/deps por lenguaje (TS/JS/Python regex), indexer incremental (1 archivo tocado → 1 reindexado), watcher (fs.watch recursive + debounce + coalescing a `FileChangeEvent`), freshness model (nunca evidencia vieja silenciosa — decide reindex o live-disk).
+
+| repo | build | reuse | incr (1 f) |
+|------|-------|-------|------------|
+| t1-basic | 54ms | 58ms | 58ms (1) |
+| polar | 134ms | 123ms | 130ms (1) |
+
+Watcher roundtrip 259ms; queries < 50ms. Este es el access layer del planner: los índices se convierten en **access paths** que el optimizer puede elegir (change `context-query-ir`), en vez de rg/search sobre filesystem crudo. Detalle v1: symbols por regex (sin tree-sitter); differencial vs Frigg/cqs = el planner/retrieval queda en CQE, aquí solo el catálogo materializado.
+
+## Repository structure
+
 │   ├── optimizer.js               # candidate plans + cost model + telemetry + learned mappings
 │   ├── engine.js                  # pipeline: parse → optimize → execute → fuse (+ cache)
 │   ├── mcp-server.js              # MCP stdio: context_query / search_files / read_file
