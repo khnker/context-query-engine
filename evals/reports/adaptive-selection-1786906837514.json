@@ -1,0 +1,1501 @@
+{
+  "date": "2026-08-16",
+  "tasks": 62,
+  "baseline": {
+    "correctness": 0.8387096774193549,
+    "gt_hits_mean": 3.823,
+    "tokens_mean": 1569
+  },
+  "adaptive": {
+    "correctness": 0.8387096774193549,
+    "gt_hits_mean": 3.79,
+    "tokens_mean": 1587
+  },
+  "recovered": [],
+  "flood_actions": 14,
+  "verdict": {
+    "pass": false,
+    "correctness_ok": true,
+    "recovery_ok": false,
+    "recovered_n": 0
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "gt_hits": 11,
+      "tokens": 239,
+      "latency_ms": 162,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 11,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "gt_hits": 4,
+      "tokens": 74,
+      "latency_ms": 148,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "gt_hits": 7,
+      "tokens": 79,
+      "latency_ms": 152,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 79,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "gt_hits": 1,
+      "tokens": 11,
+      "latency_ms": 157,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 11,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "gt_hits": 5,
+      "tokens": 86,
+      "latency_ms": 151,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 6
+      },
+      "mode_adaptive": {
+        "gt_hits": 5,
+        "tokens": 86,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "gt_hits": 3,
+      "tokens": 111,
+      "latency_ms": 141,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 3,
+        "tokens": 111,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "str-02",
+      "group": "structural",
+      "gt_hits": 8,
+      "tokens": 247,
+      "latency_ms": 143,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 13
+      },
+      "mode_adaptive": {
+        "gt_hits": 8,
+        "tokens": 247,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "str-03",
+      "group": "structural",
+      "gt_hits": 2,
+      "tokens": 19,
+      "latency_ms": 142,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 2
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 19,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "str-04",
+      "group": "structural",
+      "gt_hits": 2,
+      "tokens": 67,
+      "latency_ms": 149,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 5
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 67,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "str-05",
+      "group": "structural",
+      "gt_hits": 8,
+      "tokens": 127,
+      "latency_ms": 166,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 8,
+        "tokens": 127,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "sem-01",
+      "group": "semantic",
+      "gt_hits": 7,
+      "tokens": 239,
+      "latency_ms": 152,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "sem-02",
+      "group": "semantic",
+      "gt_hits": 5,
+      "tokens": 121,
+      "latency_ms": 151,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 5,
+        "tokens": 121,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "sem-03",
+      "group": "semantic",
+      "gt_hits": 2,
+      "tokens": 67,
+      "latency_ms": 144,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 5
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 67,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "sem-04",
+      "group": "semantic",
+      "gt_hits": 2,
+      "tokens": 120,
+      "latency_ms": 349,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 2
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 120,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "sem-05",
+      "group": "semantic",
+      "gt_hits": 5,
+      "tokens": 90,
+      "latency_ms": 157,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 5,
+        "tokens": 90,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "dep-01",
+      "group": "dependency",
+      "gt_hits": 11,
+      "tokens": 239,
+      "latency_ms": 169,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 11,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "dep-02",
+      "group": "dependency",
+      "gt_hits": 6,
+      "tokens": 111,
+      "latency_ms": 161,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 6,
+        "tokens": 111,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "dep-03",
+      "group": "dependency",
+      "gt_hits": 7,
+      "tokens": 79,
+      "latency_ms": 166,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 79,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "dep-04",
+      "group": "dependency",
+      "gt_hits": 1,
+      "tokens": 11,
+      "latency_ms": 156,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 11,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "dep-05",
+      "group": "dependency",
+      "gt_hits": 4,
+      "tokens": 74,
+      "latency_ms": 168,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "cfg-01",
+      "group": "configuration",
+      "gt_hits": 1,
+      "tokens": 61,
+      "latency_ms": 151,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 3
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 61,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "cfg-02",
+      "group": "configuration",
+      "gt_hits": 4,
+      "tokens": 74,
+      "latency_ms": 146,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "cfg-03",
+      "group": "configuration",
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 124,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "cfg-04",
+      "group": "configuration",
+      "gt_hits": 4,
+      "tokens": 39,
+      "latency_ms": 149,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 4,
+        "tokens": 39,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "cfg-05",
+      "group": "configuration",
+      "gt_hits": 5,
+      "tokens": 264,
+      "latency_ms": 184,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 15
+      },
+      "mode_adaptive": {
+        "gt_hits": 5,
+        "tokens": 264,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tst-01",
+      "group": "tests",
+      "gt_hits": 8,
+      "tokens": 249,
+      "latency_ms": 165,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 2,
+        "agreement_rate": 1.6667,
+        "coverage_estimate": 0.8,
+        "n_pool": 15
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tst-02",
+      "group": "tests",
+      "gt_hits": 6,
+      "tokens": 96,
+      "latency_ms": 192,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 2,
+        "agreement_rate": 3,
+        "coverage_estimate": 0.6667,
+        "n_pool": 9
+      },
+      "mode_adaptive": {
+        "gt_hits": 6,
+        "tokens": 96,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tst-03",
+      "group": "tests",
+      "gt_hits": 1,
+      "tokens": 50,
+      "latency_ms": 168,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 2,
+        "agreement_rate": 0.5,
+        "coverage_estimate": 0.6667,
+        "n_pool": 6
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 50,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tst-04",
+      "group": "tests",
+      "gt_hits": 6,
+      "tokens": 127,
+      "latency_ms": 172,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 2,
+        "agreement_rate": 9,
+        "coverage_estimate": 0.7059,
+        "n_pool": 17
+      },
+      "mode_adaptive": {
+        "gt_hits": 6,
+        "tokens": 127,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "tst-05",
+      "group": "tests",
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 122,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-01",
+      "group": "adversarial",
+      "gt_hits": 3,
+      "tokens": 111,
+      "latency_ms": 134,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 3,
+        "tokens": 111,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "git-01",
+      "group": "git",
+      "gt_hits": 1,
+      "tokens": 45,
+      "latency_ms": 146,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 9
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 45,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-hf-01",
+      "group": "high-frequency-symbol",
+      "gt_hits": 7,
+      "tokens": 5616,
+      "latency_ms": 203,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 392
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 5620,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-hf-02",
+      "group": "high-frequency-symbol",
+      "gt_hits": 1,
+      "tokens": 6738,
+      "latency_ms": 185,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 275
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 6888,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-hf-03",
+      "group": "high-frequency-symbol",
+      "gt_hits": 2,
+      "tokens": 239,
+      "latency_ms": 138,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-am-04",
+      "group": "ambiguous-identifier",
+      "gt_hits": 0,
+      "tokens": 7999,
+      "latency_ms": 402,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 3903
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 7999,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-am-05",
+      "group": "ambiguous-identifier",
+      "gt_hits": 7,
+      "tokens": 7992,
+      "latency_ms": 255,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1162
+      },
+      "mode_adaptive": {
+        "gt_hits": 7,
+        "tokens": 7992,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-am-06",
+      "group": "ambiguous-identifier",
+      "gt_hits": 1,
+      "tokens": 79,
+      "latency_ms": 137,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 79,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-fo-07",
+      "group": "huge-fanout",
+      "gt_hits": 3,
+      "tokens": 7989,
+      "latency_ms": 331,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 2753
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 7992,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-fo-08",
+      "group": "huge-fanout",
+      "gt_hits": 2,
+      "tokens": 4297,
+      "latency_ms": 195,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 427
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 4397,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-fo-09",
+      "group": "huge-fanout",
+      "gt_hits": 2,
+      "tokens": 74,
+      "latency_ms": 138,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 74,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-zr-10",
+      "group": "zero-results",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 163,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-zr-11",
+      "group": "zero-results",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 150,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-zr-12",
+      "group": "zero-results",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 113,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-dc-13",
+      "group": "deep-dependency-chain",
+      "gt_hits": 0,
+      "tokens": 2624,
+      "latency_ms": 176,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 70
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 3074,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-dc-14",
+      "group": "deep-dependency-chain",
+      "gt_hits": 8,
+      "tokens": 7980,
+      "latency_ms": 215,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 665
+      },
+      "mode_adaptive": {
+        "gt_hits": 8,
+        "tokens": 7980,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-dc-15",
+      "group": "deep-dependency-chain",
+      "gt_hits": 2,
+      "tokens": 19,
+      "latency_ms": 143,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 2
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 19,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-du-16",
+      "group": "duplicate-implementations",
+      "gt_hits": 8,
+      "tokens": 5684,
+      "latency_ms": 196,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 333
+      },
+      "mode_adaptive": {
+        "gt_hits": 8,
+        "tokens": 5966,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-du-17",
+      "group": "duplicate-implementations",
+      "gt_hits": 2,
+      "tokens": 20,
+      "latency_ms": 129,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 2
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 20,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-du-18",
+      "group": "duplicate-implementations",
+      "gt_hits": 2,
+      "tokens": 239,
+      "latency_ms": 136,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 12
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 239,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-gc-19",
+      "group": "generated-code",
+      "gt_hits": 1,
+      "tokens": 40,
+      "latency_ms": 134,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 40,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-gc-20",
+      "group": "generated-code",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 105,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-gc-21",
+      "group": "generated-code",
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 136,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-vd-22",
+      "group": "vendor-code",
+      "gt_hits": 0,
+      "tokens": 4297,
+      "latency_ms": 208,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 427
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 4397,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-vd-23",
+      "group": "vendor-code",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 105,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-vd-24",
+      "group": "vendor-code",
+      "gt_hits": 0,
+      "tokens": 0,
+      "latency_ms": 118,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 0,
+        "agreement_rate": null,
+        "coverage_estimate": 0,
+        "n_pool": 0
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 0,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-mo-25",
+      "group": "monorepo",
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 130,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-mo-26",
+      "group": "monorepo",
+      "gt_hits": 21,
+      "tokens": 7992,
+      "latency_ms": 295,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1770
+      },
+      "mode_adaptive": {
+        "gt_hits": 21,
+        "tokens": 7992,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-mo-27",
+      "group": "monorepo",
+      "gt_hits": 2,
+      "tokens": 40,
+      "latency_ms": 144,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 4
+      },
+      "mode_adaptive": {
+        "gt_hits": 2,
+        "tokens": 40,
+        "adaptive": {
+          "flood": false,
+          "actions": []
+        }
+      }
+    },
+    {
+      "id": "adv-po-28",
+      "group": "polyglot",
+      "gt_hits": 21,
+      "tokens": 7992,
+      "latency_ms": 310,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 1770
+      },
+      "mode_adaptive": {
+        "gt_hits": 21,
+        "tokens": 7992,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-po-29",
+      "group": "polyglot",
+      "gt_hits": 1,
+      "tokens": 7987,
+      "latency_ms": 615,
+      "plan": "A",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 7309
+      },
+      "mode_adaptive": {
+        "gt_hits": 1,
+        "tokens": 7991,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25",
+            "dependency-expand"
+          ]
+        }
+      }
+    },
+    {
+      "id": "adv-po-30",
+      "group": "polyglot",
+      "gt_hits": 0,
+      "tokens": 8000,
+      "latency_ms": 2202,
+      "plan": "B",
+      "adaptive": null,
+      "belief": {
+        "sources": 1,
+        "agreement_rate": null,
+        "coverage_estimate": 1,
+        "n_pool": 35089
+      },
+      "mode_adaptive": {
+        "gt_hits": 0,
+        "tokens": 8000,
+        "adaptive": {
+          "flood": true,
+          "actions": [
+            "symbol-lookup",
+            "bm25"
+          ]
+        }
+      }
+    }
+  ]
+}

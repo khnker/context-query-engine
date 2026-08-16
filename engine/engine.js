@@ -571,6 +571,49 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   stats.belief = beliefFromPool(pool);
 
+  // adaptive-plan-selection — CF_ADAPTIVE=1: el belief state decide adquisición
+  // extra ANTES de fuse (determinista, opt-in).
+  // Flood risk: coverage alta + pool grande + agreement bajo → símbolo común
+  // inundado por rg (score 1 uniforme, ej. 'main') → symbol-lookup (pins el def).
+  // Low agreement: fuentes divergen → bm25 + dependency-expand como adquisición.
+  if (process.env.CF_ADAPTIVE === '1') {
+    const b = stats.belief;
+    const floodCov = Number(process.env.CF_ADAPTIVE_FLOOD_COV ?? 0.85);
+    const agreeTh = Number(process.env.CF_ADAPTIVE_AGREE ?? 0.5);
+    const actions = [];
+    const seenPath = (p) => pool.some((x) => String(x.path) === String(p));
+    const flood = b.coverage_estimate > floodCov && b.n_pool > 30 && (b.agreement_rate === null || b.agreement_rate < agreeTh);
+    const diverge = b.agreement_rate !== null && b.agreement_rate < agreeTh && !flood;
+    if (flood) {
+      // NEGATIVO (probado): descartar la fuente inundada rompe correctness (0.839→0.710)
+      // — la fuente flood suele CONTENER el GT (logger/env multi-hit); el problema real
+      // es el budget consumido por ruido antes del GT (adv-po-30 35k rows). La vía
+      // correcta es boost de prioridad de evidencia adquirida en fuse (tarea derivada).
+      try {
+        const sym = execOp({ tool: 'symbol-lookup', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
+        for (const r of sym) if (!seenPath(r.path)) pool.push(r);
+        actions.push('symbol-lookup');
+      } catch { /* best-effort */ }
+    }
+    if (diverge || flood) {
+      if (!pool.some((r) => r.source === 'bm25')) {
+        try {
+          const bm = execOp({ tool: 'bm25', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
+          for (const r of bm) if (!seenPath(r.path)) pool.push(r);
+          actions.push('bm25');
+        } catch { /* best-effort */ }
+      }
+      if (logicalPlan.target?.kind === 'symbol' || logicalPlan.target?.kind === 'function') {
+        try {
+          const de = execOp({ tool: 'dependency-expand', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, pool);
+          for (const r of de) if (!seenPath(r.path)) pool.push(r);
+          actions.push('dependency-expand');
+        } catch { /* best-effort */ }
+      }
+    }
+    stats.adaptive = { flood, actions };
+  }
+
   let results = fuse(pool, effectiveBudget(logicalPlan));
 
   // 07B context selection submodular — CF_SELECTOR=marginal: greedy por ganancia
