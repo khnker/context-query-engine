@@ -806,6 +806,33 @@ Split-conformal para abstention: nonconformity = 1 − max evidence strength (ti
 TMPDIR=$PWD/.tmp node evals/scripts/eval-conformal.js   # → evals/reports/abstain-conformal-<TS>.json
 ```
 
+
+## Context query IR (CF_INDEX=1) — PASSA
+
+Access paths materializados: el planner puede sustituir ops sobre filesystem crudo por consultas al catálogo (engine/index-layer) — `CF_INDEX=1` mapea search-code/rg-files→lexical-index, search-structure→dependency-expand (solo definitions/references/implementation/filename; pattern/concept conservan rg, FTS no es regex).
+
+```bash
+TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-ir.js   # → evals/reports/ir-<TS>.json
+```
+
+| modo | correctness | tokens | r@5 | MRR |
+|------|-------------|--------|-----|-----|
+| cqe (rg) | 1.000 | 104 | 0.833 | 0.939 |
+| index (CF_INDEX=1) | **1.000** | **36** (2.9× menos) | 0.823 | 0.720 |
+
+Veredicto: **SÍ sirve** — 2.9× menos tokens sin perder correctness; MRR menor porque las filas del índice no traen spans de línea exactos (siguiente: op físico READ_SPAN). Costo: build 326-341ms. Descartados con evidencia: AND-tokens camelCase, symbol-lookup para filename, substitución en pattern/concept.
+
+## Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial)
+
+Descomposición determinista (sin LLM) de queries multi-facet en sub-consultas por keywords EN+ES (`engine/decompose.js`): facetas persistence/callers/definition → `FIND references/definitions/implementation OF symbol <name>`.
+
+| modo | correctness | tokens (medio) |
+|------|-------------|----------------|
+| baseline | 0.900 | ~4.5k |
+| CF_DECOMPOSE=1 | 0.900 | +3006 (2-3×) |
+
+Veredicto: **NO sirve en el corpus actual** — gt gain 0/10 (la intención resuelta ya cubre la faceta principal); costos 2-3× (polar 2×). `CF_DECOMPOSE` OFF por default. Escenario de ganancia real (entidad con callers/impl distintos del def) no representado en fixtures — anotado para re-test. El mecanismo determinista funciona (facetas 7/10).
+
 ## Glossary
 
 | Term | Meaning |
