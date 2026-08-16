@@ -645,6 +645,23 @@ Medición (`evals/scripts/eval-indexing.js`, tasks 3.1-3.5 del change `indexing-
 - **Mitigaciones adversarial**: ✅ DONE (adversarial-mitigations) — M1 escalación concept con evidencia exacta primero (rg-files por palabra → search-structure → semántica; dc-14/15 ✓, dc-13 miss estructural documentado: GT sin match léxico, probe ausente); M2 generated-code recuperado 3/3 con `CF_SEARCH_NO_IGNORE=1` + `CF_INCLUDE_GENERATED=1` (bad_path relajado; gc-19 package-lock gitignored, gc-20 dist main.js); M3 token explosion acotada con budget duro en fuse (mo-26 15836→7992 tokens sin perder correctness). Descartado: cap fan-out por truncación en engine (rompía correctness — rg scores uniformes → truncado arbitrario). **strict-budget-default**: el budget duro es ahora el DEFAULT (opt-out `CF_STRICT_BUDGET=0` para el comportamiento legacy con path-cluster); mo-26 default = 7,992 ≤ 8,000 con correctness ✓; matriz T1 idéntica. Ver `evals/reports/mitigations-<TS>.json`.
 - **Harness acotado/reproducible**: ✅ DONE (harness-bounded-reproducible) — todo run del engine desde un eval script tiene timeout por query (60s) + aislamiento de error (fila con error, no aborta) en eval-recall/hybrid/baselines/downstream/failure-modes; dev completo sin --limit bajó de >15 min a ~9s; artefactos siempre escritos. Ver `evals/reports/` y `reproduce.sh`.
 
+## Quality-aware selection (REJECT)
+
+Política de escalación simulada offline sobre el artefacto congelado de diagnosis (32 tasks, planes A/B/C forzados): correr en orden de costo estimado y escalar a un plan mayor solo si la señal de calidad observada < umbral.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-quality-policy.js   # → evals/reports/quality-policy-<TS>.json
+```
+
+| política | tokens | gt_hits | r@5 | escalaciones |
+|----------|--------|---------|-----|--------------|
+| cost_only (actual) | 105 | 4.438 | 0.833 | 0 |
+| exactness θ=1.0 | 116 | 4.438 | 0.833 | 4 |
+| gt_hits θ=5 (techo) | 237 | 4.875 | 1.021* | 17 |
+| oracle_quality | 221 | 5.375 | 1.021* | — |
+
+La señal exactness (runtime-observable sin GT) es **plana**: nunca escala el gt (4.438 en todo el sweep) — mismo diagnóstico que cost/quality. Incluso con señal oráculo gt_hits, ningún umbral alcanza el objetivo (≥90% del oráculo @ ≤2.0× tokens): θ=5 da 4.875 (90.7%) pero a 2.26× tokens. La frontera es dura: el +21% de gt_hits del oráculo cuesta 2.1× tokens sin punto medio barato. **Veredicto REJECT** en fixtures sintéticas (plan A ya satisface casi todo); re-testear en repos reales (T2/dev) o exponer tradeoff explícito para queries high-stakes. (*1.021 = anomalía de display del artefacto base.)
+
 ## Repository structure
 
 ```text

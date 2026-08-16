@@ -1,0 +1,680 @@
+{
+  "date": "2026-08-16",
+  "source": "/home/nicolas/dev/contextforge/evals/reports/selection-policy-1786834278335.json",
+  "tasks": 32,
+  "cost_only": {
+    "avg_tokens": 104.6,
+    "avg_gt_hits": 4.438,
+    "coverage": 1,
+    "recall5": 0.833,
+    "escalations": 0,
+    "escalations_detail": []
+  },
+  "oracle_quality": {
+    "avg_tokens": 220.8,
+    "avg_gt_hits": 5.375,
+    "coverage": 1,
+    "recall5": 1.021,
+    "escalations": 0,
+    "escalations_detail": []
+  },
+  "sweep_exactness": [
+    {
+      "theta": 0,
+      "signal": "exactness",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 0.5,
+      "signal": "exactness",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 0.7,
+      "signal": "exactness",
+      "avg_tokens": 114.9,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 2,
+      "escalations_detail": [
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 0.8,
+      "signal": "exactness",
+      "avg_tokens": 114.9,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 2,
+      "escalations_detail": [
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 0.9,
+      "signal": "exactness",
+      "avg_tokens": 116.2,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 4,
+      "escalations_detail": [
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 1,
+      "signal": "exactness",
+      "avg_tokens": 116.2,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 4,
+      "escalations_detail": [
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    }
+  ],
+  "sweep_gt_hits": [
+    {
+      "theta": 0,
+      "signal": "gt_hits",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 1,
+      "signal": "gt_hits",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 2,
+      "signal": "gt_hits",
+      "avg_tokens": 144.8,
+      "avg_gt_hits": 4.531,
+      "coverage": 1,
+      "recall5": 0.844,
+      "escalations": 7,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 3,
+      "signal": "gt_hits",
+      "avg_tokens": 174.2,
+      "avg_gt_hits": 4.563,
+      "coverage": 1,
+      "recall5": 0.896,
+      "escalations": 11,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "git-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 4,
+      "signal": "gt_hits",
+      "avg_tokens": 203.4,
+      "avg_gt_hits": 4.688,
+      "coverage": 1,
+      "recall5": 0.927,
+      "escalations": 13,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "adv-01",
+          "plans_run": 3,
+          "chosen": "C"
+        }
+      ]
+    },
+    {
+      "theta": 5,
+      "signal": "gt_hits",
+      "avg_tokens": 237.4,
+      "avg_gt_hits": 4.875,
+      "coverage": 1,
+      "recall5": 1.021,
+      "escalations": 17,
+      "escalations_detail": [
+        {
+          "id": "lex-02",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-05",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-02",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        }
+      ]
+    }
+  ],
+  "sweep_n_results": [
+    {
+      "theta": 0,
+      "signal": "n_results",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 1,
+      "signal": "n_results",
+      "avg_tokens": 104.6,
+      "avg_gt_hits": 4.438,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 0,
+      "escalations_detail": []
+    },
+    {
+      "theta": 2,
+      "signal": "n_results",
+      "avg_tokens": 124.1,
+      "avg_gt_hits": 4.5,
+      "coverage": 1,
+      "recall5": 0.833,
+      "escalations": 4,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        }
+      ]
+    },
+    {
+      "theta": 3,
+      "signal": "n_results",
+      "avg_tokens": 138.7,
+      "avg_gt_hits": 4.531,
+      "coverage": 1,
+      "recall5": 0.865,
+      "escalations": 6,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        }
+      ]
+    },
+    {
+      "theta": 4,
+      "signal": "n_results",
+      "avg_tokens": 147.5,
+      "avg_gt_hits": 4.531,
+      "coverage": 1,
+      "recall5": 0.865,
+      "escalations": 7,
+      "escalations_detail": [
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 2,
+          "chosen": "A"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        }
+      ]
+    },
+    {
+      "theta": 5,
+      "signal": "n_results",
+      "avg_tokens": 190.6,
+      "avg_gt_hits": 4.75,
+      "coverage": 1,
+      "recall5": 0.969,
+      "escalations": 12,
+      "escalations_detail": [
+        {
+          "id": "lex-02",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "lex-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "str-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "sem-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "dep-05",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-01",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-02",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "cfg-03",
+          "plans_run": 3,
+          "chosen": "B"
+        },
+        {
+          "id": "cfg-04",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "tst-03",
+          "plans_run": 3,
+          "chosen": "C"
+        },
+        {
+          "id": "tst-05",
+          "plans_run": 3,
+          "chosen": "B"
+        }
+      ]
+    }
+  ],
+  "verdict": {
+    "pass": false,
+    "target": {
+      "gt_hits_90pct_oracle": 4.838,
+      "tokens_cap_2x_cost_only": 209.2
+    },
+    "best_policy": null,
+    "frontier": [
+      {
+        "theta": 0,
+        "tokens": 104.6,
+        "gt_hits": 4.438,
+        "escalations": 0
+      },
+      {
+        "theta": 0.5,
+        "tokens": 104.6,
+        "gt_hits": 4.438,
+        "escalations": 0
+      },
+      {
+        "theta": 0.7,
+        "tokens": 114.9,
+        "gt_hits": 4.438,
+        "escalations": 2
+      },
+      {
+        "theta": 0.8,
+        "tokens": 114.9,
+        "gt_hits": 4.438,
+        "escalations": 2
+      },
+      {
+        "theta": 0.9,
+        "tokens": 116.2,
+        "gt_hits": 4.438,
+        "escalations": 4
+      },
+      {
+        "theta": 1,
+        "tokens": 116.2,
+        "gt_hits": 4.438,
+        "escalations": 4
+      }
+    ]
+  }
+}
