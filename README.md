@@ -971,6 +971,19 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-flood-boost.js   # → evals/reports/fl
 | adaptive+boost | 0.855 | 3.839 | 1591 |
 
 Sin regresión (T1 1.000 en todas), pero adv-po-30 NO se rescata: el flood (coverage 1.0, n_pool 7309) dispara la adquisición, pero las filas adquiridas se dedupean por path contra el flood existente → no queda evidencia adquirida que boostear; el GT queda fuera del budget por tie-order de rg exact 0.86. Fix derivado: UPSERT por path en adquisición (reemplazar fila flood por la adquirida con mayor certeza/span) — para B8.
+
+## Typed Rank Fusion (RRF) — B1
+
+Fusión por RANGO multi-fuente con pesos por query-type (`CF_RRF=1` + `CF_RRF_RANK=1`): cada fuente (rg/bm25/structural/git/index) aporta un ranking y se combina Σ w_tier·1/(k+rank), dedupe a una fila por path.
+
+| métrica | baseline | rrf |
+|---------|----------|-----|
+| correctness | 0.855 | **0.871** |
+| mrr | 0.640 | 0.583 |
+| tokens | 1572 | **933** (−41%) |
+
+Veredicto: **FAIL por umbral, señal MIXTA** — gana cobertura (+1.6pp correctness) y reduce tokens 41% (dedupe por path), pero pierde precisión de rank (mrr −5.7pp). RRF sirve para paths diversity-first (fan-out/coverage), no para precision-first. Disponible opt-in, default intacto.
+
 ## Glossary
 
 | Term | Meaning |

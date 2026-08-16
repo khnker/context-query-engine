@@ -23,6 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
+import { rrfFuse } from './rrf.js';
 import { toPacket } from './evidence.js';
 import { structuralRefine } from './structural-refine.js';
 import { repoFingerprint, walkFiles } from './index-layer/manifest.js';
@@ -676,6 +677,15 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   // no rompe el contrato flat de assemble-context; certainty = tipo epistémico).
   const packetOpts = { operator: phys.selected ?? null, target: logicalPlan.target };
   for (let i = 0; i < pool.length; i++) pool[i] = toPacket(pool[i], i, packetOpts);
+
+  // typed-rank-fusion (B1) — CF_RRF=1: reordenar pool por RRF multi-fuente
+  // con pesos por query_type; assemble-context respeta .rrf (CF_RRF_RANK).
+  if (process.env.CF_RRF === '1' && pool.length > 1) {
+    const fused = rrfFuse(pool, logicalPlan.query_type);
+    pool.length = 0;
+    pool.push(...fused);
+    stats.rrf_fused = true;
+  }
 
   let results = fuse(pool, effectiveBudget(logicalPlan));
 

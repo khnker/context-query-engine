@@ -71,7 +71,7 @@ if [ "${CF_SELECTOR:-}" = "marginal" ] || [ "${CF_SELECTOR_RANKED_ONLY:-}" = "1"
   NOBUDGET_FLAG=true
 fi
 
-if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" --argjson SW "$SW" --argjson NOBUDGET "$NOBUDGET_FLAG" --argjson TOP "$SELECTOR_TOP" '
+if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson RRF "${CF_RRF_RANK:-0}" --argjson BADPATH "$BAD_PATH_LIST" --argjson STRICT "$STRICT_FLAG" --argjson SW "$SW" --argjson NOBUDGET "$NOBUDGET_FLAG" --argjson TOP "$SELECTOR_TOP" '
   # ---- normalize ----
   def bad_path:
     all((.path | split("/"))[]; . as $s |
@@ -131,7 +131,7 @@ if ! jq -s -c --argjson BUDGET "$BUDGET" --argjson BADPATH "$BAD_PATH_LIST" --ar
   # modelo legacy exactness 0.35/score 0.3; con reranker SW=0.5) ----
   | map(. + { score_final: ((1 - $SW - 0.2 - 0.15) * exactness + $SW * .score
                              + 0.2 * path_relevance + 0.15 * token_efficiency) })
-  | sort_by(-.score_final)
+  | sort_by(-(if $RRF == 1 then (.rrf // .score_final) else .score_final end))
   # ---- budget (07B): con NOBUDGET el selector externo aplica el budget submodular;
   # ---- si no, greedy legacy por score_final hasta BUDGET (strict por defecto) ----
   | . as $ranked
