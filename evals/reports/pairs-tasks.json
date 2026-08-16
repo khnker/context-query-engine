@@ -1,0 +1,2668 @@
+{
+  "tasks": [
+    {
+      "id": "lex-01",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 200,
+          "latency_ms": 124,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 500,
+          "latency_ms": 110,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 549,
+          "est_tokens": 1000,
+          "latency_ms": 353,
+          "gt_hits": 13,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 17
+        }
+      }
+    },
+    {
+      "id": "lex-02",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 200,
+          "latency_ms": 110,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1000,
+          "latency_ms": 284,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "lex-03",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 79,
+          "est_tokens": 200,
+          "latency_ms": 109,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 79,
+          "est_tokens": 500,
+          "latency_ms": 116,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 264,
+          "est_tokens": 1000,
+          "latency_ms": 291,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 11
+        }
+      }
+    },
+    {
+      "id": "lex-04",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 11,
+          "est_tokens": 200,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 11,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 281,
+          "est_tokens": 1000,
+          "latency_ms": 315,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "lex-05",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 86,
+          "est_tokens": 200,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        },
+        "B": {
+          "tokens": 86,
+          "est_tokens": 500,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        },
+        "C": {
+          "tokens": 181,
+          "est_tokens": 1000,
+          "latency_ms": 274,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 9
+        }
+      }
+    },
+    {
+      "id": "str-01",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 200,
+          "latency_ms": 111,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 111,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1000,
+          "latency_ms": 295,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1.5,
+          "mrr": 1,
+          "n_results": 10
+        }
+      }
+    },
+    {
+      "id": "str-02",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 310,
+          "est_tokens": 800,
+          "latency_ms": 312,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.2,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 247,
+          "est_tokens": 250,
+          "latency_ms": 111,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 13
+        },
+        "C": {
+          "tokens": 247,
+          "est_tokens": 1000,
+          "latency_ms": 109,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 13
+        }
+      }
+    },
+    {
+      "id": "str-03",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 19,
+          "est_tokens": 200,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 19,
+          "est_tokens": 500,
+          "latency_ms": 113,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "C": {
+          "tokens": 209,
+          "est_tokens": 1000,
+          "latency_ms": 288,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "str-04",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 170,
+          "est_tokens": 800,
+          "latency_ms": 291,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 67,
+          "est_tokens": 250,
+          "latency_ms": 112,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        },
+        "C": {
+          "tokens": 67,
+          "est_tokens": 1000,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        }
+      }
+    },
+    {
+      "id": "str-05",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 127,
+          "est_tokens": 200,
+          "latency_ms": 110,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 127,
+          "est_tokens": 500,
+          "latency_ms": 114,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 372,
+          "est_tokens": 1000,
+          "latency_ms": 275,
+          "gt_hits": 10,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 16
+        }
+      }
+    },
+    {
+      "id": "sem-01",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 220,
+          "est_tokens": 800,
+          "latency_ms": 266,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.5,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 250,
+          "latency_ms": 114,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 239,
+          "est_tokens": 1000,
+          "latency_ms": 114,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        }
+      }
+    },
+    {
+      "id": "sem-02",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 315,
+          "est_tokens": 800,
+          "latency_ms": 354,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.2,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 121,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 121,
+          "est_tokens": 1000,
+          "latency_ms": 113,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        }
+      }
+    },
+    {
+      "id": "sem-03",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 170,
+          "est_tokens": 800,
+          "latency_ms": 294,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 67,
+          "est_tokens": 250,
+          "latency_ms": 108,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        },
+        "C": {
+          "tokens": 67,
+          "est_tokens": 1000,
+          "latency_ms": 111,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 5
+        }
+      }
+    },
+    {
+      "id": "sem-04",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 120,
+          "est_tokens": 800,
+          "latency_ms": 276,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 120,
+          "est_tokens": 250,
+          "latency_ms": 315,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        },
+        "C": {
+          "tokens": 120,
+          "est_tokens": 1000,
+          "latency_ms": 289,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 2
+        }
+      }
+    },
+    {
+      "id": "sem-05",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 180,
+          "est_tokens": 800,
+          "latency_ms": 250,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.3333333333333333,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 90,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 90,
+          "est_tokens": 1000,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 7
+        }
+      }
+    },
+    {
+      "id": "dep-01",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 500,
+          "latency_ms": 133,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 800,
+          "latency_ms": 139,
+          "gt_hits": 11,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 549,
+          "est_tokens": 1300,
+          "latency_ms": 351,
+          "gt_hits": 13,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 17
+        }
+      }
+    },
+    {
+      "id": "dep-02",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 135,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 800,
+          "latency_ms": 139,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1300,
+          "latency_ms": 310,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 1.3333333333333333,
+          "mrr": 1,
+          "n_results": 10
+        }
+      }
+    },
+    {
+      "id": "dep-03",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 79,
+          "est_tokens": 500,
+          "latency_ms": 126,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 79,
+          "est_tokens": 800,
+          "latency_ms": 136,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 239,
+          "est_tokens": 1300,
+          "latency_ms": 311,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 1.3333333333333333,
+          "mrr": 1,
+          "n_results": 10
+        }
+      }
+    },
+    {
+      "id": "dep-04",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 11,
+          "est_tokens": 500,
+          "latency_ms": 120,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 11,
+          "est_tokens": 800,
+          "latency_ms": 123,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 281,
+          "est_tokens": 1300,
+          "latency_ms": 328,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "dep-05",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 134,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 800,
+          "latency_ms": 130,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1300,
+          "latency_ms": 306,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "cfg-01",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 280,
+          "est_tokens": 800,
+          "latency_ms": 291,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.5,
+          "mrr": 0.25,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 61,
+          "est_tokens": 250,
+          "latency_ms": 111,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "C": {
+          "tokens": 61,
+          "est_tokens": 1000,
+          "latency_ms": 113,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.5,
+          "mrr": 0.5,
+          "n_results": 3
+        }
+      }
+    },
+    {
+      "id": "cfg-02",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 200,
+          "latency_ms": 111,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 500,
+          "latency_ms": 109,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 1000,
+          "latency_ms": 408,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 2,
+          "mrr": 1,
+          "n_results": 6
+        }
+      }
+    },
+    {
+      "id": "cfg-03",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 100,
+          "latency_ms": 124,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 300,
+          "latency_ms": 96,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": null,
+          "latency_ms": 94,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        }
+      }
+    },
+    {
+      "id": "cfg-04",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 140,
+          "est_tokens": 800,
+          "latency_ms": 276,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.5,
+          "n_results": 3
+        },
+        "B": {
+          "tokens": 39,
+          "est_tokens": 250,
+          "latency_ms": 109,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 39,
+          "est_tokens": 1000,
+          "latency_ms": 115,
+          "gt_hits": 4,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 4
+        }
+      }
+    },
+    {
+      "id": "cfg-05",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 335,
+          "est_tokens": 800,
+          "latency_ms": 331,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.5,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 264,
+          "est_tokens": 250,
+          "latency_ms": 114,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 15
+        },
+        "C": {
+          "tokens": 264,
+          "est_tokens": 1000,
+          "latency_ms": 122,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 15
+        }
+      }
+    },
+    {
+      "id": "tst-01",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 40,
+          "est_tokens": 1000,
+          "latency_ms": 301,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.5,
+          "n_results": 2
+        },
+        "B": {
+          "tokens": 249,
+          "est_tokens": 450,
+          "latency_ms": 141,
+          "gt_hits": 8,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 13
+        },
+        "C": {
+          "tokens": 289,
+          "est_tokens": 1200,
+          "latency_ms": 301,
+          "gt_hits": 9,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 15
+        }
+      }
+    },
+    {
+      "id": "tst-02",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 105,
+          "est_tokens": 1000,
+          "latency_ms": 273,
+          "gt_hits": 2,
+          "exactness": 0.5,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.3333333333333333,
+          "n_results": 4
+        },
+        "B": {
+          "tokens": 96,
+          "est_tokens": 450,
+          "latency_ms": 139,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 191,
+          "est_tokens": 1200,
+          "latency_ms": 303,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 10
+        }
+      }
+    },
+    {
+      "id": "tst-03",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 90,
+          "est_tokens": 1000,
+          "latency_ms": 278,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 50,
+          "est_tokens": 450,
+          "latency_ms": 131,
+          "gt_hits": 1,
+          "exactness": 1,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.3333333333333333,
+          "n_results": 4
+        },
+        "C": {
+          "tokens": 140,
+          "est_tokens": 1200,
+          "latency_ms": 312,
+          "gt_hits": 2,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 0.3333333333333333,
+          "n_results": 5
+        }
+      }
+    },
+    {
+      "id": "tst-04",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 260,
+          "est_tokens": 1000,
+          "latency_ms": 294,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 0.3333333333333333,
+          "mrr": 0.25,
+          "n_results": 5
+        },
+        "B": {
+          "tokens": 127,
+          "est_tokens": 450,
+          "latency_ms": 149,
+          "gt_hits": 6,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 12
+        },
+        "C": {
+          "tokens": 387,
+          "est_tokens": 1200,
+          "latency_ms": 315,
+          "gt_hits": 7,
+          "exactness": 1,
+          "recall5": 0.6666666666666666,
+          "mrr": 1,
+          "n_results": 17
+        }
+      }
+    },
+    {
+      "id": "tst-05",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 100,
+          "latency_ms": 119,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 300,
+          "latency_ms": 134,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": null,
+          "latency_ms": 97,
+          "gt_hits": 1,
+          "exactness": 0.8,
+          "recall5": 0.5,
+          "mrr": 1,
+          "n_results": 1
+        }
+      }
+    },
+    {
+      "id": "adv-01",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 111,
+          "est_tokens": 200,
+          "latency_ms": 121,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "B": {
+          "tokens": 111,
+          "est_tokens": 500,
+          "latency_ms": 116,
+          "gt_hits": 3,
+          "exactness": 1,
+          "recall5": 1,
+          "mrr": 1,
+          "n_results": 7
+        },
+        "C": {
+          "tokens": 356,
+          "est_tokens": 1000,
+          "latency_ms": 347,
+          "gt_hits": 5,
+          "exactness": 1,
+          "recall5": 1.5,
+          "mrr": 1,
+          "n_results": 10
+        }
+      }
+    },
+    {
+      "id": "git-01",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 45,
+          "est_tokens": 1100,
+          "latency_ms": 223,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        },
+        "B": {
+          "tokens": 45,
+          "est_tokens": 550,
+          "latency_ms": 115,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        },
+        "C": {
+          "tokens": 45,
+          "est_tokens": 1300,
+          "latency_ms": 225,
+          "gt_hits": 1,
+          "exactness": 0.5,
+          "recall5": 1,
+          "mrr": 0.2,
+          "n_results": 9
+        }
+      }
+    },
+    {
+      "id": "dev-01",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 30,
+          "est_tokens": 30,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 3,
+          "recall5": 0.5,
+          "mrr": 0.5
+        },
+        "B": {
+          "tokens": 30,
+          "est_tokens": 30,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 3,
+          "recall5": 0.5,
+          "mrr": 0.5
+        },
+        "C": {
+          "tokens": 30,
+          "est_tokens": 30,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 3,
+          "recall5": 0.5,
+          "mrr": 0.5
+        }
+      }
+    },
+    {
+      "id": "dev-02",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 2100,
+          "est_tokens": 2100,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 210,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 2100,
+          "est_tokens": 2100,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 210,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 2100,
+          "est_tokens": 2100,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 210,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-03",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-04",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1,
+          "recall5": 0,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "dev-05",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-06",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-07",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 0.5,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 0.5,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 0.5,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-08",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "dev-09",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.1111111111111111
+        },
+        "B": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.1111111111111111
+        },
+        "C": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.1111111111111111
+        }
+      }
+    },
+    {
+      "id": "dev-10",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.009523809523809525
+        },
+        "B": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.009523809523809525
+        },
+        "C": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.009523809523809525
+        }
+      }
+    },
+    {
+      "id": "dev-11",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.02127659574468085
+        },
+        "B": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.02127659574468085
+        },
+        "C": {
+          "tokens": 1410,
+          "est_tokens": 1410,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 141,
+          "recall5": 0,
+          "mrr": 0.02127659574468085
+        }
+      }
+    },
+    {
+      "id": "dev-12",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-hf-01",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 5616,
+          "est_tokens": 5616,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 391,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        },
+        "B": {
+          "tokens": 5616,
+          "est_tokens": 5616,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 391,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        },
+        "C": {
+          "tokens": 7921,
+          "est_tokens": 7921,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 403,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        }
+      }
+    },
+    {
+      "id": "adv-hf-02",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 6738,
+          "est_tokens": 6738,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 275,
+          "recall5": 0,
+          "mrr": 0.07142857142857142
+        },
+        "B": {
+          "tokens": 6738,
+          "est_tokens": 6738,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 275,
+          "recall5": 0,
+          "mrr": 0.07142857142857142
+        },
+        "C": {
+          "tokens": 7963,
+          "est_tokens": 7963,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 304,
+          "recall5": 0,
+          "mrr": 0.07142857142857142
+        }
+      }
+    },
+    {
+      "id": "adv-hf-03",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 239,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 12,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 239,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 12,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 569,
+          "est_tokens": 569,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 18,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-am-04",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 7999,
+          "est_tokens": 7999,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 857,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 7999,
+          "est_tokens": 7999,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 857,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 7999,
+          "est_tokens": 7999,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 857,
+          "recall5": 0,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-am-05",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 7992,
+          "est_tokens": 7992,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 598,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        },
+        "B": {
+          "tokens": 7992,
+          "est_tokens": 7992,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 598,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        },
+        "C": {
+          "tokens": 7992,
+          "est_tokens": 7992,
+          "latency_ms": 0,
+          "gt_hits": 7,
+          "exactness": 1,
+          "n_results": 598,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        }
+      }
+    },
+    {
+      "id": "adv-am-06",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 79,
+          "est_tokens": 79,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 7,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        },
+        "B": {
+          "tokens": 79,
+          "est_tokens": 79,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 7,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        },
+        "C": {
+          "tokens": 79,
+          "est_tokens": 79,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 7,
+          "recall5": 0,
+          "mrr": 0.14285714285714285
+        }
+      }
+    },
+    {
+      "id": "adv-fo-07",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 7989,
+          "est_tokens": 7989,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 729,
+          "recall5": 0,
+          "mrr": 0.0625
+        },
+        "B": {
+          "tokens": 7989,
+          "est_tokens": 7989,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 729,
+          "recall5": 0,
+          "mrr": 0.0625
+        },
+        "C": {
+          "tokens": 7999,
+          "est_tokens": 7999,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 731,
+          "recall5": 0,
+          "mrr": 0.0625
+        }
+      }
+    },
+    {
+      "id": "adv-fo-08",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 4297,
+          "est_tokens": 4297,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 426,
+          "recall5": 0,
+          "mrr": 0.16666666666666666
+        },
+        "B": {
+          "tokens": 4297,
+          "est_tokens": 4297,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 426,
+          "recall5": 0,
+          "mrr": 0.16666666666666666
+        },
+        "C": {
+          "tokens": 7967,
+          "est_tokens": 7967,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 486,
+          "recall5": 0,
+          "mrr": 0.16666666666666666
+        }
+      }
+    },
+    {
+      "id": "adv-fo-09",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 74,
+          "est_tokens": 74,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 2,
+          "mrr": 0.5
+        },
+        "B": {
+          "tokens": 74,
+          "est_tokens": 74,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 2,
+          "mrr": 0.5
+        },
+        "C": {
+          "tokens": 229,
+          "est_tokens": 229,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 6,
+          "recall5": 3,
+          "mrr": 0.5
+        }
+      }
+    },
+    {
+      "id": "adv-zr-10",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 7045,
+          "est_tokens": 7045,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 16,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-zr-11",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 7955,
+          "est_tokens": 7955,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 184,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-zr-12",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-dc-13",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 7965,
+          "est_tokens": 7965,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 104,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 2624,
+          "est_tokens": 2624,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 69,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 7919,
+          "est_tokens": 7919,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 151,
+          "recall5": 0,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-dc-14",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 7725,
+          "est_tokens": 7725,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 59,
+          "recall5": 0,
+          "mrr": 0.020833333333333332
+        },
+        "B": {
+          "tokens": 7980,
+          "est_tokens": 7980,
+          "latency_ms": 0,
+          "gt_hits": 8,
+          "exactness": 1,
+          "n_results": 474,
+          "recall5": 0,
+          "mrr": 0.045454545454545456
+        },
+        "C": {
+          "tokens": 7990,
+          "est_tokens": 7990,
+          "latency_ms": 0,
+          "gt_hits": 8,
+          "exactness": 1,
+          "n_results": 475,
+          "recall5": 0,
+          "mrr": 0.045454545454545456
+        }
+      }
+    },
+    {
+      "id": "adv-dc-15",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 170,
+          "est_tokens": 170,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 3,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 19,
+          "est_tokens": 19,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 2,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 209,
+          "est_tokens": 209,
+          "latency_ms": 0,
+          "gt_hits": 4,
+          "exactness": 1,
+          "n_results": 6,
+          "recall5": 2,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-du-16",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 5684,
+          "est_tokens": 5684,
+          "latency_ms": 0,
+          "gt_hits": 8,
+          "exactness": 1,
+          "n_results": 333,
+          "recall5": 0,
+          "mrr": 0.015873015873015872
+        },
+        "B": {
+          "tokens": 5684,
+          "est_tokens": 5684,
+          "latency_ms": 0,
+          "gt_hits": 8,
+          "exactness": 1,
+          "n_results": 333,
+          "recall5": 0,
+          "mrr": 0.015873015873015872
+        },
+        "C": {
+          "tokens": 7949,
+          "est_tokens": 7949,
+          "latency_ms": 0,
+          "gt_hits": 8,
+          "exactness": 1,
+          "n_results": 364,
+          "recall5": 0,
+          "mrr": 0.015873015873015872
+        }
+      }
+    },
+    {
+      "id": "adv-du-17",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 20,
+          "est_tokens": 20,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 2,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 20,
+          "est_tokens": 20,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 2,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 20,
+          "est_tokens": 20,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 2,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-du-18",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 239,
+          "est_tokens": 239,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 12,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 239,
+          "est_tokens": 239,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 12,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 549,
+          "est_tokens": 549,
+          "latency_ms": 0,
+          "gt_hits": 3,
+          "exactness": 1,
+          "n_results": 17,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-gc-19",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-gc-20",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 466,
+          "est_tokens": 466,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 15,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 0,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-gc-21",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-vd-22",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 4297,
+          "est_tokens": 4297,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 426,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 4297,
+          "est_tokens": 4297,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 426,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 7967,
+          "est_tokens": 7967,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 486,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-vd-23",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 23,
+          "est_tokens": 23,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-vd-24",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 0,
+          "est_tokens": 0,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 0,
+          "recall5": 1,
+          "mrr": 0
+        }
+      }
+    },
+    {
+      "id": "adv-mo-25",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 10,
+          "est_tokens": 10,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 1,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-mo-26",
+      "query_type": "references",
+      "plans": {
+        "A": {
+          "tokens": 7930,
+          "est_tokens": 7930,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 81,
+          "recall5": 0,
+          "mrr": 0.015151515151515152
+        },
+        "B": {
+          "tokens": 7992,
+          "est_tokens": 7992,
+          "latency_ms": 0,
+          "gt_hits": 21,
+          "exactness": 1,
+          "n_results": 697,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        },
+        "C": {
+          "tokens": 7997,
+          "est_tokens": 7997,
+          "latency_ms": 0,
+          "gt_hits": 21,
+          "exactness": 1,
+          "n_results": 698,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        }
+      }
+    },
+    {
+      "id": "adv-mo-27",
+      "query_type": "filename",
+      "plans": {
+        "A": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "B": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "C": {
+          "tokens": 40,
+          "est_tokens": 40,
+          "latency_ms": 0,
+          "gt_hits": 2,
+          "exactness": 1,
+          "n_results": 4,
+          "recall5": 1,
+          "mrr": 1
+        }
+      }
+    },
+    {
+      "id": "adv-po-28",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 7980,
+          "est_tokens": 7980,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 84,
+          "recall5": 0,
+          "mrr": 0.014492753623188406
+        },
+        "B": {
+          "tokens": 7992,
+          "est_tokens": 7992,
+          "latency_ms": 0,
+          "gt_hits": 21,
+          "exactness": 1,
+          "n_results": 697,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        },
+        "C": {
+          "tokens": 7997,
+          "est_tokens": 7997,
+          "latency_ms": 0,
+          "gt_hits": 21,
+          "exactness": 1,
+          "n_results": 698,
+          "recall5": 0,
+          "mrr": 0.013333333333333334
+        }
+      }
+    },
+    {
+      "id": "adv-po-29",
+      "query_type": "definitions",
+      "plans": {
+        "A": {
+          "tokens": 7987,
+          "est_tokens": 7987,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 867,
+          "recall5": 0,
+          "mrr": 0.001256281407035176
+        },
+        "B": {
+          "tokens": 7987,
+          "est_tokens": 7987,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 867,
+          "recall5": 0,
+          "mrr": 0.001256281407035176
+        },
+        "C": {
+          "tokens": 7997,
+          "est_tokens": 7997,
+          "latency_ms": 0,
+          "gt_hits": 1,
+          "exactness": 1,
+          "n_results": 868,
+          "recall5": 0,
+          "mrr": 0.001256281407035176
+        }
+      }
+    },
+    {
+      "id": "adv-po-30",
+      "query_type": "implementation",
+      "plans": {
+        "A": {
+          "tokens": 7710,
+          "est_tokens": 7710,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 54,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "B": {
+          "tokens": 8000,
+          "est_tokens": 8000,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1000,
+          "recall5": 0,
+          "mrr": 0
+        },
+        "C": {
+          "tokens": 8000,
+          "est_tokens": 8000,
+          "latency_ms": 0,
+          "gt_hits": 0,
+          "exactness": 0,
+          "n_results": 1000,
+          "recall5": 0,
+          "mrr": 0
+        }
+      }
+    }
+  ]
+}

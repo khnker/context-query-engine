@@ -1,0 +1,1511 @@
+{
+  "tasks": 74,
+  "plan_acc": {
+    "pairwise": 0.6351351351351351,
+    "cost_only": 0.6081081081081081
+  },
+  "avg_gt_hits": {
+    "pairwise": 3.310810810810811,
+    "cost_only": 2.77027027027027
+  },
+  "avg_tokens": {
+    "pairwise": 1417.081081081081,
+    "cost_only": 1393.445945945946
+  },
+  "correctness": {
+    "pairwise": 0.8513513513513513,
+    "cost_only": 0.8513513513513513
+  },
+  "model": {
+    "holdout_acc": 0.7333333333333333,
+    "balanced_acc": 0.8421052631578947
+  },
+  "verdict": {
+    "pass": true,
+    "gt": true,
+    "correctness": true,
+    "threshold": "pairwise.gt_hits >= cost_only Y correctness sin degradación"
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 11,
+        "cost_only": 11
+      },
+      "tokens": {
+        "pairwise": 239,
+        "cost_only": 239
+      }
+    },
+    {
+      "id": "lex-02",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 6,
+        "cost_only": 4
+      },
+      "tokens": {
+        "pairwise": 229,
+        "cost_only": 74
+      }
+    },
+    {
+      "id": "lex-03",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 9,
+        "cost_only": 7
+      },
+      "tokens": {
+        "pairwise": 264,
+        "cost_only": 79
+      }
+    },
+    {
+      "id": "lex-04",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 11,
+        "cost_only": 11
+      }
+    },
+    {
+      "id": "lex-05",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 6,
+        "cost_only": 5
+      },
+      "tokens": {
+        "pairwise": 181,
+        "cost_only": 86
+      }
+    },
+    {
+      "id": "str-01",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 5,
+        "cost_only": 3
+      },
+      "tokens": {
+        "pairwise": 356,
+        "cost_only": 111
+      }
+    },
+    {
+      "id": "str-02",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 8,
+        "cost_only": 8
+      },
+      "tokens": {
+        "pairwise": 247,
+        "cost_only": 247
+      }
+    },
+    {
+      "id": "str-03",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 3,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 209,
+        "cost_only": 19
+      }
+    },
+    {
+      "id": "str-04",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 67,
+        "cost_only": 67
+      }
+    },
+    {
+      "id": "str-05",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 8,
+        "cost_only": 8
+      },
+      "tokens": {
+        "pairwise": 127,
+        "cost_only": 127
+      }
+    },
+    {
+      "id": "sem-01",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "A",
+      "sel_cost": "B",
+      "score": {
+        "A": 2,
+        "B": 0,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 7
+      },
+      "tokens": {
+        "pairwise": 220,
+        "cost_only": 239
+      }
+    },
+    {
+      "id": "sem-02",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 5,
+        "cost_only": 5
+      },
+      "tokens": {
+        "pairwise": 121,
+        "cost_only": 121
+      }
+    },
+    {
+      "id": "sem-03",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 67,
+        "cost_only": 67
+      }
+    },
+    {
+      "id": "sem-04",
+      "query_type": "implementation",
+      "oracle": "A",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 120,
+        "cost_only": 120
+      }
+    },
+    {
+      "id": "sem-05",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 5,
+        "cost_only": 5
+      },
+      "tokens": {
+        "pairwise": 90,
+        "cost_only": 90
+      }
+    },
+    {
+      "id": "dep-01",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 11,
+        "cost_only": 11
+      },
+      "tokens": {
+        "pairwise": 239,
+        "cost_only": 239
+      }
+    },
+    {
+      "id": "dep-02",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 6,
+        "cost_only": 6
+      },
+      "tokens": {
+        "pairwise": 111,
+        "cost_only": 111
+      }
+    },
+    {
+      "id": "dep-03",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 9,
+        "cost_only": 7
+      },
+      "tokens": {
+        "pairwise": 239,
+        "cost_only": 79
+      }
+    },
+    {
+      "id": "dep-04",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 11,
+        "cost_only": 11
+      }
+    },
+    {
+      "id": "dep-05",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 6,
+        "cost_only": 4
+      },
+      "tokens": {
+        "pairwise": 229,
+        "cost_only": 74
+      }
+    },
+    {
+      "id": "cfg-01",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 61,
+        "cost_only": 61
+      }
+    },
+    {
+      "id": "cfg-02",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 6,
+        "cost_only": 4
+      },
+      "tokens": {
+        "pairwise": 229,
+        "cost_only": 74
+      }
+    },
+    {
+      "id": "cfg-03",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 1,
+        "B": 2,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "cfg-04",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 4,
+        "cost_only": 4
+      },
+      "tokens": {
+        "pairwise": 39,
+        "cost_only": 39
+      }
+    },
+    {
+      "id": "cfg-05",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 5,
+        "cost_only": 5
+      },
+      "tokens": {
+        "pairwise": 264,
+        "cost_only": 264
+      }
+    },
+    {
+      "id": "tst-01",
+      "query_type": "implementation",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "B",
+      "score": {
+        "A": 2,
+        "B": 0,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 8
+      },
+      "tokens": {
+        "pairwise": 40,
+        "cost_only": 249
+      }
+    },
+    {
+      "id": "tst-02",
+      "query_type": "implementation",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 7,
+        "cost_only": 6
+      },
+      "tokens": {
+        "pairwise": 191,
+        "cost_only": 96
+      }
+    },
+    {
+      "id": "tst-03",
+      "query_type": "implementation",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 140,
+        "cost_only": 50
+      }
+    },
+    {
+      "id": "tst-04",
+      "query_type": "implementation",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "B",
+      "score": {
+        "A": 2,
+        "B": 0,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 6
+      },
+      "tokens": {
+        "pairwise": 260,
+        "cost_only": 127
+      }
+    },
+    {
+      "id": "tst-05",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 1,
+        "B": 2,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "adv-01",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "C",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 1,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 5,
+        "cost_only": 3
+      },
+      "tokens": {
+        "pairwise": 356,
+        "cost_only": 111
+      }
+    },
+    {
+      "id": "git-01",
+      "query_type": "implementation",
+      "oracle": "A",
+      "sel_pairwise": "C",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 0,
+        "C": 2
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 45,
+        "cost_only": 45
+      }
+    },
+    {
+      "id": "dev-01",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 30,
+        "cost_only": 30
+      }
+    },
+    {
+      "id": "dev-02",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 2100,
+        "cost_only": 2100
+      }
+    },
+    {
+      "id": "dev-03",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-04",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-05",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-06",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-07",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-08",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "dev-09",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 1410,
+        "cost_only": 1410
+      }
+    },
+    {
+      "id": "dev-10",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 1410,
+        "cost_only": 1410
+      }
+    },
+    {
+      "id": "dev-11",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 1410,
+        "cost_only": 1410
+      }
+    },
+    {
+      "id": "dev-12",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "adv-hf-01",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 7,
+        "cost_only": 7
+      },
+      "tokens": {
+        "pairwise": 5616,
+        "cost_only": 5616
+      }
+    },
+    {
+      "id": "adv-hf-02",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 6738,
+        "cost_only": 6738
+      }
+    },
+    {
+      "id": "adv-hf-03",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.17,
+        "B": 1.17,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 239,
+        "cost_only": 239
+      }
+    },
+    {
+      "id": "adv-am-04",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.274,
+        "B": 0.274,
+        "C": 0.274
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 7999,
+        "cost_only": 7999
+      }
+    },
+    {
+      "id": "adv-am-05",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.274,
+        "B": 0.274,
+        "C": 0.274
+      },
+      "gt": {
+        "pairwise": 7,
+        "cost_only": 7
+      },
+      "tokens": {
+        "pairwise": 7992,
+        "cost_only": 7992
+      }
+    },
+    {
+      "id": "adv-am-06",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.274,
+        "B": 0.274,
+        "C": 0.274
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 79,
+        "cost_only": 79
+      }
+    },
+    {
+      "id": "adv-fo-07",
+      "query_type": "references",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.17,
+        "B": 1.17,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 3,
+        "cost_only": 3
+      },
+      "tokens": {
+        "pairwise": 7989,
+        "cost_only": 7989
+      }
+    },
+    {
+      "id": "adv-fo-08",
+      "query_type": "references",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.17,
+        "B": 1.17,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 4297,
+        "cost_only": 4297
+      }
+    },
+    {
+      "id": "adv-fo-09",
+      "query_type": "references",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.17,
+        "B": 1.17,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 74,
+        "cost_only": 74
+      }
+    },
+    {
+      "id": "adv-zr-10",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-zr-11",
+      "query_type": "references",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.17,
+        "B": 1.17,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-zr-12",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.274,
+        "B": 0.274,
+        "C": 0.274
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-dc-13",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "B",
+      "sel_cost": "B",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 2624,
+        "cost_only": 2624
+      }
+    },
+    {
+      "id": "adv-dc-14",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 2,
+        "B": 1,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 7725,
+        "cost_only": 7725
+      }
+    },
+    {
+      "id": "adv-dc-15",
+      "query_type": "implementation",
+      "oracle": "C",
+      "sel_pairwise": "B",
+      "sel_cost": "B",
+      "score": {
+        "A": 1,
+        "B": 2,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 19,
+        "cost_only": 19
+      }
+    },
+    {
+      "id": "adv-du-16",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 8,
+        "cost_only": 8
+      },
+      "tokens": {
+        "pairwise": 5684,
+        "cost_only": 5684
+      }
+    },
+    {
+      "id": "adv-du-17",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 20,
+        "cost_only": 20
+      }
+    },
+    {
+      "id": "adv-du-18",
+      "query_type": "definitions",
+      "oracle": "C",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 239,
+        "cost_only": 239
+      }
+    },
+    {
+      "id": "adv-gc-19",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 40,
+        "cost_only": 40
+      }
+    },
+    {
+      "id": "adv-gc-20",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.102,
+        "B": 0,
+        "C": 1.102
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-gc-21",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "adv-vd-22",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 4297,
+        "cost_only": 4297
+      }
+    },
+    {
+      "id": "adv-vd-23",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.102,
+        "B": 0,
+        "C": 1.102
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-vd-24",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.274,
+        "B": 0.274,
+        "C": 0.274
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 0,
+        "cost_only": 0
+      }
+    },
+    {
+      "id": "adv-mo-25",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 10,
+        "cost_only": 10
+      }
+    },
+    {
+      "id": "adv-mo-26",
+      "query_type": "references",
+      "oracle": "B",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 21,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 7992,
+        "cost_only": 7930
+      }
+    },
+    {
+      "id": "adv-mo-27",
+      "query_type": "filename",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 0.204,
+        "B": 0.204,
+        "C": 0.204
+      },
+      "gt": {
+        "pairwise": 2,
+        "cost_only": 2
+      },
+      "tokens": {
+        "pairwise": 40,
+        "cost_only": 40
+      }
+    },
+    {
+      "id": "adv-po-28",
+      "query_type": "implementation",
+      "oracle": "B",
+      "sel_pairwise": "B",
+      "sel_cost": "A",
+      "score": {
+        "A": 0,
+        "B": 2,
+        "C": 1
+      },
+      "gt": {
+        "pairwise": 21,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 7992,
+        "cost_only": 7980
+      }
+    },
+    {
+      "id": "adv-po-29",
+      "query_type": "definitions",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 1.137,
+        "B": 1.137,
+        "C": 0
+      },
+      "gt": {
+        "pairwise": 1,
+        "cost_only": 1
+      },
+      "tokens": {
+        "pairwise": 7987,
+        "cost_only": 7987
+      }
+    },
+    {
+      "id": "adv-po-30",
+      "query_type": "implementation",
+      "oracle": "A",
+      "sel_pairwise": "A",
+      "sel_cost": "A",
+      "score": {
+        "A": 2,
+        "B": 0.062,
+        "C": 0.062
+      },
+      "gt": {
+        "pairwise": 0,
+        "cost_only": 0
+      },
+      "tokens": {
+        "pairwise": 7710,
+        "cost_only": 7710
+      }
+    }
+  ]
+}
