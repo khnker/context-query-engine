@@ -210,6 +210,28 @@ function execOp(op, plan, pool = []) {
     case 'dependency-expand': {
       return dependencyExpand(process.cwd(), name, plan.limit ?? 10);
     }
+    case 'read-span': {
+      // read-span-op — operador físico READ_SPAN: materializa SOLO el span
+      // (path + [line_start, line_end]) de un row de evidencia, no el archivo.
+      // args: [path, startLine, endLine]; fallback al archivo completo si no hay span.
+      const [rpath, start, end] = op.args ?? [];
+      if (!rpath) return [];
+      let content = '';
+      try {
+        content = fs.readFileSync(path.resolve(process.cwd(), String(rpath)), 'utf8');
+      } catch {
+        return [];
+      }
+      const lines = content.split('\n');
+      const s = Number(start) || 1;
+      const e = Math.min(Number(end) || s, lines.length);
+      const span = lines.slice(s - 1, e).join('\n');
+      return [{
+        source: 'read-span', path: String(rpath), line_start: s, line_end: e,
+        content: span, match_type: 'reference', score: 0.7,
+        token_estimate: Math.max(4, Math.ceil(span.length / 4)), span_only: true,
+      }];
+    }
     case 'assemble-context':
       return []; // op de fusión — se resuelve en fuse()
     case 'git-log': {

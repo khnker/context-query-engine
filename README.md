@@ -938,6 +938,22 @@ TMPDIR=$PWD/.tmp node evals/scripts/eval-pairwise-runtime.js   # → evals/repor
 | pairwise runtime | 0.906 | 4.406 | 105 | 1.000 |
 
 Paridad exacta — sin regresión, pero el +19.5% gt del paso 08 (offline) NO se reproduce pre-ejecución: la señal vive en los features post-ejecución (gt_hits/exactness/n_results), que son 0 antes de correr. Conclusión: Lero no reemplaza la selección inicial; su valor es ADAPTAR tras observar la primera op → motor de re-selección en adaptive-query-execution (B8). CF_PAIRWISE queda disponible, default intacto.
+
+## Read Span Operator (A2) — SÍ SIRVE
+
+Operador físico `read-span` en engine.js: materializa SOLO el span (path + [line_start, line_end]) de un row de evidencia, no el archivo. COST_TABLE: 40 tokens / 2ms.
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-read-span.js   # → evals/reports/read-span-<TS>.json
+```
+
+| métrica | valor |
+|---------|-------|
+| avg reduction (span vs archivo) | 0.505 |
+| span_hit | 1.000 |
+| correctness with_span | 1.000 (= baseline) |
+
+Span [l-2, l+8] sobre la línea real del símbolo. Bugs de eval fijados (documentados en tasks.md): rows con line_start default 1 (rg-files/git-log) → resolver línea real; queries file/concept → hit a nivel archivo; regex multi-word sin comillas. Habilita references-en-vez-de-dumps (FastContext) y conecta con explorer next_actions + evidence packets.
 ## Glossary
 
 | Term | Meaning |

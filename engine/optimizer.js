@@ -36,6 +36,7 @@ const COST_TABLE = {
   'symbol-lookup':    { tokens: 40,  latency_ms: 2,   tool_calls: 1, relevance: 0.9  },
   'lexical-index':    { tokens: 60,  latency_ms: 5,   tool_calls: 1, relevance: 0.85 },
   'dependency-expand':{ tokens: 80,  latency_ms: 4,   tool_calls: 1, relevance: 0.8  },
+  'read-span':        { tokens: 40,  latency_ms: 2,   tool_calls: 1, relevance: 0.5  },
 };
 
 // D13 — cardinalidad default por clase de predicado (sin stats)
