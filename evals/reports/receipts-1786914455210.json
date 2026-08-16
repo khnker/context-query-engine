@@ -1,0 +1,543 @@
+{
+  "date": "2026-08-16",
+  "tasks": 38,
+  "totals": {
+    "seen": 1360,
+    "inferred": 13,
+    "unknown_codes": 34,
+    "claims": 1373
+  },
+  "verdict": {
+    "pass": true,
+    "parity": true,
+    "gt_in_receipt": 35,
+    "n": 38,
+    "receipts_with_ids": 38
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "gt_baseline": 11,
+      "gt_receipt": 11,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 12
+      }
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "gt_baseline": 4,
+      "gt_receipt": 4,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "gt_baseline": 7,
+      "gt_receipt": 7,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 1,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "gt_baseline": 5,
+      "gt_receipt": 5,
+      "receipt": {
+        "seen": 6,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 6
+      }
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "gt_baseline": 3,
+      "gt_receipt": 3,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "str-02",
+      "group": "structural",
+      "gt_baseline": 8,
+      "gt_receipt": 8,
+      "receipt": {
+        "seen": 13,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 13
+      }
+    },
+    {
+      "id": "str-03",
+      "group": "structural",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 2,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 2
+      }
+    },
+    {
+      "id": "str-04",
+      "group": "structural",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 5,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 5
+      }
+    },
+    {
+      "id": "str-05",
+      "group": "structural",
+      "gt_baseline": 8,
+      "gt_receipt": 8,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 12
+      }
+    },
+    {
+      "id": "sem-01",
+      "group": "semantic",
+      "gt_baseline": 7,
+      "gt_receipt": 7,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 12
+      }
+    },
+    {
+      "id": "sem-02",
+      "group": "semantic",
+      "gt_baseline": 5,
+      "gt_receipt": 5,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "sem-03",
+      "group": "semantic",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 5,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 5
+      }
+    },
+    {
+      "id": "sem-04",
+      "group": "semantic",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 0,
+        "inferred": 2,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "group": "semantic",
+      "gt_baseline": 5,
+      "gt_receipt": 5,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "dep-01",
+      "group": "dependency",
+      "gt_baseline": 11,
+      "gt_receipt": 11,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 12
+      }
+    },
+    {
+      "id": "dep-02",
+      "group": "dependency",
+      "gt_baseline": 6,
+      "gt_receipt": 6,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "dep-03",
+      "group": "dependency",
+      "gt_baseline": 7,
+      "gt_receipt": 7,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "dep-04",
+      "group": "dependency",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 1,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "group": "dependency",
+      "gt_baseline": 4,
+      "gt_receipt": 4,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "cfg-01",
+      "group": "configuration",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "low-agreement"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "cfg-02",
+      "group": "configuration",
+      "gt_baseline": 4,
+      "gt_receipt": 4,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "cfg-03",
+      "group": "configuration",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 1,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "group": "configuration",
+      "gt_baseline": 4,
+      "gt_receipt": 4,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "cfg-05",
+      "group": "configuration",
+      "gt_baseline": 5,
+      "gt_receipt": 5,
+      "receipt": {
+        "seen": 15,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 15
+      }
+    },
+    {
+      "id": "tst-01",
+      "group": "tests",
+      "gt_baseline": 8,
+      "gt_receipt": 8,
+      "receipt": {
+        "seen": 12,
+        "inferred": 1,
+        "unknown": [],
+        "claims": 13
+      }
+    },
+    {
+      "id": "tst-02",
+      "group": "tests",
+      "gt_baseline": 6,
+      "gt_receipt": 6,
+      "receipt": {
+        "seen": 6,
+        "inferred": 1,
+        "unknown": [],
+        "claims": 7
+      }
+    },
+    {
+      "id": "tst-03",
+      "group": "tests",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [],
+        "claims": 4
+      }
+    },
+    {
+      "id": "tst-04",
+      "group": "tests",
+      "gt_baseline": 6,
+      "gt_receipt": 6,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [],
+        "claims": 12
+      }
+    },
+    {
+      "id": "tst-05",
+      "group": "tests",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 1,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "group": "adversarial",
+      "gt_baseline": 3,
+      "gt_receipt": 3,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "git-01",
+      "group": "git",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 0,
+        "inferred": 9,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 9
+      }
+    },
+    {
+      "id": "adv-fo-07",
+      "group": "huge-fanout",
+      "gt_baseline": 3,
+      "gt_receipt": 3,
+      "receipt": {
+        "seen": 729,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 729
+      }
+    },
+    {
+      "id": "adv-fo-08",
+      "group": "huge-fanout",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 426,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 426
+      }
+    },
+    {
+      "id": "adv-fo-09",
+      "group": "huge-fanout",
+      "gt_baseline": 2,
+      "gt_receipt": 2,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "adv-zr-10",
+      "group": "zero-results",
+      "gt_baseline": 0,
+      "gt_receipt": 0,
+      "receipt": {
+        "seen": 0,
+        "inferred": 0,
+        "unknown": [
+          "no-candidates"
+        ],
+        "claims": 0
+      }
+    },
+    {
+      "id": "adv-zr-11",
+      "group": "zero-results",
+      "gt_baseline": 0,
+      "gt_receipt": 0,
+      "receipt": {
+        "seen": 0,
+        "inferred": 0,
+        "unknown": [
+          "no-candidates"
+        ],
+        "claims": 0
+      }
+    },
+    {
+      "id": "adv-zr-12",
+      "group": "zero-results",
+      "gt_baseline": 0,
+      "gt_receipt": 0,
+      "receipt": {
+        "seen": 0,
+        "inferred": 0,
+        "unknown": [
+          "no-candidates"
+        ],
+        "claims": 0
+      }
+    }
+  ]
+}

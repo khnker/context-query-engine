@@ -24,6 +24,7 @@ import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
 import * as claimMod from './claim.js';
+import * as receiptMod from './receipt.js';
 import { rrfFuse } from './rrf.js';
 import { toPacket } from './evidence.js';
 import { structuralRefine } from './structural-refine.js';
@@ -773,6 +774,17 @@ function runPlan(logicalPlan, rawText, opts = {}) {
           next_actions: actions,
         },
       };
+    } catch { /* best-effort — fallback al contrato normal */ }
+  }
+
+  // execution-receipts (B4) — CF_RECEIPT=1: receipt {seen, inferred, unknown}
+  // + claims (provenance evidencia→claim) — aditivo, cache intacto.
+  if (process.env.CF_RECEIPT === '1') {
+    const { buildReceipt, receiptStats } = receiptMod;
+    try {
+      const receipt = buildReceipt({ results, pool, belief: stats.belief ?? null, plan: phys, query: rawText });
+      stats.receipt = receiptStats(receipt);
+      return { plan: phys, results, stats, cached: false, receipt };
     } catch { /* best-effort — fallback al contrato normal */ }
   }
 
