@@ -1,0 +1,66 @@
+{
+  "date": "2026-08-16",
+  "repos": {
+    "t1-basic": {
+      "files": 9,
+      "index_version": 1,
+      "incremental_files": 1,
+      "t_build_ms": 55,
+      "t_reuse_ms": 61,
+      "t_incremental_ms": 68,
+      "query": {
+        "symbol_ms": 37,
+        "symbol_rows": 0,
+        "lexical_ms": 41,
+        "lexical_rows": 3,
+        "dependency_ms": 39,
+        "dependency_rows": 1
+      },
+      "freshness_state": "snapshot",
+      "reuse_faster_than_build": false
+    },
+    "t1-modular": {
+      "files": 11,
+      "index_version": 1,
+      "incremental_files": 0,
+      "t_build_ms": 58,
+      "t_reuse_ms": 49,
+      "t_incremental_ms": 51,
+      "query": {
+        "symbol_ms": 38,
+        "symbol_rows": 0,
+        "lexical_ms": 38,
+        "lexical_rows": 1,
+        "dependency_ms": 36,
+        "dependency_rows": 0
+      },
+      "freshness_state": "snapshot"
+    },
+    "polar": {
+      "files": 3794,
+      "index_version": 1,
+      "incremental_files": 0,
+      "t_build_ms": 121,
+      "t_reuse_ms": 114,
+      "t_incremental_ms": 120,
+      "query": {
+        "symbol_ms": 42,
+        "symbol_rows": 3,
+        "lexical_ms": 42,
+        "lexical_rows": 3,
+        "dependency_ms": 43,
+        "dependency_rows": 2
+      },
+      "freshness_state": "snapshot"
+    }
+  },
+  "watcher": {
+    "roundtrip_ms": 258,
+    "first_kind": "change"
+  },
+  "verdict": {
+    "reuse_faster_than_build": false,
+    "incremental_one_file": true,
+    "pass": false
+  }
+}

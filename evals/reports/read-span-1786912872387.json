@@ -1,0 +1,334 @@
+{
+  "pass": false,
+  "date": "2026-08-16",
+  "tasks": 32,
+  "avg_reduction": 0.497,
+  "span_hit_rate": 0.875,
+  "correctness": {
+    "baseline": 1,
+    "with_span": 0.875
+  },
+  "window": "l-2..l+8",
+  "rows": [
+    {
+      "id": "lex-01",
+      "path": "src/services/fallback.ts",
+      "line": 16,
+      "span_tokens": 88,
+      "file_tokens": 341,
+      "reduction": 0.742,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "lex-02",
+      "path": "src/services/fallback.ts",
+      "line": 3,
+      "span_tokens": 57,
+      "file_tokens": 341,
+      "reduction": 0.833,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "lex-03",
+      "path": "tests/test_registry.py",
+      "line": 1,
+      "span_tokens": 47,
+      "file_tokens": 70,
+      "reduction": 0.329,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "lex-04",
+      "path": "app/core/config.py",
+      "line": 17,
+      "span_tokens": 32,
+      "file_tokens": 114,
+      "reduction": 0.719,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "lex-05",
+      "path": "src/services/fallback.ts",
+      "line": 37,
+      "span_tokens": 79,
+      "file_tokens": 341,
+      "reduction": 0.768,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "str-01",
+      "path": "src/services/fallback.ts",
+      "line": 30,
+      "span_tokens": 60,
+      "file_tokens": 341,
+      "reduction": 0.824,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "str-02",
+      "path": "src/services/fallback.ts",
+      "line": 16,
+      "span_tokens": 88,
+      "file_tokens": 341,
+      "reduction": 0.742,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "str-03",
+      "path": "app/handlers/http.py",
+      "line": 4,
+      "span_tokens": 42,
+      "file_tokens": 53,
+      "reduction": 0.208,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "str-04",
+      "path": "app/core/registry.py",
+      "line": 10,
+      "span_tokens": 61,
+      "file_tokens": 96,
+      "reduction": 0.365,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "str-05",
+      "path": "tests/test_registry.py",
+      "line": 1,
+      "span_tokens": 47,
+      "file_tokens": 70,
+      "reduction": 0.329,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "sem-01",
+      "path": "src/services/fallback.ts",
+      "line": 16,
+      "span_tokens": 88,
+      "file_tokens": 341,
+      "reduction": 0.742,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "sem-02",
+      "path": "src/services/fallback.ts",
+      "line": 12,
+      "span_tokens": 114,
+      "file_tokens": 341,
+      "reduction": 0.666,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "sem-03",
+      "path": "app/core/registry.py",
+      "line": 10,
+      "span_tokens": 61,
+      "file_tokens": 96,
+      "reduction": 0.365,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "sem-04",
+      "path": "/home/nicolas/dev/contextforge/evals/datasets/repos/t1-modular/app/config/settings.yaml",
+      "line": 1,
+      "span_tokens": 18,
+      "file_tokens": 18,
+      "reduction": 0,
+      "span_hit": false,
+      "correct": true
+    },
+    {
+      "id": "sem-05",
+      "path": "src/services/fallback.ts",
+      "line": 37,
+      "span_tokens": 79,
+      "file_tokens": 341,
+      "reduction": 0.768,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "dep-01",
+      "path": "src/services/fallback.ts",
+      "line": 16,
+      "span_tokens": 88,
+      "file_tokens": 341,
+      "reduction": 0.742,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "dep-02",
+      "path": "src/services/fallback.ts",
+      "line": 30,
+      "span_tokens": 60,
+      "file_tokens": 341,
+      "reduction": 0.824,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "dep-03",
+      "path": "tests/test_registry.py",
+      "line": 1,
+      "span_tokens": 47,
+      "file_tokens": 70,
+      "reduction": 0.329,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "dep-04",
+      "path": "app/core/config.py",
+      "line": 17,
+      "span_tokens": 32,
+      "file_tokens": 114,
+      "reduction": 0.719,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "dep-05",
+      "path": "src/services/fallback.ts",
+      "line": 3,
+      "span_tokens": 57,
+      "file_tokens": 341,
+      "reduction": 0.833,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "cfg-01",
+      "path": "README.md",
+      "line": 3,
+      "span_tokens": 40,
+      "file_tokens": 40,
+      "reduction": 0,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "cfg-02",
+      "path": "src/services/fallback.ts",
+      "line": 3,
+      "span_tokens": 57,
+      "file_tokens": 341,
+      "reduction": 0.833,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "cfg-03",
+      "path": "app/config/settings.yaml",
+      "line": 1,
+      "span_tokens": 18,
+      "file_tokens": 18,
+      "reduction": 0,
+      "span_hit": false,
+      "correct": true
+    },
+    {
+      "id": "cfg-04",
+      "path": "app/config/settings.yaml",
+      "line": 1,
+      "span_tokens": 18,
+      "file_tokens": 18,
+      "reduction": 0,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "cfg-05",
+      "path": "config/providers.json",
+      "line": 3,
+      "span_tokens": 19,
+      "file_tokens": 19,
+      "reduction": 0,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "tst-01",
+      "path": "src/services/fallback.ts",
+      "line": 16,
+      "span_tokens": 88,
+      "file_tokens": 341,
+      "reduction": 0.742,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "tst-02",
+      "path": "src/services/fallback.ts",
+      "line": 37,
+      "span_tokens": 79,
+      "file_tokens": 341,
+      "reduction": 0.768,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "tst-03",
+      "path": "app/handlers/file.py",
+      "line": 1,
+      "span_tokens": 39,
+      "file_tokens": 39,
+      "reduction": 0,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "tst-04",
+      "path": "tests/test_registry.py",
+      "line": 1,
+      "span_tokens": 47,
+      "file_tokens": 70,
+      "reduction": 0.329,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "tst-05",
+      "path": "tests/fallback.test.ts",
+      "line": 1,
+      "span_tokens": 82,
+      "file_tokens": 190,
+      "reduction": 0.568,
+      "span_hit": false,
+      "correct": true
+    },
+    {
+      "id": "adv-01",
+      "path": "src/services/fallback.ts",
+      "line": 30,
+      "span_tokens": 60,
+      "file_tokens": 341,
+      "reduction": 0.824,
+      "span_hit": true,
+      "correct": true
+    },
+    {
+      "id": "git-01",
+      "path": "README.md",
+      "line": 1,
+      "span_tokens": 40,
+      "file_tokens": 40,
+      "reduction": 0,
+      "span_hit": false,
+      "correct": true
+    }
+  ]
+}

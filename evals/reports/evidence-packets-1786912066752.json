@@ -1,0 +1,480 @@
+{
+  "date": "2026-08-16",
+  "summary": {
+    "tasks": 32,
+    "correctness": 1,
+    "avg_tokens": 104.90625,
+    "packets_total": 214,
+    "schema_complete": false,
+    "tier0_certainty_1": false,
+    "semantic_filter_uses_score_not_certainty": true
+  },
+  "verdict": {
+    "pass": false,
+    "parity_ok": true,
+    "schema_ok": false,
+    "tier0_ok": false
+  },
+  "schema_issues": [
+    "missing packet fields: lex-01 src/services/fallback.ts",
+    "missing packet fields: lex-01 src/utils/helpers.ts",
+    "missing packet fields: lex-01 src/utils/helpers.ts",
+    "missing packet fields: lex-01 tests/fallback.test.ts",
+    "missing packet fields: lex-01 tests/fallback.test.ts",
+    "missing packet fields: lex-01 tests/fallback.test.ts",
+    "missing packet fields: lex-01 README.md",
+    "missing packet fields: lex-01 tests/fallback.test.ts",
+    "missing packet fields: lex-01 src/utils/helpers.ts",
+    "missing packet fields: lex-01 tests/fallback.test.ts"
+  ],
+  "rows": [
+    {
+      "id": "lex-01",
+      "gt_hits": 11,
+      "n_results": 12,
+      "n_ground": 3,
+      "tokens": 239,
+      "selected": "A",
+      "packets": 12,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 12
+      }
+    },
+    {
+      "id": "lex-02",
+      "gt_hits": 4,
+      "n_results": 4,
+      "n_ground": 2,
+      "tokens": 74,
+      "selected": "A",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "gt_hits": 7,
+      "n_results": 7,
+      "n_ground": 3,
+      "tokens": 79,
+      "selected": "A",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "gt_hits": 1,
+      "n_results": 1,
+      "n_ground": 1,
+      "tokens": 11,
+      "selected": "A",
+      "packets": 1,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "gt_hits": 5,
+      "n_results": 6,
+      "n_ground": 2,
+      "tokens": 86,
+      "selected": "A",
+      "packets": 6,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 6
+      }
+    },
+    {
+      "id": "str-01",
+      "gt_hits": 3,
+      "n_results": 7,
+      "n_ground": 2,
+      "tokens": 111,
+      "selected": "A",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "str-02",
+      "gt_hits": 8,
+      "n_results": 13,
+      "n_ground": 2,
+      "tokens": 247,
+      "selected": "B",
+      "packets": 13,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 13
+      }
+    },
+    {
+      "id": "str-03",
+      "gt_hits": 2,
+      "n_results": 2,
+      "n_ground": 1,
+      "tokens": 19,
+      "selected": "A",
+      "packets": 2,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 2
+      }
+    },
+    {
+      "id": "str-04",
+      "gt_hits": 2,
+      "n_results": 5,
+      "n_ground": 3,
+      "tokens": 67,
+      "selected": "B",
+      "packets": 5,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 5
+      }
+    },
+    {
+      "id": "str-05",
+      "gt_hits": 8,
+      "n_results": 12,
+      "n_ground": 3,
+      "tokens": 127,
+      "selected": "A",
+      "packets": 12,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 12
+      }
+    },
+    {
+      "id": "sem-01",
+      "gt_hits": 7,
+      "n_results": 12,
+      "n_ground": 3,
+      "tokens": 239,
+      "selected": "B",
+      "packets": 12,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 12
+      }
+    },
+    {
+      "id": "sem-02",
+      "gt_hits": 5,
+      "n_results": 7,
+      "n_ground": 2,
+      "tokens": 121,
+      "selected": "B",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "sem-03",
+      "gt_hits": 2,
+      "n_results": 5,
+      "n_ground": 3,
+      "tokens": 67,
+      "selected": "B",
+      "packets": 5,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 5
+      }
+    },
+    {
+      "id": "sem-04",
+      "gt_hits": 2,
+      "n_results": 2,
+      "n_ground": 2,
+      "tokens": 120,
+      "selected": "B",
+      "packets": 2,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "gt_hits": 5,
+      "n_results": 7,
+      "n_ground": 2,
+      "tokens": 90,
+      "selected": "B",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "dep-01",
+      "gt_hits": 11,
+      "n_results": 12,
+      "n_ground": 3,
+      "tokens": 239,
+      "selected": "A",
+      "packets": 12,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 12
+      }
+    },
+    {
+      "id": "dep-02",
+      "gt_hits": 6,
+      "n_results": 7,
+      "n_ground": 3,
+      "tokens": 111,
+      "selected": "A",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "dep-03",
+      "gt_hits": 7,
+      "n_results": 7,
+      "n_ground": 3,
+      "tokens": 79,
+      "selected": "A",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "dep-04",
+      "gt_hits": 1,
+      "n_results": 1,
+      "n_ground": 1,
+      "tokens": 11,
+      "selected": "A",
+      "packets": 1,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "gt_hits": 4,
+      "n_results": 4,
+      "n_ground": 2,
+      "tokens": 74,
+      "selected": "A",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 4
+      }
+    },
+    {
+      "id": "cfg-01",
+      "gt_hits": 1,
+      "n_results": 4,
+      "n_ground": 2,
+      "tokens": 71,
+      "selected": "B",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 1,
+        "weak": 3
+      }
+    },
+    {
+      "id": "cfg-02",
+      "gt_hits": 4,
+      "n_results": 4,
+      "n_ground": 2,
+      "tokens": 74,
+      "selected": "A",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 4
+      }
+    },
+    {
+      "id": "cfg-03",
+      "gt_hits": 1,
+      "n_results": 1,
+      "n_ground": 2,
+      "tokens": 10,
+      "selected": "A",
+      "packets": 1,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "gt_hits": 4,
+      "n_results": 4,
+      "n_ground": 2,
+      "tokens": 39,
+      "selected": "B",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 4
+      }
+    },
+    {
+      "id": "cfg-05",
+      "gt_hits": 5,
+      "n_results": 15,
+      "n_ground": 2,
+      "tokens": 264,
+      "selected": "B",
+      "packets": 15,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 15
+      }
+    },
+    {
+      "id": "tst-01",
+      "gt_hits": 8,
+      "n_results": 13,
+      "n_ground": 3,
+      "tokens": 249,
+      "selected": "B",
+      "packets": 13,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 13
+      }
+    },
+    {
+      "id": "tst-02",
+      "gt_hits": 6,
+      "n_results": 7,
+      "n_ground": 3,
+      "tokens": 96,
+      "selected": "B",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "tst-03",
+      "gt_hits": 1,
+      "n_results": 4,
+      "n_ground": 3,
+      "tokens": 50,
+      "selected": "B",
+      "packets": 4,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 4
+      }
+    },
+    {
+      "id": "tst-04",
+      "gt_hits": 6,
+      "n_results": 12,
+      "n_ground": 3,
+      "tokens": 127,
+      "selected": "B",
+      "packets": 12,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 12
+      }
+    },
+    {
+      "id": "tst-05",
+      "gt_hits": 1,
+      "n_results": 1,
+      "n_ground": 2,
+      "tokens": 10,
+      "selected": "A",
+      "packets": 1,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "gt_hits": 3,
+      "n_results": 7,
+      "n_ground": 2,
+      "tokens": 111,
+      "selected": "A",
+      "packets": 7,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 7
+      }
+    },
+    {
+      "id": "git-01",
+      "gt_hits": 1,
+      "n_results": 9,
+      "n_ground": 1,
+      "tokens": 45,
+      "selected": "B",
+      "packets": 9,
+      "certainty_buckets": {
+        "deterministic": 0,
+        "strong": 0,
+        "weak": 9
+      }
+    }
+  ]
+}

@@ -1,0 +1,1571 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "model": "node /home/nicolas/dev/contextforge/evals/ml/classify.mjs",
+  "stages": {
+    "heur": {
+      "candidate_recall": 1,
+      "r5_pre": 1,
+      "r5_post": 1,
+      "r5_fuse": 1,
+      "rerank_loss_tasks": 0,
+      "fuse_loss_tasks": 0,
+      "anchored_demoted_tasks": 0,
+      "n": 32
+    },
+    "rerank": {
+      "candidate_recall": 1,
+      "r5_pre": 1,
+      "r5_post": 1,
+      "r5_fuse": 1,
+      "rerank_loss_tasks": 0,
+      "fuse_loss_tasks": 0,
+      "anchored_demoted_tasks": 0,
+      "n": 32
+    }
+  },
+  "verdict": {
+    "rerank_demotes_anchored": false,
+    "rerank_loss_where_pool_ok": false,
+    "fuse_loss_where_pool_ok": false,
+    "summary": "atribución de pérdida de recall por etapa — el GT está en el pool (candidate recall) pero cae del top-5 en re-orden o en fusión"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": false,
+      "tokens": 239,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": true,
+      "tokens": 144,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": false,
+      "tokens": 74,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": true,
+      "tokens": 48,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 79,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 57,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 11,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 11,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 6,
+      "reranked": false,
+      "tokens": 86,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 6,
+      "reranked": true,
+      "tokens": 69,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 111,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 8,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 13,
+      "reranked": false,
+      "tokens": 247,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 13,
+      "reranked": true,
+      "tokens": 152,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 2,
+      "reranked": false,
+      "tokens": 19,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 2,
+      "reranked": false,
+      "tokens": 19,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 5,
+      "reranked": false,
+      "tokens": 67,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 0.5,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 2,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 5,
+      "reranked": false,
+      "tokens": 67,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 0.5,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 2,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-05",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": false,
+      "tokens": 127,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "str-05",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": true,
+      "tokens": 60,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 12,
+      "reranked": false,
+      "tokens": 239,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 12,
+      "reranked": true,
+      "tokens": 46,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 121,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 67,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 5,
+      "reranked": false,
+      "tokens": 67,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.25,
+        "post": 0.25,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 4,
+        "post": 4,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 5,
+      "reranked": false,
+      "tokens": 67,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 0.5,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 2,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 2,
+      "reranked": false,
+      "tokens": 120,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 2,
+      "reranked": false,
+      "tokens": 120,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-05",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 90,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "sem-05",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 68,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": false,
+      "tokens": 239,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 12,
+      "reranked": true,
+      "tokens": 144,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 111,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 8,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 79,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 57,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 11,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 11,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": false,
+      "tokens": 74,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": true,
+      "tokens": 48,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 3,
+      "reranked": false,
+      "tokens": 61,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 0.333
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 3
+      }
+    },
+    {
+      "id": "cfg-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 3,
+      "reranked": false,
+      "tokens": 61,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 0.333
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 3
+      }
+    },
+    {
+      "id": "cfg-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": false,
+      "tokens": 74,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 4,
+      "reranked": true,
+      "tokens": 48,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 10,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 10,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 4,
+      "reranked": false,
+      "tokens": 39,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 4,
+      "reranked": false,
+      "tokens": 39,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-05",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 15,
+      "reranked": false,
+      "tokens": 264,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "cfg-05",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 15,
+      "reranked": true,
+      "tokens": 68,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 15,
+      "reranked": false,
+      "tokens": 249,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 15,
+      "reranked": true,
+      "tokens": 154,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-02",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 9,
+      "reranked": false,
+      "tokens": 96,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-02",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 9,
+      "reranked": true,
+      "tokens": 79,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 6,
+      "reranked": false,
+      "tokens": 50,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 0.5,
+        "fuse": 0.333
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 2,
+        "fuse": 3
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 6,
+      "reranked": true,
+      "tokens": 10,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 17,
+      "reranked": false,
+      "tokens": 127,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 17,
+      "reranked": true,
+      "tokens": 48,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-05",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 10,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "tst-05",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 1,
+      "reranked": false,
+      "tokens": 10,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": false,
+      "tokens": 111,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 0.5,
+        "post": 0.5,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 2,
+        "post": 2,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "A",
+      "n_pool": 7,
+      "reranked": true,
+      "tokens": 8,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "mode": "heur",
+      "plan": "B",
+      "n_pool": 9,
+      "reranked": false,
+      "tokens": 45,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 0.2
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 5
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "mode": "rerank",
+      "plan": "B",
+      "n_pool": 9,
+      "reranked": true,
+      "tokens": 5,
+      "r5": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "mrr": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      },
+      "gtPos": {
+        "pre": 1,
+        "post": 1,
+        "fuse": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "date": "2026-08-16",
+  "tasks": 6,
+  "baseline": {
+    "n": 6,
+    "correctness": 1,
+    "gt": 5.166666666666667,
+    "tokens": 100,
+    "latency": 190.83333333333334,
+    "replanned": 0,
+    "pruned": 0
+  },
+  "adaptive": {
+    "n": 6,
+    "correctness": 1,
+    "gt": 5.166666666666667,
+    "tokens": 100,
+    "latency": 180.16666666666666,
+    "replanned": 0,
+    "pruned": 0
+  },
+  "verdict": {
+    "pass": true,
+    "correctness": {
+      "base": 1,
+      "adaptive": 1
+    },
+    "tokens": {
+      "base": 100,
+      "adaptive": 100
+    },
+    "latency": {
+      "base": 191,
+      "adaptive": 180
+    },
+    "replanned": 0,
+    "pruned": 0
+  },
+  "replan_examples": []
+}

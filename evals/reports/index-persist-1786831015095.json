@@ -1,0 +1,16 @@
+{
+  "date": "2026-08-15",
+  "pass": false,
+  "threshold": "T_reuse <= 0.25 * T_build en polar,dev",
+  "results": [
+    {
+      "repo": "t1-basic",
+      "t_build_ms": 2,
+      "t_reuse_ms": 2,
+      "t_after_touch_ms": 2,
+      "ratio": 1,
+      "top_same": true,
+      "verdict": "info"
+    }
+  ]
+}

@@ -1,0 +1,1494 @@
+{
+  "ts": 1786922130619,
+  "results": [
+    {
+      "id": "lex-01",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "lex-02",
+      "query_type": "references",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "lex-03",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "lex-04",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "lex-05",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "str-01",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "str-02",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "str-03",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "str-04",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "str-05",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sem-01",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sem-02",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sem-03",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sem-04",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sem-05",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "dep-01",
+      "query_type": "references",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-hf-03",
+      "query_type": "references",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-am-06",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-fo-09",
+      "query_type": "references",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-zr-12",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-dc-15",
+      "query_type": "implementation",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-du-18",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-gc-21",
+      "query_type": "filename",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    },
+    {
+      "id": "adv-vd-24",
+      "query_type": "definitions",
+      "planes": [
+        {
+          "id": "lexical",
+          "accessPath": "index",
+          "costTokens": 50,
+          "latencyMs": 6,
+          "precision": 0.75,
+          "recall": 0.65
+        },
+        {
+          "id": "symbol",
+          "accessPath": "index",
+          "costTokens": 40,
+          "latencyMs": 4,
+          "precision": 0.95,
+          "recall": 0.6
+        },
+        {
+          "id": "dependency",
+          "accessPath": "index",
+          "costTokens": 80,
+          "latencyMs": 8,
+          "precision": 0.85,
+          "recall": 0.55
+        },
+        {
+          "id": "callgraph",
+          "accessPath": "disk",
+          "costTokens": 200,
+          "latencyMs": 20,
+          "precision": 0.7,
+          "recall": 0.4
+        },
+        {
+          "id": "history",
+          "accessPath": "disk",
+          "costTokens": 120,
+          "latencyMs": 15,
+          "precision": 0.6,
+          "recall": 0.3
+        },
+        {
+          "id": "test",
+          "accessPath": "disk",
+          "costTokens": 80,
+          "latencyMs": 10,
+          "precision": 0.5,
+          "recall": 0.25
+        },
+        {
+          "id": "semantic",
+          "accessPath": "disk",
+          "costTokens": 400,
+          "latencyMs": 50,
+          "precision": 0.65,
+          "recall": 0.8
+        }
+      ]
+    }
+  ],
+  "count": 24
+}

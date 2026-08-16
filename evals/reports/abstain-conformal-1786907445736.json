@@ -1,0 +1,301 @@
+{
+  "date": "2026-08-16",
+  "calib_scores": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "rows": [
+    {
+      "id": "cfg-05",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 264,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "tst-01",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 249,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "tst-02",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 96,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "tst-03",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 50,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "tst-04",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 127,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "tst-05",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 10,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "adv-01",
+      "split": "gold",
+      "abstained": false,
+      "tokens": 111,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "git-01",
+      "split": "gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.80 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-01",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-02",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-03",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-04",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-05",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-06",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-07",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-08",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 7813,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-09",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-10",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-11",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-12",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-13",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-14",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 27,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-15",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 10,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-16",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 5992,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-17",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-18",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 4974,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-19",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.00 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-20",
+      "split": "no-gold",
+      "abstained": true,
+      "tokens": 0,
+      "max_strength": 0,
+      "reason": "no-answer: max evidence 0.60 < θ 1.00 (conformal)"
+    },
+    {
+      "id": "nog-21",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 375,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-22",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 3345,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-23",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 91,
+      "max_strength": 1,
+      "reason": null
+    },
+    {
+      "id": "nog-24",
+      "split": "no-gold",
+      "abstained": false,
+      "tokens": 4340,
+      "max_strength": 1,
+      "reason": null
+    }
+  ],
+  "verdict": {
+    "pass": false,
+    "alpha": 0.2,
+    "theta": 1,
+    "q_hat": 0,
+    "calibration_n": 24,
+    "coverage_gold": 0.875,
+    "guarantee": ">= 0.8",
+    "coverage_no_gold": 0.625,
+    "previo": 0.667,
+    "abstention_precision": 0.938,
+    "fp_retrieval": 9,
+    "fn_retrieval": 1
+  }
+}

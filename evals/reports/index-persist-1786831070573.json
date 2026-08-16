@@ -1,0 +1,43 @@
+{
+  "date": "2026-08-15",
+  "pass": false,
+  "threshold": "T_reuse <= 0.25 * T_build en polar,dev",
+  "results": [
+    {
+      "repo": "t1-basic",
+      "t_build_ms": 2,
+      "t_reuse_ms": 2,
+      "t_after_touch_ms": 3,
+      "ratio": 1,
+      "top_same": true,
+      "verdict": "info"
+    },
+    {
+      "repo": "t1-modular",
+      "t_build_ms": 2,
+      "t_reuse_ms": 1,
+      "t_after_touch_ms": 3,
+      "ratio": 0.5,
+      "top_same": true,
+      "verdict": "info"
+    },
+    {
+      "repo": "polar",
+      "t_build_ms": 335,
+      "t_reuse_ms": 180,
+      "t_after_touch_ms": 973,
+      "ratio": 0.537,
+      "top_same": true,
+      "verdict": "FAIL"
+    },
+    {
+      "repo": "dev",
+      "t_build_ms": 714,
+      "t_reuse_ms": 326,
+      "t_after_touch_ms": 1804,
+      "ratio": 0.457,
+      "top_same": true,
+      "verdict": "FAIL"
+    }
+  ]
+}

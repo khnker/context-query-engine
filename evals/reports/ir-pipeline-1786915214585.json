@@ -1,0 +1,1005 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "verdict": {
+    "parity_correctness": 1,
+    "parity_tokens": false,
+    "has_ir": 1,
+    "spearman_est_vs_actual": -0.476,
+    "pass": false
+  },
+  "operators_seen": [
+    "CALLER_EXPAND",
+    "DEDUP",
+    "DEPENDENCY_EXPAND",
+    "LEXICAL_LOOKUP",
+    "MERGE",
+    "READ_SPAN",
+    "SCAN",
+    "SYMBOL_LOOKUP"
+  ],
+  "rows": [
+    {
+      "id": "lex-01",
+      "base": {
+        "gt_hits": 11,
+        "tokens": 239
+      },
+      "ir": {
+        "gt_hits": 11,
+        "tokens": 239,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "lex-02",
+      "base": {
+        "gt_hits": 4,
+        "tokens": 74
+      },
+      "ir": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "lex-03",
+      "base": {
+        "gt_hits": 7,
+        "tokens": 79
+      },
+      "ir": {
+        "gt_hits": 7,
+        "tokens": 79,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "lex-04",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 11
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 11,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "lex-05",
+      "base": {
+        "gt_hits": 5,
+        "tokens": 86
+      },
+      "ir": {
+        "gt_hits": 5,
+        "tokens": 86,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "str-01",
+      "base": {
+        "gt_hits": 3,
+        "tokens": 111
+      },
+      "ir": {
+        "gt_hits": 3,
+        "tokens": 111,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "str-02",
+      "base": {
+        "gt_hits": 8,
+        "tokens": 247
+      },
+      "ir": {
+        "gt_hits": 8,
+        "tokens": 247,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "str-03",
+      "base": {
+        "gt_hits": 2,
+        "tokens": 19
+      },
+      "ir": {
+        "gt_hits": 2,
+        "tokens": 19,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "str-04",
+      "base": {
+        "gt_hits": 2,
+        "tokens": 67
+      },
+      "ir": {
+        "gt_hits": 2,
+        "tokens": 67,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "str-05",
+      "base": {
+        "gt_hits": 8,
+        "tokens": 127
+      },
+      "ir": {
+        "gt_hits": 8,
+        "tokens": 127,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "sem-01",
+      "base": {
+        "gt_hits": 7,
+        "tokens": 239
+      },
+      "ir": {
+        "gt_hits": 7,
+        "tokens": 239,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "sem-02",
+      "base": {
+        "gt_hits": 5,
+        "tokens": 121
+      },
+      "ir": {
+        "gt_hits": 5,
+        "tokens": 121,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "sem-03",
+      "base": {
+        "gt_hits": 2,
+        "tokens": 67
+      },
+      "ir": {
+        "gt_hits": 2,
+        "tokens": 67,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "sem-04",
+      "base": {
+        "gt_hits": 2,
+        "tokens": 120
+      },
+      "ir": {
+        "gt_hits": 2,
+        "tokens": 120,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "sem-05",
+      "base": {
+        "gt_hits": 5,
+        "tokens": 90
+      },
+      "ir": {
+        "gt_hits": 5,
+        "tokens": 90,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "dep-01",
+      "base": {
+        "gt_hits": 11,
+        "tokens": 239
+      },
+      "ir": {
+        "gt_hits": 11,
+        "tokens": 239,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "dep-02",
+      "base": {
+        "gt_hits": 6,
+        "tokens": 111
+      },
+      "ir": {
+        "gt_hits": 6,
+        "tokens": 111,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "dep-03",
+      "base": {
+        "gt_hits": 7,
+        "tokens": 79
+      },
+      "ir": {
+        "gt_hits": 7,
+        "tokens": 79,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "dep-04",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 11
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 11,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "dep-05",
+      "base": {
+        "gt_hits": 4,
+        "tokens": 74
+      },
+      "ir": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "has_ir": true,
+        "operators": [
+          "DEPENDENCY_EXPAND",
+          "CALLER_EXPAND",
+          "SYMBOL_LOOKUP",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 590
+      }
+    },
+    {
+      "id": "cfg-01",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 71
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 71,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "cfg-02",
+      "base": {
+        "gt_hits": 4,
+        "tokens": 74
+      },
+      "ir": {
+        "gt_hits": 4,
+        "tokens": 74,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "cfg-03",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 10
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "has_ir": true,
+        "operators": [
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            1
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 330
+      }
+    },
+    {
+      "id": "cfg-04",
+      "base": {
+        "gt_hits": 4,
+        "tokens": 39
+      },
+      "ir": {
+        "gt_hits": 4,
+        "tokens": 39,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "cfg-05",
+      "base": {
+        "gt_hits": 5,
+        "tokens": 264
+      },
+      "ir": {
+        "gt_hits": 5,
+        "tokens": 264,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "tst-01",
+      "base": {
+        "gt_hits": 8,
+        "tokens": 249
+      },
+      "ir": {
+        "gt_hits": 7,
+        "tokens": 239,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "tst-02",
+      "base": {
+        "gt_hits": 6,
+        "tokens": 96
+      },
+      "ir": {
+        "gt_hits": 6,
+        "tokens": 96,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "tst-03",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 50
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 50,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "tst-04",
+      "base": {
+        "gt_hits": 6,
+        "tokens": 127
+      },
+      "ir": {
+        "gt_hits": 6,
+        "tokens": 127,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "tst-05",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 10
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 10,
+        "has_ir": true,
+        "operators": [
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            1
+          ],
+          [
+            "disk",
+            3
+          ]
+        ],
+        "est_tokens": 330
+      }
+    },
+    {
+      "id": "adv-01",
+      "base": {
+        "gt_hits": 3,
+        "tokens": 111
+      },
+      "ir": {
+        "gt_hits": 3,
+        "tokens": 111,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    },
+    {
+      "id": "git-01",
+      "base": {
+        "gt_hits": 1,
+        "tokens": 45
+      },
+      "ir": {
+        "gt_hits": 1,
+        "tokens": 45,
+        "has_ir": true,
+        "operators": [
+          "SYMBOL_LOOKUP",
+          "LEXICAL_LOOKUP",
+          "SCAN",
+          "READ_SPAN",
+          "MERGE",
+          "DEDUP"
+        ],
+        "access_paths": [
+          [
+            "index",
+            2
+          ],
+          [
+            "disk",
+            4
+          ]
+        ],
+        "est_tokens": 450
+      }
+    }
+  ]
+}

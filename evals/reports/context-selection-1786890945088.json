@@ -1,0 +1,977 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "budget": 8000,
+  "mmr_lambda": 0.7,
+  "selectors": {
+    "topk": {
+      "r5": 1.33854375,
+      "r10": 1.71875,
+      "mrr": 0.9333312500000001,
+      "gt_hits": 4.4375,
+      "tokens": 104.59375,
+      "dirs": 2.90625,
+      "density": 0.04242605318195399
+    },
+    "mmr": {
+      "r5": 1.3906312499999998,
+      "r10": 1.7552062499999999,
+      "mrr": 0.940103125,
+      "gt_hits": 4.4375,
+      "tokens": 104.59375,
+      "dirs": 2.90625,
+      "density": 0.04242605318195399
+    },
+    "marginal": {
+      "r5": 1.33854375,
+      "r10": 1.71875,
+      "mrr": 0.9333312500000001,
+      "gt_hits": 4.4375,
+      "tokens": 104.59375,
+      "dirs": 2.90625,
+      "density": 0.04242605318195399
+    }
+  },
+  "verdict": {
+    "pass": true,
+    "r5": {
+      "topk": 1.33854375,
+      "marginal": 1.33854375
+    },
+    "tokens": {
+      "topk": 104.59375,
+      "marginal": 104.59375
+    },
+    "threshold": "marginal.r5 >= topk.r5 AND marginal.tokens <= 1.05*topk.tokens"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "candidates": 12,
+      "topk": {
+        "r5": 1.6667,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 3.3333,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.6667,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "candidates": 4,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "candidates": 6,
+      "topk": {
+        "r5": 2,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 86,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 2.5,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 86,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 86,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "candidates": 13,
+      "topk": {
+        "r5": 1.5,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 247,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.5,
+        "r10": 3.5,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 247,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.5,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 247,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "candidates": 2,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 19,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 19,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 19,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "str-04",
+      "repo": "t1-modular",
+      "candidates": 5,
+      "topk": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "str-05",
+      "repo": "t1-modular",
+      "candidates": 12,
+      "topk": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 127,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 127,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 127,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "sem-01",
+      "repo": "t1-basic",
+      "candidates": 12,
+      "topk": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 239,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "sem-02",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 2,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 121,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 2.5,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 121,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 121,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "candidates": 5,
+      "topk": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 0.6667,
+        "r10": 0.6667,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 67,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "sem-04",
+      "repo": "t1-modular",
+      "candidates": 2,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 120,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 120,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 120,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.5,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 90,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 1.5,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 90,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 1.5,
+        "r10": 2.5,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 90,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "dep-01",
+      "repo": "t1-basic",
+      "candidates": 12,
+      "topk": {
+        "r5": 1.6667,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 3.3333,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.6667,
+        "r10": 3,
+        "mrr": 1,
+        "gt": 11,
+        "tokens": 239,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "dep-02",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 111,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "dep-03",
+      "repo": "t1-modular",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 1.6667,
+        "r10": 2.3333,
+        "mrr": 1,
+        "gt": 7,
+        "tokens": 79,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "dep-04",
+      "repo": "t1-modular",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 11,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "candidates": 4,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "cfg-01",
+      "repo": "t1-basic",
+      "candidates": 3,
+      "topk": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.3333,
+        "gt": 1,
+        "tokens": 61,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.5,
+        "gt": 1,
+        "tokens": 61,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.3333,
+        "gt": 1,
+        "tokens": 61,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "cfg-02",
+      "repo": "t1-basic",
+      "candidates": 4,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 74,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "cfg-03",
+      "repo": "t1-modular",
+      "candidates": 1,
+      "topk": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "repo": "t1-modular",
+      "candidates": 4,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 39,
+        "dirs": 2
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 39,
+        "dirs": 2
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 4,
+        "tokens": 39,
+        "dirs": 2
+      }
+    },
+    {
+      "id": "cfg-05",
+      "repo": "t1-basic",
+      "candidates": 15,
+      "topk": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 264,
+        "dirs": 6
+      },
+      "mmr": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 264,
+        "dirs": 6
+      },
+      "marginal": {
+        "r5": 2,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 5,
+        "tokens": 264,
+        "dirs": 6
+      }
+    },
+    {
+      "id": "tst-01",
+      "repo": "t1-basic",
+      "candidates": 13,
+      "topk": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 249,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 249,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 8,
+        "tokens": 249,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "tst-02",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 96,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 1.6667,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 96,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 1.3333,
+        "r10": 2,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 96,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "candidates": 4,
+      "topk": {
+        "r5": 0.3333,
+        "r10": 0.3333,
+        "mrr": 0.3333,
+        "gt": 1,
+        "tokens": 50,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 0.3333,
+        "r10": 0.3333,
+        "mrr": 0.3333,
+        "gt": 1,
+        "tokens": 50,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 0.3333,
+        "r10": 0.3333,
+        "mrr": 0.3333,
+        "gt": 1,
+        "tokens": 50,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "candidates": 12,
+      "topk": {
+        "r5": 1,
+        "r10": 1.6667,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 127,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1.6667,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 127,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1.6667,
+        "mrr": 1,
+        "gt": 6,
+        "tokens": 127,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "tst-05",
+      "repo": "t1-basic",
+      "candidates": 1,
+      "topk": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "repo": "t1-basic",
+      "candidates": 7,
+      "topk": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "mmr": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      },
+      "marginal": {
+        "r5": 1.5,
+        "r10": 1.5,
+        "mrr": 1,
+        "gt": 3,
+        "tokens": 111,
+        "dirs": 4
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "candidates": 9,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 0.2,
+        "gt": 1,
+        "tokens": 45,
+        "dirs": 6
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 0.25,
+        "gt": 1,
+        "tokens": 45,
+        "dirs": 6
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 0.2,
+        "gt": 1,
+        "tokens": 45,
+        "dirs": 6
+      }
+    }
+  ]
+}

@@ -8,3 +8,6 @@ openspec/
 evals/results/
 .cqe/
 engine/.bm25-index.json
+
+# Engram AI agent memory
+.engram/

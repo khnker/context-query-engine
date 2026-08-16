@@ -1,0 +1,152 @@
+{
+  "date": "2026-08-16",
+  "tasks": 8,
+  "with_snapshot": 8,
+  "verdict": {
+    "pass": false,
+    "p_miss_low": 0,
+    "p_miss_high": 0,
+    "difference": 0,
+    "median_agreement": 1,
+    "n_low": 0,
+    "n_high": 8,
+    "buckets_ok": false,
+    "hypothesis": "P(gt_miss | low agreement) > P(gt_miss | high agreement)"
+  },
+  "bins": [
+    {
+      "range": "0.00-0.25",
+      "n": 0,
+      "miss_rate": null
+    },
+    {
+      "range": "0.25-0.50",
+      "n": 0,
+      "miss_rate": null
+    },
+    {
+      "range": "0.50-0.75",
+      "n": 0,
+      "miss_rate": null
+    },
+    {
+      "range": "0.75-1.01",
+      "n": 8,
+      "miss_rate": 0
+    }
+  ],
+  "rows": [
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "gt_hits": 11,
+      "n_ground": 3,
+      "tokens": 239,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0502,
+      "n_sources": 1,
+      "n_pool": 12
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "gt_hits": 4,
+      "n_ground": 2,
+      "tokens": 74,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0541,
+      "n_sources": 1,
+      "n_pool": 4
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "gt_hits": 7,
+      "n_ground": 3,
+      "tokens": 79,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0886,
+      "n_sources": 1,
+      "n_pool": 7
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "gt_hits": 1,
+      "n_ground": 1,
+      "tokens": 11,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": null,
+      "density": 0.0909,
+      "n_sources": 1,
+      "n_pool": 1
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "gt_hits": 5,
+      "n_ground": 2,
+      "tokens": 86,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0698,
+      "n_sources": 1,
+      "n_pool": 6
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "gt_hits": 3,
+      "n_ground": 2,
+      "tokens": 111,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0631,
+      "n_sources": 1,
+      "n_pool": 7
+    },
+    {
+      "id": "str-02",
+      "group": "structural",
+      "gt_hits": 8,
+      "n_ground": 2,
+      "tokens": 247,
+      "plan": "B",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": 0,
+      "density": 0.0526,
+      "n_sources": 1,
+      "n_pool": 13
+    },
+    {
+      "id": "str-03",
+      "group": "structural",
+      "gt_hits": 2,
+      "n_ground": 1,
+      "tokens": 19,
+      "plan": "A",
+      "agreement_rate": 1,
+      "rank_dispersion": 0,
+      "margin": null,
+      "density": 0.1053,
+      "n_sources": 1,
+      "n_pool": 2
+    }
+  ]
+}

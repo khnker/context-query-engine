@@ -1,0 +1,608 @@
+{
+  "date": "2026-08-16",
+  "tasks": 32,
+  "build_ms_per_repo": {
+    "t1-basic": 326,
+    "t1-modular": 341
+  },
+  "cqe": {
+    "correctness": 1,
+    "recall5": 0.8333333333333335,
+    "mrr": 0.9385416666666666,
+    "tokens_mean": 104.59375,
+    "latency_mean": 147.25
+  },
+  "index": {
+    "correctness": 1,
+    "recall5": 0.8229166666666667,
+    "mrr": 0.7197916666666667,
+    "tokens_mean": 36.40625,
+    "latency_mean": 132.8125
+  },
+  "verdict": {
+    "pass": true,
+    "correctness": {
+      "cqe": 1,
+      "index": 1
+    },
+    "detail": "index 1.000 vs cqe 1.000"
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 239,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "lex-01",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 40,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "lex-02",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 74,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "lex-02",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 20,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "lex-03",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 79,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "lex-03",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 30,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "lex-04",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 11,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "lex-04",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "lex-05",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 86,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "lex-05",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 30,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "str-01",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 111,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "str-01",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 40,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "str-02",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 247,
+      "plan": "B",
+      "results": 4
+    },
+    {
+      "id": "str-02",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 10,
+      "plan": "B",
+      "results": 1
+    },
+    {
+      "id": "str-03",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 19,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "str-03",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "str-04",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 3,
+      "tokens": 67,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "str-04",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 3,
+      "tokens": 30,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "str-05",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 127,
+      "plan": "A",
+      "results": 5
+    },
+    {
+      "id": "str-05",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 50,
+      "plan": "A",
+      "results": 5
+    },
+    {
+      "id": "sem-01",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 3,
+      "tokens": 239,
+      "plan": "B",
+      "results": 4
+    },
+    {
+      "id": "sem-01",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 3,
+      "tokens": 10,
+      "plan": "B",
+      "results": 1
+    },
+    {
+      "id": "sem-02",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 121,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "sem-02",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 20,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "sem-03",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 3,
+      "tokens": 67,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "sem-03",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 3,
+      "tokens": 30,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "sem-04",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 120,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "sem-04",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 120,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "sem-05",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 90,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "sem-05",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 180,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "dep-01",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 239,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "dep-01",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 40,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "dep-02",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 111,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "dep-02",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 40,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "dep-03",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 79,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "dep-03",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 30,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "dep-04",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 11,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "dep-04",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "dep-05",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 74,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "dep-05",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 20,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "cfg-01",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 61,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "cfg-01",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 30,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "cfg-02",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 74,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "cfg-02",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 20,
+      "plan": "A",
+      "results": 2
+    },
+    {
+      "id": "cfg-03",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "cfg-03",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 30,
+      "plan": "A",
+      "results": 3
+    },
+    {
+      "id": "cfg-04",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 39,
+      "plan": "B",
+      "results": 2
+    },
+    {
+      "id": "cfg-04",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 2,
+      "tokens": 10,
+      "plan": "B",
+      "results": 1
+    },
+    {
+      "id": "cfg-05",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 264,
+      "plan": "B",
+      "results": 7
+    },
+    {
+      "id": "cfg-05",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 70,
+      "plan": "B",
+      "results": 7
+    },
+    {
+      "id": "tst-01",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 249,
+      "plan": "B",
+      "results": 4
+    },
+    {
+      "id": "tst-01",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 3,
+      "tokens": 10,
+      "plan": "B",
+      "results": 1
+    },
+    {
+      "id": "tst-02",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 96,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "tst-02",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 30,
+      "plan": "B",
+      "results": 3
+    },
+    {
+      "id": "tst-03",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 3,
+      "tokens": 50,
+      "plan": "B",
+      "results": 4
+    },
+    {
+      "id": "tst-03",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 50,
+      "plan": "B",
+      "results": 5
+    },
+    {
+      "id": "tst-04",
+      "mode": "cqe",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 127,
+      "plan": "B",
+      "results": 5
+    },
+    {
+      "id": "tst-04",
+      "mode": "index",
+      "gt": 3,
+      "n_ground": 3,
+      "tokens": 50,
+      "plan": "B",
+      "results": 5
+    },
+    {
+      "id": "tst-05",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "tst-05",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 10,
+      "plan": "A",
+      "results": 1
+    },
+    {
+      "id": "adv-01",
+      "mode": "cqe",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 111,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "adv-01",
+      "mode": "index",
+      "gt": 2,
+      "n_ground": 2,
+      "tokens": 40,
+      "plan": "A",
+      "results": 4
+    },
+    {
+      "id": "git-01",
+      "mode": "cqe",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 45,
+      "plan": "B",
+      "results": 9
+    },
+    {
+      "id": "git-01",
+      "mode": "index",
+      "gt": 1,
+      "n_ground": 1,
+      "tokens": 45,
+      "plan": "B",
+      "results": 9
+    }
+  ]
+}

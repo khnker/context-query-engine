@@ -1,0 +1,90 @@
+{
+  "date": "2026-08-15",
+  "baseline": {
+    "adv-mo": 15836
+  },
+  "verdict": {
+    "M2_generated_recovered": true,
+    "M1_deepchain_documented_miss": 0.6666666666666666,
+    "M3_monorepo_capped": true,
+    "details": {
+      "m2": "3/3 con flags opt-in",
+      "m1": "2/3 (dc-13: miss estructural — GT app.module.ts sin match léxico; probe ausente)",
+      "m3": "max tokens 7992 vs baseline 15836 (correctness 3/3)"
+    }
+  },
+  "rows": [
+    {
+      "mitigation": "M2-generated",
+      "id": "adv-gc-19",
+      "correct": true,
+      "gt_hits": 1,
+      "tokens": 60,
+      "results": 6
+    },
+    {
+      "mitigation": "M2-generated",
+      "id": "adv-gc-20",
+      "correct": true,
+      "gt_hits": 1,
+      "tokens": 20,
+      "results": 2
+    },
+    {
+      "mitigation": "M2-generated",
+      "id": "adv-gc-21",
+      "correct": true,
+      "gt_hits": 1,
+      "tokens": 10,
+      "results": 1
+    },
+    {
+      "mitigation": "M1-deepchain",
+      "id": "adv-dc-13",
+      "correct": false,
+      "gt_hits": 0,
+      "tokens": 2624,
+      "results": 69
+    },
+    {
+      "mitigation": "M1-deepchain",
+      "id": "adv-dc-14",
+      "correct": true,
+      "gt_hits": 8,
+      "tokens": 7980,
+      "results": 474
+    },
+    {
+      "mitigation": "M1-deepchain",
+      "id": "adv-dc-15",
+      "correct": true,
+      "gt_hits": 2,
+      "tokens": 19,
+      "results": 2
+    },
+    {
+      "mitigation": "M3-strict-budget",
+      "id": "adv-mo-25",
+      "correct": true,
+      "gt_hits": 1,
+      "tokens": 10,
+      "results": 1
+    },
+    {
+      "mitigation": "M3-strict-budget",
+      "id": "adv-mo-26",
+      "correct": true,
+      "gt_hits": 21,
+      "tokens": 7992,
+      "results": 697
+    },
+    {
+      "mitigation": "M3-strict-budget",
+      "id": "adv-mo-27",
+      "correct": true,
+      "gt_hits": 2,
+      "tokens": 40,
+      "results": 4
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-08-16",
+  "cache": {
+    "cold_hits": 0,
+    "warm_hits": 1,
+    "after_touch_fp_hits": 0,
+    "after_touch2_fp_hits": 1
+  },
+  "bm25": {
+    "build_ms": 49,
+    "reuse_ms": 52,
+    "rebuild_after_touch_ms": 49,
+    "persisted_fp_present": true,
+    "fp_updated_on_rebuild": true
+  },
+  "stats_provenance": "present",
+  "verdict": {
+    "cache_invalidated_by_touch": true,
+    "bm25_rebuild_on_change": true,
+    "stats_have_provenance": true,
+    "pass": true
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "date": "2026-08-16",
+  "tasks": 8,
+  "verdict": {
+    "correctness": {
+      "baseline": 1,
+      "decomposed": 1,
+      "ok": true
+    },
+    "gt_gain_tasks": 0,
+    "gt_loss_tasks": 0,
+    "tokens_delta_mean": 1,
+    "n_decomposed": 1,
+    "pass": true
+  },
+  "rows": [
+    {
+      "id": "dec-01",
+      "repo": "t1-basic",
+      "baseline": {
+        "id": "dec-01",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 143,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "decomposed": {
+        "id": "dec-01",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 143,
+        "gt_hits": 2,
+        "n_ground": 2,
+        "correct": true,
+        "hits": [
+          "src/utils/helpers.ts",
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-02",
+      "repo": "t1-basic",
+      "baseline": {
+        "id": "dec-02",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 133,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "decomposed": {
+        "id": "dec-02",
+        "repo": "t1-basic",
+        "tokens": 239,
+        "latency_ms": 130,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "src/services/fallback.ts"
+        ],
+        "decomposed": null,
+        "results": 4
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-03",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-03",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 128,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-03",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 151,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-04",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-04",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 134,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-04",
+        "repo": "t1-modular",
+        "tokens": 22,
+        "latency_ms": 213,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": {
+          "facets": [
+            "callers"
+          ],
+          "sub_queries": [
+            "quien llama y usa get_provider_config",
+            "FIND references OF symbol get_provider_config LIMIT 8"
+          ],
+          "runs": 2
+        },
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 11,
+      "decomposed_run": {
+        "facets": [
+          "callers"
+        ],
+        "sub_queries": [
+          "quien llama y usa get_provider_config",
+          "FIND references OF symbol get_provider_config LIMIT 8"
+        ],
+        "runs": 2
+      }
+    },
+    {
+      "id": "dec-05",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-05",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 204,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "decomposed": {
+        "id": "dec-05",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 212,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-06",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-06",
+        "repo": "polar",
+        "tokens": 7987,
+        "latency_ms": 613,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "ts-facturacion-comercio/src/analizar-ocr.ts"
+        ],
+        "decomposed": null,
+        "results": 269
+      },
+      "decomposed": {
+        "id": "dec-06",
+        "repo": "polar",
+        "tokens": 7987,
+        "latency_ms": 609,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "ts-facturacion-comercio/src/analizar-ocr.ts"
+        ],
+        "decomposed": null,
+        "results": 269
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-07",
+      "repo": "polar",
+      "baseline": {
+        "id": "dec-07",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 213,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "decomposed": {
+        "id": "dec-07",
+        "repo": "polar",
+        "tokens": 5616,
+        "latency_ms": 226,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "api-polar/src/main.ts"
+        ],
+        "decomposed": null,
+        "results": 42
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    },
+    {
+      "id": "dec-08",
+      "repo": "t1-modular",
+      "baseline": {
+        "id": "dec-08",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 133,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "decomposed": {
+        "id": "dec-08",
+        "repo": "t1-modular",
+        "tokens": 11,
+        "latency_ms": 134,
+        "gt_hits": 1,
+        "n_ground": 1,
+        "correct": true,
+        "hits": [
+          "app/core/config.py"
+        ],
+        "decomposed": null,
+        "results": 1
+      },
+      "gt_delta": 0,
+      "tokens_delta": 0,
+      "decomposed_run": null
+    }
+  ]
+}

@@ -25,6 +25,7 @@ import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
 import { orderByVoI, voiConfig } from './voi.js';
 import { compile as irCompile, irStats } from './ir.js';
+import { planesForQueryType, planeStats, planeById } from './federated.js';
 import * as claimMod from './claim.js';
 import * as receiptMod from './receipt.js';
 import { rrfFuse } from './rrf.js';
@@ -683,6 +684,11 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   }
 
   stats.belief = beliefFromPool(pool);
+
+  // federated-evidence-sources (B9) — metadata de planos de evidencia
+  // adjunta stats.federated con costo/latencia/freshness/P/R por plano
+  // para el query_type actual (informatívico; no muta ejecución).
+  stats.federated = { query_type: logicalPlan.query_type, planes: planeStats() };
 
   // adaptive-plan-selection — CF_ADAPTIVE=1: el belief state decide adquisición
   // extra ANTES de fuse (determinista, opt-in).

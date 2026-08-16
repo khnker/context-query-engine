@@ -1,0 +1,66 @@
+{
+  "date": "2026-08-16",
+  "trivial_tasks": 4,
+  "t1_tasks": 0,
+  "bypass_rate": 0.75,
+  "trivial": {
+    "baseline": {
+      "correctness": 1,
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 170
+    },
+    "bypass": {
+      "correctness": 1,
+      "gt_hits": 1,
+      "tokens": 10,
+      "latency_ms": 110.5
+    }
+  },
+  "t1": {
+    "baseline": {
+      "correctness": null,
+      "gt_hits": null,
+      "tokens": 0,
+      "latency_ms": 0
+    },
+    "bypass": {
+      "correctness": null,
+      "gt_hits": null,
+      "tokens": 0,
+      "latency_ms": 0
+    }
+  },
+  "verdict": {
+    "trivial_correctness_ok": true,
+    "trivial_latency_ok": true,
+    "t1_no_regression": null,
+    "pass": true
+  },
+  "rows": [
+    {
+      "id": "fm-filename-01",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 86
+    },
+    {
+      "id": "fm-filename-02",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 79
+    },
+    {
+      "id": "fm-filename-03",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 202
+    },
+    {
+      "id": "fm-filename-04",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 75
+    }
+  ]
+}

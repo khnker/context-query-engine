@@ -1,0 +1,455 @@
+{
+  "date": "2026-08-16",
+  "tasks": 14,
+  "budget": 8000,
+  "mmr_lambda": 0.7,
+  "selectors": {
+    "topk": {
+      "r5": 0.7142857142857143,
+      "r10": 0.9285714285714286,
+      "mrr": 0.5736285714285715,
+      "gt_hits": 2.5714285714285716,
+      "tokens": 639.2857142857143,
+      "dirs": 47.5,
+      "density": 0.004022346368715084
+    },
+    "mmr": {
+      "r5": 0.7142857142857143,
+      "r10": 0.9285714285714286,
+      "mrr": 0.5735071428571429,
+      "gt_hits": 2.5714285714285716,
+      "tokens": 639.2857142857143,
+      "dirs": 47.5,
+      "density": 0.004022346368715084
+    },
+    "marginal": {
+      "r5": 0.7142857142857143,
+      "r10": 0.9285714285714286,
+      "mrr": 0.5736285714285715,
+      "gt_hits": 2.5714285714285716,
+      "tokens": 639.2857142857143,
+      "dirs": 47.5,
+      "density": 0.004022346368715084
+    }
+  },
+  "verdict": {
+    "pass": true,
+    "r5": {
+      "topk": 0.7142857142857143,
+      "marginal": 0.7142857142857143
+    },
+    "tokens": {
+      "topk": 639.2857142857143,
+      "marginal": 639.2857142857143
+    },
+    "threshold": "marginal.r5 >= topk.r5 AND marginal.tokens <= 1.05*topk.tokens"
+  },
+  "records": [
+    {
+      "id": "dev-01",
+      "repo": "dev",
+      "candidates": 3,
+      "topk": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.5,
+        "gt": 1,
+        "tokens": 30,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.5,
+        "gt": 1,
+        "tokens": 30,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 0.5,
+        "gt": 1,
+        "tokens": 30,
+        "dirs": 3
+      }
+    },
+    {
+      "id": "dev-02",
+      "repo": "dev",
+      "candidates": 210,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 2100,
+        "dirs": 210
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 2100,
+        "dirs": 210
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 2,
+        "tokens": 2100,
+        "dirs": 210
+      }
+    },
+    {
+      "id": "dev-03",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-04",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0,
+        "gt": 0,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0,
+        "gt": 0,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0,
+        "gt": 0,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-05",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-06",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-07",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 0.5,
+        "r10": 0.5,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-08",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-09",
+      "repo": "dev",
+      "candidates": 141,
+      "topk": {
+        "r5": 0,
+        "r10": 1,
+        "mrr": 0.1111,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 1,
+        "mrr": 0.1111,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 1,
+        "mrr": 0.1111,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      }
+    },
+    {
+      "id": "dev-10",
+      "repo": "dev",
+      "candidates": 141,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0095,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0078,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0095,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      }
+    },
+    {
+      "id": "dev-11",
+      "repo": "dev",
+      "candidates": 141,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0213,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0213,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0213,
+        "gt": 2,
+        "tokens": 1410,
+        "dirs": 141
+      }
+    },
+    {
+      "id": "dev-12",
+      "repo": "dev",
+      "candidates": 1,
+      "topk": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "mmr": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      },
+      "marginal": {
+        "r5": 1,
+        "r10": 1,
+        "mrr": 1,
+        "gt": 1,
+        "tokens": 10,
+        "dirs": 1
+      }
+    },
+    {
+      "id": "dev-13",
+      "repo": "dev",
+      "candidates": 129,
+      "topk": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0556,
+        "gt": 16,
+        "tokens": 2316,
+        "dirs": 19
+      },
+      "mmr": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0556,
+        "gt": 16,
+        "tokens": 2316,
+        "dirs": 19
+      },
+      "marginal": {
+        "r5": 0,
+        "r10": 0,
+        "mrr": 0.0556,
+        "gt": 16,
+        "tokens": 2316,
+        "dirs": 19
+      }
+    },
+    {
+      "id": "dev-14",
+      "repo": "dev",
+      "candidates": 13,
+      "topk": {
+        "r5": 3,
+        "r10": 5,
+        "mrr": 0.3333,
+        "gt": 5,
+        "tokens": 204,
+        "dirs": 3
+      },
+      "mmr": {
+        "r5": 3,
+        "r10": 5,
+        "mrr": 0.3333,
+        "gt": 5,
+        "tokens": 204,
+        "dirs": 3
+      },
+      "marginal": {
+        "r5": 3,
+        "r10": 5,
+        "mrr": 0.3333,
+        "gt": 5,
+        "tokens": 204,
+        "dirs": 3
+      }
+    }
+  ]
+}

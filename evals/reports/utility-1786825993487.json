@@ -1,0 +1,917 @@
+{
+  "date": "2026-08-15",
+  "tasks": 32,
+  "plan_accuracy": {
+    "current": 0.875,
+    "utility": 0.875,
+    "oracle": 1
+  },
+  "regret": {
+    "current": 0.1581676136363636,
+    "utility": 0.1659801136363636
+  },
+  "avg_tokens": {
+    "current": 104.28125,
+    "utility": 104.59375,
+    "oracle": 97.46875
+  },
+  "gt_recall": {
+    "current": 1,
+    "utility": 1
+  },
+  "expected_total_cost": {
+    "current": 201.75,
+    "utility": 202.0625
+  },
+  "selected_plans": {
+    "current": [
+      "A",
+      "B"
+    ],
+    "utility": [
+      "A",
+      "B"
+    ]
+  },
+  "verdict": {
+    "pass": false,
+    "correctness": {
+      "current": 1,
+      "utility": 1,
+      "ok": true
+    },
+    "regret": {
+      "current": 0.1581676136363636,
+      "utility": 0.1659801136363636,
+      "reduction": -0.04939380332285581,
+      "ok": false
+    },
+    "threshold": "utility.correctness >= current.correctness AND regret_util <= 0.9*regret_current"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "repo": "t1-basic",
+      "query": "FIND definitions OF symbol retryWithFallback LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 239,
+        "utility": 239,
+        "oracle": 239
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 478,
+        "utility": 478
+      },
+      "gt_hits": {
+        "current": 11,
+        "utility": 11
+      }
+    },
+    {
+      "id": "lex-02",
+      "repo": "t1-basic",
+      "query": "FIND references OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 74,
+        "utility": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 148,
+        "utility": 148
+      },
+      "gt_hits": {
+        "current": 4,
+        "utility": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol register LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 79,
+        "utility": 79,
+        "oracle": 79
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 158,
+        "utility": 158
+      },
+      "gt_hits": {
+        "current": 7,
+        "utility": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol get_provider_config LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 11,
+        "utility": 11,
+        "oracle": 11
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 22,
+        "utility": 22
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "repo": "t1-basic",
+      "query": "FIND definitions OF symbol route LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 86,
+        "utility": 86,
+        "oracle": 86
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 172,
+        "utility": 172
+      },
+      "gt_hits": {
+        "current": 5,
+        "utility": 5
+      }
+    },
+    {
+      "id": "str-01",
+      "repo": "t1-basic",
+      "query": "FIND definitions OF symbol ProviderRouter LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 111,
+        "utility": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 222,
+        "utility": 222
+      },
+      "gt_hits": {
+        "current": 3,
+        "utility": 3
+      }
+    },
+    {
+      "id": "str-02",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"try catch fallback\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 247,
+        "utility": 247,
+        "oracle": 247
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 494,
+        "utility": 494
+      },
+      "gt_hits": {
+        "current": 8,
+        "utility": 8
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol HttpHandler LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 19,
+        "utility": 19,
+        "oracle": 19
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 38,
+        "utility": 38
+      },
+      "gt_hits": {
+        "current": 2,
+        "utility": 2
+      }
+    },
+    {
+      "id": "str-04",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"handler registry\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 67,
+        "utility": 67,
+        "oracle": 67
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 134,
+        "utility": 134
+      },
+      "gt_hits": {
+        "current": 2,
+        "utility": 2
+      }
+    },
+    {
+      "id": "str-05",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol get LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 127,
+        "utility": 127,
+        "oracle": 127
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 254,
+        "utility": 254
+      },
+      "gt_hits": {
+        "current": 8,
+        "utility": 8
+      }
+    },
+    {
+      "id": "sem-01",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"retry between providers\" LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 239,
+        "utility": 239,
+        "oracle": 220
+      },
+      "regret": {
+        "current": 0.0864,
+        "utility": 0.0864
+      },
+      "expected_total_cost": {
+        "current": 459,
+        "utility": 459
+      },
+      "gt_hits": {
+        "current": 7,
+        "utility": 7
+      }
+    },
+    {
+      "id": "sem-02",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"provider failure fallback\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 121,
+        "utility": 121,
+        "oracle": 121
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 242,
+        "utility": 242
+      },
+      "gt_hits": {
+        "current": 5,
+        "utility": 5
+      }
+    },
+    {
+      "id": "sem-03",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"handler registration\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 67,
+        "utility": 67,
+        "oracle": 67
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 134,
+        "utility": 134
+      },
+      "gt_hits": {
+        "current": 2,
+        "utility": 2
+      }
+    },
+    {
+      "id": "sem-04",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"configuration loading\" LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 120,
+        "utility": 120,
+        "oracle": 120
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 240,
+        "utility": 240
+      },
+      "gt_hits": {
+        "current": 2,
+        "utility": 2
+      }
+    },
+    {
+      "id": "sem-05",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"model routing\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 90,
+        "utility": 90,
+        "oracle": 90
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 180,
+        "utility": 180
+      },
+      "gt_hits": {
+        "current": 5,
+        "utility": 5
+      }
+    },
+    {
+      "id": "dep-01",
+      "repo": "t1-basic",
+      "query": "FIND references OF symbol retryWithFallback AND FOLLOW references LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 239,
+        "utility": 239,
+        "oracle": 239
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 478,
+        "utility": 478
+      },
+      "gt_hits": {
+        "current": 11,
+        "utility": 11
+      }
+    },
+    {
+      "id": "dep-02",
+      "repo": "t1-basic",
+      "query": "FIND references OF symbol ProviderRouter AND FOLLOW references LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 111,
+        "utility": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 222,
+        "utility": 222
+      },
+      "gt_hits": {
+        "current": 6,
+        "utility": 6
+      }
+    },
+    {
+      "id": "dep-03",
+      "repo": "t1-modular",
+      "query": "FIND references OF symbol register AND FOLLOW references LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 79,
+        "utility": 79,
+        "oracle": 79
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 158,
+        "utility": 158
+      },
+      "gt_hits": {
+        "current": 7,
+        "utility": 7
+      }
+    },
+    {
+      "id": "dep-04",
+      "repo": "t1-modular",
+      "query": "FIND references OF symbol get_provider_config AND FOLLOW references LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 11,
+        "utility": 11,
+        "oracle": 11
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 22,
+        "utility": 22
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "dep-05",
+      "repo": "t1-basic",
+      "query": "FIND references OF symbol DEFAULT_TIMEOUT_MS AND FOLLOW references LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 74,
+        "utility": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 148,
+        "utility": 148
+      },
+      "gt_hits": {
+        "current": 4,
+        "utility": 4
+      }
+    },
+    {
+      "id": "cfg-01",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"providers json config\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 61,
+        "utility": 61,
+        "oracle": 61
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 122,
+        "utility": 122
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "cfg-02",
+      "repo": "t1-basic",
+      "query": "FIND definitions OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 74,
+        "utility": 74,
+        "oracle": 74
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 148,
+        "utility": 148
+      },
+      "gt_hits": {
+        "current": 4,
+        "utility": 4
+      }
+    },
+    {
+      "id": "cfg-03",
+      "repo": "t1-modular",
+      "query": "FIND filename OF file settings.yaml LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 10,
+        "utility": 10,
+        "oracle": 10
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 20,
+        "utility": 20
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "cfg-04",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"provider config\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 39,
+        "utility": 39,
+        "oracle": 39
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 78,
+        "utility": 78
+      },
+      "gt_hits": {
+        "current": 4,
+        "utility": 4
+      }
+    },
+    {
+      "id": "cfg-05",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"fallback configuration\" LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 264,
+        "utility": 264,
+        "oracle": 264
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 528,
+        "utility": 528
+      },
+      "gt_hits": {
+        "current": 5,
+        "utility": 5
+      }
+    },
+    {
+      "id": "tst-01",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"retry tests\" AND INCLUDE tests LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 239,
+        "utility": 249,
+        "oracle": 40
+      },
+      "regret": {
+        "current": 4.975,
+        "utility": 5.225
+      },
+      "expected_total_cost": {
+        "current": 279,
+        "utility": 289
+      },
+      "gt_hits": {
+        "current": 7,
+        "utility": 8
+      }
+    },
+    {
+      "id": "tst-02",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"route test\" AND INCLUDE tests LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 96,
+        "utility": 96,
+        "oracle": 96
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 192,
+        "utility": 192
+      },
+      "gt_hits": {
+        "current": 6,
+        "utility": 6
+      }
+    },
+    {
+      "id": "tst-03",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"registry tests\" AND INCLUDE tests LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 50,
+        "utility": 50,
+        "oracle": 50
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 100,
+        "utility": 100
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "tst-04",
+      "repo": "t1-modular",
+      "query": "FIND implementation OF concept \"get fallback test\" AND INCLUDE tests LIMIT 10",
+      "oracle_plan": "B",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 127,
+        "utility": 127,
+        "oracle": 127
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 254,
+        "utility": 254
+      },
+      "gt_hits": {
+        "current": 6,
+        "utility": 6
+      }
+    },
+    {
+      "id": "tst-05",
+      "repo": "t1-basic",
+      "query": "FIND filename OF file fallback.test.ts LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 10,
+        "utility": 10,
+        "oracle": 10
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 20,
+        "utility": 20
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    },
+    {
+      "id": "adv-01",
+      "repo": "t1-basic",
+      "query": "FIND definitions OF symbol ProviderRouter LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "A",
+      "selected_utility": "A",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 111,
+        "utility": 111,
+        "oracle": 111
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 222,
+        "utility": 222
+      },
+      "gt_hits": {
+        "current": 3,
+        "utility": 3
+      }
+    },
+    {
+      "id": "git-01",
+      "repo": "t1-basic",
+      "query": "FIND implementation OF concept \"recent changes\" LIMIT 10",
+      "oracle_plan": "A",
+      "selected_current": "B",
+      "selected_utility": "B",
+      "p_correct_current": null,
+      "p_correct_utility": 0.1,
+      "tokens": {
+        "current": 45,
+        "utility": 45,
+        "oracle": 45
+      },
+      "regret": {
+        "current": 0,
+        "utility": 0
+      },
+      "expected_total_cost": {
+        "current": 90,
+        "utility": 90
+      },
+      "gt_hits": {
+        "current": 1,
+        "utility": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "date": "2026-08-16",
+  "tasks": 6,
+  "totals": {
+    "seen": 37,
+    "inferred": 0,
+    "unknown_codes": 6,
+    "claims": 37
+  },
+  "verdict": {
+    "pass": true,
+    "parity": true,
+    "gt_in_receipt": 6,
+    "n": 6,
+    "receipts_with_ids": 6
+  },
+  "rows": [
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "gt_baseline": 11,
+      "gt_receipt": 11,
+      "receipt": {
+        "seen": 12,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 12
+      }
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "gt_baseline": 4,
+      "gt_receipt": 4,
+      "receipt": {
+        "seen": 4,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 4
+      }
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "gt_baseline": 7,
+      "gt_receipt": 7,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "gt_baseline": 1,
+      "gt_receipt": 1,
+      "receipt": {
+        "seen": 1,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 1
+      }
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "gt_baseline": 5,
+      "gt_receipt": 5,
+      "receipt": {
+        "seen": 6,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 6
+      }
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "gt_baseline": 3,
+      "gt_receipt": 3,
+      "receipt": {
+        "seen": 7,
+        "inferred": 0,
+        "unknown": [
+          "single-source"
+        ],
+        "claims": 7
+      }
+    }
+  ]
+}

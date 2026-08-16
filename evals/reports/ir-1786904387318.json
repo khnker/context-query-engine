@@ -1,0 +1,30 @@
+{
+  "date": "2026-08-16",
+  "tasks": 4,
+  "build_ms_per_repo": {
+    "t1-basic": 117,
+    "t1-modular": 113
+  },
+  "cqe": {
+    "correctness": 1,
+    "recall5": 1,
+    "mrr": 1,
+    "tokens_mean": 100.75,
+    "latency_mean": 133.5
+  },
+  "index": {
+    "correctness": 1,
+    "recall5": 1,
+    "mrr": 0.875,
+    "tokens_mean": 25,
+    "latency_mean": 112.25
+  },
+  "verdict": {
+    "pass": true,
+    "correctness": {
+      "cqe": 1,
+      "index": 1
+    },
+    "detail": "index 1.000 vs cqe 1.000"
+  }
+}

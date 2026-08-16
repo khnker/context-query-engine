@@ -1,0 +1,130 @@
+{
+  "report": {
+    "date": "2026-08-16",
+    "tasks": 2,
+    "plan_accuracy": {
+      "first_match": 1,
+      "heuristic": 1,
+      "learned": 1,
+      "oracle": 1
+    },
+    "regret": {
+      "first_match": 0,
+      "heuristic": 0,
+      "learned": 0
+    },
+    "avg_tokens": {
+      "first_match": 49,
+      "heuristic": 49,
+      "learned": 49,
+      "oracle": 49
+    },
+    "avg_latency_ms": {
+      "heuristic": 131,
+      "learned": 182.5
+    },
+    "gt_recall": {
+      "first_match": 1,
+      "heuristic": 1,
+      "learned": 1
+    }
+  },
+  "records": [
+    {
+      "id": "lex-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol register LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 200,
+          "actual_tokens": 79,
+          "latency_ms": 197,
+          "gt_hits": 7
+        },
+        {
+          "id": "B",
+          "est_tokens": 500,
+          "actual_tokens": 79,
+          "latency_ms": 178,
+          "gt_hits": 7
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 79,
+          "latency_ms": 161,
+          "gt_hits": 7
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "A",
+      "selected_learned": "A",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 7,
+        "heur": 7,
+        "learned": 7,
+        "gt": 3
+      },
+      "tokens": {
+        "first": 79,
+        "heur": 79,
+        "learned": 79,
+        "oracle": 79
+      },
+      "latency_ms": {
+        "heur": 125,
+        "learned": 181
+      }
+    },
+    {
+      "id": "str-03",
+      "repo": "t1-modular",
+      "query": "FIND definitions OF symbol HttpHandler LIMIT 10",
+      "candidate_plans": [
+        {
+          "id": "A",
+          "est_tokens": 200,
+          "actual_tokens": 19,
+          "latency_ms": 172,
+          "gt_hits": 2
+        },
+        {
+          "id": "B",
+          "est_tokens": 500,
+          "actual_tokens": 19,
+          "latency_ms": 164,
+          "gt_hits": 2
+        },
+        {
+          "id": "C",
+          "est_tokens": 1000,
+          "actual_tokens": 19,
+          "latency_ms": 185,
+          "gt_hits": 2
+        }
+      ],
+      "selected_first": "A",
+      "selected_heuristic": "A",
+      "selected_learned": "A",
+      "oracle_plan": "A",
+      "quality": {
+        "first": 2,
+        "heur": 2,
+        "learned": 2,
+        "gt": 1
+      },
+      "tokens": {
+        "first": 19,
+        "heur": 19,
+        "learned": 19,
+        "oracle": 19
+      },
+      "latency_ms": {
+        "heur": 137,
+        "learned": 184
+      }
+    }
+  ]
+}

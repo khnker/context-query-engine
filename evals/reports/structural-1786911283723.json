@@ -1,0 +1,600 @@
+{
+  "date": "2026-08-16",
+  "categories": {
+    "high-frequency-symbol": {
+      "correctness": 1,
+      "tokens_avg": 4198,
+      "refined_total": 0
+    },
+    "ambiguous-identifier": {
+      "correctness": 0.667,
+      "tokens_avg": 5357,
+      "refined_total": 0
+    },
+    "huge-fanout": {
+      "correctness": 1,
+      "tokens_avg": 4120,
+      "refined_total": 0
+    },
+    "zero-results": {
+      "correctness": 0,
+      "tokens_avg": 0,
+      "refined_total": 0
+    },
+    "deep-dependency-chain": {
+      "correctness": 1,
+      "tokens_avg": 3591,
+      "refined_total": 15
+    },
+    "duplicate-implementations": {
+      "correctness": 1,
+      "tokens_avg": 1981,
+      "refined_total": 0
+    },
+    "generated-code": {
+      "correctness": 0.667,
+      "tokens_avg": 17,
+      "refined_total": 0
+    },
+    "vendor-code": {
+      "correctness": 0,
+      "tokens_avg": 1432,
+      "refined_total": 0
+    },
+    "monorepo": {
+      "correctness": 1,
+      "tokens_avg": 2681,
+      "refined_total": 0
+    },
+    "polyglot": {
+      "correctness": 0.667,
+      "tokens_avg": 7993,
+      "refined_total": 0
+    },
+    "lexical": {
+      "correctness": 1,
+      "tokens_avg": 98,
+      "refined_total": 0
+    },
+    "structural": {
+      "correctness": 1,
+      "tokens_avg": 114,
+      "refined_total": 0
+    },
+    "semantic": {
+      "correctness": 1,
+      "tokens_avg": 127,
+      "refined_total": 0
+    },
+    "dependency": {
+      "correctness": 1,
+      "tokens_avg": 103,
+      "refined_total": 0
+    },
+    "configuration": {
+      "correctness": 1,
+      "tokens_avg": 92,
+      "refined_total": 1
+    },
+    "tests": {
+      "correctness": 1,
+      "tokens_avg": 104,
+      "refined_total": 0
+    },
+    "adversarial": {
+      "correctness": 1,
+      "tokens_avg": 111,
+      "refined_total": 0
+    },
+    "git": {
+      "correctness": 1,
+      "tokens_avg": 45,
+      "refined_total": 0
+    }
+  },
+  "verdict": {
+    "dc_ge_09": true,
+    "t1_no_regression": false,
+    "pass": false,
+    "dc_correctness": 1,
+    "t1_correctness": 0
+  },
+  "rows": [
+    {
+      "id": "adv-hf-01",
+      "group": "high-frequency-symbol",
+      "gt": 7,
+      "tokens": 5616,
+      "refined": 0,
+      "latency": 343
+    },
+    {
+      "id": "adv-hf-02",
+      "group": "high-frequency-symbol",
+      "gt": 1,
+      "tokens": 6738,
+      "refined": 0,
+      "latency": 259
+    },
+    {
+      "id": "adv-hf-03",
+      "group": "high-frequency-symbol",
+      "gt": 2,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 169
+    },
+    {
+      "id": "adv-am-04",
+      "group": "ambiguous-identifier",
+      "gt": 0,
+      "tokens": 7999,
+      "refined": 0,
+      "latency": 490
+    },
+    {
+      "id": "adv-am-05",
+      "group": "ambiguous-identifier",
+      "gt": 7,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 312
+    },
+    {
+      "id": "adv-am-06",
+      "group": "ambiguous-identifier",
+      "gt": 1,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "adv-fo-07",
+      "group": "huge-fanout",
+      "gt": 3,
+      "tokens": 7989,
+      "refined": 0,
+      "latency": 391
+    },
+    {
+      "id": "adv-fo-08",
+      "group": "huge-fanout",
+      "gt": 2,
+      "tokens": 4297,
+      "refined": 0,
+      "latency": 275
+    },
+    {
+      "id": "adv-fo-09",
+      "group": "huge-fanout",
+      "gt": 2,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "adv-zr-10",
+      "group": "zero-results",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 198
+    },
+    {
+      "id": "adv-zr-11",
+      "group": "zero-results",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 212
+    },
+    {
+      "id": "adv-zr-12",
+      "group": "zero-results",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 127
+    },
+    {
+      "id": "adv-dc-13",
+      "group": "deep-dependency-chain",
+      "gt": 1,
+      "tokens": 2774,
+      "refined": 15,
+      "latency": 2123
+    },
+    {
+      "id": "adv-dc-14",
+      "group": "deep-dependency-chain",
+      "gt": 8,
+      "tokens": 7980,
+      "refined": 0,
+      "latency": 277
+    },
+    {
+      "id": "adv-dc-15",
+      "group": "deep-dependency-chain",
+      "gt": 2,
+      "tokens": 19,
+      "refined": 0,
+      "latency": 147
+    },
+    {
+      "id": "adv-du-16",
+      "group": "duplicate-implementations",
+      "gt": 8,
+      "tokens": 5684,
+      "refined": 0,
+      "latency": 262
+    },
+    {
+      "id": "adv-du-17",
+      "group": "duplicate-implementations",
+      "gt": 2,
+      "tokens": 20,
+      "refined": 0,
+      "latency": 190
+    },
+    {
+      "id": "adv-du-18",
+      "group": "duplicate-implementations",
+      "gt": 2,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 150
+    },
+    {
+      "id": "adv-gc-19",
+      "group": "generated-code",
+      "gt": 1,
+      "tokens": 40,
+      "refined": 0,
+      "latency": 185
+    },
+    {
+      "id": "adv-gc-20",
+      "group": "generated-code",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 165
+    },
+    {
+      "id": "adv-gc-21",
+      "group": "generated-code",
+      "gt": 1,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 136
+    },
+    {
+      "id": "adv-vd-22",
+      "group": "vendor-code",
+      "gt": 0,
+      "tokens": 4297,
+      "refined": 0,
+      "latency": 264
+    },
+    {
+      "id": "adv-vd-23",
+      "group": "vendor-code",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 162
+    },
+    {
+      "id": "adv-vd-24",
+      "group": "vendor-code",
+      "gt": 0,
+      "tokens": 0,
+      "refined": 0,
+      "latency": 137
+    },
+    {
+      "id": "adv-mo-25",
+      "group": "monorepo",
+      "gt": 1,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 193
+    },
+    {
+      "id": "adv-mo-26",
+      "group": "monorepo",
+      "gt": 21,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 369
+    },
+    {
+      "id": "adv-mo-27",
+      "group": "monorepo",
+      "gt": 2,
+      "tokens": 40,
+      "refined": 0,
+      "latency": 185
+    },
+    {
+      "id": "adv-po-28",
+      "group": "polyglot",
+      "gt": 21,
+      "tokens": 7992,
+      "refined": 0,
+      "latency": 371
+    },
+    {
+      "id": "adv-po-29",
+      "group": "polyglot",
+      "gt": 1,
+      "tokens": 7987,
+      "refined": 0,
+      "latency": 690
+    },
+    {
+      "id": "adv-po-30",
+      "group": "polyglot",
+      "gt": 0,
+      "tokens": 8000,
+      "refined": 0,
+      "latency": 2363
+    },
+    {
+      "id": "lex-01",
+      "group": "lexical",
+      "gt": 11,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "lex-02",
+      "group": "lexical",
+      "gt": 4,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 146
+    },
+    {
+      "id": "lex-03",
+      "group": "lexical",
+      "gt": 7,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 163
+    },
+    {
+      "id": "lex-04",
+      "group": "lexical",
+      "gt": 1,
+      "tokens": 11,
+      "refined": 0,
+      "latency": 153
+    },
+    {
+      "id": "lex-05",
+      "group": "lexical",
+      "gt": 5,
+      "tokens": 86,
+      "refined": 0,
+      "latency": 149
+    },
+    {
+      "id": "str-01",
+      "group": "structural",
+      "gt": 3,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 149
+    },
+    {
+      "id": "str-02",
+      "group": "structural",
+      "gt": 8,
+      "tokens": 247,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "str-03",
+      "group": "structural",
+      "gt": 2,
+      "tokens": 19,
+      "refined": 0,
+      "latency": 153
+    },
+    {
+      "id": "str-04",
+      "group": "structural",
+      "gt": 2,
+      "tokens": 67,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "str-05",
+      "group": "structural",
+      "gt": 8,
+      "tokens": 127,
+      "refined": 0,
+      "latency": 163
+    },
+    {
+      "id": "sem-01",
+      "group": "semantic",
+      "gt": 7,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "sem-02",
+      "group": "semantic",
+      "gt": 5,
+      "tokens": 121,
+      "refined": 0,
+      "latency": 163
+    },
+    {
+      "id": "sem-03",
+      "group": "semantic",
+      "gt": 2,
+      "tokens": 67,
+      "refined": 0,
+      "latency": 147
+    },
+    {
+      "id": "sem-04",
+      "group": "semantic",
+      "gt": 2,
+      "tokens": 120,
+      "refined": 0,
+      "latency": 361
+    },
+    {
+      "id": "sem-05",
+      "group": "semantic",
+      "gt": 5,
+      "tokens": 90,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "dep-01",
+      "group": "dependency",
+      "gt": 11,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 168
+    },
+    {
+      "id": "dep-02",
+      "group": "dependency",
+      "gt": 6,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 168
+    },
+    {
+      "id": "dep-03",
+      "group": "dependency",
+      "gt": 7,
+      "tokens": 79,
+      "refined": 0,
+      "latency": 169
+    },
+    {
+      "id": "dep-04",
+      "group": "dependency",
+      "gt": 1,
+      "tokens": 11,
+      "refined": 0,
+      "latency": 147
+    },
+    {
+      "id": "dep-05",
+      "group": "dependency",
+      "gt": 4,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 166
+    },
+    {
+      "id": "cfg-01",
+      "group": "configuration",
+      "gt": 1,
+      "tokens": 71,
+      "refined": 1,
+      "latency": 295
+    },
+    {
+      "id": "cfg-02",
+      "group": "configuration",
+      "gt": 4,
+      "tokens": 74,
+      "refined": 0,
+      "latency": 155
+    },
+    {
+      "id": "cfg-03",
+      "group": "configuration",
+      "gt": 1,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 134
+    },
+    {
+      "id": "cfg-04",
+      "group": "configuration",
+      "gt": 4,
+      "tokens": 39,
+      "refined": 0,
+      "latency": 152
+    },
+    {
+      "id": "cfg-05",
+      "group": "configuration",
+      "gt": 5,
+      "tokens": 264,
+      "refined": 0,
+      "latency": 157
+    },
+    {
+      "id": "tst-01",
+      "group": "tests",
+      "gt": 7,
+      "tokens": 239,
+      "refined": 0,
+      "latency": 189
+    },
+    {
+      "id": "tst-02",
+      "group": "tests",
+      "gt": 6,
+      "tokens": 96,
+      "refined": 0,
+      "latency": 177
+    },
+    {
+      "id": "tst-03",
+      "group": "tests",
+      "gt": 1,
+      "tokens": 50,
+      "refined": 0,
+      "latency": 174
+    },
+    {
+      "id": "tst-04",
+      "group": "tests",
+      "gt": 6,
+      "tokens": 127,
+      "refined": 0,
+      "latency": 179
+    },
+    {
+      "id": "tst-05",
+      "group": "tests",
+      "gt": 1,
+      "tokens": 10,
+      "refined": 0,
+      "latency": 130
+    },
+    {
+      "id": "adv-01",
+      "group": "adversarial",
+      "gt": 3,
+      "tokens": 111,
+      "refined": 0,
+      "latency": 154
+    },
+    {
+      "id": "git-01",
+      "group": "git",
+      "gt": 1,
+      "tokens": 45,
+      "refined": 0,
+      "latency": 162
+    }
+  ]
+}
