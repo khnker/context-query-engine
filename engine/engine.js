@@ -360,7 +360,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
         }
       }
     }
-    if (relevant.length > 0) {
+    if (relevant.length > 0 && process.env.CF_DISAGREE_ALL !== '1') {
       // D14 — early termination solo si no quedan ops dependientes (FOLLOW/INCLUDE)
       const pending = selected.ops.slice(selected.ops.indexOf(op) + 1)
         .some((o) => o.tool === 'follow' || o.tool === 'include');
@@ -480,6 +480,52 @@ function runPlan(logicalPlan, rawText, opts = {}) {
       },
     });
   } catch { /* telemetría best-effort */ }
+
+  // retriever-disagreement — snapshot por query si CF_DISAGREEMENT_FILE:
+  // rank por fuente (lexical/structural/semantic/graph → source/match_type),
+  // agreement_rate (Jaccard top-10 entre pares de fuentes), rank_dispersion,
+  // margen top1-top2 (fuente dominante) y candidate density — antes de fuse.
+  if (process.env.CF_DISAGREEMENT_FILE) {
+    try {
+      const bySource = {};
+      for (const r of pool) {
+        const s = r.source ?? r.match_type ?? 'unknown';
+        (bySource[s] ??= []).push({ p: r.path, s: r.score ?? 0 });
+      }
+      // CF_DISAGREE_ALL — incluir bm25 como fuente extra (sin mutar el pool)
+      if (process.env.CF_DISAGREE_ALL === '1' && !bySource.bm25) {
+        try {
+          const bm = execOp({ tool: 'bm25', args: [logicalPlan.target?.name ?? rawText] }, logicalPlan, []);
+          if (bm.length) bySource.bm25 = bm.map((r) => ({ p: r.path, s: r.score ?? 0 }));
+        } catch { /* best-effort */ }
+      }
+      const top = (arr) => [...new Map(arr.map((x) => [x.p.replace(/^\.\//, ''), x.s])).entries()].filter(([, s]) => s > 0)
+        .sort((a, b) => b[1] - a[1]).slice(0, 3) // top-3: solapamiento significativo, no top-10 (disjuntos por construcción)
+        .map(([p, sc]) => ({ p, s: +sc.toFixed(4) }));
+      const lists = Object.fromEntries(Object.entries(bySource).map(([k, v]) => [k, top(v)]));
+      const keys = Object.keys(lists).filter((k) => lists[k].length > 0);
+      const N = 5;
+      const cands = new Map(); // path → número de fuentes que lo rankean en top-N
+      for (const k of keys) for (const { p } of lists[k].slice(0, N)) cands.set(p, (cands.get(p) ?? 0) + 1);
+      const nSrc = keys.length;
+      // agreement = soporte medio: 1 = todas las fuentes rankean los mismos archivos;
+      // 0 = cada fuente tiene candidatos únicos; null si <2 fuentes con candidatos.
+      const agreement = nSrc > 1 && cands.size ? [...cands.values()].reduce((a, c) => a + (c - 1) / (nSrc - 1), 0) / cands.size : null;
+      const primary = keys.find((k) => /bm25/.test(k)) ?? keys.find((k) => /rg/.test(k)) ?? keys[0];
+      const pm = lists[primary] ?? [];
+      const margin = pm.length >= 2 ? pm[0].s - pm[1].s : null;
+      const poolTokens = pool.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
+      const snapshot = {
+        ts: Date.now(), query: rawText, query_type: logicalPlan.query_type,
+        sources: keys.length,
+        agreement_rate: agreement == null ? null : +agreement.toFixed(4),
+        top1_top2_margin: margin == null ? null : +margin.toFixed(4),
+        candidate_density: +(pool.length / Math.max(1, poolTokens)).toFixed(4),
+        n_pool: pool.length, per_source: lists,
+      };
+      fs.appendFileSync(process.env.CF_DISAGREEMENT_FILE, JSON.stringify(snapshot) + '\n');
+    } catch { /* best-effort */ }
+  }
 
   let results = fuse(pool, effectiveBudget(logicalPlan));
 
