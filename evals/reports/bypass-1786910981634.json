@@ -1,0 +1,186 @@
+{
+  "date": "2026-08-16",
+  "trivial_tasks": 24,
+  "t1_tasks": 32,
+  "bypass_rate": 0.16666666666666666,
+  "trivial": {
+    "baseline": {
+      "correctness": 1,
+      "gt_hits": 1.7916666666666667,
+      "tokens": 73.375,
+      "latency_ms": 161.79166666666666
+    },
+    "bypass": {
+      "correctness": 1,
+      "gt_hits": 1.7916666666666667,
+      "tokens": 73.375,
+      "latency_ms": 151.16666666666666
+    }
+  },
+  "t1": {
+    "baseline": {
+      "correctness": 1,
+      "gt_hits": 4.40625,
+      "tokens": 104.28125,
+      "latency_ms": 176.4375
+    },
+    "bypass": {
+      "correctness": 1,
+      "gt_hits": 4.4375,
+      "tokens": 104.59375,
+      "latency_ms": 172.78125
+    }
+  },
+  "verdict": {
+    "trivial_correctness_ok": true,
+    "trivial_latency_ok": true,
+    "t1_no_regression": true,
+    "pass": true
+  },
+  "rows": [
+    {
+      "id": "fm-filename-01",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 79
+    },
+    {
+      "id": "fm-filename-02",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 72
+    },
+    {
+      "id": "fm-filename-03",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 214
+    },
+    {
+      "id": "fm-filename-04",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 69
+    },
+    {
+      "id": "fm-symbol-01",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 164
+    },
+    {
+      "id": "fm-symbol-02",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 161
+    },
+    {
+      "id": "fm-symbol-03",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 227
+    },
+    {
+      "id": "fm-symbol-04",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 148
+    },
+    {
+      "id": "fm-single-01",
+      "bypassed": false,
+      "gt": 4,
+      "latency": 151
+    },
+    {
+      "id": "fm-single-02",
+      "bypassed": false,
+      "gt": 5,
+      "latency": 150
+    },
+    {
+      "id": "fm-single-03",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 232
+    },
+    {
+      "id": "fm-single-04",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 145
+    },
+    {
+      "id": "fm-shot-01",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 145
+    },
+    {
+      "id": "fm-shot-02",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 236
+    },
+    {
+      "id": "fm-shot-03",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 152
+    },
+    {
+      "id": "fm-shot-04",
+      "bypassed": false,
+      "gt": 4,
+      "latency": 155
+    },
+    {
+      "id": "fm-tiny-01",
+      "bypassed": true,
+      "gt": 1,
+      "latency": 76
+    },
+    {
+      "id": "fm-tiny-02",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 148
+    },
+    {
+      "id": "fm-tiny-03",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 150
+    },
+    {
+      "id": "fm-tiny-04",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 153
+    },
+    {
+      "id": "fm-regex-01",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 157
+    },
+    {
+      "id": "fm-regex-02",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 142
+    },
+    {
+      "id": "fm-regex-03",
+      "bypassed": false,
+      "gt": 2,
+      "latency": 150
+    },
+    {
+      "id": "fm-regex-04",
+      "bypassed": false,
+      "gt": 1,
+      "latency": 152
+    }
+  ]
+}

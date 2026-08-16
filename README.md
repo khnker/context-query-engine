@@ -866,6 +866,24 @@ Fingerprint barato (`repoFingerprint`, engine/index-layer/manifest.js): sha256 d
 
 Verificado (eval-fingerprint.js): cache cold 0 → warm 1 → **touch → 0 (invalidada)** → 1 (repoblada); BM25 rebuild por fingerprint; stats con repo_fp. Bugs que esto elimina: cache con TTL 5min devolviendo evidencia vieja, stale-catálogo sin rebuild, drift de stats sin provenance. Modelos aprendidos: tagging con fingerprint de entrenamiento queda como refinamiento (runtime staleness check).
 
+
+## Cheap query bypass — SÍ SIRVE (parcial)
+
+"Optimizar tiene costo": queries triviales (filename inequívoco + repo < 500 archivos) van directo a rg-files + fuse, sin optimizer/plans/cost model (`CF_BYPASS=1`).
+
+```bash
+TMPDIR=$PWD/.tmp node evals/scripts/eval-bypass.js   # → evals/reports/bypass-<TS>.json
+```
+
+| set | correctness | latencia | tokens |
+|-----|-------------|----------|--------|
+| trivial baseline | 1.000 | 162ms | 73 |
+| trivial bypass | 1.000 | 152ms | 73 |
+| T1 baseline | 1.000 | — | 104 |
+| T1 bypass | 1.000 | — | 105 |
+
+Verdict: **PASS** (correctness igual en ambos, latencia <= baseline, sin regresión). Matices: bypass_rate 0.17 (solo triviales de repos chicos; polar >500 files fuera por diseño); el objetivo <20ms no es alcanzable vía spawn CLI (floor de node ~40ms) — sí en modo daemon/MCP (cqs-style).
+
 ## Glossary
 
 | Term | Meaning |

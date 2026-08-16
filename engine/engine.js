@@ -23,7 +23,7 @@ import { optimize, recordExecution } from './optimizer.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
-import { repoFingerprint } from './index-layer/manifest.js';
+import { repoFingerprint, walkFiles } from './index-layer/manifest.js';
 import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
 import { select as selectorSelect } from './selector.js';
 
@@ -702,6 +702,30 @@ function mergeRuns(runs) {
   };
 }
 
+// cheap-query-bypass — optimizar tiene costo: queries triviales (filename
+// inequívoco + repo chico) van directo a rg-files + fuse, sin optimize().
+function trivialGate(logicalPlan) {
+  if (process.env.CF_BYPASS !== '1') return null;
+  const name = String(logicalPlan.target?.name ?? '').trim();
+  if (!name || /[\s"'*?\[\](){}|\\]/u.test(name)) return null;
+  if (logicalPlan.query_type !== 'filename') return null;
+  let files;
+  try { files = walkFiles(process.cwd()); } catch { return null; }
+  if (files.length > Number(process.env.CF_BYPASS_MAX_FILES ?? 500)) return null;
+  return { name, files: files.length };
+}
+
+function runBypass(logicalPlan, rawText) {
+  const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0, bypassed: true };
+  const t0 = Date.now();
+  const rows = execOp({ tool: 'rg-files', args: [logicalPlan.target.name] }, logicalPlan, []);
+  stats.tool_calls = 1;
+  stats.tokens_used = rows.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
+  const results = fuse(rows, effectiveBudget(logicalPlan));
+  const plan = { selected: 'bypass', plans: [], reason: 'cheap-query-bypass: filename inequívoco, repo chico' };
+  return { plan, results, stats, cached: false, bypassed: true, bypass_latency_ms: Date.now() - t0 };
+}
+
 export function runCQP(cqpText, opts = {}) {
   // physical-query-decomposition (02): CF_DECOMPOSE=1 → sub-consultas físicas
   // (symbol/callers/impl) ejecutadas por separado y fusionadas sin LLM.
@@ -713,6 +737,7 @@ export function runCQP(cqpText, opts = {}) {
     }
   }
   const logicalPlan = parseCQP(cqpText); // lanza Error si input inválido
+  if (trivialGate(logicalPlan)) return runBypass(logicalPlan, cqpText);
   return runPlan(logicalPlan, cqpText, opts);
 }
 
@@ -743,6 +768,7 @@ export function runIntent(intentText, opts = {}) {
       return { ...mergeRuns(runs), stats: { ...mergeRuns(runs).stats, decomposed: { facets, sub_queries, runs: runs.length } } };
     }
   }
+  if (trivialGate(logicalPlan)) return runBypass(logicalPlan, src);
   return runPlan(logicalPlan, src, opts);
 }
 
