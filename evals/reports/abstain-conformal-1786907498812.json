@@ -1,0 +1,538 @@
+{
+  "date": "2026-08-16",
+  "alpha": 0.2,
+  "configs": {
+    "gold_calibrated": {
+      "theta": 1,
+      "calib_n": 24,
+      "calib_dist": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "coverage_gold": 0.875,
+      "coverage_no_gold": 0.625,
+      "abstention_precision": 0.938,
+      "fp_retrieval": 9,
+      "fn_retrieval": 1,
+      "pass": false
+    },
+    "mixed_calibrated": {
+      "theta": 0,
+      "calib_n": 24,
+      "calib_dist": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.4,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "coverage_gold": 1,
+      "coverage_no_gold": 0,
+      "abstention_precision": 0,
+      "fp_retrieval": 24,
+      "fn_retrieval": 0,
+      "pass": false
+    }
+  },
+  "eval_rows": [
+    {
+      "config": "gold_calibrated",
+      "rows": [
+        {
+          "id": "cfg-05",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 264,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-01",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 249,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-02",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 96,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-03",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 50,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-04",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 127,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-05",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 10,
+          "max_strength": 1
+        },
+        {
+          "id": "adv-01",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 111,
+          "max_strength": 1
+        },
+        {
+          "id": "git-01",
+          "split": "gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-01",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-02",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-03",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-04",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-05",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-06",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-07",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-08",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 7813,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-09",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-10",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-11",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-12",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-13",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-14",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 27,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-15",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 10,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-16",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 5992,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-17",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-18",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 4974,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-19",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-20",
+          "split": "no-gold",
+          "abstained": true,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-21",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 375,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-22",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 3345,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-23",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 91,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-24",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 4340,
+          "max_strength": 1
+        }
+      ]
+    },
+    {
+      "config": "mixed_calibrated",
+      "rows": [
+        {
+          "id": "cfg-05",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 264,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-01",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 249,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-02",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 96,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-03",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 50,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-04",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 127,
+          "max_strength": 1
+        },
+        {
+          "id": "tst-05",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 10,
+          "max_strength": 1
+        },
+        {
+          "id": "adv-01",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 111,
+          "max_strength": 1
+        },
+        {
+          "id": "git-01",
+          "split": "gold",
+          "abstained": false,
+          "tokens": 45,
+          "max_strength": 0.8
+        },
+        {
+          "id": "nog-01",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-02",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-03",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-04",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-05",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-06",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-07",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-08",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 7813,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-09",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-10",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-11",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-12",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-13",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-14",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 27,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-15",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 10,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-16",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 5992,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-17",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-18",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 4974,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-19",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 0,
+          "max_strength": 0
+        },
+        {
+          "id": "nog-20",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 4000,
+          "max_strength": 0.6
+        },
+        {
+          "id": "nog-21",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 375,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-22",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 3345,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-23",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 91,
+          "max_strength": 1
+        },
+        {
+          "id": "nog-24",
+          "split": "no-gold",
+          "abstained": false,
+          "tokens": 4340,
+          "max_strength": 1
+        }
+      ]
+    }
+  ]
+}

@@ -635,16 +635,31 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   // structural), no devolver resultados débiles → {abstained:true, reason}.
   // Señal de confianza: conteo de matches con match_type relevante post-fusión.
   if (process.env.CF_ABSTAIN === '1') {
-    const relevantMatches = results.filter((r) => RELEVANT.has(r.match_type)).length;
-    const selectedPlan = phys.plans.find((p) => p.id === phys.selected);
-    const hasGitOp = selectedPlan?.ops.some((o) => o.tool === 'git-log') ?? false;
-    const gitEvidence = hasGitOp && results.length > 0; // git-log: filas 'git' son evidencia legítima
-    if (relevantMatches === 0 && !gitEvidence) {
-      return {
-        plan: phys, results: [], cached: false, abstained: true,
-        reason: `no-answer: 0 relevant matches (${results.length} weak results descartados)`,
-        stats: { ...stats, abstained: true, tokens_used: 0 },
-      };
+    // abstain-calibration conformal — CF_ABSTAIN_CONFORMAL=1: umbral calibrado θ
+    // (split-conformal), strength por match_type; null → lógica binaria legacy.
+    if (process.env.CF_ABSTAIN_CONFORMAL === '1') {
+      const STRENGTH = { exact: 1, filename: 1, structural: 1, reference: 0.8, git: 0.8, semantic: 0.6, test: 0.4, config: 0.3 };
+      const th = Number(process.env.CF_ABSTAIN_THRESHOLD ?? 0.6);
+      const maxStr = results.reduce((a, r) => Math.max(a, STRENGTH[r.match_type] ?? 0.5), 0);
+      if (maxStr < th) {
+        return {
+          plan: phys, results: [], cached: false, abstained: true,
+          reason: `no-answer: max evidence ${maxStr.toFixed(2)} < θ ${th.toFixed(2)} (conformal)`,
+          stats: { ...stats, abstained: true, tokens_used: 0, conformal: { max_strength: maxStr, threshold: th } },
+        };
+      }
+    } else {
+      const relevantMatches = results.filter((r) => RELEVANT.has(r.match_type)).length;
+      const selectedPlan = phys.plans.find((p) => p.id === phys.selected);
+      const hasGitOp = selectedPlan?.ops.some((o) => o.tool === 'git-log') ?? false;
+      const gitEvidence = hasGitOp && results.length > 0; // git-log: filas 'git' son evidencia legítima
+      if (relevantMatches === 0 && !gitEvidence) {
+        return {
+          plan: phys, results: [], cached: false, abstained: true,
+          reason: `no-answer: 0 relevant matches (${results.length} weak results descartados)`,
+          stats: { ...stats, abstained: true, tokens_used: 0 },
+        };
+      }
     }
   }
 
