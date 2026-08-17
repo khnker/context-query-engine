@@ -1,537 +1,487 @@
 # context-query-engine
 
-**A query optimizer for agent context.** Turns agent context retrieval into a declarative, cost-aware query execution problem: it interprets what the agent needs, plans how to obtain it (like a database optimizer plans SQL), and materializes only useful context within a token budget.
+> A cost-aware query engine for retrieving high-signal context from large codebases for AI agents.
 
+**context-query-engine** treats agent context retrieval as a **query optimization problem**.
 
-
-## What is it?
-
-An LLM agent working on a large codebase spends most of its context window on inefficient retrieval: global `grep`s, `cat` of whole files, duplicated results, redundant searches. The outcome is low **useful information per token**:
+Instead of asking an agent to decide which files to grep, which tools to call, and how much context to read, the agent describes **what it needs**. The engine builds a logical query, selects a physical retrieval plan, executes the appropriate tools, and assembles the most useful context within a target budget.
 
 ```text
-Information Density = useful_context_tokens / total_context_tokens
+Agent
+  │
+  │ "Find the implementation of provider fallback,
+  │  follow references, include tests"
+  ▼
+Context Query
+  │
+  ▼
+Logical Plan
+  │
+  ▼
+Query Optimizer
+  │
+  ├── search-code
+  ├── search-structure
+  ├── search-semantic
+  ├── project-map
+  └── extract-context
+  │
+  ▼
+Context Fusion
+  │
+  ├── normalize
+  ├── deduplicate
+  ├── rank
+  └── budget
+  │
+  ▼
+High-signal Context
+  │
+  ▼
+LLM Agent
 ```
 
-context-query-engine fixes this by applying the database query optimizer analogy to code retrieval:
+---
 
-| Database | context-query-engine |
-|---|---|
-| SQL | Context Query (CQP) |
-| Query parser | `interpreter.js` + `cqp.js` |
-| Logical plan | Plan with target, relations, inclusions, budget |
-| Query optimizer | `optimizer.js` (cost model + candidate plans) |
-| Table scan / index | rg / fd / ast-grep / Probe |
-| Result set | Fused context bounded by budget |
-| Statistics | Execution telemetry (`telemetry.ndjson`) |
+## Why?
 
-The agent says **what** it needs, not **how** to find it. context-query-engine decides which tool to use, with what scope, how much context to return, and when to stop.
+Large codebases make naive context retrieval expensive and noisy.
+
+A typical agent may repeatedly:
+
+* grep the entire repository;
+* read complete files after finding a match;
+* call multiple overlapping tools;
+* retrieve duplicate results;
+* spend tokens on irrelevant files;
+* use the same retrieval strategy for very different query types.
+
+The problem is not simply **retrieval**.
+
+It is deciding:
+
+> **What information should be retrieved, which operations should retrieve it, in what order, and when should retrieval stop?**
+
+context-query-engine applies the database query optimizer model to this problem.
+
+| Database systems | context-query-engine |
+| ---------------- | -------------------- |
+| SQL | Context Query |
+| Query parser | CQP parser + interpreter |
+| Logical plan | Retrieval requirements |
+| Query optimizer | Physical plan selection |
+| Cost model | Tokens + latency + tool calls |
+| Query operators | Search / structure / semantic / extraction |
+| Query execution | Ordered retrieval |
+| Result set | Fused context |
+| Query statistics | Execution telemetry |
+
+The agent describes **what it needs**. The engine decides **how to obtain it**.
 
 ---
 
-## Current state
+## Current status
 
-> Honesty first: today context-query-engine is a **tool router with a linear cost model**, on its way to becoming a full query optimizer. Implemented and pending:
+> **Early-stage / research-oriented implementation.**
 
-**Implemented**
+The project already implements a working retrieval pipeline with:
 
-- CQP (declarative query language) + parser
-- Heuristic intent interpreter **+ optional local ML classifier** (confidence gate ≥ 0.6, regex fallback intact)
-- Candidate physical plans A/B/C per query type
-- Statistics store per `(operator, predicate_class)`: avg candidates, p50/p95 tokens, variance, latency, success rate (≥3 records, confidence 0.3/0.6/0.9)
-- Cardinality estimation per predicate class, refined with post-execution actuals
-- Cost/Quality split: `utility = quality / cost` (CostModel `CF_COST_*`, QualityModel `CF_QUALITY_*`)
-- Plan rewriting: cheap/high-selectivity operators first (dependency-safe)
-- `FOLLOW` (references/definitions/usages) and `INCLUDE` (tests) operators executed
-- Ordered execution with informed **early termination**
-- Fusion: cross-tool dedup, multi-factor ranking, token budget, tiered ordering
-- Intra-session cache (5 min TTL, persisted between processes)
-- MCP server (stdio, zero dependencies)
-- Repository statistics snapshot (`repo-stats.js`): files, bytes, estimated tokens, extensions, git recency
-- Adaptive: exponential decay (τ=7d) in the statistics store — cost model adapts to repo evolution
-- Per-operator cardinality: `estimateCandidates(operator|queryClass → queryClass → default)` wired into the optimizer
-- Local model interface (`local-model.js`): `available()/run()/rerank()/rerankSync()`, `CF_MODEL_CMD`, 2s timeout, failure → null
-- Optional reranker (engine.js hook before fuse; null → heuristic ranking) + `recall@k` harness
-- **ML pipeline (TinyBERT-style)**: 1,000 labeled queries dataset (10 classes, EN+ES) + 70/15/15 split, numpy out-of-band trainer (`evals/ml/train-classifier.py`), node inference (`evals/ml/classify.mjs`, ~6 ms), swappable artifact
-- ML gate (11.8): intent classification — regex 0.347 → **ML effective 0.94** (fired 135/150, acc 1.0, fallback 15)
--- Budget override por env `CF_BUDGET` (2k/8k/20k/30k) - eval por nivel de presupuesto sin tocar el plan
--- Context quality harness (`evals/scripts/eval-quality.js`): total/useful/wrong tokens, density, precision/recall por budget -> `evals/reports/quality-budget.json`
+* declarative Context Query syntax;
+* intent interpretation (heuristic + optional local ML classifier);
+* logical and physical plans;
+* candidate physical plans per query type;
+* cost-aware plan selection (`utility = quality / cost`);
+* cardinality estimation, refined with post-execution actuals;
+* execution telemetry and adaptive statistics;
+* early termination;
+* cross-tool deduplication and relevance ranking;
+* context-budget management;
+* optional reranking;
+* intra-session caching;
+* MCP integration.
 
-**ML evidence — gate PASS (full report: `evals/ml/GATE-ML.md`)**
+The current implementation should be understood as a **cost-aware retrieval planner / tool router evolving toward a full query optimizer**.
 
-Measured over real executions (T1 harness 40 tasks / test split 150 queries), no regression:
-
-| Component | Before | With local model | Decision |
-|-----------|--------|------------------|----------|
-| Intent classification | regex 0.347 | **0.94** (fired 135/150, acc 1.0) | ✅ adopted |
-| Spanish queries (es_acc) | ~0.17 | **1.0** (48 test rows) | ✅ adopted |
-| Cardinality MAPE | 1.418 (heuristic avg) | **0.498** (ridge, P95 5.43→2.02) | ✅ adopted |
-| Optimizer regret (C vs oracle) | 0.6886 | **0.6655** (−3.4%) | ✅ adopted |
-| Correctness / tokens (C) | 100% / 764 | 100% / 764 (identical) | ✅ no regression |
-| Reranker (real model, MRR) | sanity Δ0.000 | Δ0.000 end-to-end, pair-level MRR 0.909 | ✅ adopted (neutral, no regression) |
-
-**Context quality by budget (real tree /home/nicolas/dev, 24GB, 14 tasks GT, 2026-08-15)**
-
-| Budget | total tok | median/task | >budget | density | p@file | r@file |
-|--------|-----------|-------------|---------|---------|--------|--------|
-| 2k | 1,865,292 | 204 | 6/14 | 0.261 | 0.277 | 0.857 |
-| 8k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
-| 20k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
-| 30k | 1,865,360 | 204 | 4/14 | 0.261 | 0.277 | 0.857 |
-
-Hallazgo: budget es SOFT-cap por diseño (assemble-context siempre conserva el primer item de cada path) - matches amplios lo exceden (dev-13 pm2: 1.76M tok, 131 items). Medianas tiny (204 tok) porque las queries puntuales entregan poco. Reporte: `evals/reports/quality-budget.json`.
-All ML paths are null-safe (`CF_MODEL_CMD` absent/failure → deterministic heuristic, verified Δ0 without model).
-
-**Real-world evidence — heavy tree (2026-08-15, `/home/nicolas/dev`, ~24 GB / 164,063 files)**
-
-Full report: [`EVIDENCIA-DEV-TREE.md`](EVIDENCIA-DEV-TREE.md) (14 tasks with real ground truth, `evals/reports/dev-tree-20260815.json`).
-
-| Metric | Heuristic | Reranker |
-|--------|-----------|----------|
-| recall@5 / recall@10 | 0.857 / 0.929 | 0.786 / 0.857 (Δ = fs noise on `filename` queries; neutral on concept/symbol) |
-| MRR | 0.637 | 0.520 |
-
-Token/time savings vs naive full-tree grep:
-
-| Case | Naive (grep raw) | Engine | Savings |
-|------|------------------|--------|---------|
-| dev-13 `pm2` (broad concept) | 33.5M tokens (134 MB) | **1.76M tokens**, 0.66 s cold | **~19×** fewer tokens |
-| dev-14 `SERVICE_META` (precise symbol) | 4,056 tokens | **104 tokens**, rerank 83 ms | **~39×** fewer tokens |
-
-Time (cold, measured 2026-08-15 over `/home/nicolas/dev`):
-
-| Query | Naive (grep match + read all files) | Engine cold | Engine warm (cache 5 min) |
-|-------|--------------------------------------|-------------|---------------------------|
-| dev-13 broad `pm2` (134 MB / 33.5M tok) | ~1.9 s | **0.66 s** | ~0 s |
-| dev-14 `SERVICE_META` (16 KB / 4k tok) | ~0.9 s | **0.50 s** | ~0 s |
-
-Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is faster cold; the engine pays off on broad-concept queries over large trees (ranking + budget + cache included).
+Some research components have been validated, while others have been rejected or remain inconclusive (OOD cost models, learned plan steering, EU-based selection). The repository intentionally preserves that evidence rather than presenting every experiment as a success. See [Research and experiments](#research-and-experiments).
 
 ---
 
-## Architecture
+## Core idea: context retrieval as query optimization
+
+### Context Query
+
+A declarative description of the information the agent needs.
 
 ```text
-                    LLM AGENT
-                        │
-                        ▼
-              context_query() ── MCP or CLI
-                        │
-                        ▼
-               ┌──────────────────────┐
-               │   cqp.js / interpreter │  parse + classify intent
-               └──────────┬───────────┘
-                          ▼
-               ┌──────────────────────┐
-               │   Logical Plan       │  target, relations, inclusions, limit, budget
-               └──────────┬───────────┘
-                          ▼
-               ┌──────────────────────┐
-               │   optimizer.js       │  plans A/B/C → cost model → selection
-               └──────────┬───────────┘     + learned mappings (telemetry)
-                          ▼
-               ┌──────────────────────┐
-               │   Physical Plan      │  ordered sequence of ops
-               └──────────┬───────────┘
-                          ▼
-        ┌─────────┬────────┼─────────┬─────────┐
-        ▼         ▼        ▼         ▼         ▼
-   search-code search-structure search-semantic project-map extract-context
-        └─────────┴────────┼─────────┴─────────┘
-                           ▼
-               ┌──────────────────────┐
-               │   assemble-context   │  normalize → filter → dedup → rank → budget → order
-               └──────────┬───────────┘
-                          ▼
-                    FINAL CONTEXT (under budget)
-                          ▼
-                        LLM
+FIND implementation OF concept "provider fallback"
+AND FOLLOW references
+AND INCLUDE tests
+LIMIT 8000
 ```
 
-### Phases
+### Logical plan
 
-1. **Interpretation** — the agent issues a CQP query (`FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000`) or natural language (`--intent 'where is parseConfig defined?'`). `cqp.js` turns it into a logical plan; `interpreter.js` classifies the intent into `query_type` + `confidence`.
-2. **Optimization** — `optimizer.js` generates candidate physical plans per query type and selects the lowest estimated cost. Accumulated telemetry enables *learned mappings*: if `search-structure` has a better track record than `search-code` for `definitions`, the plan is reordered.
-3. **Execution** — plan ops run in order with **early termination**: if the first op satisfies the query, the rest are skipped. Each op emits NDJSON lines of the normalized schema.
-4. **Fusion** — `assemble-context` runs the pipeline over results: excludes low-value paths, dedups by `path:line_start:line_end` (collapses cross-tool matches), ranks multi-factor, trims to budget, orders by confidence tiers (T1 constraints → T4 low confidence).
+Describes **what must be retrieved**, without committing to specific tools.
 
----
+```text
+target: concept("provider fallback")
+relation: references
+include: tests
+budget: 8000
+```
 
-## Components
+### Physical plan
 
-| Module | Description |
-|---|---|
-| `agent-context-engineering/` | **Agent skill** — `SKILL.md` + 10 policy references (retrieval-policy, tool-selection, context-budget with levels 2000/8000/20000/30000, dedup, semantics, filesystem, evaluation, metrics, result schema, toolchain). Teaches the agent the rules; contains no engine logic. |
-| `engine/` | **Node engine (ESM, stdlib-only, zero deps)** — CQP parser, interpreter, optimizer, pipeline, cache and MCP server. |
-| `scripts/` | **CLIs** — 9 wrappers around the retrieval tools. |
-| `evals/` | **Benchmark** — 10 tasks, skill-vs-baseline runner and 4-target analyzer. |
-| `openspec/` | **Spec-driven specification** (governance, local-only, git-ignored). |
+Describes **how the query will actually be executed**.
+
+```text
+search-code(definitions)
+→ search-code(implementation)
+→ search-structure(implementation)
+→ follow(references)
+→ include(tests)
+```
+
+### Cost model
+
+Candidate plans are evaluated using execution cost and expected quality.
+
+```text
+cost = w1 · tokens + w2 · latency + w3 · tool_calls
+utility = quality / cost
+```
+
+Weights are configurable through environment variables (`CF_COST_1..3`, `CF_QUALITY_1..3`).
+
+### Context fusion
+
+Results from different retrieval operators are normalized, filtered, deduplicated, ranked and assembled into the final context.
 
 ---
 
 ## How it works
 
-Real example — CQP query:
-
-```bash
-node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
+```mermaid
+flowchart TB
+    Q["Context Query"] --> P["Query Parser / Interpreter"]
+    P --> L["Logical Plan"]
+    L --> O["Query Optimizer"]
+    O --> C1["Candidate Plan A"]
+    O --> C2["Candidate Plan B"]
+    O --> C3["Candidate Plan C"]
+    C1 --> CM["Cost Model: utility = quality / cost"]
+    C2 --> CM
+    C3 --> CM
+    CM --> S["Selected Physical Plan"]
+    S --> E["Execution"]
+    E --> R1["search-code"]
+    E --> R2["search-structure"]
+    E --> R3["search-semantic"]
+    E --> R4["follow / include"]
+    R1 --> F["Context Fusion"]
+    R2 --> F
+    R3 --> F
+    R4 --> F
+    F --> B["normalize → dedup → rank → budget"]
+    B --> X["High-signal Context"]
 ```
 
-```text
-1. cqp.js        → { query_type: "implementation",
-                     target: {kind:"concept", name:"provider fallback"},
-                     relations: ["references"], inclusions: ["tests"],
-                     limit: 8000, budget: 8000 }
-2. optimizer.js  → 3 candidate plans (A: search-code; B: search-code + search-structure;
-                     C: search-semantic + search-code) → picks lowest cost
-3. engine.js     → executes ops in order, early termination if one satisfies,
-                     fuses with assemble-context
-4. Result        → context bounded to budget, deduplicated and ranked
-```
+### Execution phases
 
-Budgets: `BUDGET` maps to levels 2000 / 8000 / 20000 / 30000 (intermediate values round down: `5000 → 2000`).
+1. **Interpretation** — the query is parsed and classified into an intent (`query_type` + confidence).
+2. **Planning** — the engine creates a logical representation of the retrieval requirements.
+3. **Optimization** — candidate physical plans are evaluated using the cost model and accumulated statistics.
+4. **Execution** — operators run in the selected order; early termination skips operations once the query is satisfied.
+5. **Fusion** — results are normalized, deduplicated and ranked.
+6. **Budgeting** — the engine attempts to keep the resulting context within the requested context level (soft cap, see [Limitations](#limitations)).
+7. **Telemetry** — actual execution statistics are recorded and refine future estimates.
+
+```mermaid
+sequenceDiagram
+    participant A as Agent
+    participant Q as Context Query
+    participant O as Optimizer
+    participant T as Tools
+    participant F as Fusion
+    A->>Q: "Find provider fallback"
+    Q->>O: Logical plan
+    O->>O: Generate candidate plans (A/B/C)
+    O->>O: Estimate cost + quality
+    O->>T: Execute selected plan
+    T-->>O: Retrieval results
+    O->>F: Merge results
+    F->>F: Normalize + dedup + rank + budget
+    F-->>A: Optimized context
+```
 
 ---
 
-## Pipeline: worked example
+## Quick start
 
-The query below is the one shown in [How it works](#how-it-works), traced through every stage with its real outputs:
+### Requirements
 
-```bash
-node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'
-```
+* Node.js ≥ 18
+* `ripgrep`
+* `fd`
+* `jq`
 
-1. **Query text (CQP)** — declarative: target `concept "provider fallback"`, relation `implementation`, `FOLLOW references`, `INCLUDE tests`, bounded by `LIMIT 8000` tokens.
-2. **Interpreter + parser** (`cqp.js` + `interpreter.js`) — parse into the internal AST, then classify intent into `query_type: "implementation"` with a heuristic `confidence`. Output: `{ query_type: "implementation", target: { kind: "concept", name: "provider fallback" }, relations: ["references"], inclusions: ["tests"], limit: 8000, budget: 8000 }`.
-3. **Logical plan** — tool-agnostic: what to retrieve (target, relations, inclusions), not how. The budget is snapped to the closest context level (`8000 → 8000`).
-4. **Optimizer** (`optimizer.js`) — builds **candidate physical plans A/B/C** per query type: A = `search-code`; B = `search-code` + `search-structure`; C = `search-semantic` + `search-code`. Each is scored with the cost model (`cost = w1·tokens + w2·latency + w3·tool_calls`, `utility = quality / cost`); cardinality starts from `CARD_DEFAULTS` (e.g. `concept: 100`) and is refined with post-execution actuals.
-5. **Physical plan** — the selected ordered sequence of operators:
-   `search-code(definitions) → search-code(implementation) → search-structure(implementation) → follow(references) → include(tests)`
-6. **Execution** — operators run in order; each emits one NDJSON line with **estimated vs actual** (`engine/statistics.ndjson`). Real row from this query:
+Optional: `ast-grep`, `probe`, `tokei`, `semgrep`.
 
-```json
-{"ts":"2026-08-14T20:37:35.784Z","operator":"search-code","queryClass":"definitions","estimated":{"candidates":15,"tokens":200,"latencyMs":15},"actual":{"candidates":15,"tokens":599,"latencyMs":26}}
-```
+The engine itself has **zero npm runtime dependencies**.
 
-| Operator / predicate class | Estimated (cand · tok · ms) | Actual (cand · tok · ms) |
-|---|---|---|
-| `search-code` / definitions | 15 · 200 · 15 | 15 · 599 · 26 |
-| `search-code` / implementation | 15 · 200 · 15 | 15 · 551 · 25 |
-| `search-structure` / implementation | 15 · 300 · 20 | 0 · 1 · 15 |
-| `follow` / implementation | 15 · 300 · 25 | 0 · 1 · 19 |
-| `include` / implementation | 15 · 200 · 20 | 4 · 1 · 27 |
-
-   The `search-structure` and `follow` stages returned **0 candidates** — the actuals teach the optimizer that this predicate class is cheap and low-yield, improving future estimates (learned mappings).
-7. **Fusion** (`assemble-context`) — normalizes results, filters low-value paths, dedups by `path:line_start:line_end` across tools, ranks multi-factor, trims to the 8000-token budget and orders by confidence tiers.
-8. **Stats + context** — actuals append to `engine/statistics.ndjson`; with ≥3 records per `(operator, predicate_class)` the estimates improve. Final context is bounded by budget, deduplicated and ranked — ready for the LLM.
-
----
-
-## Installation
-
-**Requirements** (Fedora):
-
-```bash
-sudo dnf install ripgrep fd-find jq yq fzf tokei
-```
-
-- `rg` (text search), `fd` (names), `ast-grep`/`sg` (structural), `jq` (JSON), `tokei` (LOC metrics, optional)
-- **Probe** (optional, semantic retrieval): `npm install -g @probelabs/probe`
-- **Node.js ≥ 18** (the engine uses no npm dependencies)
-
-**Clone and install the skill** into your agent (OpenCode, Claude, etc.):
+### Install
 
 ```bash
 git clone https://github.com/khnker/context-query-engine.git
 cd context-query-engine
-
-# Install the retrieval skill (symlink into your agent's skills directory):
-ln -s "$PWD/agent-context-engineering" ~/.config/opencode/skills/
-```
-
-**Verify the toolchain**:
-
-```bash
-scripts/check-tools   # exit 0 if rg/fd/jq present; optional tools don't block
-```
-
-Per-distro install details and sudo-free fallbacks in `agent-context-engineering/references/toolchain-install.md`.
-
----
-
-## Expanded installation
-
-### Prerequisites per distribution
-
-Node.js **≥ 18** plus core tools (`rg`, `fd`, `jq`):
-
-| Distribution | Command |
-|---|---|
-| Fedora | `sudo dnf install ripgrep fd-find jq` |
-| Ubuntu / Debian | `sudo apt install ripgrep fd-find jq` |
-| macOS | `brew install ripgrep fd jq` |
-
-On Debian/Ubuntu the package is `fd-find` and the binary is `fdfind`; symlink it so `fd` resolves:
-
-```bash
-mkdir -p "$HOME/.local/bin" && ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
-```
-
-### Optional tools
-
-| Tool | Purpose | Install without sudo |
-|---|---|---|
-| `probe` | Semantic search (`scripts/search-semantic`) | static binary → `~/.local/bin` |
-| `tokei` | LOC stats (repo_map cardinality) | static binary → `~/.local/bin` |
-| `semgrep` | AST rules for advanced pattern searches | pip or static binary → `~/.local/bin` |
-
-`sg` (semantic grep) is deprecated — use `ast-grep` instead.
-
-### Environment variables
-
-| Variable | Default | Effect |
-|---|---|---|
-| `CF_COST_1` | `0.01` | Cost weight w1 — tokens |
-| `CF_COST_2` | `0.001` | Cost weight w2 — latency |
-| `CF_COST_3` | `1` | Cost weight w3 — tool calls |
-| `CF_QUALITY_1` | `10` | Quality weight q1 — relevance |
-| `CF_QUALITY_2` | `5` | Quality weight q2 — coverage |
-| `CF_QUALITY_3` | `1` | Quality weight q3 — confidence |
-| `CF_STATS_FILE` | `engine/statistics.ndjson` | Path to the statistics store (default in-repo file) |
-
-`utility = quality / cost` drives physical plan selection — tune the weights per workload.
-
-### Exclusions configuration
-
-`agent-context-engineering/config/exclusions.json`:
-
-- `defaults` — paths excluded everywhere: `node_modules`, `.git`, `dist`, `build`, `coverage`, `vendor`, `target`, `__pycache__`, `.next`.
-- `project_overrides` — per-project additions (empty by default).
-
-### Verification
-
-```bash
 npm run check-tools
 ```
 
-Checks core (`rg`, `fd`, `jq`) and optional (`yq`, `sg`, `tokei`, `probe`) tools. **Exit 0** if all core tools are present; **exit 1** if any core tool is missing. Missing optional tools are reported as `MISSING` but do not block basic operation.
-
-### Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| Semantic search returns nothing | Probe index missing → run `probe index` |
-| `sg` reported MISSING / deprecated | Use `ast-grep` instead |
-| `fd: command not found` (Debian/Ubuntu) | Install `fd-find` and symlink `fdfind → fd` (see above) |
-| Tools in `~/.local/bin` not found | Add `export PATH="$HOME/.local/bin:$PATH"` to your shell profile (`check-tools` does this itself) |
-| Analyzer exits with code 2 (insufficient data) | Statistics need ≥3 records per `(operator, predicate_class)` — run the query at least 3 times |
-
----
-
-## Usage
-
-**Quick search (direct CLI):**
+### Run a query
 
 ```bash
-scripts/project-map                                          # repo shape (dirs, languages, LOC)
-scripts/search-code -d src "provider"                        # scoped rg with default exclusions
-scripts/search-code -i -l "retry"                            # files only, case-insensitive
-scripts/search-structure -d src 'class $A'                   # AST pattern (ast-grep)
-scripts/extract-context src/router.ts 40 60                  # semantic unit (line range)
-```
-
-**Full engine:**
-
-```bash
-# CQP query
 node engine/engine.js 'FIND definitions OF symbol parseConfig'
-
-# Natural language query
-node engine/engine.js --intent 'where is parseConfig defined?'
-
-# Same query twice → 2nd run hits the cache
-node engine/engine.js 'FIND implementation OF concept "provider fallback"'  # cache_hits: 0
-node engine/engine.js 'FIND implementation OF concept "provider fallback"'  # cache_hits: 1
 ```
 
-**MCP (for agents):**
+Or use natural language:
 
 ```bash
-engine/mcp-test.sh    # initialize → tools/list → context_query
+node engine/engine.js --intent 'where is parseConfig defined?'
 ```
-
-Deliberately minimal MCP surface:
-
-- `context_query({intent, constraints})` — main abstraction
-- `search_files` / `read_file` — low-level escape hatches
 
 ---
 
-## Testing
+## CQP
 
-Run the full suite (34 unit tests + smoke + e2e):
-
-```bash
-npm test
-```
-
-Coverage (aligned with the `test-suite` OpenSpec change):
-
-- **Unit** — `node --test` over `engine/` (parser, optimizer, statistics, local-model).
-- **Smoke** — bash scripts: `npm run check-tools` plus one end-to-end run of the worked query.
-- **End-to-end** — `node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FOLLOW references AND INCLUDE tests LIMIT 8000'`, asserting each pipeline stage emits the expected NDJSON.
-
-**Verification (2026-08-15)** — all green:
+The Context Query language is intentionally declarative.
 
 ```text
-npm test                    34/34 pass  (unit + smoke + e2e)
-openspec validate           18/18 pass
-npm run bench               PASS (61.3% compression, guards)
-ML gate (evals/ml/GATE-ML.md)  15/15 PASS — no regression on polar (T1/T2)
-mcp-test.sh                 RC=0 (init → tools/list → tools/call)
+FIND implementation OF concept "provider fallback"
+AND FOLLOW references
+AND INCLUDE tests
+LIMIT 8000
 ```
 
+The terminology deliberately distinguishes:
+
+```text
+Context Query (CQ)      → the agent's request text
+Context Query Plan (CQP) → structured logical representation produced by parseCQP
+Physical Retrieval Plan  → optimizer output (ordered ops)
+```
+
+The project does not use `CQL` for the query language because that name collides with existing standards.
 
 ---
 
+## MCP
 
-```bash
-npm test    # 34 unit tests + smoke + e2e
-npm run bench  # métricas duras: tokens y latencia reales (C vs A) con guardas de regresión
+context-query-engine exposes a deliberately small MCP surface for agents.
+
+* `context_query({intent, constraints})` — main abstraction
+* `search_files` / `read_file` — low-level escape hatches
+
+```text
+Agent → context_query() → Query optimization → Context
 ```
 
-## Reproducibility
+---
 
-All headline benchmark numbers are generated from versioned datasets, pinned repository commits, fixed query sets, reproducible execution manifests, and raw per-query results.
+## Retrieval operators
+
+The engine can compose multiple retrieval strategies:
+
+| Operator | Purpose |
+| -------- | ------- |
+| `search-code` | Text/code search (rg) |
+| `search-structure` | Structural / AST search (ast-grep) |
+| `search-semantic` | Semantic retrieval (Probe) |
+| `project-map` | Repository structure and statistics |
+| `extract-context` | Extract relevant source spans |
+| `bm25` | In-repo BM25 index (opt-in, hybrid fusion) |
+| `follow` | Follow references |
+| `include` | Include related artifacts such as tests |
+
+The optimizer decides which operators are useful for a particular query.
+
+---
+
+## Context budgets
+
+The system supports predefined context levels:
+
+```text
+2000   8000   20000   30000
+```
+
+Intermediate values map to the closest level (`5000 → 2000`). Override with `CF_BUDGET`.
+
+> **Important:** the current budget mechanism is a **soft cap**, not a strict hard limit. Broad retrieval queries can exceed the requested budget when preserving minimum context for matched paths (e.g. a 1.76M-token broad `pm2` query against a 30k budget). This is measured and tracked by the evaluation suite; strict-budget mode is available as default since adversarial mitigations (M3).
+
+---
+
+## Benchmarks & evidence
+
+The project is evaluated against naive retrieval baselines on: context tokens, correctness, information density, precision, recall, latency, optimizer regret, MRR, and execution cost.
+
+### Harness T1 — 32 synthetic tasks, 4 modes
+
+| Mode | Correctness | Tokens | Latency | Compression vs A |
+|------|-------------|--------|---------|------------------|
+| A — raw baseline (`grep`/`cat`) | 100% | 139,199 | 978 ms | 1.0× |
+| B — `rg`/`fd` | 92.5% | 95 | 108 ms | 637× |
+| **C — context-query-engine** | **100%** | **764** | **199 ms** | **104×** |
+| D — oracle | 87.5% | 611 | 1,506 ms | 129× |
+
+### Real repo T2 — `polar` (2,129 files, 50k+ LOC)
+
+| Mode | Correctness | Tokens | Latency | Density |
+|------|-------------|--------|---------|---------|
+| A — baseline | 8/8 | 694,581 | 12,098 ms | 0.1856 |
+| **C — context-query-engine** | **8/8** | **3,403** | **232 ms** | **0.1875** |
+
+C cuts **204× vs baseline** on the real repo with 98% less latency, keeping correctness and the highest density.
+
+### Real-world evidence — heavy tree (`/home/nicolas/dev`, ~24 GB / 164k files)
+
+| Query | Naive retrieval | Engine | Reduction |
+| ----- | --------------: | -----: | --------: |
+| Broad `pm2` query | 33.5M tokens | 1.76M | ~19× |
+| Precise `SERVICE_META` query | 4,056 tokens | 104 | ~39× |
+
+The same measurements show an important trade-off:
+
+> Raw grep is faster for small, precise cold queries. The engine pays off on broad-concept queries over large trees (ranking + budget + cache included).
+
+### Reproducibility
 
 ```bash
 ./evals/reproduce.sh T1          # in-repo fixtures (32 queries)
 ./evals/reproduce.sh T2          # polar, TEST split (8 queries)
-./evals/reproduce.sh dev         # dev workspace tree (14 queries, ground truth real)
-./evals/reproduce.sh T1 --smoke  # CI rápido: 2 queries, runs=1
+./evals/reproduce.sh dev         # dev workspace tree (14 queries, real ground truth)
+./evals/reproduce.sh T1 --smoke  # fast CI: 2 queries, runs=1
 ```
 
-Cada run produce un artefacto verificable en `evals/results/<BENCH>-<TS>/`: `manifest.json` (thresholds + SHA256 inputs), `environment.json` (machine/commits/model sha256), `queries.jsonl` (dataset congelado), `raw-results.jsonl` (una fila por query×modo×run), `metrics.json`, `statistical-tests.json` (bootstrap pareado, 95% CI) y `report.md` con veredicto PASS/FAIL (exit 0/1).
+Each run produces a versioned artifact set: `manifest.json`, `environment.json`, `queries.jsonl`, `raw-results.jsonl`, `metrics.json`, `statistical-tests.json` (paired bootstrap, 95% CI), and `report.md` with PASS/FAIL.
 
-The benchmark does not assume that lower token usage is better by itself; results are evaluated jointly on correctness, context cost, latency, information density, and optimizer regret.
+The benchmark does **not** treat lower token usage as sufficient evidence; results are evaluated jointly on correctness, context cost, latency, information density, and optimizer regret.
 
-| Claim | Test | Baseline | Primary metric |
-|-------|------|----------|----------------|
-| Reduce context | T1/T2 | rg/fd | tokens |
-| No information loss | T1/T2 | baseline | correctness |
-| Improves efficiency | T1/T2 | baseline | tokens + latency |
-| Improves density | T1/T2 | baseline | information density |
-| Optimizes plans | Oracle | heuristic | regret |
-| ML improves estimation | held-out | heuristic | MAPE |
-| ML improves decisions | Oracle | heuristic | regret |
-| Reranker helps | E2E | deterministic | MRR + recall + density |
+---
 
-## Experiments
+## Limitations
 
-Tabla de veredictos — un estado por experimento. La evidencia completa (metodología, métricas, artifacts) está en cada archivo.
+This project is intentionally experimental. Known limitations include:
 
-| Experimento | Status | Evidencia |
-|---|---|---|
-| Benchmark: context savings | ✅ PASS | [md](docs/evidence/benchmark-context-savings.md) |
-| CQE vs hybrid retrieval | ✅ SIRVE | [md](docs/evidence/hybrid-retrieval.md) |
-| Harder baselines | ✅ SIRVE | [md](docs/evidence/harder-baselines.md) |
-| Downstream agent evaluation | ❌ FAIL | [md](docs/evidence/downstream-agent-eval.md) |
-| ABSTAIN / No-Answer | ✅ PASS | [md](docs/evidence/abstain-no-answer.md) |
-| Distribution shift (OOD) — FAIL | ❌ FAIL | [md](docs/evidence/distribution-shift-ood.md) |
-| Adversarial workloads — FAIL parcial (8/10 categorías) | ❌ FAIL | [md](docs/evidence/adversarial-workloads.md) |
-| Expected Utility Cost Model (REJECT) | ❌ REJECT | [md](docs/evidence/expected-utility-cost.md) |
-| Cuándo NO usar context-query-engine | ✅ SIRVE | [md](docs/evidence/failure-modes.md) |
-| Indexing cost & break-even | ℹ️ medicion - N_break_even < 1.3 | [md](docs/evidence/indexing-cost-breakeven.md) |
-| Roadmap v1.8 (Index-Centric) | ℹ️ Formalizado: Catálogo → Index → Operadores Índice → Cost Model Index → Contexto Selección → Semántica → Adaptativo ML (refinamiento) | [md](docs/evidence/roadmap-v1-8.md) |
-| Quality-aware selection (REJECT) | ❌ REJECT | [md](docs/evidence/quality-aware-selection.md) |
-| Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial) | ✅ ADOPTED | [md](docs/evidence/evidence-model-context-selection.md) |
-| Retriever disagreement → active retrieval | ✅ SIRVE | [md](docs/evidence/retriever-disagreement.md) |
-| Repository Index Layer | ✅ SIRVE | [md](docs/evidence/repository-index-layer.md) |
-| Operator cost model (REJECT) | ❌ REJECT | [md](docs/evidence/operator-cost-model.md) |
-| Evidence State (REJECT parcial) | ❌ REJECT | [md](docs/evidence/evidence-state.md) |
-| Adaptive plan selection (REJECT) | ❌ REJECT | [md](docs/evidence/adaptive-plan-selection.md) |
-| Context selection (MMR) — paso 06 | ✅ PASS | [md](docs/evidence/context-selection-mmr.md) |
-| Abstain calibration (conformal) — REJECT | ❌ REJECT | [md](docs/evidence/abstain-conformal.md) |
-| Context query IR (CF_INDEX=1) — PASSA | ✅ SIRVE | [md](docs/evidence/context-query-ir.md) |
-| Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial) | ❌ NO SIRVE | [md](docs/evidence/physical-decomposition.md) |
-| Pairwise plan preference (Lero) — paso 08, SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/pairwise-plan-preference.md) |
-| Repo fingerprint consistency (máxima transversal) | ✅ SIRVE | [md](docs/evidence/repo-fingerprint.md) |
-| Cheap query bypass — SÍ SIRVE (parcial) | ✅ SIRVE | [md](docs/evidence/cheap-query-bypass.md) |
-| Semantic-Structural Operator (CeQe) — SÍ SIRVE (dc-13 fijo) | ✅ SIRVE | [md](docs/evidence/semantic-structural-operator.md) |
-| Evidence Packet Standard — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/evidence-packet-standard.md) |
-| Explorer-Solver Separation (FastContext) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/explorer-solver-separation.md) |
-| Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte | ⚠️ PARITY | [md](docs/evidence/pairwise-runtime.md) |
-| Read Span Operator (A2) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/read-span-operator.md) |
-| Fuse Flood Boost (A3) — REJECT parcial, root cause: dedup por path | ❌ REJECT | [md](docs/evidence/fuse-flood-boost.md) |
-| Typed Rank Fusion (RRF) — B1 | ℹ️ mixta - -41% tokens, mrr -5.7pp | [md](docs/evidence/typed-rank-fusion.md) |
-| Adaptive Context Budget (Adaptive-k) — B2, SÍ SIRVE (parity) | ✅ SIRVE | [md](docs/evidence/adaptive-context-budget.md) |
-| Claim-Level Context (B3) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/claim-level-context.md) |
-| Execution Receipts (B4) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/execution-receipts.md) |
-| Information Bottleneck Metrics (B5) — SÍ SIRVE (métrica estándar) | ✅ SIRVE | [md](docs/evidence/info-bottleneck-metrics.md) |
-| Context Compilation / IR (B6) — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/context-compilation-ir.md) |
-| Information Acquisition / VoI (B7) — SÍ SIRVE (mecanismo, parity) | ✅ SIRVE | [md](docs/evidence/information-acquisition-voi.md) |
-| Federated Evidence Sources (B9) — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/federated-evidence-sources.md) |
-| Repo-Calibrated Cardinality (B11) — NO SIRVE (OOD dev) | ❌ NO SIRVE | [md](docs/evidence/repo-calibrated-cardinality.md) |
-| Learned Plan Steering (B12) — PARITY (sin señal pre-ejecución) | ⚠️ PARITY | [md](docs/evidence/learned-plan-steering.md) |
-| Evidence Semantics (B13) — SÍ SIRVE (contrato tipado Score<T>) | ✅ SIRVE | [md](docs/evidence/evidence-semantics.md) |
-| Generated Code Default Policy (B14) — OFF default (medición empírica) | ✅ SIRVE | [md](docs/evidence/generated-code-policy.md) |
-| Backlog Audit v1.7 (B15) — inventario y archivo de superseded | ℹ️ gobernanza - 28 archivados | [md](docs/evidence/backlog-audit.md) |
-| CQE Thesis (B16) — paper/architecture doc | ℹ️ paper - 23 claims con artifact | [md](docs/evidence/cqe-thesis.md) |
-| Soundex Fallback (B17) — SÍ SIRVE (typos) | ✅ SIRVE | [md](docs/evidence/soundex-fallback.md) |
+* the context budget is a **soft cap** — broad retrieval can exceed it;
+* raw `rg` is 6–10× faster on small, precise cold queries (exact filename/symbol in small repos);
+* semantic retrieval depends on optional tooling (`probe`);
+* cost estimates require sufficient telemetry (≥3 records per `(operator, predicate_class)`);
+* repository-specific distributions break ML cost models OOD — the heuristic remains the robust default;
+* several learned approaches (EU selection, plan steering, calibrated cardinality) were rejected or remain at parity: pre-execution signals do not discriminate, and calibration does not transfer across repos;
+* the project is stdlib-only; dense embedding retrieval is out of scope.
 
+See [Research and experiments](#research-and-experiments) and `docs/evidence/` for the detailed record.
+
+---
 
 ## Repository structure
 
 ```text
 context-query-engine/
-context-query-engine/
-├── agent-context-engineering/     # agent skill
-│   ├── SKILL.md                   # activation, decision tree, escalation, budgets, anti-patterns
-│   ├── references/                # 10 retrieval policy docs
-│   ├── config/exclusions.json     # default exclusions (node_modules, dist, ...)
-│   └── scripts/check-tools
-├── engine/                        # engine (Node, stdlib-only)
-│   ├── cqp.js                     # CQP parser → logical plan
-│   ├── interpreter.js             # intent classifier (heuristic)
-
-│   ├── optimizer.js               # candidate plans + cost model + telemetry + learned mappings
-│   ├── engine.js                  # pipeline: parse → optimize → execute → fuse (+ cache)
-│   ├── mcp-server.js              # MCP stdio: context_query / search_files / read_file
-│   └── README.md
-├── scripts/                       # 9 CLIs (project-map, search-code, search-structure, ...)
-├── evals/                         # benchmark + target analyzer
-└── openspec/                      # spec-driven (local-only, git-ignored) (local, git-ignored)
+├── agent-context-engineering/   # Agent skill and retrieval policies
+│   ├── SKILL.md
+│   ├── references/
+│   └── config/
+├── engine/                      # Core query engine (Node ESM, stdlib-only)
+│   ├── cqp.js                   # Query parser
+│   ├── interpreter.js           # Intent classification
+│   ├── optimizer.js             # Cost model + plan selection
+│   ├── engine.js                # Execution pipeline
+│   ├── evidence.js              # Evidence packet standard (Score<T>)
+│   ├── selector.js              # Budgeted context selection (marginal/MMR)
+│   ├── soundex.js               # Phonetic fallback
+│   └── mcp-server.js            # MCP interface
+├── scripts/                     # Retrieval and diagnostic CLIs
+├── evals/                       # Benchmarks, datasets, reports
+│   ├── datasets/                # tasks, adversarial, no-gold, soundex...
+│   ├── scripts/                 # per-experiment eval scripts
+│   ├── reports/                 # artifacts (evals/reports/<change>-<TS>.json)
+│   └── reproduce.sh
+├── docs/                        # Research and technical documentation
+│   ├── THESIS.md                # CQE thesis: adaptive evidence acquisition
+│   ├── experiments.md           # Full experiment index
+│   └── evidence/                # Per-experiment evidence (46 files)
+├── openspec/                    # Spec-driven governance (local)
+├── EVIDENCIA-DEV-TREE.md        # Real-world evidence
+├── MASTER-PLAN-v17.md           # Development plan
+└── package.json
 ```
-
-
-## Glossary
-
-| Term | Meaning |
-|---|---|
-| **CQ** | Context Query — what the agent needs, as natural language or intent text (e.g. `--intent 'where is parseConfig defined?'`). |
-| **CQP** | Context Query Plan — the structured logical representation the parser produces from a CQ (`FIND ... AND ... LIMIT ...`), consumed by the optimizer. |
-| **AST** | Abstract Syntax Tree — the internal structured representation produced by the parser; boundary between query text and the planner. |
-| **Logical plan** | Tool-agnostic description of what to retrieve: target, relations, inclusions, limit/budget. |
-| **Physical retrieval plan** | The concrete ordered sequence of operators that will run (`search-code`, `search-structure`, `search-semantic`, `project-map`, `extract-context`). Candidates A/B/C per query type. |
-| **Cost model** | `cost = w1·tokens + w2·latency + w3·tool_calls` with weights `CF_COST_1..3`; plan selection uses `utility = quality / cost`. |
-| **Confidence** | How sure the heuristic interpreter is about the `query_type` classification of a query. |
-| **Statistics** | Per `(operator, predicate_class)` aggregates — avg candidates, p95 tokens, latency, success rate — computed with ≥3 records, stored in `engine/statistics.ndjson`. |
-| **Information density** | `useful_context_tokens / total_context_tokens` — the metric the engine optimizes. |
-| **Wrong-context** | Retrieved context that does not match what the agent actually needs; the failure mode that fusion (dedup, ranking, budget) minimizes. |
 
 ---
 
-## Naming: CQ / CQP
+## Testing
 
-The engine distinguishes two levels, like SQL vs its plan:
-
+```bash
+npm test                 # unit + smoke + e2e (TMPDIR=$PWD/.tmp npm test → 50/50)
+npm run bench            # hard token/latency guards (C vs A)
+npm run check-tools      # toolchain verification
+engine/mcp-test.sh       # MCP init → tools/list → context_query
 ```
-Context Query (CQ)          → the agent's request text (declarative, `FIND ... AND ... LIMIT ...`)
-Context Query Plan (CQP)    → structured logical representation produced by parseCQP
-Physical Retrieval Plan     → optimizer output (ordered ops)
+
+---
+
+## Research and experiments
+
+The full experimental record lives outside this README:
+
+* **[docs/experiments.md](docs/experiments.md)** — index of 46 experiments, one line each, with verdict (✅ PASS / ⚠️ PARITY / ❌ REJECT) and link to the full evidence.
+* **[docs/evidence/](docs/evidence/)** — per-experiment evidence files: methodology, metrics, verdict, artifacts.
+* **[docs/THESIS.md](docs/THESIS.md)** — the CQE thesis framing the system as adaptive evidence acquisition under uncertainty and resource constraints (23 claims, each with an artifact).
+
+Headline findings:
+
+* evidence tiering, typed scores (`Score<T>`), and provenance survive — the evidence layer is robust;
+* pre-execution prediction of downstream value does not work in this corpus (pairwise, hints, VoI, learned costs);
+* strict budget, RRF fusion, claim-level context, and soundex fallback are net wins;
+* OOD transfer of ML cost models fails; repository calibration is not enough.
+
+---
+
+## Roadmap
+
+The project has moved to an **index-centric direction (v1.8)**:
+
+```text
+Tool routing + heuristics
+        │
+        ▼
+Cost-aware physical planning (done)
+        │
+        ▼
+Repository-aware statistics (done)
+        │
+        ▼
+Catalog + index materialization (in progress)
+        │
+        ▼
+IndexSeek operators (O(log N) instead of O(N) scans)
+        │
+        ▼
+Index-based cost model + cardinality
+        │
+        ▼
+Context selection under budget
+        │
+        ▼
+Adaptive evidence acquisition
 ```
 
-The query language is deliberately not called "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
+The central research question:
+
+> **Can context retrieval for AI agents be treated as an optimizable execution problem rather than a collection of ad-hoc search calls?**
+
+---
 
 ## License
 
-[MIT](LICENSE)
+MIT
