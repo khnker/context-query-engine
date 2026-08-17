@@ -1,0 +1,245 @@
+{
+  "date": "2026-08-17",
+  "tasks": 9,
+  "recall": {
+    "off": 0,
+    "on": 0.42857142857142855,
+    "gain": 0.42857142857142855
+  },
+  "fp_rate": 1,
+  "avg_tokens": {
+    "off": 0,
+    "on": 0
+  },
+  "avg_latency_ms": {
+    "off": 166.88888888888889,
+    "on": 241.88888888888889
+  },
+  "soundex_triggered_on": 6,
+  "details": {
+    "off": [
+      {
+        "id": "sx-01",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 208,
+        "error": null,
+        "symbol": "retryWithFallback"
+      },
+      {
+        "id": "sx-02",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 176,
+        "error": null,
+        "symbol": "DEFAULT_TIMEOUT_MS"
+      },
+      {
+        "id": "sx-03",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 162,
+        "error": null,
+        "symbol": "get_provider_config"
+      },
+      {
+        "id": "sx-04",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 168,
+        "error": null,
+        "symbol": "HttpHandler"
+      },
+      {
+        "id": "sx-05",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 171,
+        "error": null,
+        "symbol": "ProviderRouter"
+      },
+      {
+        "id": "sx-06",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 140,
+        "error": null,
+        "symbol": "fallback.test.ts"
+      },
+      {
+        "id": "sx-07",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 145,
+        "error": null,
+        "symbol": "settings.yaml"
+      },
+      {
+        "id": "sx-fp-01",
+        "category": "fp",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 164,
+        "error": null,
+        "symbol": "zxq9PlutoniumWidget"
+      },
+      {
+        "id": "sx-fp-02",
+        "category": "fp",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 168,
+        "error": null,
+        "symbol": "qwwertyuiopp"
+      }
+    ],
+    "on": [
+      {
+        "id": "sx-01",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 4,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 262,
+        "error": null,
+        "symbol": "retryWithFallback"
+      },
+      {
+        "id": "sx-02",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 1,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 247,
+        "error": null,
+        "symbol": "DEFAULT_TIMEOUT_MS"
+      },
+      {
+        "id": "sx-03",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 248,
+        "error": null,
+        "symbol": "get_provider_config"
+      },
+      {
+        "id": "sx-04",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 1,
+        "n_results": 2,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 242,
+        "error": null,
+        "symbol": "HttpHandler"
+      },
+      {
+        "id": "sx-05",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 5,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 244,
+        "error": null,
+        "symbol": "ProviderRouter"
+      },
+      {
+        "id": "sx-06",
+        "category": "typo",
+        "repo": "t1-basic",
+        "gt_hits": 1,
+        "n_results": 2,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 226,
+        "error": null,
+        "symbol": "fallback.test.ts"
+      },
+      {
+        "id": "sx-07",
+        "category": "typo",
+        "repo": "t1-modular",
+        "gt_hits": 1,
+        "n_results": 1,
+        "soundex_triggered": true,
+        "tokens": 0,
+        "latency_ms": 223,
+        "error": null,
+        "symbol": "settings.yaml"
+      },
+      {
+        "id": "sx-fp-01",
+        "category": "fp",
+        "repo": "t1-basic",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 252,
+        "error": null,
+        "symbol": "zxq9PlutoniumWidget"
+      },
+      {
+        "id": "sx-fp-02",
+        "category": "fp",
+        "repo": "t1-modular",
+        "gt_hits": 0,
+        "n_results": 0,
+        "soundex_triggered": false,
+        "tokens": 0,
+        "latency_ms": 233,
+        "error": null,
+        "symbol": "qwwertyuiopp"
+      }
+    ]
+  },
+  "verdict": {
+    "pass": false,
+    "note": "recall_gain>0 && fp_rate==0"
+  }
+}

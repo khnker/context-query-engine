@@ -30,6 +30,7 @@ import * as claimMod from './claim.js';
 import * as receiptMod from './receipt.js';
 import { rrfFuse } from './rrf.js';
 import { toPacket } from './evidence.js';
+import { soundexFind } from './soundex.js';
 import { structuralRefine } from './structural-refine.js';
 import { repoFingerprint, walkFiles } from './index-layer/manifest.js';
 import { ensureIndex, symbolLookup, lexicalLookup, dependencyExpand } from './index-ops.js';
@@ -764,6 +765,33 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
   stageSnap('post_fuse', results);
+
+  // soundex-fallback (B17) — segunda pasada fonética si la fusión devuelve 0
+  // filas (typos): recupera contenido que suene parecido al target. Opt-in
+  // CF_SOUNDEX=1; umbral CF_SOUNDEX_THRESHOLD (default 0.8). Nunca en
+  // pattern/concept (necesitan regex). Nunca crash.
+  const soundexThreshold = Number(process.env.CF_SOUNDEX_THRESHOLD ?? 0.8);
+  if (process.env.CF_SOUNDEX === '1' && results.length === 0 &&
+      ['definitions', 'references', 'implementation', 'filename', 'symbol'].includes(logicalPlan.query_type) &&
+      logicalPlan.target?.name) {
+    const sT0 = Date.now();
+    try {
+      const sc = soundexFind(logicalPlan.target.name, process.cwd(), soundexThreshold);
+      if (sc.length) {
+        results = sc.map((c) => toPacket({
+          path: c.path ?? `${logicalPlan.target.name}-similar`,
+          match_type: 'soundex', score: c.similarity, score_final: c.similarity,
+          token_estimate: 10, line_start: null, line_end: null,
+          similar: true, phonetic_score: c.similarity, phonetic_of: c.token,
+          phonetic_target: logicalPlan.target.name,
+        }, 0, { ...packetOpts, query: rawText }));
+        stats.soundex = { triggered: true, target: logicalPlan.target.name,
+          note: 'contenido similar, no el buscado', candidates: results.length,
+          threshold: soundexThreshold, latency_ms: Date.now() - sT0 };
+        stats.tokens_used = results.reduce((a, r) => a + (r.token_estimate ?? 0), 0);
+      }
+    } catch { /* fallback nunca crash */ }
+  }
 
   // abstain-no-answer — CF_ABSTAIN=1: si no hay evidence relevante (exact/filename/
   // structural), no devolver resultados débiles → {abstained:true, reason}.

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "sx-01",
+    "category": "typo",
+    "repo": "t1-basic",
+    "symbol": "retryWithFallback",
+    "cqp": "FIND definitions OF symbol retryWithFallbak LIMIT 10",
+    "query": "Where is retryWithFallbak defined?",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-02",
+    "category": "typo",
+    "repo": "t1-basic",
+    "symbol": "DEFAULT_TIMEOUT_MS",
+    "cqp": "FIND references OF symbol DEFAULT_TIMOUT_MS LIMIT 10",
+    "query": "References to DEFAULT_TIMOUT_MS",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-03",
+    "category": "typo",
+    "repo": "t1-modular",
+    "symbol": "get_provider_config",
+    "cqp": "FIND definitions OF symbol get_provider_confg LIMIT 10",
+    "query": "Where is get_provider_confg defined?",
+    "primary": ["app/core/config.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-04",
+    "category": "typo",
+    "repo": "t1-modular",
+    "symbol": "HttpHandler",
+    "cqp": "FIND definitions OF symbol HttpHndler LIMIT 10",
+    "query": "Where is HttpHndler defined?",
+    "primary": ["app/handlers/http.py"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-05",
+    "category": "typo",
+    "repo": "t1-basic",
+    "symbol": "ProviderRouter",
+    "cqp": "FIND definitions OF symbol ProviderRuter LIMIT 10",
+    "query": "Where is ProviderRuter defined?",
+    "primary": ["src/services/fallback.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-06",
+    "category": "typo",
+    "repo": "t1-basic",
+    "symbol": "fallback.test.ts",
+    "cqp": "FIND filename OF file fallbak.test.ts LIMIT 10",
+    "query": "Find fallbak.test.ts",
+    "primary": ["tests/fallback.test.ts"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-07",
+    "category": "typo",
+    "repo": "t1-modular",
+    "symbol": "settings.yaml",
+    "cqp": "FIND filename OF file settngs.yaml LIMIT 10",
+    "query": "Find settngs.yaml",
+    "primary": ["app/config/settings.yaml"],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-fp-01",
+    "category": "fp",
+    "repo": "t1-basic",
+    "symbol": "zxq9PlutoniumWidget",
+    "cqp": "FIND definitions OF symbol zxq9PlutoniumWidget LIMIT 10",
+    "query": "Where is zxq9PlutoniumWidget defined?",
+    "primary": [],
+    "related": [],
+    "tests": []
+  },
+  {
+    "id": "sx-fp-02",
+    "category": "fp",
+    "repo": "t1-modular",
+    "symbol": "qwwertyuiopp",
+    "cqp": "FIND definitions OF symbol qwwertyuiopp LIMIT 10",
+    "query": "Where is qwwertyuiopp defined?",
+    "primary": [],
+    "related": [],
+    "tests": []
+  }
+]

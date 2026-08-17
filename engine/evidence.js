@@ -12,7 +12,7 @@
 const CERTAINTY = {
   exact: 1.0, filename: 1.0, structural: 1.0,
   reference: 0.8, git: 0.8,
-  semantic: 0.6, bm25: 0.6,
+  semantic: 0.6, bm25: 0.6, soundex: 0.4,
   test: 0.4, config: 0.3,
 };
 
@@ -24,7 +24,7 @@ export function toPacket(row, i, opts = {}) {
   if (row.evidence_id) return row; // ya es packet (idempotente)
   const { operator = row.source ?? 'unknown', parser = null, index_version = null, target = null, query = null } = opts;
   const certainty = certaintyOf(row.match_type);
-  const tier = row.evidence_tier ?? (row.match_type === 'semantic' ? 2 : (row.match_type === 'test' || row.match_type === 'config' ? 3 : 0));
+  const tier = row.evidence_tier ?? (row.match_type === 'semantic' || row.match_type === 'soundex' ? 2 : (row.match_type === 'test' || row.match_type === 'config' ? 3 : 0));
   const det = certainty === 1.0;
   const generated = /(^|\/)(dist|build|vendor|generated|coverage)(\/|$)/.test(row.path ?? '');
   return {
