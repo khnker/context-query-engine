@@ -427,54 +427,57 @@ The benchmark does not assume that lower token usage is better by itself; result
 
 ## Experiments
 
-Una linea por prueba con enlace a la evidencia completa (metodologia, metricas, veredicto, artifacts).
+Tabla de veredictos — un estado por experimento. La evidencia completa (metodología, métricas, artifacts) está en cada archivo.
 
-- [**Benchmark: context savings**](docs/evidence/benchmark-context-savings.md) - PASS - 61% menos tokens
-- [**CQE vs hybrid retrieval**](docs/evidence/hybrid-retrieval.md) - SIRVE - recall@5 +3.7pp
-- [**Harder baselines**](docs/evidence/harder-baselines.md) - SIRVE - CQE gana o empata
-- [**Downstream agent evaluation**](docs/evidence/downstream-agent-eval.md) - FAIL umbral estricto (matiz: +25pp success)
-- [**ABSTAIN / No-Answer**](docs/evidence/abstain-no-answer.md) - PASS - precision 0.941
-- [**Distribution shift (OOD) — FAIL**](docs/evidence/distribution-shift-ood.md) - FAIL - OOD/train 9.18x
-- [**Adversarial workloads — FAIL parcial (8/10 categorías)**](docs/evidence/adversarial-workloads.md) - FAIL parcial - 8/10 categorias
-- [**Expected Utility Cost Model (REJECT)**](docs/evidence/expected-utility-cost.md) - REJECT
-- [**Cuándo NO usar context-query-engine**](docs/evidence/failure-modes.md) - SIRVE - regla de oro rg vs CQE
-- [**Indexing cost & break-even**](docs/evidence/indexing-cost-breakeven.md) - medicion - N_break_even < 1.3
-- [**Roadmap v1.8 (Index-Centric)**](docs/evidence/roadmap-v1-8.md) - Formalizado: Catálogo → Index → Operadores Índice → Cost Model Index → Contexto Selección → Semántica → Adaptativo ML (refinamiento)
-- [**Quality-aware selection (REJECT)**](docs/evidence/quality-aware-selection.md) - REJECT
-- [**Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial)**](docs/evidence/evidence-model-context-selection.md) - 07A ADOPTED / 07B REJECT parcial
-- [**Retriever disagreement → active retrieval**](docs/evidence/retriever-disagreement.md) - SIRVE - hipotesis sostenida
-- [**Repository Index Layer**](docs/evidence/repository-index-layer.md) - SIRVE
-- [**Operator cost model (REJECT)**](docs/evidence/operator-cost-model.md) - REJECT
-- [**Evidence State (REJECT parcial)**](docs/evidence/evidence-state.md) - REJECT parcial
-- [**Adaptive plan selection (REJECT)**](docs/evidence/adaptive-plan-selection.md) - REJECT
-- [**Context selection (MMR) — paso 06**](docs/evidence/context-selection-mmr.md) - PASS
-- [**Abstain calibration (conformal) — REJECT**](docs/evidence/abstain-conformal.md) - REJECT (con hallazgo)
-- [**Context query IR (CF_INDEX=1) — PASSA**](docs/evidence/context-query-ir.md) - SIRVE - 2.9x menos tokens
-- [**Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial)**](docs/evidence/physical-decomposition.md) - NO sirve
-- [**Pairwise plan preference (Lero) — paso 08, SÍ SIRVE**](docs/evidence/pairwise-plan-preference.md) - SIRVE - gt +19.5%
-- [**Repo fingerprint consistency (máxima transversal)**](docs/evidence/repo-fingerprint.md) - SIRVE
-- [**Cheap query bypass — SÍ SIRVE (parcial)**](docs/evidence/cheap-query-bypass.md) - SIRVE (parcial)
-- [**Semantic-Structural Operator (CeQe) — SÍ SIRVE (dc-13 fijo)**](docs/evidence/semantic-structural-operator.md) - SIRVE - dc-13 fijo
-- [**Evidence Packet Standard — SÍ SIRVE (representación)**](docs/evidence/evidence-packet-standard.md) - SIRVE
-- [**Explorer-Solver Separation (FastContext) — SÍ SIRVE**](docs/evidence/explorer-solver-separation.md) - SIRVE - -59% tokens
-- [**Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte**](docs/evidence/pairwise-runtime.md) - PARITY
-- [**Read Span Operator (A2) — SÍ SIRVE**](docs/evidence/read-span-operator.md) - SIRVE - reduction 0.505
-- [**Fuse Flood Boost (A3) — REJECT parcial, root cause: dedup por path**](docs/evidence/fuse-flood-boost.md) - REJECT parcial
-- [**Typed Rank Fusion (RRF) — B1**](docs/evidence/typed-rank-fusion.md) - mixta - -41% tokens, mrr -5.7pp
-- [**Adaptive Context Budget (Adaptive-k) — B2, SÍ SIRVE (parity)**](docs/evidence/adaptive-context-budget.md) - SIRVE (parity)
-- [**Claim-Level Context (B3) — SÍ SIRVE**](docs/evidence/claim-level-context.md) - SIRVE - -58.6% tokens
-- [**Execution Receipts (B4) — SÍ SIRVE**](docs/evidence/execution-receipts.md) - SIRVE
-- [**Information Bottleneck Metrics (B5) — SÍ SIRVE (métrica estándar)**](docs/evidence/info-bottleneck-metrics.md) - SIRVE
-- [**Context Compilation / IR (B6) — SÍ SIRVE (representación)**](docs/evidence/context-compilation-ir.md) - SIRVE
-- [**Information Acquisition / VoI (B7) — SÍ SIRVE (mecanismo, parity)**](docs/evidence/information-acquisition-voi.md) - SIRVE (parity)
-- [**Federated Evidence Sources (B9) — SÍ SIRVE (representación)**](docs/evidence/federated-evidence-sources.md) - SIRVE
-- [**Repo-Calibrated Cardinality (B11) — NO SIRVE (OOD dev)**](docs/evidence/repo-calibrated-cardinality.md) - NO SIRVE
-- [**Learned Plan Steering (B12) — PARITY (sin señal pre-ejecución)**](docs/evidence/learned-plan-steering.md) - PARITY
-- [**Evidence Semantics (B13) — SÍ SIRVE (contrato tipado Score<T>)**](docs/evidence/evidence-semantics.md) - SIRVE - contrato 223/223
-- [**Generated Code Default Policy (B14) — OFF default (medición empírica)**](docs/evidence/generated-code-policy.md) - SIRVE - OFF default
-- [**Backlog Audit v1.7 (B15) — inventario y archivo de superseded**](docs/evidence/backlog-audit.md) - gobernanza - 28 archivados
-- [**CQE Thesis (B16) — paper/architecture doc**](docs/evidence/cqe-thesis.md) - paper - 23 claims con artifact
-- [**Soundex Fallback (B17) — SÍ SIRVE (typos)**](docs/evidence/soundex-fallback.md) - SIRVE - recall 0->1.0
+| Experimento | Status | Evidencia |
+|---|---|---|
+| Benchmark: context savings | ✅ PASS | [md](docs/evidence/benchmark-context-savings.md) |
+| CQE vs hybrid retrieval | ✅ SIRVE | [md](docs/evidence/hybrid-retrieval.md) |
+| Harder baselines | ✅ SIRVE | [md](docs/evidence/harder-baselines.md) |
+| Downstream agent evaluation | ❌ FAIL | [md](docs/evidence/downstream-agent-eval.md) |
+| ABSTAIN / No-Answer | ✅ PASS | [md](docs/evidence/abstain-no-answer.md) |
+| Distribution shift (OOD) — FAIL | ❌ FAIL | [md](docs/evidence/distribution-shift-ood.md) |
+| Adversarial workloads — FAIL parcial (8/10 categorías) | ❌ FAIL | [md](docs/evidence/adversarial-workloads.md) |
+| Expected Utility Cost Model (REJECT) | ❌ REJECT | [md](docs/evidence/expected-utility-cost.md) |
+| Cuándo NO usar context-query-engine | ✅ SIRVE | [md](docs/evidence/failure-modes.md) |
+| Indexing cost & break-even | ℹ️ medicion - N_break_even < 1.3 | [md](docs/evidence/indexing-cost-breakeven.md) |
+| Roadmap v1.8 (Index-Centric) | ℹ️ Formalizado: Catálogo → Index → Operadores Índice → Cost Model Index → Contexto Selección → Semántica → Adaptativo ML (refinamiento) | [md](docs/evidence/roadmap-v1-8.md) |
+| Quality-aware selection (REJECT) | ❌ REJECT | [md](docs/evidence/quality-aware-selection.md) |
+| Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial) | ✅ ADOPTED | [md](docs/evidence/evidence-model-context-selection.md) |
+| Retriever disagreement → active retrieval | ✅ SIRVE | [md](docs/evidence/retriever-disagreement.md) |
+| Repository Index Layer | ✅ SIRVE | [md](docs/evidence/repository-index-layer.md) |
+| Operator cost model (REJECT) | ❌ REJECT | [md](docs/evidence/operator-cost-model.md) |
+| Evidence State (REJECT parcial) | ❌ REJECT | [md](docs/evidence/evidence-state.md) |
+| Adaptive plan selection (REJECT) | ❌ REJECT | [md](docs/evidence/adaptive-plan-selection.md) |
+| Context selection (MMR) — paso 06 | ✅ PASS | [md](docs/evidence/context-selection-mmr.md) |
+| Abstain calibration (conformal) — REJECT | ❌ REJECT | [md](docs/evidence/abstain-conformal.md) |
+| Context query IR (CF_INDEX=1) — PASSA | ✅ SIRVE | [md](docs/evidence/context-query-ir.md) |
+| Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial) | ❌ NO SIRVE | [md](docs/evidence/physical-decomposition.md) |
+| Pairwise plan preference (Lero) — paso 08, SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/pairwise-plan-preference.md) |
+| Repo fingerprint consistency (máxima transversal) | ✅ SIRVE | [md](docs/evidence/repo-fingerprint.md) |
+| Cheap query bypass — SÍ SIRVE (parcial) | ✅ SIRVE | [md](docs/evidence/cheap-query-bypass.md) |
+| Semantic-Structural Operator (CeQe) — SÍ SIRVE (dc-13 fijo) | ✅ SIRVE | [md](docs/evidence/semantic-structural-operator.md) |
+| Evidence Packet Standard — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/evidence-packet-standard.md) |
+| Explorer-Solver Separation (FastContext) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/explorer-solver-separation.md) |
+| Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte | ⚠️ PARITY | [md](docs/evidence/pairwise-runtime.md) |
+| Read Span Operator (A2) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/read-span-operator.md) |
+| Fuse Flood Boost (A3) — REJECT parcial, root cause: dedup por path | ❌ REJECT | [md](docs/evidence/fuse-flood-boost.md) |
+| Typed Rank Fusion (RRF) — B1 | ℹ️ mixta - -41% tokens, mrr -5.7pp | [md](docs/evidence/typed-rank-fusion.md) |
+| Adaptive Context Budget (Adaptive-k) — B2, SÍ SIRVE (parity) | ✅ SIRVE | [md](docs/evidence/adaptive-context-budget.md) |
+| Claim-Level Context (B3) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/claim-level-context.md) |
+| Execution Receipts (B4) — SÍ SIRVE | ✅ SIRVE | [md](docs/evidence/execution-receipts.md) |
+| Information Bottleneck Metrics (B5) — SÍ SIRVE (métrica estándar) | ✅ SIRVE | [md](docs/evidence/info-bottleneck-metrics.md) |
+| Context Compilation / IR (B6) — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/context-compilation-ir.md) |
+| Information Acquisition / VoI (B7) — SÍ SIRVE (mecanismo, parity) | ✅ SIRVE | [md](docs/evidence/information-acquisition-voi.md) |
+| Federated Evidence Sources (B9) — SÍ SIRVE (representación) | ✅ SIRVE | [md](docs/evidence/federated-evidence-sources.md) |
+| Repo-Calibrated Cardinality (B11) — NO SIRVE (OOD dev) | ❌ NO SIRVE | [md](docs/evidence/repo-calibrated-cardinality.md) |
+| Learned Plan Steering (B12) — PARITY (sin señal pre-ejecución) | ⚠️ PARITY | [md](docs/evidence/learned-plan-steering.md) |
+| Evidence Semantics (B13) — SÍ SIRVE (contrato tipado Score<T>) | ✅ SIRVE | [md](docs/evidence/evidence-semantics.md) |
+| Generated Code Default Policy (B14) — OFF default (medición empírica) | ✅ SIRVE | [md](docs/evidence/generated-code-policy.md) |
+| Backlog Audit v1.7 (B15) — inventario y archivo de superseded | ℹ️ gobernanza - 28 archivados | [md](docs/evidence/backlog-audit.md) |
+| CQE Thesis (B16) — paper/architecture doc | ℹ️ paper - 23 claims con artifact | [md](docs/evidence/cqe-thesis.md) |
+| Soundex Fallback (B17) — SÍ SIRVE (typos) | ✅ SIRVE | [md](docs/evidence/soundex-fallback.md) |
+
 
 ## Repository structure
 
