@@ -20,6 +20,7 @@ import { parseCQP } from './cqp.js';
 import { decompose } from './decompose.js';
 import { interpret } from './interpreter.js';
 import { optimize, recordExecution } from './optimizer.js';
+import { queryIndex } from './index-layer/index.js';
 import { record, setFingerprint } from './statistics.js';
 import { available as modelAvailable, rerankSync } from './local-model.js';
 import { score as bm25Score } from './bm25.js';
@@ -39,6 +40,7 @@ import { select as selectorSelect } from './selector.js';
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const SCRIPTS = path.join(ENGINE_DIR, '..', 'scripts');
 const CACHE_FILE = path.join(ENGINE_DIR, '.cache.json');
+const CATALOG_DB = '.cqe/catalog.db';
 // override de presupuesto por env (eval-quality por niveles de budget; si no, usa el plan)
 const CF_BUDGET = Number(process.env.CF_BUDGET) || 0;
 const effectiveBudget = (lp) => (CF_BUDGET > 0 ? CF_BUDGET : lp.budget ?? 8000);
@@ -165,12 +167,17 @@ function parseStructural(out) {
 function execOp(op, plan, pool = []) {
   const name = String(op.args?.[0] ?? plan.target?.name ?? '').trim();
   if (!name) return [];
+  const repoDir = process.cwd();
+  const hasCatalog = fs.existsSync(path.join(repoDir, CATALOG_DB));
+
   switch (op.tool) {
     case 'search-code': {
+      if (hasCatalog) return queryIndex(repoDir, 'lexical', name);
       const r = runScript(path.join(SCRIPTS, 'search-code'), ['-d', '.', name]);
       return parseGrep(r.out);
     }
     case 'search-structure': {
+      if (hasCatalog) return queryIndex(repoDir, 'symbol', name);
       const r = runScript(path.join(SCRIPTS, 'search-structure'), ['-d', '.', name]);
       return parseStructural(r.out);
     }

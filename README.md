@@ -439,7 +439,7 @@ Una linea por prueba con enlace a la evidencia completa (metodologia, metricas, 
 - [**Expected Utility Cost Model (REJECT)**](docs/evidence/expected-utility-cost.md) - REJECT
 - [**Cuándo NO usar context-query-engine**](docs/evidence/failure-modes.md) - SIRVE - regla de oro rg vs CQE
 - [**Indexing cost & break-even**](docs/evidence/indexing-cost-breakeven.md) - medicion - N_break_even < 1.3
-- [**Derived tasks (roadmap v1.6)**](docs/evidence/derived-tasks.md) - 5/5 derivados DONE
+- [**Roadmap v1.8 (Index-Centric)**](docs/evidence/roadmap-v1-8.md) - Formalizado: Catálogo → Index → Operadores Índice → Cost Model Index → Contexto Selección → Semántica → Adaptativo ML (refinamiento)
 - [**Quality-aware selection (REJECT)**](docs/evidence/quality-aware-selection.md) - REJECT
 - [**Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial)**](docs/evidence/evidence-model-context-selection.md) - 07A ADOPTED / 07B REJECT parcial
 - [**Retriever disagreement → active retrieval**](docs/evidence/retriever-disagreement.md) - SIRVE - hipotesis sostenida
