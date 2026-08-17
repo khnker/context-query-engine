@@ -1,0 +1,124 @@
+{
+  "configs": {
+    "off": {
+      "gc_recall": 0.6666666666666666,
+      "gc_tasks": 3,
+      "gc_avg_tokens": 16.7,
+      "gc_avg_rows": 1.7,
+      "control_tasks": 32,
+      "control_avg_tokens": 104.9,
+      "control_avg_rows": 6.7,
+      "control_generated_rows": 0,
+      "provenance_generated_ok": "n/a"
+    },
+    "on": {
+      "gc_recall": 0.6666666666666666,
+      "gc_tasks": 3,
+      "gc_avg_tokens": 16.7,
+      "gc_avg_rows": 1.7,
+      "control_tasks": 32,
+      "control_avg_tokens": 104.6,
+      "control_avg_rows": 6.7,
+      "control_generated_rows": 0,
+      "provenance_generated_ok": "n/a"
+    },
+    "on_noignore": {
+      "gc_recall": 1,
+      "gc_tasks": 3,
+      "gc_avg_tokens": 30,
+      "gc_avg_rows": 3,
+      "control_tasks": 32,
+      "control_avg_tokens": 104.9,
+      "control_avg_rows": 6.7,
+      "control_generated_rows": 0,
+      "provenance_generated_ok": "2/2"
+    }
+  },
+  "gc": [
+    {
+      "id": "adv-gc-19",
+      "repo": "polar",
+      "found": true,
+      "rows": 4,
+      "tokens": 40,
+      "config": "off"
+    },
+    {
+      "id": "adv-gc-20",
+      "repo": "polar",
+      "found": false,
+      "rows": 0,
+      "tokens": 0,
+      "config": "off"
+    },
+    {
+      "id": "adv-gc-21",
+      "repo": "t1-basic",
+      "found": true,
+      "rows": 1,
+      "tokens": 10,
+      "config": "off"
+    },
+    {
+      "id": "adv-gc-19",
+      "repo": "polar",
+      "found": true,
+      "rows": 4,
+      "tokens": 40,
+      "config": "on"
+    },
+    {
+      "id": "adv-gc-20",
+      "repo": "polar",
+      "found": false,
+      "rows": 0,
+      "tokens": 0,
+      "config": "on"
+    },
+    {
+      "id": "adv-gc-21",
+      "repo": "t1-basic",
+      "found": true,
+      "rows": 1,
+      "tokens": 10,
+      "config": "on"
+    },
+    {
+      "id": "adv-gc-19",
+      "repo": "polar",
+      "found": true,
+      "rows": 6,
+      "tokens": 60,
+      "config": "on_noignore"
+    },
+    {
+      "id": "adv-gc-20",
+      "repo": "polar",
+      "found": true,
+      "rows": 2,
+      "tokens": 20,
+      "config": "on_noignore"
+    },
+    {
+      "id": "adv-gc-21",
+      "repo": "t1-basic",
+      "found": true,
+      "rows": 1,
+      "tokens": 10,
+      "config": "on_noignore"
+    }
+  ],
+  "control": {},
+  "contract": {
+    "check": "rows generadas marcan provenance.generated (B14 3.1)",
+    "pass": true,
+    "detail": "2/2"
+  },
+  "verdict": {
+    "pass": true,
+    "policy": "OFF default",
+    "delta_gc_recall": 0,
+    "delta_control_tokens": -0.3,
+    "note": "ON no añade recall GC (y/o añade ruido) → mantener OFF default con opt-in"
+  }
+}

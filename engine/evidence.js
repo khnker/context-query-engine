@@ -26,6 +26,7 @@ export function toPacket(row, i, opts = {}) {
   const certainty = certaintyOf(row.match_type);
   const tier = row.evidence_tier ?? (row.match_type === 'semantic' ? 2 : (row.match_type === 'test' || row.match_type === 'config' ? 3 : 0));
   const det = certainty === 1.0;
+  const generated = /(^|\/)(dist|build|vendor|generated|coverage)(\/|$)/.test(row.path ?? '');
   return {
     ...row,
     evidence_id: `${operator}:${row.path}:${row.line_start ?? 1}:${i}`,
@@ -45,7 +46,7 @@ export function toPacket(row, i, opts = {}) {
       estimate: det ? null : (row.score ?? null),
     },
     evidence_tier: tier,
-    provenance: { operator, parser, index_version, query, tier },
+    provenance: { operator, parser, index_version, query, tier, ...(generated ? { generated: true } : {}) },
     cost: { tokens: row.token_estimate ?? 8, latency_ms: 0 },
   };
 }
