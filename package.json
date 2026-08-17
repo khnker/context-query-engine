@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "check-tools": "scripts/check-tools",
-    "test": "node --test test/cqp.test.js test/interpreter.test.js test/optimizer.test.js test/statistics.test.js test/local-model.test.js test/adaptive.test.js && bash test/smoke.sh && bash engine/test-e2e.sh",
+    "test": "node --test test/cqp.test.js test/interpreter.test.js test/optimizer.test.js test/statistics.test.js test/local-model.test.js test/adaptive.test.js test/evidence-semantics.test.js && bash test/smoke.sh && bash engine/test-e2e.sh",
     "eval": "bash evals/run-eval.sh && bash evals/analyze-eval.sh --in evals/reports/latest.ndjson",
     "bench": "node --test test/bench.test.js"
   }

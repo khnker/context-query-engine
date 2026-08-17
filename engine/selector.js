@@ -57,7 +57,7 @@ export function selectMMR(rows, budget = BUDGET) {
         const sim = sameRegion(r, s);
         if (sim > maxSim) maxSim = sim;
       }
-      const val = LAMBDA * (scores[i] ?? 0.5) - (1 - LAMBDA) * maxSim;
+      const val = LAMBDA * (scores[i] ?? 0.5) - (1 - LAMBDA) * maxSim + ((r.evidence_tier ?? 3) === 0 ? 1000 : 0);
       if (val > bestVal) { bestVal = val; best = j; }
     }
     if (best < 0) break;
@@ -99,7 +99,8 @@ export function select(rows, budget = BUDGET, mode = 'marginal', adaptiveTheta =
 
   for (const { r, gain } of scored) {
     // adaptive-k: parada por diminishing returns (knee de la curva de marginal gain)
-    if (gain < knee) break;
+    // B13 eligibility por tipo: tier0 determinista NUNCA eliminado por score (knee).
+    if (gain < knee && (r.evidence_tier ?? 3) !== 0) break;
     const t = r.token_estimate ?? 10;
     if (used + t > budget) continue;
     selected.push(r);

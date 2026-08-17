@@ -736,7 +736,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
 
   // evidence-packet-standard — todo row del pool es un packet tipado (aditivo,
   // no rompe el contrato flat de assemble-context; certainty = tipo epistémico).
-  const packetOpts = { operator: phys.selected ?? null, target: logicalPlan.target };
+  const packetOpts = { operator: phys.selected ?? null, target: logicalPlan.target, query: rawText };
   for (let i = 0; i < pool.length; i++) pool[i] = toPacket(pool[i], i, packetOpts);
 
   // typed-rank-fusion (B1) — CF_RRF=1: reordenar pool por RRF multi-fuente

@@ -1,0 +1,209 @@
+{
+  "date": "2026-08-17",
+  "tasks": 32,
+  "rows": 223,
+  "contract": {
+    "score_t_ok": 223,
+    "provenance_ok": 223,
+    "tier0_rows": 210,
+    "tier0_dropped": 0
+  },
+  "verdict": {
+    "pass": true,
+    "note": "contrato Score<T>: namespaces disjuntos + provenance query/tier + tier0 nunca eliminado por score"
+  },
+  "details": [
+    {
+      "id": "lex-01",
+      "n": 12,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "lex-02",
+      "n": 4,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "lex-03",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "lex-04",
+      "n": 1,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "lex-05",
+      "n": 6,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "str-01",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "str-02",
+      "n": 13,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "str-03",
+      "n": 2,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "str-04",
+      "n": 5,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "str-05",
+      "n": 12,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "sem-01",
+      "n": 12,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "sem-02",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "sem-03",
+      "n": 5,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "sem-04",
+      "n": 0,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "sem-05",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "dep-01",
+      "n": 12,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "dep-02",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "dep-03",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "dep-04",
+      "n": 1,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "dep-05",
+      "n": 4,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "cfg-01",
+      "n": 4,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "cfg-02",
+      "n": 4,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "cfg-03",
+      "n": 1,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "cfg-04",
+      "n": 4,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "cfg-05",
+      "n": 15,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "tst-01",
+      "n": 15,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "tst-02",
+      "n": 9,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "tst-03",
+      "n": 6,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "tst-04",
+      "n": 17,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "tst-05",
+      "n": 1,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "adv-01",
+      "n": 7,
+      "ok": true,
+      "problems": []
+    },
+    {
+      "id": "git-01",
+      "n": 9,
+      "ok": true,
+      "problems": []
+    }
+  ]
+}
