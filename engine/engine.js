@@ -375,6 +375,7 @@ function runPlan(logicalPlan, rawText, opts = {}) {
   const planT0 = Date.now();
   const fp = useFp() ? repoFp(process.cwd()) : null;
   setFingerprint(fp);
+  logicalPlan = { ...logicalPlan, repo_fp: fp }; // B11: per-repo calibration
   const stats = { tokens_used: 0, tool_calls: 0, early_terminated: false, cache_hits: 0 };
   const key = `${rawText}|${effectiveBudget(logicalPlan)}`;
   const phys = optimize(logicalPlan);

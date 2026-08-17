@@ -344,7 +344,7 @@ export function optimize(logicalPlan = {}) {
   const plans = plansFor(queryType, target, logicalPlan.relations ?? [], logicalPlan.inclusions ?? [])
     .flatMap((p) => {
       const ops = p.ops.map((op) => {
-        const heur = statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool);
+        const heur = statsEstimate(queryType, logicalPlan.scope ?? '', stats, op.tool, logicalPlan.repo_fp);
         const mEst = modelEstimate(op.tool, queryType, logicalPlan.scope ?? '', heur);
         const m = makeOp(op.tool, op.args ?? [name], mEst ?? heur);
         // operator-cost-model — CF_LEARNED_COST=1: costos medidos por (op|query_class)

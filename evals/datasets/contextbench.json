@@ -1,0 +1,160 @@
+[
+  {
+    "id": "cb-01",
+    "category": "contextbench-explored-used",
+    "repo": "t1-basic",
+    "query": "How does retryWithFallback handle transient errors?",
+    "cqp": "FIND definitions OF symbol retryWithFallback LIMIT 10",
+    "explored": [
+      "src/services/fallback.ts",
+      "src/utils/helpers.ts",
+      "tests/fallback.test.ts"
+    ],
+    "used": [
+      "src/services/fallback.ts"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-02",
+    "category": "contextbench-explored-used",
+    "repo": "t1-basic",
+    "query": "What configuration options does fallback service accept?",
+    "cqp": "FIND definitions OF symbol DEFAULT_TIMEOUT_MS LIMIT 10",
+    "explored": [
+      "src/services/fallback.ts",
+      "src/config.ts",
+      "tests/fallback.test.ts"
+    ],
+    "used": [
+      "src/services/fallback.ts",
+      "src/config.ts"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-03",
+    "category": "contextbench-explored-used",
+    "repo": "t1-modular",
+    "query": "How does the registry pattern work in this codebase?",
+    "cqp": "FIND definitions OF symbol register LIMIT 10",
+    "explored": [
+      "app/core/registry.py",
+      "app/handlers/http.py",
+      "tests/test_registry.py"
+    ],
+    "used": [
+      "app/core/registry.py"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-04",
+    "category": "contextbench-explored-used",
+    "repo": "t1-modular",
+    "query": "How are HTTP handlers registered and dispatched?",
+    "cqp": "FIND references OF symbol register LIMIT 10",
+    "explored": [
+      "app/core/registry.py",
+      "app/handlers/http.py",
+      "tests/test_registry.py"
+    ],
+    "used": [
+      "app/core/registry.py",
+      "app/handlers/http.py"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-05",
+    "category": "contextbench-explored-used",
+    "repo": "t1-basic",
+    "query": "What does the ProviderRouter class do?",
+    "cqp": "FIND definitions OF class ProviderRouter LIMIT 10",
+    "explored": [
+      "src/services/fallback.ts",
+      "tests/fallback.test.ts"
+    ],
+    "used": [
+      "src/services/fallback.ts"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-06",
+    "category": "contextbench-explored-used",
+    "repo": "t1-basic",
+    "query": "How is the timeout function implemented?",
+    "cqp": "FIND definitions OF symbol timeout LIMIT 10",
+    "explored": [
+      "src/services/fallback.ts",
+      "tests/fallback.test.ts"
+    ],
+    "used": [
+      "src/services/fallback.ts"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-07",
+    "category": "contextbench-explored-used",
+    "repo": "t1-modular",
+    "query": "What is the get_provider_config function?",
+    "cqp": "FIND definitions OF symbol get_provider_config LIMIT 10",
+    "explored": [
+      "app/core/config.py",
+      "tests/test_registry.py"
+    ],
+    "used": [
+      "app/core/config.py"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-08",
+    "category": "contextbench-explored-used",
+    "repo": "t1-modular",
+    "query": "How does the HttpHandler class handle requests?",
+    "cqp": "FIND definitions OF class HttpHandler LIMIT 10",
+    "explored": [
+      "app/handlers/http.py",
+      "app/core/registry.py",
+      "tests/test_registry.py"
+    ],
+    "used": [
+      "app/handlers/http.py"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-09",
+    "category": "contextbench-explored-used",
+    "repo": "t1-basic",
+    "query": "What is the loadProviders function?",
+    "cqp": "FIND definitions OF symbol loadProviders LIMIT 10",
+    "explored": [
+      "src/services/fallback.ts",
+      "tests/fallback.test.ts"
+    ],
+    "used": [
+      "src/services/fallback.ts"
+    ],
+    "max_context_tokens": 8000
+  },
+  {
+    "id": "cb-10",
+    "category": "contextbench-explored-used",
+    "repo": "t1-modular",
+    "query": "How does the get function work in registry?",
+    "cqp": "FIND definitions OF symbol get LIMIT 10",
+    "explored": [
+      "app/core/registry.py",
+      "app/handlers/http.py",
+      "tests/test_registry.py"
+    ],
+    "used": [
+      "app/core/registry.py"
+    ],
+    "max_context_tokens": 8000
+  }
+]

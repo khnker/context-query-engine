@@ -40,8 +40,9 @@ else
   SW="0.3"
 fi
 
-TMP_IN="$(mktemp)"
-TMP_OUT="$(mktemp)"
+TMPDIR="${TMPDIR:-/tmp}"
+TMP_IN="$(mktemp -p "$TMPDIR")"
+TMP_OUT="$(mktemp -p "$TMPDIR")"
 trap 'rm -f "$TMP_IN" "$TMP_OUT"' EXIT
 
 { printf '%s\n' "$first_line"; cat; } > "$TMP_IN"

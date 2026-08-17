@@ -113,6 +113,10 @@ export function load() {
     if (scope) {
       accumulate(ensure(`${operator}|${queryClass}|${scope}`), o, cand, tokens, latency, estCand, successFlag);
     }
+    // B11: per-repo profile (residual correction by (op, queryClass) per repo_fp)
+    if (o.repo_fp) {
+      accumulate(ensure(`repo:${o.repo_fp}|${operator}|${queryClass}`), o, cand, tokens, latency, estCand, successFlag);
+    }
   }
 
   for (const e of map.values()) {
@@ -146,17 +150,33 @@ export function confidence(n) {
 // Blend: con datos → avgCandidates*c + DEFAULT*(1-c); sin datos → DEFAULT.
 // Si se pasa operator, prefiere la clave `operator|queryClass` (cardinalidad por
 // operador, change cardinality-estimation) y cae a `queryClass` si no hay datos.
-export function estimateCandidates(queryClass, scope, stats = new Map(), operator) {
+// B11: si repoFp disponible, aplica residual correction online por (op, qc, repo).
+export function estimateCandidates(queryClass, scope, stats = new Map(), operator, repoFp) {
   const d = DEFAULTS[queryClass] ?? 15;
   const keys = operator ? [`${operator}|${queryClass}`, queryClass] : [queryClass];
+  let baseEst = d;
+  let baseEntry = null;
   for (const k of keys) {
     const entry = stats.get(k);
     if (entry && entry.n > 0) {
       const c = confidence(entry.n);
-      return Math.round(entry.avgCandidates * c + d * (1 - c));
+      baseEst = Math.round(entry.avgCandidates * c + d * (1 - c));
+      baseEntry = entry;
+      break;
     }
   }
-  return d;
+  // B11: per-repo residual calibration
+  if (repoFp) {
+    const repoKey = `repo:${repoFp}|${operator ?? ''}|${queryClass}`;
+    const repoEntry = stats.get(repoKey);
+    if (repoEntry && repoEntry.n >= 3) {
+      const c = confidence(repoEntry.n);
+      const residualFactor = repoEntry.avgCandidates / (baseEntry?.avgCandidates || baseEst || 1);
+      const corrected = baseEst * residualFactor;
+      return Math.round(corrected * c + baseEst * (1 - c));
+    }
+  }
+  return baseEst;
 }
 
 // --- CLI ---

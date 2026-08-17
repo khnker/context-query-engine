@@ -1,0 +1,31 @@
+{
+  "date": "2026-08-17",
+  "threshold": {
+    "heuristic_test_mape": 0.27698788836229593,
+    "x2": 0.5539757767245919,
+    "pass": false
+  },
+  "metrics": {
+    "train": {
+      "rows": 44,
+      "ml_global_mape": 0.2941954018522361,
+      "ml_calibrated_mape": 0.4499852341731282,
+      "heuristic_baseline_mape": 0.32427102218768894
+    },
+    "val": {
+      "rows": 30,
+      "ml_global_mape": 1.2253121329443426,
+      "ml_calibrated_mape": 0.7412025751014205,
+      "heuristic_baseline_mape": 1.448410623508663
+    },
+    "test": {
+      "rows": 12,
+      "ml_global_mape": 3.389960660422678,
+      "ml_calibrated_mape": 3.389960660422678,
+      "heuristic_baseline_mape": 0.27698788836229593
+    }
+  },
+  "repo_profiles": 21,
+  "verdict": "REJECT",
+  "model_file": "evals/ml/model/cardinality-model-ood.json"
+}

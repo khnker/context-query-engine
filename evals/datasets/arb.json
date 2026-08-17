@@ -1,0 +1,92 @@
+[
+  {
+    "id": "arb-01",
+    "category": "arb-no-gold",
+    "repo": "t1-basic",
+    "query": "How does the OpenSpec change validation work?",
+    "cqp": "FIND definitions OF symbol validateChange LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  },
+  {
+    "id": "arb-02",
+    "category": "arb-no-gold",
+    "repo": "t1-basic",
+    "query": "What is the ProviderRouter class?",
+    "cqp": "FIND definitions OF class ProviderRouter LIMIT 10",
+    "has_answer": true,
+    "expected_abstain": false
+  },
+  {
+    "id": "arb-03",
+    "category": "arb-no-gold",
+    "repo": "t1-modular",
+    "query": "What is the QuantumEntanglementService interface?",
+    "cqp": "FIND definitions OF symbol QuantumEntanglementService LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  },
+  {
+    "id": "arb-04",
+    "category": "arb-no-gold",
+    "repo": "t1-modular",
+    "query": "How does the registry pattern work?",
+    "cqp": "FIND definitions OF function register LIMIT 10",
+    "has_answer": true,
+    "expected_abstain": false
+  },
+  {
+    "id": "arb-05",
+    "category": "arb-no-gold",
+    "repo": "t1-basic",
+    "query": "Where is the TimeTravelDebugger defined?",
+    "cqp": "FIND definitions OF symbol TimeTravelDebugger LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  },
+  {
+    "id": "arb-06",
+    "category": "arb-no-gold",
+    "repo": "t1-modular",
+    "query": "How does the get function work in registry?",
+    "cqp": "FIND references OF function get LIMIT 10",
+    "has_answer": true,
+    "expected_abstain": false
+  },
+  {
+    "id": "arb-07",
+    "category": "arb-no-gold",
+    "repo": "t1-basic",
+    "query": "What does the HyperDimensionalIndexer do?",
+    "cqp": "FIND definitions OF symbol HyperDimensionalIndexer LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  },
+  {
+    "id": "arb-08",
+    "category": "arb-no-gold",
+    "repo": "t1-modular",
+    "query": "How does the config loading work?",
+    "cqp": "FIND definitions OF function get_provider_config LIMIT 10",
+    "has_answer": true,
+    "expected_abstain": false
+  },
+  {
+    "id": "arb-09",
+    "category": "arb-no-gold",
+    "repo": "t1-basic",
+    "query": "Where is the NeuralCache invalidation logic?",
+    "cqp": "FIND references OF function invalidateCache LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  },
+  {
+    "id": "arb-10",
+    "category": "arb-no-gold",
+    "repo": "t1-modular",
+    "query": "What are the git workflow hooks?",
+    "cqp": "FIND definitions OF function gitHook LIMIT 10",
+    "has_answer": false,
+    "expected_abstain": true
+  }
+]
