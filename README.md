@@ -28,7 +28,6 @@ The agent says **what** it needs, not **how** to find it. context-query-engine d
 
 ---
 
-
 ## Current state
 
 > Honesty first: today context-query-engine is a **tool router with a linear cost model**, on its way to becoming a full query optimizer. Implemented and pending:
@@ -109,7 +108,6 @@ Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is fast
 
 ---
 
-
 ## Architecture
 
 ```text
@@ -158,7 +156,6 @@ Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is fast
 
 ---
 
-
 ## Components
 
 | Module | Description |
@@ -170,7 +167,6 @@ Intra-session cache (5 min TTL) → warm ≈ 0 latency. Honest: raw grep is fast
 | `openspec/` | **Spec-driven specification** (governance, local-only, git-ignored). |
 
 ---
-
 
 ## How it works
 
@@ -195,7 +191,6 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 Budgets: `BUDGET` maps to levels 2000 / 8000 / 20000 / 30000 (intermediate values round down: `5000 → 2000`).
 
 ---
-
 
 ## Pipeline: worked example
 
@@ -231,7 +226,6 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 
 ---
 
-
 ## Installation
 
 **Requirements** (Fedora):
@@ -263,7 +257,6 @@ scripts/check-tools   # exit 0 if rg/fd/jq present; optional tools don't block
 Per-distro install details and sudo-free fallbacks in `agent-context-engineering/references/toolchain-install.md`.
 
 ---
-
 
 ## Expanded installation
 
@@ -334,7 +327,6 @@ Checks core (`rg`, `fd`, `jq`) and optional (`yq`, `sg`, `tokei`, `probe`) tools
 
 ---
 
-
 ## Usage
 
 **Quick search (direct CLI):**
@@ -374,48 +366,6 @@ Deliberately minimal MCP surface:
 
 ---
 
-
-## Benchmark: context savings
-
-Métricas duras de tokens y latencia medidas sobre ejecuciones reales (no estimadas). Todo reproducible.
-
-### Test de regresión de métricas (hard)
-
-`npm run bench` mide tiempo y tokens reales de context-query-engine (C) vs baseline raw-fs (A) sobre el repo sintético, con guardas: la suite **falla** si C gasta más tokens que A o supera los umbrales.
-
-| Query | A tokens | C tokens | A lat | C lat |
-|-------|----------|----------|-------|-------|
-| lex-01 | 655 | 239 | 43 ms | 144 ms |
-| dep-01 | 655 | 239 | 67 ms | 295 ms |
-| sem-01 | 655 | 239 | 57 ms | 216 ms |
-| tst-01 | 504 | 239 | 47 ms | 251 ms |
-| **Σ** | **2,469** | **956** | — | — |
-
-→ **61.3% menos tokens**, wall 1.4 s, 4/4 queries correctas en ambas vías.
-
-### Harness T1 — 32 tasks sintéticas, 4 modos
-
-| Modo | Correctitud | Tokens | Latencia | Compresión vs A |
-|------|-------------|--------|----------|-----------------|
-| A — baseline raw (`grep`/`cat`) | 100% | 139,199 | 978 ms | 1.0× |
-| B — `rg`/`fd` | 92.5% | 95 | 108 ms | 637× |
-| **C — context-query-engine** | **100%** | **764** | **199 ms** | **104×** |
-| D — oracle | 87.5% | 611 | 1,506 ms | 129× |
-
-### Repo real T2 — `polar` (2,129 archivos, 50k+ LOC)
-
-| Modo | Correctitud | Tokens | Latencia | Densidad |
-|------|-------------|--------|----------|----------|
-| A — baseline | 8/8 | 694,581 | 12,098 ms | 0.1856 |
-| B — `rg`/`fd` | 8/8 | 409 | 283 ms | 0.1679 |
-| **C — context-query-engine** | **8/8** | **3,403** | **232 ms** | **0.1875** |
-| D — oracle | 8/8 | 2,512 | 7,867 ms | 0.1668 |
-
-C corta **204× vs baseline** en el repo real con 98% menos latencia, manteniendo correctitud y la mayor densidad (información útil por token).
-
-Reproducible: `npm run eval` (harness completo) y `npm run bench` (métricas duras con guardas).
-
----
 ## Testing
 
 Run the full suite (34 unit tests + smoke + e2e):
@@ -475,219 +425,61 @@ The benchmark does not assume that lower token usage is better by itself; result
 | ML improves decisions | Oracle | heuristic | regret |
 | Reranker helps | E2E | deterministic | MRR + recall + density |
 
-## CQE vs hybrid retrieval
-
-CQE se evalúa como optimizer *por encima* del algoritmo de retrieval subyacente: los mismos planes de ops corren sobre rg (baseline), sobre un op BM25 propio en node (`engine/bm25.js`, stdlib, sin deps) y sobre la fusión de ambos (`CF_RETRIEVAL=hybrid`). El modo dense (embeddings) queda marcado como `requires-dep` — el proyecto es stdlib solo.
-
-```bash
-TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-hybrid.js   # matriz → evals/reports/hybrid-<TS>.json
-```
-
-Matriz T1 (32 tasks, 1 run):
-
-| config | correctness | recall@5 | MRR | tokens (mean) |
-|--------|-------------|----------|-----|---------------|
-| BM25 puro | 0.844 | 0.667 | 0.732 | 135 |
-| CQE+hybrid | **1.000** | **0.870** | 0.939 | 239 |
-| CQE+hybrid+rerank | 1.000 | 0.870 | 0.964 | 253 |
-| CQE (baseline) | 1.000 | 0.833 | 0.939 | 105 |
-| CQE+rerank | 1.000 | 0.833 | 0.964 | 105 |
-
-Veredicto: **hybrid no degrada correctness** (1.000 = 1.000 en T1 y T2) y **mejora recall@5 en T1** (+3.7pp, 0.870 vs 0.833) — BM25 rescata hits que rg pierde. Costo: 2.3× tokens por los snippets BM25; la fusión compite en score_final de `assemble-context`. BM25 puro pierde correctness (0.844): no reemplaza a CQE, solo aporta como op de fusión. En dev (monorepo), BM25 puro falla (cap de 1000 archivos del índice) — el optimizer + rg siguen siendo necesarios. El op `bm25` queda incorporado al plan físico (COST_TABLE + `CF_RETRIEVAL`).
-
-Veredicto: **hybrid no degrada correctness** (1.000 = 1.000 en T1 y T2) y **mejora recall@5 en T1** (+3.7pp, 0.870 vs 0.833) — BM25 rescata hits que rg pierde. Costo: 2.3× tokens por los snippets BM25; la fusión compite en score_final de `assemble-context`. BM25 puro pierde correctness (0.844): no reemplaza a CQE, solo aporta como op de fusión. En dev (monorepo), BM25 puro falla (cap de 1000 archivos del índice) — el optimizer + rg siguen siendo necesarios. El op `bm25` queda incorporado al plan físico (COST_TABLE + `CF_RETRIEVAL`).
-
-### Reranker–fuse alignment (fix de recall)
-
-El reranker subía MRR pero BAJABA recall@5 (0.630 vs 0.833). Diagnóstico por etapas (`eval-rerank-stages.js`): candidate recall 1.0 (el GT siempre está en el pool), el reranker MEJORA el pool (0.818→0.833), y la pérdida ocurría en la **fusión**: el modelo puntuaba el GT exacto con ~0.003 (char-ngrams q+p sin vocabulario de código) y el filtro `score >= 0.2` de `assemble-context` lo ELIMINABA. Fix: anclaje de matches exact/filename/structural (conservan score heurístico, siempre arriba) + floor 0.3 al score del modelo (nunca bajo el filtro) + `CF_SCORE_WEIGHT` (peso del score en score_final: 0.3 legacy, 0.5 automático con modelo). Resultado: recall@5 del rerank = heur (0.833, sin sacrificio) con MRR aún mejor (0.964 vs 0.939); hybrid+rerank 0.870 r@5.
-
-
-## Harder baselines
-
-CQE se compara contra baselines no-triviales: agente crudo (rg -n / rg --files directos), RepoMap textual (file tree rankeado por overlap léxico) y BM25 puro.
-
-```bash
-TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-baselines.js   # → evals/reports/baselines-<TS>.json
-```
-
-Matriz T1 (32 tasks):
-
-| baseline | correctness | recall@5 | MRR | tokens (mean) |
-|----------|-------------|----------|-----|---------------|
-| Agente crudo (rg -n) | 0.875 | 0.609 | 0.637 | 281 |
-| Agente crudo (rg --files) | 0.594 | 0.406 | 0.453 | 13 |
-| RepoMap textual | 1.000 | 0.698 | 0.810 | 52 |
-| BM25 puro | 0.844 | 0.667 | 0.732 | 135 |
-| **CQE** | **1.000** | **0.833** | **0.939** | 105 |
-| CQE+rerank | 1.000 | 0.833 | 0.964 | 105 |
-
-Veredicto: **CQE gana o empata en correctness** en T1/T2/dev (1.000/1.000/0.750). En dev, el agente crudo colapsa: 0.000 de correctness con **4.17M tokens** de contexto (rg -n sobre monorepo), vs 538 de CQE — el optimizer existe precisamente para eso. Dónde pierde: recall@10 contra RepoMap en T1 (0.833 vs 0.932) — el file tree completo captura archivos que el plan de CQE no toca; a cambio CQE entrega 2× más recall@5 con el mismo 1.000 de correctness. El baseline de agente completo (rg+read con tool calls, task success, time-to-solution) queda delegado al change `downstream-agent-eval`.
-
-## Downstream agent evaluation
-
-CQE se evalúa por utilidad para un agente, no solo recall: un retrieval-agent determinista (sin LLM, stdlib SOLO) corre el loop retrieve → inspect → think → refine → verify sobre 8 tareas reales con completion medible (answer contiene GT). Dos modalidades: herramientas crudas (rg -n) vs CQE (engine). Hipótesis falsable: "menos contexto ≠ mejor".
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-downstream.js   # → evals/reports/downstream-<TS>.json
-```
-
-| modalidad | task success | tokens (mean) | tool calls | tts |
-|-----------|--------------|---------------|-----------|-----|
-| Agente crudo (rg -n) | 0.750 | 244 | 2.9 | 6 ms |
-| Agente + CQE | **1.000** | 349 | 3.4 | 102 ms |
-
-Veredicto del umbral estricto (CQE ≥ crudo en success Y menos tokens): **FAIL** — CQE no reduce tokens totales (+43%). El matiz importa: la prima de tokens viene de las 2 tareas donde el agente crudo NO TIENE respuesta (rg devuelve 0 líneas, 0 tokens, 0 success) — CQE las resuelve (615/268 tokens). Por tarea resuelta el costo es comparable (349 vs 325). Hallazgo: la hipótesis "menos contexto ≠ mejor" se confirma al revés — la utilidad (task success) gana con mejor selección aun con más contexto; CQE aporta +25pp de task success sin responder peor en ninguna tarea. El costo de latencia (102 ms vs 6 ms) es el precio del optimizer; en flujos batch reales domina el ahorro de turnos fallidos.
-
-## ABSTAIN / No-Answer
-
-Ante queries sin respuesta en el repo, el engine puede **abstener** en vez de devolver resultados débiles: con `CF_ABSTAIN=1`, si la fusión no produce matches relevantes (exact/filename/structural; git-log cuenta como evidencia para planes git), el resultado es `{abstained:true, reason}` con 0 tokens.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-abstain.js   # → evals/reports/abstain-<TS>.json
-```
-
-Dataset: 24 queries no-gold (13 símbolos/archivos fabricados + 11 conceptos ausentes, GT vacío) + 32 gold de T1. Métricas:
-
-| métrica | valor |
-|---------|-------|
-| abstention precision | 0.941 |
-| coverage no-gold (abstiene cuando debe) | 0.667 |
-| coverage gold (NO abstiene con respuesta real) | 0.969 |
-| FP retrieval (no-gold respondido) | 8 |
-| FN retrieval (gold abstuvo) | 1 |
-
-Veredicto umbral 6.5 (precision ≥ 0.7 ∧ coverage_gold ≥ 0.8): **PASS**. Los 8 FP son queries semánticas no-gold cuyo ruido weak (match_type semantic, 0 hits reales) supera el umbral; los 2.7k-7.8k tokens muestran escalación semántica sobre consultas inexistentes. FN restante: sem-04 (concept gold con evidencia solo-semántica). Tuning posible: umbral de score en evidencia semántica (hoy binario por match_type).
-
-
-
-## Distribution shift (OOD) — FAIL
-
-El cost model ML (cardinality, ridge) se evalúa fuera de su distribución de entrenamiento: train en t1-basic (TypeScript) → val t1-modular (Python) → test dev (workspace real). Se entrena ridge en node (mismo pipeline que classify.mjs) y se compara MAPE ML vs baseline heurístico por op|queryClass.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-distribution-shift.js   # → evals/reports/distribution-shift-<TS>.json
-```
-
-| split | MAPE ML |
-|-------|---------|
-| train (t1-basic, n=25) | 25.9% |
-| val (t1-modular, n=17) | 92% (3.6×, shift TS→Python) |
-| test (dev, n=6) | 237.3% |
-
-Veredicto: **FAIL** — ratio OOD/train 9.18× (umbral 2×). El baseline heurístico generaliza mejor fuera de distribución (test 28% vs ML 237%). **El fallback heurístico queda como default**; el modelo solo se confía en distribución. Tarea derivada: retrain por repo o regularización/feature engineering antes de usar el cost model OOD. Artefacto: evals/reports/ood-cardinality-model.json.
-
-## Adversarial workloads — FAIL parcial (8/10 categorías)
-
-30 queries adversas (10 categorías × 3) sobre polar + fixtures: símbolos de alta frecuencia, identificadores ambiguos, fan-out masivo, zero-results, cadenas de dependencia profundas, implementaciones duplicadas, código generado, vendor-code (anti-leak), monorepo, polyglot.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-adversarial.js   # → evals/reports/adversarial-<TS>.json
-```
-
-- PASS (8/10, correctness 1.0): high-frequency, ambiguous, huge-fanout, zero-results (abstain limpio), duplicates, vendor anti-leak, monorepo, polyglot.
-- **FAIL con evidencia**: deep-dependency-chain 0.667 (plan concept falla en "dependency injection") y generated-code 0.667 (dist gitignored → invisible a rg).
-- Regret 0 en todo; 0 false-confidence (concept falla con confidence < 0.9).
-
-Mitigaciones pendientes (M1-M3): M1 planes concept con fallback estructural/filename (deep-chain); M2 opción --no-ignore opt-in (generated-code, límite de gitignore documentado — no es bug); M3 enforcement estricto de budget o cap top-K fan-out (token explosion en path-clusters) + candidato CF_REOPT lexical-skip para latencia polyglot (4.7s).
-
-## Expected Utility Cost Model (REJECT)
-
-El optimizer puede seleccionar por utilidad esperada (`CF_UTILITY=1`): EU = P(correct|plan)·value − tokens·Wt − latency·Wl − (1−P)·failure_penalty·Wf, con P(correct) derivada de la varianza del cardinality estimator (varianceTokens). Ablación sobre T1 (32 tasks) vs selección actual (cost/quality): **no mejora** — correctness 1.000 = 1.000, pero regret 0.1633 = 0.1633 (0% reducción, umbral 10%).
-
-```bash
-TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-utility.js   # → evals/reports/utility-<TS>.json
-```
-
-| selector | plan_acc | regret | tokens | correctness |
-|----------|----------|--------|--------|-------------|
-| cost/quality (actual) | 0.906 | 0.163 | 105 | 1.000 |
-| EU (CF_UTILITY=1) | 0.438 | 0.163 | 105 | 1.000 |
-
-Root cause: la señal de varianza no diferencia variantes de plan (comparten el op primario y costos de tokens casi idénticos) → EU degenera a ranking por costo. El oráculo distingue por tie-break de gt_hits, no por tokens. Fix necesario (tarea derivada): señal de incertidumbre POR VARIANTE (varianza de est_candidates o success rate por plan id). El modo queda disponible sin tocar el default.
-
-## Cuándo NO usar context-query-engine
-
-Evaluación de failure modes (24 queries triviales, 6 categorías: exact-filename, exact-symbol, single-file, one-shot, tiny-repo, trivial-regex; repos t1-basic/t1-modular/polar). Artefacto: `evals/reports/failure-modes-<TS>.json`, reproducir con `TMPDIR=$PWD/.tmp node evals/scripts/eval-failure-modes.js`.
-
-| categoría | raw correctness | cqe correctness | raw lat | cqe lat |
-|-----------|-----------------|-----------------|---------|---------|
-| exact-filename | 0.25 | 1.00 | 66ms | 102ms |
-| exact-symbol | 0.25 | 1.00 | 67ms | 123ms |
-| single-file | 0.25 | 1.00 | 68ms | 123ms |
-| one-shot | 0.50 | 1.00 | 71ms | 125ms |
-| tiny-repo | 0.00 | 1.00 | 17ms | 113ms |
-| trivial-regex | 0.50 | 1.00 | 17ms | 115ms |
-
-Hallazgos (24 queries, lose_rate 0.000 — CQE nunca pierde correctness en estos casos):
-
-- **Correctness**: CQE gana en TODAS las categorías. El raw `rg -n` por palabras pierde queries de nombre de archivo (rg busca contenido, no rutas) y se contamina en repos grandes (dumps/coverage lo desbordan).
-- **Dónde SÍ gana rg**: solo en **latencia en repos pequeños**. Lookup de archivo/símbolo exacto en t1-basic/t1-modular: rg 8-18ms vs CQE 95-149ms → **rg ~6-10x más rápido**. Para un one-shot puntual de un nombre único en un repo chico, `rg` directo es la opción.
-- **Dónde NO puede competir rg**: tokens. En polar, rg content-scan devuelve ~16.7M tokens (líneas de dumps SQL/coverage) vs CQE 10-292. Overhead de pipeline CQE: +36-98ms por query (spawn+optimizer+fusión), compensado con creces en repos medianos/grandes.
-
-Regla de oro: **búsqueda de archivo por nombre exacto en repos pequeños → rg es 6-10x más rápido en latencia (pero sin garantía de correctness). En repos ≥ mediana o con queries mixtas filename+contenido → CQE domina en correctness y tokens.**
-
-## Indexing cost & break-even
-
-Medición (`evals/scripts/eval-indexing.js`, tasks 3.1-3.5 del change `indexing-cost-breakeven`): T_index = build BM25 cold (median 3 runs, proceso fresh, index lazy per-process en `engine/bm25.js`, cap 1000 files/256KB); T_incremental = rebuild full por proceso (impl actual no tiene índice incremental — touch 5 files no reduce coste); RAM = rss tras build; T_query cold/warm = `engine.js` sobre el cqp representativo del repo (warm = cache persistido en `engine/.cache.json`, `cache_hits=1`); baseline = `rg -n --no-ignore -g !node_modules` (median 3). Artefacto: `evals/reports/indexing-cost-*.json`.
-
-| repo | files | bytes | T_index (med) | RAM pico | T_incremental | T_query cold | T_query warm | rg baseline | N_break_even |
-|---|---|---|---|---|---|---|---|---|---|
-| t1-basic | 9 | 3.3KB | 2ms | 45.9MB | 2ms | 132ms | 77ms | 6ms | 0 |
-| t1-modular | 11 | 1.8KB | 2ms | 45.7MB | 2ms | 128ms | 80ms | 7ms | 0 |
-| polar | 1000 (cap) | 11.4MB | 418ms | 141.6MB | 408ms | 150ms | 93ms | 712ms | 0.7 |
-| dev | 1000 (cap) | 17.9MB | 924ms | 181.2MB | 920ms | 383ms | 100ms | 822ms | 1.3 |
-
-- **N_break_even = T_index / (baseline − T_query_warm)**; denominador ≤ 0 → N=0 (el setup nunca se amortiza).
-- **Regla (3.5):** repos con N_break_even > 100 → *usar rg para workloads < N queries*. Ningún repo del stack excede el umbral.
-- t1-*: N=0 — CQE warm (~80ms de overhead node+engine) es más caro por query que rg (~6ms); en repos chicos conviene rg directo (CQE agrega latencia sin ahorro de setup, que es trivial).
-- polar/dev: N<1.3 — el index build (~0.4-0.9s) se paga con la primera query (rg tarda 0.7-0.8s por query). Alternativa BM25-only cold (reindexa por proceso cada query): N≈1 — CQE evita re-indexar, quiebre inmediato.
-- T_incremental == T_index: la impl actual reindexa full por proceso; tarea derivada = índice incremental persistente si T_index > 1s en repos grandes.
-
-
-## Derived tasks (roadmap v1.6)
-
-- **Índice BM25 incremental persistente**: ✅ DONE (bm25-incremental-index) — índice persistido a `engine/.bm25-index.json` con validación por mtime; reuse entre procesos polar 335→180ms / dev 714→317ms (~2.1-2.2×, umbral 0.6×). Resta: incremental por archivo (hoy touch 1 archivo → rebuild full, 973-1828ms). Ver `evals/reports/index-persist-<TS>.json`.
-- **Señal de incertidumbre por variante de plan**: ✅ DONE (plan-variant-confidence) — telemetría `plan:<id>|queryClass` con success=relevant encontrado (skipBlend); planPCorrect usa successRate por plan (n≥5). La señal discrimina (P 0.84-0.96 vs fallback 0; expected_total_cost 202→105: EU evita retry) pero NO flipea selección en T1: A/B quedan con P similar y el término de costo domina → regret sin cambio (0.1660 = 0.1660). REJECT igual que expected-utility-cost, con la causa aislada: para flipear hace falta P que difiera entre variantes en queries donde los costos empatan (hoy el oráculo gana por tie-break de gt_hits, no capturable por tokens). Ver `evals/reports/utility-<TS>.json` (último run con preheat).
-- **Cost model OOD**: ✅ DONE (cost-model-ood, REJECT) — retrain combinado TS+Python (t1-basic+t1-modular) con λ sweep {1,10} evalúa en dev: MAPE out 237%→194.9% (λ=10) pero el baseline heurístico (avg por op|qc del train) da 27.7% → el promedio por (op|qc) transfiere mejor OOD que el ridge; la feature log1p(est_candidates) corrompe OOD (est es sistemáticamente erróneo). Fallback heurístico confirmado como default correcto; modelos por repo o features de lenguaje = límite conocido fuera de alcance. Ver `evals/reports/cost-model-ood-<TS>.json`.
-- **Mitigaciones adversarial**: ✅ DONE (adversarial-mitigations) — M1 escalación concept con evidencia exacta primero (rg-files por palabra → search-structure → semántica; dc-14/15 ✓, dc-13 miss estructural documentado: GT sin match léxico, probe ausente); M2 generated-code recuperado 3/3 con `CF_SEARCH_NO_IGNORE=1` + `CF_INCLUDE_GENERATED=1` (bad_path relajado; gc-19 package-lock gitignored, gc-20 dist main.js); M3 token explosion acotada con budget duro en fuse (mo-26 15836→7992 tokens sin perder correctness). Descartado: cap fan-out por truncación en engine (rompía correctness — rg scores uniformes → truncado arbitrario). **strict-budget-default**: el budget duro es ahora el DEFAULT (opt-out `CF_STRICT_BUDGET=0` para el comportamiento legacy con path-cluster); mo-26 default = 7,992 ≤ 8,000 con correctness ✓; matriz T1 idéntica. Ver `evals/reports/mitigations-<TS>.json`.
-- **Harness acotado/reproducible**: ✅ DONE (harness-bounded-reproducible) — todo run del engine desde un eval script tiene timeout por query (60s) + aislamiento de error (fila con error, no aborta) en eval-recall/hybrid/baselines/downstream/failure-modes; dev completo sin --limit bajó de >15 min a ~9s; artefactos siempre escritos. Ver `evals/reports/` y `reproduce.sh`.
-
-## Quality-aware selection (REJECT)
-
-Política de escalación simulada offline sobre el artefacto congelado de diagnosis (32 tasks, planes A/B/C forzados): correr en orden de costo estimado y escalar a un plan mayor solo si la señal de calidad observada < umbral.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-quality-policy.js   # → evals/reports/quality-policy-<TS>.json
-```
-
-| política | tokens | gt_hits | r@5 | escalaciones |
-|----------|--------|---------|-----|--------------|
-| cost_only (actual) | 105 | 4.438 | 0.833 | 0 |
-| exactness θ=1.0 | 116 | 4.438 | 0.833 | 4 |
-| gt_hits θ=5 (techo) | 237 | 4.875 | 1.021* | 17 |
-| oracle_quality | 221 | 5.375 | 1.021* | — |
-
-La señal exactness (runtime-observable sin GT) es **plana**: nunca escala el gt (4.438 en todo el sweep) — mismo diagnóstico que cost/quality. Incluso con señal oráculo gt_hits, ningún umbral alcanza el objetivo (≥90% del oráculo @ ≤2.0× tokens): θ=5 da 4.875 (90.7%) pero a 2.26× tokens. La frontera es dura: el +21% de gt_hits del oráculo cuesta 2.1× tokens sin punto medio barato. **Veredicto REJECT** en fixtures sintéticas (plan A ya satisface casi todo); re-testear en repos reales (T2/dev) o exponer tradeoff explícito para queries high-stakes. (*1.021 = anomalía de display del artefacto base.)
-
-
-## Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial)
-
-El score no es el lenguaje universal: evidencia determinista (exact/filename/structural = hecho observado) y estimaciones (semantic/reranker = belief) viven en espacios epistémicos distintos. La fusión ahora usa **eligibility por tier** (`evidence_tier <= 1` → siempre elegible; tier2+ → umbral 0.2) y el reranker deja el score crudo del modelo (el floor 0.3 desapareció — su rol lo tomó la eligibilidad). Context selection submodular (`CF_SELECTOR=marginal`, engine/selector.js): greedy por ganancia marginal bajo budget duro; con budget holgado es inerte (sin pérdida), con budget tight (fan-out) la variante MMR supera a top-k (gt +14%, density 0.0063 vs 0.0055).
-
-```bash
-TMPDIR=$PWD/.tmp CF_TASKS=adv CF_SELECTOR_BUDGET=400 node evals/scripts/eval-context-selection.js
-```
-
-| selector | gt_hits | tokens | dirs | density |
-|----------|---------|--------|------|---------|
-| top-k (fuse legacy) | 1.75 | 319 | 17.0 | 0.0055 |
-| MMR (λ=0.7) | **2.00** | 318 | **17.3** | **0.0063** |
-| marginal (07B v1) | 1.75 | 319 | 17.0 | 0.0055 |
-
-Iteración siguiente: calibrar pesos de marginal (diversidad/redundancia) o adoptar CF_SELECTOR=mmr. Ver también: pairwise-plan-preference, adaptive-query-execution (backlog v1.7).
-
+## Experiments
+
+Una linea por prueba con enlace a la evidencia completa (metodologia, metricas, veredicto, artifacts).
+
+- [**Benchmark: context savings**](docs/evidence/benchmark-context-savings.md) - PASS - 61% menos tokens
+- [**CQE vs hybrid retrieval**](docs/evidence/hybrid-retrieval.md) - SIRVE - recall@5 +3.7pp
+- [**Harder baselines**](docs/evidence/harder-baselines.md) - SIRVE - CQE gana o empata
+- [**Downstream agent evaluation**](docs/evidence/downstream-agent-eval.md) - FAIL umbral estricto (matiz: +25pp success)
+- [**ABSTAIN / No-Answer**](docs/evidence/abstain-no-answer.md) - PASS - precision 0.941
+- [**Distribution shift (OOD) — FAIL**](docs/evidence/distribution-shift-ood.md) - FAIL - OOD/train 9.18x
+- [**Adversarial workloads — FAIL parcial (8/10 categorías)**](docs/evidence/adversarial-workloads.md) - FAIL parcial - 8/10 categorias
+- [**Expected Utility Cost Model (REJECT)**](docs/evidence/expected-utility-cost.md) - REJECT
+- [**Cuándo NO usar context-query-engine**](docs/evidence/failure-modes.md) - SIRVE - regla de oro rg vs CQE
+- [**Indexing cost & break-even**](docs/evidence/indexing-cost-breakeven.md) - medicion - N_break_even < 1.3
+- [**Derived tasks (roadmap v1.6)**](docs/evidence/derived-tasks.md) - 5/5 derivados DONE
+- [**Quality-aware selection (REJECT)**](docs/evidence/quality-aware-selection.md) - REJECT
+- [**Evidence Model + Context Selection (07A ADOPTED / 07B REJECT parcial)**](docs/evidence/evidence-model-context-selection.md) - 07A ADOPTED / 07B REJECT parcial
+- [**Retriever disagreement → active retrieval**](docs/evidence/retriever-disagreement.md) - SIRVE - hipotesis sostenida
+- [**Repository Index Layer**](docs/evidence/repository-index-layer.md) - SIRVE
+- [**Operator cost model (REJECT)**](docs/evidence/operator-cost-model.md) - REJECT
+- [**Evidence State (REJECT parcial)**](docs/evidence/evidence-state.md) - REJECT parcial
+- [**Adaptive plan selection (REJECT)**](docs/evidence/adaptive-plan-selection.md) - REJECT
+- [**Context selection (MMR) — paso 06**](docs/evidence/context-selection-mmr.md) - PASS
+- [**Abstain calibration (conformal) — REJECT**](docs/evidence/abstain-conformal.md) - REJECT (con hallazgo)
+- [**Context query IR (CF_INDEX=1) — PASSA**](docs/evidence/context-query-ir.md) - SIRVE - 2.9x menos tokens
+- [**Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial)**](docs/evidence/physical-decomposition.md) - NO sirve
+- [**Pairwise plan preference (Lero) — paso 08, SÍ SIRVE**](docs/evidence/pairwise-plan-preference.md) - SIRVE - gt +19.5%
+- [**Repo fingerprint consistency (máxima transversal)**](docs/evidence/repo-fingerprint.md) - SIRVE
+- [**Cheap query bypass — SÍ SIRVE (parcial)**](docs/evidence/cheap-query-bypass.md) - SIRVE (parcial)
+- [**Semantic-Structural Operator (CeQe) — SÍ SIRVE (dc-13 fijo)**](docs/evidence/semantic-structural-operator.md) - SIRVE - dc-13 fijo
+- [**Evidence Packet Standard — SÍ SIRVE (representación)**](docs/evidence/evidence-packet-standard.md) - SIRVE
+- [**Explorer-Solver Separation (FastContext) — SÍ SIRVE**](docs/evidence/explorer-solver-separation.md) - SIRVE - -59% tokens
+- [**Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte**](docs/evidence/pairwise-runtime.md) - PARITY
+- [**Read Span Operator (A2) — SÍ SIRVE**](docs/evidence/read-span-operator.md) - SIRVE - reduction 0.505
+- [**Fuse Flood Boost (A3) — REJECT parcial, root cause: dedup por path**](docs/evidence/fuse-flood-boost.md) - REJECT parcial
+- [**Typed Rank Fusion (RRF) — B1**](docs/evidence/typed-rank-fusion.md) - mixta - -41% tokens, mrr -5.7pp
+- [**Adaptive Context Budget (Adaptive-k) — B2, SÍ SIRVE (parity)**](docs/evidence/adaptive-context-budget.md) - SIRVE (parity)
+- [**Claim-Level Context (B3) — SÍ SIRVE**](docs/evidence/claim-level-context.md) - SIRVE - -58.6% tokens
+- [**Execution Receipts (B4) — SÍ SIRVE**](docs/evidence/execution-receipts.md) - SIRVE
+- [**Information Bottleneck Metrics (B5) — SÍ SIRVE (métrica estándar)**](docs/evidence/info-bottleneck-metrics.md) - SIRVE
+- [**Context Compilation / IR (B6) — SÍ SIRVE (representación)**](docs/evidence/context-compilation-ir.md) - SIRVE
+- [**Information Acquisition / VoI (B7) — SÍ SIRVE (mecanismo, parity)**](docs/evidence/information-acquisition-voi.md) - SIRVE (parity)
+- [**Federated Evidence Sources (B9) — SÍ SIRVE (representación)**](docs/evidence/federated-evidence-sources.md) - SIRVE
+- [**Repo-Calibrated Cardinality (B11) — NO SIRVE (OOD dev)**](docs/evidence/repo-calibrated-cardinality.md) - NO SIRVE
+- [**Learned Plan Steering (B12) — PARITY (sin señal pre-ejecución)**](docs/evidence/learned-plan-steering.md) - PARITY
+- [**Evidence Semantics (B13) — SÍ SIRVE (contrato tipado Score<T>)**](docs/evidence/evidence-semantics.md) - SIRVE - contrato 223/223
+- [**Generated Code Default Policy (B14) — OFF default (medición empírica)**](docs/evidence/generated-code-policy.md) - SIRVE - OFF default
+- [**Backlog Audit v1.7 (B15) — inventario y archivo de superseded**](docs/evidence/backlog-audit.md) - gobernanza - 28 archivados
+- [**CQE Thesis (B16) — paper/architecture doc**](docs/evidence/cqe-thesis.md) - paper - 23 claims con artifact
+- [**Soundex Fallback (B17) — SÍ SIRVE (typos)**](docs/evidence/soundex-fallback.md) - SIRVE - recall 0->1.0
+
+## Repository structure
 
 ```text
+context-query-engine/
 context-query-engine/
 ├── agent-context-engineering/     # agent skill
 │   ├── SKILL.md                   # activation, decision tree, escalation, budgets, anti-patterns
@@ -698,46 +490,6 @@ context-query-engine/
 │   ├── cqp.js                     # CQP parser → logical plan
 │   ├── interpreter.js             # intent classifier (heuristic)
 
-## Retriever disagreement → active retrieval
-
-Señal de incertidumbre de retrieval sin entrenar modelo: el desacuerdo entre fuentes (lexical/structural/semantic/bm25/git) predice riesgo de GT missing y activa adquisición adicional.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-disagreement.js --adv   # → evals/reports/disagreement-<TS>.json
-```
-
-Instrumento (hook CF_DISAGREEMENT_FILE en engine, pre-fuse): agreement_rate = soporte medio de archivos en la unión de top-5 por fuente (paths normalizados; 1 = convergen, 0 = dispersión). 47 queries (T1 + adversarial fan-out):
-
-| estado | P(gt_miss) |
-|--------|------------|
-| agreement ≥ 0.5 (alta) | **0.000** |
-| agreement < 0.5 (baja) | **0.050** |
-| no-signal (fuente única: concept/zero-results) | 5/6 misses → abstain |
-
-Hipótesis SOSTENIDA: baja concordancia → más riesgo de miss. Caso validado: adv-po-30 ('main', poliglote) — rg inundado (score 1 uniforme), bm25 irrelevante, agreement 0 → requiere índice estructural/símbolos. Regla de trigger: agreement < 0.5 → adquirir fuentes ausentes; fuente única sin candidatos → abstain. Loop de adquisición runtime = change `adaptive-query-execution`. Instrumentación descartada: Jaccard top-10 entre fuentes (disjuntos por construcción) y margen top1-top2 (scores rg uniformes 1.0).
-
-## Repository Index Layer
-
-Capas de acceso a los repositorios materializadas (SQLite+FTS5, node:sqlite, zero deps) bajo `engine/index-layer/`. El índice produce **evidencia tipada**, no search results: `{source, entity, path, span, certainty, index_version, cost{latency_ms, tokens}}` — determinista (symbol/dependency: certainty 1.0) o probabilística (lexical: 0.9).
-
-```bash
-node engine/index-layer/index.js index <repo>         # build incremental (manifiesto sha256)
-node engine/index-layer/index.js query <repo> symbol retryWithFallback
-node engine/index-layer/index.js query <repo> lexical fallback
-node engine/index-layer/index.js freshness <repo>    # snapshot | dirty_scope → use_index | reindex
-```
-
-Componentes: store (SQLite WAL + FTS5, `.cqe/catalog.db`), manifest (diff sha256/mtime/size), extractores de símbolos/deps por lenguaje (TS/JS/Python regex), indexer incremental (1 archivo tocado → 1 reindexado), watcher (fs.watch recursive + debounce + coalescing a `FileChangeEvent`), freshness model (nunca evidencia vieja silenciosa — decide reindex o live-disk).
-
-| repo | build | reuse | incr (1 f) |
-|------|-------|-------|------------|
-| t1-basic | 54ms | 58ms | 58ms (1) |
-| polar | 134ms | 123ms | 130ms (1) |
-
-Watcher roundtrip 259ms; queries < 50ms. Este es el access layer del planner: los índices se convierten en **access paths** que el optimizer puede elegir (change `context-query-ir`), en vez de rg/search sobre filesystem crudo. Detalle v1: symbols por regex (sin tree-sitter); differencial vs Frigg/cqs = el planner/retrieval queda en CQE, aquí solo el catálogo materializado.
-
-## Repository structure
-
 │   ├── optimizer.js               # candidate plans + cost model + telemetry + learned mappings
 │   ├── engine.js                  # pipeline: parse → optimize → execute → fuse (+ cache)
 │   ├── mcp-server.js              # MCP stdio: context_query / search_files / read_file
@@ -747,447 +499,6 @@ Watcher roundtrip 259ms; queries < 50ms. Este es el access layer del planner: lo
 └── openspec/                      # spec-driven (local-only, git-ignored) (local, git-ignored)
 ```
 
----
-
-
-
-## Operator cost model (REJECT)
-
-`CF_LEARNED_COST=1` reemplaza la COST_TABLE estática por costos medidos (p95 tokens / avg latencia por op|query_class, n>=5) desde la telemetría. Ablación T1: correctness 1.000 = 1.000 pero tokens 105 vs 104 → **REJECT**. Los promedios por op no discriminan variantes A/B/C (mismas ops reordenadas → coin-flip: plan_acc 0.9063→0.4375 sin cambio de tokens); la señal de costo relevante es cardinalidad por query. El valor real de costos aprendidos es para elegir entre FAMILIAS de ops (rg 15ms vs index 2-5ms), donde la COST_TABLE ya captura la diferencia — re-test orientado a access paths (context-query-ir) si se quiere.
-
-
-## Evidence State (REJECT parcial)
-
-Belief state por query (`stats.belief`): sources, agreement_rate (soporte cross-source top-5), coverage_estimate (fracción de evidencia determinista tier0/1 en el pool), n_pool. Correlación Spearman vs gt_hit sobre T1 + adversarial fan-out (47 queries):
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-evidence-state.js   # → evals/reports/evidence-state-<TS>.json
-```
-
-| señal | Spearman |
-|-------|----------|
-| coverage_estimate | **-0.268** (anti-correla) |
-| agreement_rate | +0.155 (débil) |
-
-Hallazgo: coverage alto ≠ confianza — la inundación léxica (rg score 1 uniforme sobre símbolos comunes tipo 'main') llena el pool de tier0 y es justo el caso miss. coverage sirve como señal ANTI (flood-detection), no de suficiencia; agreement es la señal usable para adquirir (coherente con retriever-disagreement). Umbral 1.4 no cumplido → REJECT; señales documentadas para adaptive-plan-selection.
-
-
-## Adaptive plan selection (REJECT)
-
-CF_ADAPTIVE=1: el belief state (agreement/coverage pre-fuse) decide adquisición extra — flood (coverage > 0.85, n_pool > 30, agreement < 0.5) → symbol-lookup; divergencia de fuentes (agreement < 0.5) → bm25 + dependency-expand. Eval 62 queries (T1+adv): correctness 0.839 = 0.839 (parity), flood detectado en 14, **recovery 0** — la evidencia adquirida (structural 0.7) rankea bajo el flood rg 'exact' (1.0) y el budget se consume antes del GT (adv-po-30: pool 35k rows → gt 0).
-
-Variante descartada con evidencia: descartar la fuente inundada rompe correctness (0.839→0.710) — la fuente flood suele contener el GT (logger/env multi-hit). Mitigación correcta (derivada): boost de prioridad de evidencia adquirida en fuse o cap diverso pre-fuse. CF_ADAPTIVE queda disponible, OFF por default.
-
-
-## Context selection (MMR) — paso 06
-
-Selección de contexto bajo budget duro vía MMR real en `engine/selector.js` (`CF_SELECTOR=mmr`, λ=0.7, sameRegion dirname=1/prefijo-compartido=0.5), comparada con el greedy marginal y con top-k.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-ssm.js   # → evals/reports/ssm-<TS>.json
-```
-
-44 tasks (12 adversarial fan-out + 32 T1), ranked único con `CF_SELECTOR_RANKED_ONLY=1` + hybrid; selectores reales offline a 2000/800/400:
-
-| budget | top-k gt | marginal gt | MMR gt |
-|--------|----------|-------------|--------|
-| 2000 | 208 | 233 | 233 |
-| 800 | 208 | 224 | 212 |
-| 400 (tight) | 204 | 204 | **207** |
-
-Veredicto **PASS**: MMR ≥ top-k en tight (207 ≥ 204) y sin regresión en T1 loose (197 = 197); smoke end-to-end `CF_SELECTOR=mmr CF_SELECTOR_BUDGET=400` verificado en fan-out. Lectura: MMR gana cuando el budget aprieta (diversidad evita cluster de ruido); marginal en budget medio; ambos ≥ top-k en todo el sweep. Tuning de λ por familia de query = refinamiento.
-
-
-## Abstain calibration (conformal) — REJECT
-
-Split-conformal para abstention: nonconformity = 1 − max evidence strength (tiers por match_type), θ = 1 − q̂ calibrado, modo `CF_ABSTAIN_CONFORMAL=1`. Resultado (α=0.2, holdout 8 gold + 24 no-gold): gold_calibrated θ=1.0 → **gold coverage 0.875 ≥ 0.80 ✓**, no-gold 0.625 (< 0.667 ✗), precision 0.938 ✓; mixed θ=0.0 → responde todo (garantiza cobertura, abstention 0). **Veredicto: REJECT con hallazgo** — la evidencia strength no separa gold de no-gold (los FP alcanzan tier0 = strength 1.0 igual que gold); conformal honesto colapsa a la regla binaria legacy (θ=1), que queda CONFIRMADA como abstain máximo consistente con la garantía de cobertura (formalizada: P(GT∈context) ≥ 1−α bajo exchangeability). Mejora de no-gold requiere señal de distribución de query o score de modelo calibrado, no umbral de evidencia.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-conformal.js   # → evals/reports/abstain-conformal-<TS>.json
-```
-
-
-## Context query IR (CF_INDEX=1) — PASSA
-
-Access paths materializados: el planner puede sustituir ops sobre filesystem crudo por consultas al catálogo (engine/index-layer) — `CF_INDEX=1` mapea search-code/rg-files→lexical-index, search-structure→dependency-expand (solo definitions/references/implementation/filename; pattern/concept conservan rg, FTS no es regex).
-
-```bash
-TMPDIR=$PWD/.tmp CF_TASKS=t1 node evals/scripts/eval-ir.js   # → evals/reports/ir-<TS>.json
-```
-
-| modo | correctness | tokens | r@5 | MRR |
-|------|-------------|--------|-----|-----|
-| cqe (rg) | 1.000 | 104 | 0.833 | 0.939 |
-| index (CF_INDEX=1) | **1.000** | **36** (2.9× menos) | 0.823 | 0.720 |
-
-Veredicto: **SÍ sirve** — 2.9× menos tokens sin perder correctness; MRR menor porque las filas del índice no traen spans de línea exactos (siguiente: op físico READ_SPAN). Costo: build 326-341ms. Descartados con evidencia: AND-tokens camelCase, symbol-lookup para filename, substitución en pattern/concept.
-
-## Physical query decomposition (CF_DECOMPOSE=1) — NO sirve (REJECT parcial)
-
-Descomposición determinista (sin LLM) de queries multi-facet en sub-consultas por keywords EN+ES (`engine/decompose.js`): facetas persistence/callers/definition → `FIND references/definitions/implementation OF symbol <name>`.
-
-| modo | correctness | tokens (medio) |
-|------|-------------|----------------|
-| baseline | 0.900 | ~4.5k |
-| CF_DECOMPOSE=1 | 0.900 | +3006 (2-3×) |
-
-Veredicto: **NO sirve en el corpus actual** — gt gain 0/10 (la intención resuelta ya cubre la faceta principal); costos 2-3× (polar 2×). `CF_DECOMPOSE` OFF por default. Escenario de ganancia real (entidad con callers/impl distintos del def) no representado en fixtures — anotado para re-test. El mecanismo determinista funciona (facetas 7/10).
-
-
-## Pairwise plan preference (Lero) — paso 08, SÍ SIRVE
-
-Primera vía de aprendizaje que mejora la selección de plan. Modelo logístico pairwise (numpy, sin deps): aprende P(A≻B | features del par + query_type) del OUTCOME real (gt_hits), no de costos estimados — la diferencia clave vs los 4 REJECTs previos (EU/plan-variant/cost-model/quality-aware).
-
-```bash
-python3 evals/ml/train-pairwise.py                      # 74 tasks, 222 pares → pairwise-model.json
-TMPDIR=$PWD/.tmp node evals/scripts/eval-pairwise.js    # → evals/reports/pairwise-<TS>.json
-```
-
-| selector | plan_acc | gt_hits (media) | tokens | correctness |
-|----------|----------|-----------------|--------|-------------|
-| cost_only (default) | 0.608 | 2.770 | 1393 | 0.851 |
-| pairwise | **0.635** | **3.311 (+19.5%)** | 1417 (+24) | **0.851** |
-
-Veredicto: **SÍ sirve** — +19.5% gt_hits con tokens casi iguales. Holdout 0.733 (balanced 0.842). Aprender el orden relativo cancela el ruido de escala entre queries que rompía la regresión de costos. Pendiente: integración runtime en optimizer.js (el modelo ya está disponible; la simulación fue offline sobre perTask).
-
-
-## Repo fingerprint consistency (máxima transversal)
-
-Máxima: **todo artefacto que derive de archivos declara su dependencia del estado del repo** — si el fingerprint cambia, se invalida o se marca stale; nunca evidencia vieja silenciosa.
-
-Fingerprint barato (`repoFingerprint`, engine/index-layer/manifest.js): sha256 de la lista ordenada `path|size|mtimeMs` (walk+stat, sin leer contenido). mtime+size para el scan completo; sha256 de contenido solo sobre archivos cambiados.
-
-| Artefacto | Acción al cambiar el repo |
-|-----------|---------------------------|
-| Cache engine (`.cache.json`) | Key con fingerprint: entrada filtrada en loadCache → miss determinista (activo si `CF_FINGERPRINT=1` o existe catálogo `.cqe/`) |
-| BM25 persistido (`.bm25-index.json`) | `loadPersisted` valida fingerprint → rebuild (además de mtime+size) |
-| statistics.ndjson | Cada record lleva `repo_fp` (setFingerprint por runPlan) → provenance para modelos |
-| Índice catalog (SQLite) | Manifest sha256 + freshness snapshot/dirty_scope (ya existía) |
-
-Verificado (eval-fingerprint.js): cache cold 0 → warm 1 → **touch → 0 (invalidada)** → 1 (repoblada); BM25 rebuild por fingerprint; stats con repo_fp. Bugs que esto elimina: cache con TTL 5min devolviendo evidencia vieja, stale-catálogo sin rebuild, drift de stats sin provenance. Modelos aprendidos: tagging con fingerprint de entrenamiento queda como refinamiento (runtime staleness check).
-
-
-## Cheap query bypass — SÍ SIRVE (parcial)
-
-"Optimizar tiene costo": queries triviales (filename inequívoco + repo < 500 archivos) van directo a rg-files + fuse, sin optimizer/plans/cost model (`CF_BYPASS=1`).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-bypass.js   # → evals/reports/bypass-<TS>.json
-```
-
-| set | correctness | latencia | tokens |
-|-----|-------------|----------|--------|
-| trivial baseline | 1.000 | 162ms | 73 |
-| trivial bypass | 1.000 | 152ms | 73 |
-| T1 baseline | 1.000 | — | 104 |
-| T1 bypass | 1.000 | — | 105 |
-
-Verdict: **PASS** (correctness igual en ambos, latencia <= baseline, sin regresión). Matices: bypass_rate 0.17 (solo triviales de repos chicos; polar >500 files fuera por diseño); el objetivo <20ms no es alcanzable vía spawn CLI (floor de node ~40ms) — sí en modo daemon/MCP (cqs-style).
-
-
-## Semantic-Structural Operator (CeQe) — SÍ SIRVE (dc-13 fijo)
-
-Concept queries cuya implementación no tiene match léxico (dc-13: 'dependency injection' → app.module.ts encontrado por `@Module`) ahora resuelven: tras el plan, si el pool de un concept es mayoría-docs sin evidencia estructural, se escanean anclas de framework (`@Module`, `@Injectable`, `providers:`, `app.use`...) y se anexan los archivos con más anclas (solo implementación, docs excluidos).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-structural.js   # → evals/reports/structural-<TS>.json
-```
-
-| categoría | antes | después |
-|-----------|-------|---------|
-| deep-dependency-chain | 0.667 | **1.000** |
-| vendor-code | 1.000 | 1.000 |
-| T1 (32) | 1.000 | 1.000 |
-
-Hallazgo de diseño: la evidencia del *concept* (docs con match léxico) no es evidencia de la *implementación* estructural — el gate correcto es "mayoría docs + 0 filas estructurales", no "pool vacío". Costo: +15 filas/ancla solo en el caso miss (raro); sin regresión en ninguna categoría.
-
-
-## Evidence Packet Standard — SÍ SIRVE (representación)
-
-Cada resultado de retrieval es un **packet tipado** `{evidence_id, subject{file,symbol,lines}, claim, evidence_type, certainty, source, provenance{operator,parser,index_version}, cost{tokens,latency_ms}}` (engine/evidence.js, aditivo sobre el contrato flat de fuse). La **certainty es tipo epistémico** (determinista tier0 = 1.0, estimación semantic = 0.6), ortogonal al score de ranking — el reranker interpreta evidencia, nunca la sobrescribe (el bug 0.0034 es estructuralmente imposible; el filtro de fuse opera sobre score, no sobre certainty).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-evidence-packets.js   # → evals/reports/evidence-packets-<TS>.json
-```
-
-Paridad T1: correctness 1.000 = 1.000 (aditivo), 214 packets con schema completa, tier0 certainty 1.0 ✓. Habilita selección por certeza/provenance en selector.js.
-
-
-## Explorer-Solver Separation (FastContext) — SÍ SIRVE
-
-El explorador (modo headless `CF_EXPLORER=1`) devuelve **evidence references** — `{path, lines:[start,end], reason, certainty}` + `next_actions: [{operator, target, eig}]` — no dumps de contenido. El solver recibe 59% menos tokens (2336 → 1100 media sobre 22 tasks downstream+adversarial) con correctness idéntica (0.955 = 0.955).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-explorer.js   # → evals/reports/explorer-<TS>.json
-```
-
-next_actions se derivan del belief state: agreement<0.5 → symbol-lookup (eig 0.7); relations sin reference → follow (0.5); inclusions sin test/config → read_span (0.4). El ahorro es el costo que el solver no paga en lectura temprana; los spans (`line_start/line_end` de la evidencia) habilitan el operador físico READ_SPAN del roadmap.
-
-
-## Pairwise Runtime (A1) — PARITY, señal pre-ejecución inerte
-
-CF_PAIRWISE=1 integra el modelo pairwise (Lero) en optimizer.js: score por plan = Σ P(plan ≻ otro) con features de las ops (est_tokens/latencia) y features post-hoc (gt_hits/exactness/n_results/recall5/mrr) = 0 pre-ejecución.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-pairwise-runtime.js   # → evals/reports/pairwise-runtime-<TS>.json
-```
-
-| selector | plan_acc | gt_hits | tokens | correctness |
-|----------|----------|---------|--------|-------------|
-| default | 0.906 | 4.406 | 105 | 1.000 |
-| pairwise runtime | 0.906 | 4.406 | 105 | 1.000 |
-
-Paridad exacta — sin regresión, pero el +19.5% gt del paso 08 (offline) NO se reproduce pre-ejecución: la señal vive en los features post-ejecución (gt_hits/exactness/n_results), que son 0 antes de correr. Conclusión: Lero no reemplaza la selección inicial; su valor es ADAPTAR tras observar la primera op → motor de re-selección en adaptive-query-execution (B8). CF_PAIRWISE queda disponible, default intacto.
-
-## Read Span Operator (A2) — SÍ SIRVE
-
-Operador físico `read-span` en engine.js: materializa SOLO el span (path + [line_start, line_end]) de un row de evidencia, no el archivo. COST_TABLE: 40 tokens / 2ms.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-read-span.js   # → evals/reports/read-span-<TS>.json
-```
-
-| métrica | valor |
-|---------|-------|
-| avg reduction (span vs archivo) | 0.505 |
-| span_hit | 1.000 |
-| correctness with_span | 1.000 (= baseline) |
-
-Span [l-2, l+8] sobre la línea real del símbolo. Bugs de eval fijados (documentados en tasks.md): rows con line_start default 1 (rg-files/git-log) → resolver línea real; queries file/concept → hit a nivel archivo; regex multi-word sin comillas. Habilita references-en-vez-de-dumps (FastContext) y conecta con explorer next_actions + evidence packets.
-
-## Fuse Flood Boost (A3) — REJECT parcial, root cause: dedup por path
-
-CF_FLOOD_BOOST añade bonus a score_final para evidencia adquirida (structural/symbol-lookup/dependency-expand/read-span) en assemble-context.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-flood-boost.js   # → evals/reports/flood-boost-<TS>.json
-```
-
-| config | correct | gt | tokens |
-|--------|---------|----|--------|
-| baseline | 0.855 | 3.823 | 1572 |
-| boost 0.2 | 0.855 | 3.839 | 1572 |
-| adaptive | 0.855 | 3.823 | 1591 |
-| adaptive+boost | 0.855 | 3.839 | 1591 |
-
-Sin regresión (T1 1.000 en todas), pero adv-po-30 NO se rescata: el flood (coverage 1.0, n_pool 7309) dispara la adquisición, pero las filas adquiridas se dedupean por path contra el flood existente → no queda evidencia adquirida que boostear; el GT queda fuera del budget por tie-order de rg exact 0.86. Fix derivado: UPSERT por path en adquisición (reemplazar fila flood por la adquirida con mayor certeza/span) — para B8.
-
-## Typed Rank Fusion (RRF) — B1
-
-Fusión por RANGO multi-fuente con pesos por query-type (`CF_RRF=1` + `CF_RRF_RANK=1`): cada fuente (rg/bm25/structural/git/index) aporta un ranking y se combina Σ w_tier·1/(k+rank), dedupe a una fila por path.
-
-| métrica | baseline | rrf |
-|---------|----------|-----|
-| correctness | 0.855 | **0.871** |
-| mrr | 0.640 | 0.583 |
-| tokens | 1572 | **933** (−41%) |
-
-Veredicto: **FAIL por umbral, señal MIXTA** — gana cobertura (+1.6pp correctness) y reduce tokens 41% (dedupe por path), pero pierde precisión de rank (mrr −5.7pp). RRF sirve para paths diversity-first (fan-out/coverage), no para precision-first. Disponible opt-in, default intacto.
-
-
-## Adaptive Context Budget (Adaptive-k) — B2, SÍ SIRVE (parity)
-
-Selección con parada por diminishing returns: `CF_ADAPTIVE_K=1` + `CF_ADAPTIVE_K_THETA` (knee de la curva de marginal gain = θ·maxGain) integrado a `CF_SELECTOR=marginal` en engine/selector.js.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-adaptive-k.js   # → evals/reports/adaptive-k-<TS>.json
-```
-
-44 tasks (fanout + T1), budgets 2000/8000, θ sweep 0.05-0.20: **PASS — density adaptive 0.011105 = topk 0.011105, parity ✓**. Hallazgo: la curva de marginal gain no tiene rodilla en este corpus (top-k y adaptive-k idénticos en todo el sweep) — el knee solo corta en rankings con cola de baja ganancia (flood de ruido, p.ej. adv-po-30), no representado aquí. Sin regresión; el mecanismo queda disponible.
-
-
-## Claim-Level Context (B3) — SÍ SIRVE
-
-La unidad de contexto es el **claim** (span mínimo con evidencia), no el archivo completo. `CF_CLAIMS=1` materializa los resultados como `{claim_id, subject, text, evidence:[{path, lines}], evidence_type, certainty, source, cost}`.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-claim.js   # → evals/reports/claims-<TS>.json
-```
-
-44 tasks (T1 + fan-out): coverage **0.977 = 0.977** (parity), tokens 53681 → 25040 (**−58.6%**). Habilita evaluación line-level (SWE-Explore-style) y el op físico READ_SPAN para materializar solo lo necesario.
-
-
-## Execution Receipts (B4) — SÍ SIRVE
-
-Receipt por query con `CF_RECEIPT=1`: separa **seen** (evidencia determinista tier0, certainty 1.0) de **inferred** (semántica/bm25) y **unknown** (códigos: no-candidates / single-source / low-agreement desde belief), con cadena de provenance evidencia→claim (evidence_id de evidence-packet en cada fila + claims por span).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-receipts.js   # → evals/reports/receipts-<TS>.json
-```
-
-| métrica | valor |
-|---------|-------|
-| parity correctness (38 tasks) | 38/38 |
-| receipts con evidence_id | 38/38 |
-| GT en receipt | 35/38 (3 misses = zero-results abstain ✓) |
-| seen / inferred / unknown / claims | 1360 / 13 / 34 / 1373 |
-
-`files_touched`/`tests_run` quedan para que el agente anote post-acción (schema listo para auditoría evidencia→cambio).
-
-
-## Information Bottleneck Metrics (B5) — SÍ SIRVE (métrica estándar)
-
-Métrica primaria: **task-information density = Δ task success / Δ token** (y success/token por config) — un contexto de 8000 tokens puede tener utilidad radicalmente distinta; `tokens ≤ 8000` solo es el cap, no la calidad.
-
-```bash
-node evals/scripts/eval-ib-metrics.js   # → evals/reports/information-bottleneck-<TS>.json
-```
-
-| harness | config | success/token |
-|---------|--------|---------------|
-| downstream | raw | 0.00307 |
-| downstream | cqe | 0.00287 (Δsuccess/Δtokens 0.0024) |
-| context-selection @400 | topk | 0.0175 |
-| context-selection @400 | mmr | **0.0178** |
-
-La densidad se agregó a `report.md`/`metrics.json` del reproduce.sh como métrica estándar por modo. Hallazgo: topk gana densidad en budget holgado, MMR en tight — el par (density, correctness) discrimina configs, no una sola métrica.
-
-
-## Context Compilation / IR (B6) — SÍ SIRVE (representación)
-
-Pipeline IR explícito (estilo SQL): CQP lógico → lowering → plan físico de operadores IR → ejecución → contexto. `engine/ir.js` mapea 11 operadores (SCAN, SYMBOL_LOOKUP, LEXICAL_LOOKUP, DEPENDENCY_EXPAND, CALLER_EXPAND, SEMANTIC_SEARCH, HISTORY_LOOKUP, TEST_LOOKUP, READ_SPAN, MERGE, DEDUP) a implementaciones físicas con costo y access_path (index si hay catálogo `.cqe`, disk si no). `CF_IR=1` adjunta `plan.ir` + `plan.ir_stats` al resultado sin cambiar la ejecución.
-
-| métrica | valor |
-|---------|-------|
-| parity correctness (T1, 32) | 1.000 |
-| parity tokens (stats frescas) | true |
-| has_ir | 32/32 |
-| access_path index | 32/32 |
-| operadores IR vistos | 8/11 |
-
-Veredicto: **PASS (representación)** — el valor está en permitir selección de implementación cost-based sobre el plan físico (los index ops ya existen; pairwise/EU operan sobre planes). Límite conocido: est_cost estático por query_type no correlaciona con tokens reales (spearman ~-0.5 informacional); la cardinalidad per-query es la señal que discrimina (mismo techo de Operator Cost Model REJECT).
-
-
-## Information Acquisition / VoI (B7) — SÍ SIRVE (mecanismo, parity)
-
-Retrieval como acción con valor esperado: `VoI(op) = P_new·rel·value − tokens·WT − latency·WL` (`engine/voi.js`). `CF_VOI=1` ordena las ops del plan por VoI desc y poda las de VoI ≤ 0 (abstención por VoI — el análogo plan-level del abstain).
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-voi.js   # → evals/reports/voi-<TS>.json
-```
-
-T1 (32): parity exacta — correctness 1.000 = 1.000, tokens 105 = 105, pruned 0 (todas las ops tienen VoI positiva; la poda se activa con successRate bajo + op cara, p.ej. search-semantic 800tok). Confirma el patrón: con señal estática por op el mecanismo no discrimina en T1; el valor real está en P_new por query (puente a adaptive-query-execution B8).
-
-## Federated Evidence Sources (B9) — SÍ SIRVE (representación)
-
-Catálogo de 7 planos de evidencia con metadata (cost, latency, freshness, P/R) por query_type.
-
-| plano | access | cost(tok) | lat(ms) | precision | recall | query_types |
-|-------|--------|-----------|---------|-----------|--------|-------------|
-| lexical | index | 50 | 6 | 0.75 | 0.65 | concept/pattern/default |
-| symbol | index | 40 | 4 | 0.95 | 0.60 | definitions/references/impl/filename |
-| dependency | index | 80 | 8 | 0.85 | 0.55 | references/implementation |
-| callgraph | disk | 200 | 20 | 0.70 | 0.40 | references/implementation/callers |
-| history | disk | 120 | 15 | 0.60 | 0.30 | pattern/concept/default |
-| test | disk | 80 | 10 | 0.50 | 0.25 | pattern/default |
-| semantic | disk | 400 | 50 | 0.65 | 0.80 | concept/pattern/default |
-
-Resultado: 24/32 tasks con metadata adjunta (stats.federated), 7 planos cubriendo todos los query_types. Aditivo — no muta ejecución. El catálogo habilita selección de planos por cost-benefit en VoI/B8.
-
-## Repo-Calibrated Cardinality (B11) — NO SIRVE (OOD dev)
-
-Calibración del estimador de cardinalidad por repo: modelo global (ridge) + per-repo profile (residuos por `op|queryClass` vía `repo:<fp>|op|qc` en `statistics.js`) + corrección online en `estimateCandidates(repoFp)`. `CF_FINGERPRINT=1` activa los fingerprints.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-calibrated.js --limit 6   # → evals/reports/calibrated-<TS>.json
-```
-
-Resultado (train=t1-basic TS, val=t1-modular Python, test=dev OOD):
-
-| grupo | global MAPE | calibrated MAPE | heur MAPE |
-|-------|------------|-----------------|-----------|
-| train | 29.4% | 45.0% | 32.4% |
-| val | 122.5% | 74.1% | 144.8% |
-| test (dev) | 339.0% | 339.0% | 27.7% |
-
-La calibración por repo SÍ mejora val (122.5% → 74.1%, < 2×heur) — el residual per-repo captura el shift de lenguaje TS→Python. Pero en dev (repo nuevo sin profile previo) la corrección no aplica (339% = global ML), muy por encima del umbral 2×heur (55.4%). Confirma el patrón previo: el modelo ML global no generaliza a workspaces reales; el heurístico por (op,qc) sigue siendo el default robusto. REJECT — se mantiene `cardinality-model-ood.json` como fallback opcional, heurístico ON.
-
-## Learned Plan Steering (B12) — PARITY (sin señal pre-ejecución)
-
-Hint ligero sobre el optimizer determinista (Bao-style, NO reemplazo): ranking aprendido del modelo pairwise (Lero) + umbral de confianza + Thompson sampling. `engine/hint.js` exporta `hintSelect`; en `optimize()` se aplica como capa posterior a la selección determinista: solo inclina si `confianza >= umbral` (default 0.35, env `CF_HINT_THRESHOLD`); `CF_HINT=1` lo activa.
-
-```bash
-TMPDIR=$PWD/.tmp node evals/scripts/eval-hint.js   # → evals/reports/hint-<TS>.json
-```
-
-Resultado (T1, 32 tasks, oracle FORCE_PLAN A/B/C):
-
-| métrica | default | hint |
-|---------|---------|------|
-| plan_accuracy | 0.53 | 0.25 |
-| avg_gt_hits | 3.125 | 3.125 |
-| avg_tokens | 132.7 | 132.7 |
-| override_rate | — | 0.50 |
-
-El hint nunca cambia de familia de plan (A/B/C): los 16/32 overrides son entre una variante y su rewrite (`Ar`/`Br`), que tienen las MISMAS ops y features pre-ejecución → score pairwise idéntico → confianza≈0 → Thompson elige al azar entre equivalentes. gt_hits y tokens idénticos en todos los casos. Diagnóstico: sin features post-hoc (gt_hits/exactness/n_results/recall5/mrr = 0 pre-ejecución) el ranking aprendido no discrimina — la señal solo aparece en runtime, ya capturada por `CF_PAIRWISE` (pairwise-runtime PASS gt 0.906). PARITY: no degrada outcome, pero el hint pre-ejecución no aporta; no se activa por defecto.
-
-## Evidence Semantics (B13) — SÍ SIRVE (contrato tipado Score<T>)
-
-Cada row del resultado es un packet con `score_t` de namespaces disjuntos: `score_t.evidence` (determinista: exact/filename/structural, certainty 1.0) vs `score_t.estimate` (probabilístico: semantic/bm25/rerank, certainty < 1.0). El flat `score` se conserva solo como compat legacy (assemble-context jq y selectores lo leen); el modelo tipado es `score_t`. Provenance completa en cada row hasta la selección: `provenance.{operator, parser, index_version, query, tier}` + `evidence_tier` derivado del match_type. Eligibility por tipo: tier0 determinista NUNCA eliminado por score probabilístico — en fuse/rerank (anclaje `ANCHORED`, engine.js) y en selector (guard marginal sobre el knee de adaptive-k + boost MMR, selector.js).
-
-| Campo | Tipo | Namespace |
-|-------|------|-----------|
-| score_t.evidence | determinista | evidence |
-| score_t.estimate | probabilístico | estimates |
-| cost.tokens | costo | cost |
-| provenance.{operator,query,tier} | trazabilidad | provenance |
-| score (flat) | legacy compat | deprecated |
-
-Resultado eval `evidence-semantics-*.json`: 32 tasks / 223 rows, contrato 223/223 (score_t disjunto + provenance query/tier), 210 rows tier0 en output seleccionado, 0 eliminadas por score. `test/evidence-semantics.test.js` (5 asserts) fija el contrato.
-
-## Generated Code Default Policy (B14) — OFF default (medición empírica)
-
-Código generado (`dist/`, `build/`, `vendor/`, etc.) está **excluido por defecto** (BAD_PATH_LIST en assemble-context + SKIP_DIRS del índice + rg respeta .gitignore). Decisión basada en medición, no dogma: matriz `eval-generated-code.js` sobre tasks generated-code (adversarial gc-19/20/21) + control T1 (32 tasks), configs OFF / `CF_INCLUDE_GENERATED=1` / ON + `CF_SEARCH_NO_IGNORE=1`.
-
-| Config | GC recall | GC tokens/q | Control tokens/q | Control rows/q |
-|--------|-----------|-------------|------------------|----------------|
-| OFF (default) | 0.667 | 16.7 | 104.9 | 6.7 |
-| ON solo | 0.667 | 16.7 | 104.6 | 6.7 |
-| ON + NO_IGNORE | **1.000** | 30.0 | 104.9 | 6.7 |
-
-Fallos sin señal bajo query de filenames en root (`package.json`, `package-lock.json`) ya se resuelven OFF; el único gain real es `main.js` en `api-polar/dist/` (bundle Angular), inalcanzable sin `--no-ignore`. `CF_INCLUDE_GENERATED` solo relaja assemble-context — **es inerte sin `CF_SEARCH_NO_IGNORE`** (los globs de búsqueda siguen excluyendo dist/). Política final: **OFF default** (contexto limpio); queries sobre artifacts usan opt-in doble `CF_INCLUDE_GENERATED=1 CF_SEARCH_NO_IGNORE=1`. Provenance B14 3.1: rows con path generado (segmento dist|build|vendor|generated|coverage) marcan `provenance.generated: true` en su packet (evidence.js `toPacket`).
-
-## Backlog Audit v1.7 (B15) — inventario y archivo de superseded
-
-Auditoría de los cambios OpenSpec abiertos. Resultado: **28 archivados** (superseded o satisfechos), **2 activos** restantes (sin contar este cambio de gobernanza).
-
-| Categoría | Cambios archivados | Rationale |
-|---|---|---|
-| TinyBERT cluster | tinybert-cost-model, tinybert-local, tinybert-query-classifier, tinybert-reranker | ridge elegido como operador de aprendizaje; TinyBERT = implementación candidata, no pieza arquitectónica |
-| Learned optimizer | learned-optimizer, adaptive-optimizer, contextual-bandits, cost-based-plan-selection, plan-space-search, oracle-optimizer-benchmark, learned-cost-model-v2, uncertainty-aware-cost, model-choice-ablation | cubierto por adaptive-plan-selection, learned-plan-steering (B12), operator-cost-model, optimizer-advanced |
-| Cardinality / IR / física | cardinality-estimation, adaptive-query-processing, context-query-ir, introduce-context-query-ir, formalize-physical-operators, value-of-information | cubierto por repo-calibrated-cardinality (B11), adaptive-query-execution (B8), context-compilation-ir (B6), information-acquisition-voi (B7) |
-| Contexto / harness | context-quality-optimization, reproducible-evaluation | cubierto por context-selection, adaptive-context-budget, harness-bounded-reproducible |
-| Satisfechos | local-model-interface, repository-statistics, rename-cql-to-cqp, roadmap-orchestrator, establish-evaluation-framework, external-agent-benchmarks | trabajo ejecutado y documentado en este README (B1-B14) |
-| Abandonado | test-register-check | sin spec, sin tasks |
-
-Activos restantes: `cqe-thesis` (B16), `soundex-fallback` (backlog futuro, no superseded).
-
-## CQE Thesis (B16) — paper/architecture doc
-
-Tesis completa en [`docs/THESIS.md`](docs/THESIS.md): CQE como **adquisición adaptativa de evidencia** bajo incertidumbre y presupuesto. Problema formal, arquitectura (Evidence Model → VoI planning → budgeted selection), **23 claims con artifact por claim** (tabla: verdict / `evals/reports/*.json` / change archivado), límites y roadmap v1.7.
-
-Hallazgo central de la síntesis: lo que sobrevive es la **capa de evidencia** (tipado, provenance, fusión por rango, tier-0 anclado); lo que falla o queda en parity es la **predicción pre-ejecución del valor downstream** (pairwise, hints, VoI, costos calibrados — la señal no existe antes del runtime y la calibración no transfiere OOD).
-
-## Soundex Fallback (B17) — SÍ SIRVE (typos)
-
-Segunda pasada fonética cuando la fusión devuelve **0 filas** (typos en el target): Soundex 4-char propio (stdlib, cero deps) sobre identificadores del repo, con part-matching para identifiers camelCase/snake_case. Opt-in `CF_SOUNDEX=1` (default off); umbral `CF_SOUNDEX_THRESHOLD` (default `0.8` — prefix-match de 3+ chars del código fonético). Corpus: índice bm25 (`.bm25-index.json`) con paths reales por token; fallback walk de paths; nunca crash.
-
-La evidencia recuperada se etiqueta explícitamente como **similar, no exacta**: cada row lleva `similar: true`, `phonetic_score`, `phonetic_of`, `phonetic_target`, `match_type: 'soundex'` (evidence_tier 2, certainty 0.4) y `stats.soundex.note = "contenido similar, no el buscado"`.
-
-Dataset `evals/datasets/soundex.json` (7 typos reales T1 + 2 control FP, `eval-soundex.js`):
-
-| task | typo | gt_hits OFF | gt_hits ON | FP |
-|------|------|------------|------------|----|
-| sx-01 | retryWithFallbak | 0 | 1 | — |
-| sx-02 | DEFAULT_TIMOUT_MS | 0 | 1 | — |
-| sx-03 | get_provider_confg | 0 | 3 | — |
-| sx-04 | HttpHndler | 0 | 3 | — |
-| sx-05 | ProviderRuter | 0 | 2 | — |
-| sx-06 | fallbak.test.ts | 0 | 1 | — |
-| sx-07 | settngs.yaml | 0 | 1 | — |
-| sx-fp-01/02 | inventados | 0 | 0 | 0 |
-
-Veredicto: **PASS** — recall OFF 0 → ON 1.0 (ganancia +1.0), tasa de falsos positivos 0 con umbral default, latencia +80ms solo en el camino de 0 resultados.
 
 ## Glossary
 
@@ -1206,7 +517,6 @@ Veredicto: **PASS** — recall OFF 0 → ON 1.0 (ganancia +1.0), tasa de falsos 
 
 ---
 
-
 ## Naming: CQ / CQP
 
 The engine distinguishes two levels, like SQL vs its plan:
@@ -1219,8 +529,6 @@ Physical Retrieval Plan     → optimizer output (ordered ops)
 
 The query language is deliberately not called "CQL", which collides with third-party standards (ARROW/Europeana, MDPI "Context Definition and Query Language", USENIX).
 
-
 ## License
 
 [MIT](LICENSE)
-
