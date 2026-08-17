@@ -18,6 +18,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { load, confidence, estimateCandidates as statsEstimate } from './statistics.js';
+import { hintSelect } from './hint.js';
 
 const ENGINE_DIR = fileURLToPath(new URL('.', import.meta.url));
 const TELEMETRY = path.join(ENGINE_DIR, 'telemetry.ndjson');
@@ -384,7 +385,7 @@ export function optimize(logicalPlan = {}) {
 // pairwise-runtime — CF_PAIRWISE=1: score por plan = Σ P(plan ≻ otro) con el
 // modelo pairwise (Lero). Features post-hoc (gt_hits/exactness/n_results/recall5/mrr)
 // = 0 pre-ejecución (sin señal); est_tokens/latencia desde las ops del plan.
-const selected = pairModel
+let selected = pairModel
   ? (() => {
       const ids = plans.map((p) => p.id);
       const score = {};
@@ -401,13 +402,33 @@ const selected = pairModel
   : euMode
     ? plans.reduce((a, b) => (b.eu > a.eu ? b : a))
     : plans.reduce((a, b) => (b.utility > a.utility ? b : a));
-const reason = pairModel
+// learned-plan-steering (B12) — hint como capa posterior al optimizer determinista.
+// NO reemplaza: solo inclina la selección si el ranking aprendido (modelo pairwise
+// Lero) supera el umbral de confianza; stats insuficientes => default intacto.
+let hint = null;
+if (process.env.CF_HINT === '1') {
+  const before = selected.id;
+  hint = hintSelect(plans, queryType, {
+    threshold: Number(process.env.CF_HINT_THRESHOLD ?? 0.35),
+  });
+  if (hint && hint.id && hint.id !== before) {
+    const hinted = plans.find((p) => p.id === hint.id);
+    if (hinted) {
+      selected = hinted;
+      hint.overrode = true;
+    }
+  }
+}
+let reason = pairModel
   ? `plan ${selected.id}: pairwise (CF_PAIRWISE) para query_type "${queryType}" pred_class "${predClass}"`
   : euMode
     ? `plan ${selected.id}: EU ${selected.eu.toFixed(1)} (P ${selected.p_correct.toFixed(2)}·${euCfg.value} − ${selected.cost.toFixed(2)}) para query_type "${queryType}" pred_class "${predClass}"`
     : `plan ${selected.id}: utility ${selected.utility.toFixed(3)} ` +
       `(quality ${selected.quality.toFixed(2)} / cost ${selected.cost.toFixed(3)}) ` +
       `para query_type "${queryType}" pred_class "${predClass}"`;
+if (hint && hint.overrode) {
+  reason = `plan ${selected.id}: hint override (B12 learned-plan-steering, conf ${hint.confidence.toFixed(2)}, mode ${hint.mode}) sobre default`;
+}
 
   return { selected: selected.id, plans, reason, pred_class: predClass };
 }

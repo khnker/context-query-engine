@@ -1,0 +1,570 @@
+{
+  "date": "2026-08-17",
+  "tasks": 32,
+  "threshold": 0.35,
+  "plan_accuracy": {
+    "default": 0.53125,
+    "hint": 0.25
+  },
+  "avg_gt_hits": {
+    "default": 3.125,
+    "hint": 3.125
+  },
+  "avg_tokens": {
+    "default": 132.65625,
+    "hint": 132.65625,
+    "oracle": 132.65625
+  },
+  "override_rate": 0.5,
+  "verdict": {
+    "pass": true,
+    "delta_gt": 0,
+    "note": "hint = capa posterior (CF_HINT=1), umbral de confianza default 0.35; override = hint cambió la selección vs default"
+  },
+  "records": [
+    {
+      "id": "lex-01",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 11,
+        "hint": 11
+      },
+      "tokens": {
+        "def": 239,
+        "hint": 239,
+        "oracle": 239
+      }
+    },
+    {
+      "id": "lex-02",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 4,
+        "hint": 4
+      },
+      "tokens": {
+        "def": 74,
+        "hint": 74,
+        "oracle": 74
+      }
+    },
+    {
+      "id": "lex-03",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 7,
+        "hint": 7
+      },
+      "tokens": {
+        "def": 79,
+        "hint": 79,
+        "oracle": 79
+      }
+    },
+    {
+      "id": "lex-04",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 11,
+        "hint": 11,
+        "oracle": 11
+      }
+    },
+    {
+      "id": "lex-05",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 5,
+        "hint": 5
+      },
+      "tokens": {
+        "def": 86,
+        "hint": 86,
+        "oracle": 86
+      }
+    },
+    {
+      "id": "str-01",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 3,
+        "hint": 3
+      },
+      "tokens": {
+        "def": 111,
+        "hint": 111,
+        "oracle": 111
+      }
+    },
+    {
+      "id": "str-02",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 310,
+        "hint": 310,
+        "oracle": 310
+      }
+    },
+    {
+      "id": "str-03",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 19,
+        "hint": 19,
+        "oracle": 19
+      }
+    },
+    {
+      "id": "str-04",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 170,
+        "hint": 170,
+        "oracle": 170
+      }
+    },
+    {
+      "id": "str-05",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 8,
+        "hint": 8
+      },
+      "tokens": {
+        "def": 127,
+        "hint": 127,
+        "oracle": 127
+      }
+    },
+    {
+      "id": "sem-01",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 220,
+        "hint": 220,
+        "oracle": 220
+      }
+    },
+    {
+      "id": "sem-02",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 315,
+        "hint": 315,
+        "oracle": 315
+      }
+    },
+    {
+      "id": "sem-03",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 170,
+        "hint": 170,
+        "oracle": 170
+      }
+    },
+    {
+      "id": "sem-04",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 120,
+        "hint": 120,
+        "oracle": 120
+      }
+    },
+    {
+      "id": "sem-05",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 180,
+        "hint": 180,
+        "oracle": 180
+      }
+    },
+    {
+      "id": "dep-01",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 11,
+        "hint": 11
+      },
+      "tokens": {
+        "def": 239,
+        "hint": 239,
+        "oracle": 239
+      }
+    },
+    {
+      "id": "dep-02",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 6,
+        "hint": 6
+      },
+      "tokens": {
+        "def": 111,
+        "hint": 111,
+        "oracle": 111
+      }
+    },
+    {
+      "id": "dep-03",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 7,
+        "hint": 7
+      },
+      "tokens": {
+        "def": 79,
+        "hint": 79,
+        "oracle": 79
+      }
+    },
+    {
+      "id": "dep-04",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 11,
+        "hint": 11,
+        "oracle": 11
+      }
+    },
+    {
+      "id": "dep-05",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 4,
+        "hint": 4
+      },
+      "tokens": {
+        "def": 74,
+        "hint": 74,
+        "oracle": 74
+      }
+    },
+    {
+      "id": "cfg-01",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 280,
+        "hint": 280,
+        "oracle": 280
+      }
+    },
+    {
+      "id": "cfg-02",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 4,
+        "hint": 4
+      },
+      "tokens": {
+        "def": 74,
+        "hint": 74,
+        "oracle": 74
+      }
+    },
+    {
+      "id": "cfg-03",
+      "selected": {
+        "def": "A",
+        "hint": "A",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 10,
+        "hint": 10,
+        "oracle": 10
+      }
+    },
+    {
+      "id": "cfg-04",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 140,
+        "hint": 140,
+        "oracle": 140
+      }
+    },
+    {
+      "id": "cfg-05",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 335,
+        "hint": 335,
+        "oracle": 335
+      }
+    },
+    {
+      "id": "tst-01",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 40,
+        "hint": 40,
+        "oracle": 40
+      }
+    },
+    {
+      "id": "tst-02",
+      "selected": {
+        "def": "B",
+        "hint": "Br",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 2,
+        "hint": 2
+      },
+      "tokens": {
+        "def": 105,
+        "hint": 105,
+        "oracle": 105
+      }
+    },
+    {
+      "id": "tst-03",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 90,
+        "hint": 90,
+        "oracle": 90
+      }
+    },
+    {
+      "id": "tst-04",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 260,
+        "hint": 260,
+        "oracle": 260
+      }
+    },
+    {
+      "id": "tst-05",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 10,
+        "hint": 10,
+        "oracle": 10
+      }
+    },
+    {
+      "id": "adv-01",
+      "selected": {
+        "def": "A",
+        "hint": "Ar",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 3,
+        "hint": 3
+      },
+      "tokens": {
+        "def": 111,
+        "hint": 111,
+        "oracle": 111
+      }
+    },
+    {
+      "id": "git-01",
+      "selected": {
+        "def": "B",
+        "hint": "B",
+        "oracle": "A"
+      },
+      "gt": {
+        "def": 1,
+        "hint": 1
+      },
+      "tokens": {
+        "def": 45,
+        "hint": 45,
+        "oracle": 45
+      }
+    }
+  ]
+}
