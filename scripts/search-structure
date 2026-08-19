@@ -5,6 +5,8 @@
 
 set -uo pipefail
 
+source "$(dirname "$0")/env.sh"
+
 if command -v ast-grep >/dev/null 2>&1; then
   BIN="ast-grep"
 elif command -v sg >/dev/null 2>&1; then

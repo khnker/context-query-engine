@@ -2,6 +2,17 @@
 
 Instalación de las herramientas de retrieval en Linux (tasks 2.1-2.3).
 
+## Binarios incluidos en el repo — opción preferida (sin acceso a repos públicos)
+
+El script `scripts/download-binaries.sh` descarga binarios estáticos de `[rg, fd, jq, yq, ast-grep (>sg), tokei]` para **linux, darwin y win32** (x64 y arm64) a `bin/<os>-<arch>/`. Los scripts del proyecto anteponen ese directorio al PATH automáticamente (`scripts/env.sh`), priorizando los binarios del repo sobre los del sistema.
+
+```bash
+./scripts/download-binaries.sh   # requiere curl + tar + unzip; corre una vez
+scripts/check-tools              # verifica resolución
+```
+
+Solo `probe` (retrieval semántico, opcional) no se incluye en el bundle por ser paquete npm.
+
 ## Fedora (dnf) — 2.1
 
 ```bash

@@ -9,6 +9,8 @@
 
 set -uo pipefail
 
+source "$(dirname "$0")/env.sh"
+
 if ! command -v probe >/dev/null 2>&1; then
   echo "search-semantic: probe not found" >&2
   exit 2
