@@ -4,7 +4,7 @@
 
 **context-query-engine** treats agent context retrieval as a **query optimization problem**.
 
-Instead of asking an agent to decide which files to grep, which tools to call, and how much context to read, the agent describes **what it needs**. The engine builds a logical query, selects a physical retrieval plan, executes the appropriate tools, and assembles the most useful context within a target budget.
+Instead of asking an agent to decide which files to grep, which tools to call, and how much context to read, the agent describes **what it needs**. The engine builds a logical query, detects the intent, selects a hybrid retrieval plan, executes the appropriate retrievers, reranks the candidates, and assembles the most useful context within a target budget.
 
 ```text
 Agent
@@ -12,27 +12,22 @@ Agent
   │ "Find the implementation of provider fallback,
   │  follow references, include tests"
   ▼
-Context Query
+Intent Detection
   │
   ▼
-Logical Plan
+Context Planner
+  │
+  ├── lexical      (search-code)
+  ├── structural   (search-structure / symbol)
+  ├── semantic     (search-semantic / BM25 / embeddings)
+  ├── structured   (federated)
+  └── git          (git-log)
   │
   ▼
-Query Optimizer
-  │
-  ├── search-code
-  ├── search-structure
-  ├── search-semantic
-  ├── project-map
-  └── extract-context
+Candidate Fusion + Reranking
   │
   ▼
-Context Fusion
-  │
-  ├── normalize
-  ├── deduplicate
-  ├── rank
-  └── budget
+Context Assembly (budget-aware)
   │
   ▼
 High-signal Context
@@ -216,24 +211,79 @@ sequenceDiagram
 
 ---
 
+## CQE: context planning, not just retrieval
+
+**context-query-engine** is evolving from a retrieval engine into a **Context Planner**: instead of assuming one retrieval strategy fits all queries, the engine decides *how* to retrieve the most relevant context, selecting dynamically among lexical, structural, semantic and structured strategies per query.
+
+> **CQE is not a RAG.** A RAG pipeline (query → embedding → vector search → chunks → LLM) is a *capability* inside CQE, not the default mechanism. Embeddings are one replaceable retriever among many.
+
+```text
+query
+  ↓
+intent detection        ← what kind of information is needed
+  ↓
+context planner         ← select retrieval strategies + budget
+  ├── lexical          (rg / search-code)
+  ├── structural       (symbol lookup / search-structure)
+  ├── semantic         (BM25 / embeddings, replaceable provider)
+  ├── structured       (federated planes / knowledge graph)
+  └── git/history      (git-log)
+  ↓
+candidate fusion        ← dedup + unify scores
+  ↓
+reranking               ← weighted: relevance × coverage × source quality × confidence
+  ↓
+context assembly        ← budget-aware selection
+  ↓
+context evaluation      ← sufficiency? stop or revise plan (closed loop)
+```
+
+### New modules (v1.5)
+
+| Module | Role |
+| ------ | ---- |
+| `engine/retriever.js` | `Retriever` interface, `Candidate` schema, `Reranker` (weighted sum), `hybridRetrieval()` |
+| `engine/intent-planner.js` | Intent taxonomy (7 types), budget mapping, retriever selection |
+| `engine/retrievers/` | Concrete retrievers: `bm25` (lexical), `symbol` (structural), `federated` (structured) |
+
+Retrievers return a standardized `Candidate` shape (`id, path, line_start, line_end, score, source, match_type, snippet`) and run in parallel via `Promise.allSettled`; results are deduplicated and reranked before context assembly. The reranker combines four signals with default weights `[0.4, 0.3, 0.2, 0.1]` (relevance, coverage, source quality, confidence).
+
+```js
+import { hybridRetrieval } from './engine/retriever.js';
+import { Bm25Retriever, SymbolRetriever, FederatedRetriever } from './engine/retrievers/index.js';
+import { parseIntent } from './engine/intent-planner.js';
+
+const plan = parseIntent('por qué usamos PostgreSQL?');       // → architecture_decision
+const { candidates } = await hybridRetrieval(
+  [new Bm25Retriever(), new SymbolRetriever(), new FederatedRetriever()],
+  plan.raw, { budget: plan.budget, intentConfidence: plan.confidence }
+);
+```
+
+The CQE path is **opt-in** (`--cqe` flag / `CF_CQE_ENABLE=1`) and preserves the existing pipeline unchanged when disabled.
+
+---
+
 ## Quick start
 
 ### Requirements
 
 * Node.js ≥ 18
-* `ripgrep`
-* `fd`
-* `jq`
 
-Optional: `ast-grep`, `probe`, `tokei`, `semgrep`.
+The engine itself has **zero npm runtime dependencies**. Retrieval tools (`rg`, `fd`, `jq`, `ast-grep`, `tokei`) can be installed via the bundled binary script — no system packages needed:
 
-The engine itself has **zero npm runtime dependencies**.
+```bash
+./scripts/download-binaries.sh   # downloads static binaries for linux/darwin/win32 (x64/arm64) into bin/
+```
+
+`scripts/env.sh` (sourced by every script) detects the OS/architecture and prepends `bin/<os>-<arch>/` to `PATH`, so bundled binaries win over system ones. `scripts/check-tools` verifies resolution. Only `probe` (semantic, optional) is not bundled — it is an npm package.
 
 ### Install
 
 ```bash
 git clone https://github.com/khnker/context-query-engine.git
 cd context-query-engine
+./scripts/download-binaries.sh   # optional: bundles rg/fd/jq/ast-grep/tokei for offline use
 npm run check-tools
 ```
 

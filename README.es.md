@@ -197,7 +197,18 @@ node engine/engine.js 'FIND implementation OF concept "provider fallback" AND FO
 
 ## Instalación
 
-**Requisitos** (Fedora):
+**Requisitos**: Node.js ≥ 18 (el engine no usa dependencias npm).
+
+**Binarios bundled (opcional, recomendado para redes restringidas):**
+
+```bash
+./scripts/download-binaries.sh   # descarga binarios estáticos rg/fd/jq/ast-grep/tokei
+                                 # para linux/darwin/win32 (x64/arm64) a bin/
+```
+
+`scripts/env.sh` (sourceado por todos los scripts) detecta SO/arquitectura y antepone `bin/<os>-<arch>/` al PATH, priorizando los binarios del repo sobre los del sistema. Solo `probe` (semántico, opcional) no se incluye — es paquete npm.
+
+**Alternativa por distro** (Fedora):
 
 ```bash
 sudo dnf install ripgrep fd-find jq yq fzf tokei
@@ -205,7 +216,6 @@ sudo dnf install ripgrep fd-find jq yq fzf tokei
 
 - `rg` (búsqueda de texto), `fd` (nombres), `ast-grep`/`sg` (estructural), `jq` (JSON), `tokei` (métricas LOC, opcional)
 - **Probe** (opcional, retrieval semántico): `npm install -g @probelabs/probe`
-- **Node.js ≥ 18** (el engine no usa dependencias npm)
 
 **Clonar e instalar la skill** en tu agente (OpenCode, Claude, etc.):
 
